@@ -121,7 +121,27 @@ outro domínio.
   imagem, com 0 erros no console.
 - Não foram jogados até o fim os casos 1 a 5, nem testados som e vozes.
 
+## Mudanças feitas depois da separação
+
+A separação em si não mudou o comportamento. Depois dela, a pedido, entraram
+duas correções pequenas:
+
+- **Capa esperando o vídeo:** o vídeo só começava a baixar quando a cena abria,
+  e na rede do GitHub Pages a capa ficava ~1,5 s na tela. Agora os vídeos são
+  baixados antes (`warmUrl()` e `warmCase()` em `js/16-cutscenes.js`): o da
+  abertura no menu e ao abrir o cartaz do caso, o da próxima cena enquanto a
+  atual toca, e o da primeira cena da reconstrução ao abrir a Prisão. Medido
+  com um servidor local atrasando cada `.mp4` em 1,2 s: de ~1400 ms para
+  ~150 ms na abertura e ~20 ms entre cenas.
+- **Planta do salão (caso 0):** `SP.plantb` em `js/13-arte-provas-cenas.js`
+  passou a usar o mesmo desenho do ícone da lista (`AR.plant`), reduzido.
+
 ## Pendências conhecidas
+
+- **Mãos nos vídeos:** em vários vídeos os personagens aparecem com as duas
+  mãos iguais (não esquerda e direita). Já era assim no original. Os `.mp4`
+  vieram prontos, sem o projeto de origem, e não dá para corrigir pelo código:
+  é preciso regerar os vídeos na ferramenta em que foram feitos.
 
 Itens deixados de propósito para não mexer na lógica:
 
