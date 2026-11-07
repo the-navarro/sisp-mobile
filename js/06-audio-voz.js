@@ -1,6 +1,6 @@
 const VFEM=new Set(['marta','eleanor','clara','marina','beatriz','celia','helena','sofia','olivia','lidia','bianca','monica','nair']);
 Object.assign(AU,{vo:null,
-vstop(){try{window.speechSynthesis&&speechSynthesis.cancel()}catch(e){}try{if(this.vo){this.vo.gain.cancelScheduledValues(0);this.vo.gain.value=0;this.vo.disconnect()}}catch(e){}this.vo=null},
+vstop(){try{introStop()}catch(e){}try{window.speechSynthesis&&speechSynthesis.cancel()}catch(e){}try{if(this.vo){this.vo.gain.cancelScheduledValues(0);this.vo.gain.value=0;this.vo.disconnect()}}catch(e){}this.vo=null},
 voice(id,len){this.vstop();if(!this.f)return;
 const ss=window.speechSynthesis;if(ss&&window.SpeechSynthesisUtterance&&typeof S!=='undefined'&&S&&S.call&&EV[S.call]){try{const t=gx(String(EV[S.call][1])).replace(/\[[^\]]*\]/g,' ').replace(/<[^>]*>/g,' ').replace(/[*_#~]/g,'').replace(/\s+/g,' ').trim(),u=new SpeechSynthesisUtterance(t),fem=VFEM.has(id),vs=(ss.getVoices()||[]).filter(v=>/^pt/i.test(v.lang)),pk=vs.find(v=>/pt-BR/i.test(v.lang)&&(fem?/maria|francisca|luciana|helo[ií]sa|fernanda|female|feminina/i.test(v.name):/daniel|felipe|ant[oô]nio|ricardo|male|masculin/i.test(v.name)))||vs.find(v=>/pt-BR/i.test(v.lang))||vs[0];u.lang='pt-BR';if(pk)u.voice=pk;u.pitch=fem?1.2:.65;u.rate=1.02;u.volume=.85;ss.cancel();ss.speak(u);return}catch(e){}}
 this.init();const x=this.x;if(!x||!this.mg)return;
