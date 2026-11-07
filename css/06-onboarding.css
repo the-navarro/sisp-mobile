@@ -3,3 +3,15 @@
 .onc h3{margin:0 0 4px;font:400 22px var(--ty)}.onc .mut{font-size:12px}
 .onc input{width:100%;margin:16px 0 14px;padding:13px 14px;border-radius:12px;border:1.5px solid #ffffff2a;background:#0b0f14;color:#fff;font:500 17px var(--ui);text-align:center;outline:none;box-sizing:border-box}.onc input:focus{border-color:#eaa73c}
 .onc .btn{width:100%;padding:13px;border-radius:12px;font-size:14px}
+
+/* tutorial no estilo do resto do jogo: petróleo escuro, serifada e âmbar (antes, azul-marinho) */
+.odlg,.onc{background:linear-gradient(180deg,rgba(11,21,28,.97),rgba(5,9,13,.98));border:1px solid rgba(255,255,255,.1);border-radius:16px;box-shadow:0 14px 34px #000b}
+.odlg .onm0{font:300 10.5px 'SISP Thin',Arial,sans-serif;letter-spacing:.3em;color:#eaa73c}
+.odlg .onm0 small{font:300 10px 'SISP Thin',Arial,sans-serif;letter-spacing:.14em;color:#8b99a5;text-transform:uppercase}
+.odlg p{font:600 17px/1.42 'SISP Serif',Georgia,serif;color:#f3e8d2;min-height:calc(1.42em*4)}
+.otr .odlg p{font-size:16.5px}
+.onc h3{font:600 24px 'SISP Serif',Georgia,serif;color:#f6ecd8}
+.onc input{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.14)}
+.tmk{background:linear-gradient(rgba(11,21,28,.96),rgba(5,9,13,.98));border:1px solid rgba(255,255,255,.1)}
+.spt{box-shadow:0 0 0 2400px rgba(2,5,8,.84),0 0 0 2px #eaa73c,0 0 18px 4px rgba(234,167,60,.4)}
+.otr .oav{border:1.5px solid rgba(234,167,60,.6)}
