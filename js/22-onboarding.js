@@ -1,7 +1,7 @@
 PDX.chefe={e:'almond',n:'pointed',b:'arch',bt:.8,lp:1,mw:.95,sp:7.8,sk:'#d9b496',sh:'#b89478',hc:'#2a1d12',hs:'swept',bg:['#2c3a5c','#0c1220'],deco:'',out:'blazer',oc:'#26324d',oc2:'#ece7dc',ic:'#3a2a1c',age:47,g:'',ex:['lipstick:#8a3a44','earrg','smile'],ms:.6};VFEM.add('chefe');
 const ONTALK={talk:["Então é você. A Corregedoria disse que ia mandar alguém bom, e eu não costumo ouvir isso à toa.","Eu sou a superintendente Regina Vaz, chefe da Divisão de Homicídios do SISP, o Sistema de Investigação Policial. A partir de hoje, sou a sua chefe. E quem cobra relatório.","Aqui o trabalho é minucioso: cada caso chega com suspeitos mentindo e provas que ninguém olhou direito.","Antes de tudo, preciso registrar você no sistema."],talk2:["Prazer, {n}. Registro aberto.","Agora o crachá: o sistema precisa de uma foto sua. Escolha a sua aparência. Dá para mudar depois."]};
 const ONTOUR=[
-{s:'.play',t:"Este é o seu painel, {n}. O botão grande leva direto ao caso da vez e lembra onde você parou."},
+{s:'.play',t:"Este é o seu painel, {n}. Toque no nome do caso para ir direto à investigação da vez; ele lembra onde você parou."},
 {s:'.tl3 .tile:nth-child(1)',t:"O Arquivo guarda todos os casos: os novos, os em andamento e os que você já resolveu."},
 {s:'.tl3 .tile:nth-child(2)',t:"Investigador: aqui você muda o seu visual quando quiser."},
 {s:'.tl3 .tile:nth-child(3)',t:"A Galeria reúne os selos. Eles premiam quem investiga a fundo e descobre os segredos de cada caso."},
@@ -14,8 +14,9 @@ const ONTOUR=[
 {m:1,s:'[data-k=caderno]',t:"Caderno: tudo fica anotado, como a ocorrência, os suspeitos, a cronologia e as suas notas. Consulte sempre que ficar em dúvida."},
 {m:1,s:'[data-k=mindmap]',t:"Quadro: aqui você liga as pistas e faz as deduções. Cada dedução certa aproxima você do culpado."},
 {m:1,s:'[data-k=solve]',t:"Prisão: com as deduções feitas, acuse o culpado. Errar custa caro. Com três erros, o caso é arquivado."},
-{t:"A ordem é sempre a mesma: coletar, analisar, conversar e deduzir. Os aplicativos vão se liberando a cada etapa, e o app de Dicas ajuda se você travar."},
-{s:'.play',last:1,t:"Vamos começar, {n}? Seu primeiro caso é um treinamento: {caso}. É só tocar neste botão quando estiver pronto."}];
+{m:1,s:'[data-k=hint]',t:"Dicas: se travar, toque aqui ou na lâmpada, no topo de qualquer aplicativo. No modo Guiado a dica não custa tempo; no Clássico custa 20 minutos do relógio."},
+{t:"A ordem é sempre a mesma: coletar, analisar, conversar e deduzir. Os aplicativos vão se liberando a cada etapa."},
+{s:'.play',last:1,t:"Vamos começar, {n}? Seu primeiro caso é um treinamento: {caso}. É só tocar no nome do caso quando estiver pronto."}];
 const onbN=()=>esc((ONN||(META.pl&&META.pl.n)||'detetive').trim()||'detetive');
 const onbT=t=>t.replace(/\{n\}/g,onbN()).replace(/\{caso\}/g,esc(CASES[0].n));
 const onbBust=sz=>av('chefe',sz);

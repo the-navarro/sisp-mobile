@@ -204,6 +204,9 @@ duas correções pequenas:
   `introSnd()`/`introStop()` em `js/16-cutscenes.js`. Ela respeita o botão de efeitos
   sonoros, silencia a música de fundo enquanto toca e para ao pular. A abertura só
   toca quando o caso não tem progresso salvo (ou ao Reiniciar).
+- **Tutorial:** textos atualizados para a interface nova (o "botão grande" virou o nome
+  do caso), passo novo do app Dicas (e da lâmpada no topo) em `js/22-onboarding.js`, e
+  visual no estilo do jogo (petróleo escuro, serifada, âmbar) em `css/06-onboarding.css`.
 - **Lista de casos:** as linhas viraram cartazes em grade (2 colunas) com as capas
   novas; um caso sozinho na temporada (treinamento e caso 5) vira um banner com a
   miniatura 16:9; a gaveta de detalhes ganhou a miniatura no topo.
