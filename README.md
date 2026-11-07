@@ -27,11 +27,12 @@ Não é preciso instalar nada.
 
 ```
 index.html        Só a estrutura: carrega os estilos e os scripts na ordem certa
-css/              Estilos (8 arquivos, carregados na ordem do número)
+css/              Estilos (9 arquivos, carregados na ordem do número)
 js/               Motor do jogo (26 arquivos, carregados na ordem do número)
 casos/            Dados de cada caso (um arquivo por caso)
 assets/v/         Vídeos (.mp4) e capas (.jpg) das cenas de cada caso
 assets/home/      Camadas da arte da tela inicial (.webp)
+assets/casos/     Capas (cartazes) e miniaturas 16:9 dos 6 casos (.webp)
 assets/fonts/     Fontes do título da tela inicial, com as licenças
 original/         Cópia intocada do arquivo único original
 ```
@@ -47,7 +48,8 @@ original/         Cópia intocada do arquivo único original
 | `04-guia-caderno.css` | painel do guia e caderno |
 | `05-cenas-inspecao-cutscenes.css` | cenas, inspeção de provas, cutscenes |
 | `06-onboarding.css` | tutorial de boas-vindas |
-| `07-home.css` | fundo das telas do menu e tela inicial: camadas, névoa, raio e título |
+| `07-home.css` | fundo das telas do menu e tela inicial: camadas, névoa, raio, título e a parte de baixo (só tipografia) |
+| `08-casos.css` | lista de casos: cartazes em grade e banner |
 
 ### js/
 
@@ -102,6 +104,15 @@ reordenado.
 Cada `casoN.js` define a função `mkCN()` com suspeitos, locais, provas,
 cronologia e solução. Eles carregam **antes** de `js/02-casos-lista.js`, que
 monta a lista final.
+
+### assets/casos/
+
+`capa_c0.webp` a `capa_c5.webp` (cartazes verticais 600×900, com o título e o
+número do inquérito desenhados na própria imagem) e `mini_c0.webp` a
+`mini_c5.webp` (miniaturas 16:9 de 960×540). São usadas na lista de casos
+(`js/21-menu.js`): as capas formam a grade, e a miniatura é o banner do caso que
+fica sozinho na temporada e o topo da gaveta de detalhes. Ficaram de fora, por
+enquanto, as capas sem texto e as miniaturas quadradas.
 
 ### assets/home/ e assets/fonts/
 
@@ -165,6 +176,14 @@ duas correções pequenas:
   degradê azul-petróleo escuro. Código em `js/23a-home.js` e `css/07-home.css`; o menu
   (`js/21-menu.js`) só chama `homeArt()`. Com "reduzir animações" ligado, a tela
   fica parada. (Uma gota escorrendo pelo "vidro" foi testada e retirada.)
+- **Parte de baixo da tela inicial:** os botões em caixa viram só tipografia (nome
+  do caso em serifada, uma linha dourada, "Investigar" e os atalhos em texto),
+  com as mesmas classes de antes (`.play`, `.tl3 .tile`), então a visita guiada
+  continua funcionando. A arte desceu para diminuir o espaço vazio entre ela e o
+  botão (`homeGeom()` em `js/23a-home.js`; a arte agora preenche a altura toda).
+- **Lista de casos:** as linhas viraram cartazes em grade (2 colunas) com as capas
+  novas; um caso sozinho na temporada (treinamento e caso 5) vira um banner com a
+  miniatura 16:9; a gaveta de detalhes ganhou a miniatura no topo.
 
 ## Pendências conhecidas
 
