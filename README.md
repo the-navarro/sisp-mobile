@@ -47,7 +47,7 @@ original/         Cópia intocada do arquivo único original
 | `04-guia-caderno.css` | painel do guia e caderno |
 | `05-cenas-inspecao-cutscenes.css` | cenas, inspeção de provas, cutscenes |
 | `06-onboarding.css` | tutorial de boas-vindas |
-| `07-home.css` | tela inicial: camadas, névoa, raio e título |
+| `07-home.css` | fundo das telas do menu e tela inicial: camadas, névoa, raio e título |
 
 ### js/
 
@@ -159,7 +159,10 @@ duas correções pequenas:
   (`assets/home/`) com profundidade (o fundo se mexe de leve, com o toque ou o
   mouse), névoa, luz do poste viva, garoa fina com respingos na rua (mais clara e
   dourada dentro do cone de luz) e raios ocasionais. O título neon virou um
-  título serifado. Código em `js/23a-home.js` e `css/07-home.css`; o menu
+  título serifado. O fundo atrás da arte (tela inicial e lista de casos) perdeu os
+  riscos diagonais e o brilho laranja do desenho antigo: na tela inicial a arte se
+  funde a um fundo que termina em preto (classe `hmh`), e a lista de casos usa um
+  degradê azul-petróleo escuro. Código em `js/23a-home.js` e `css/07-home.css`; o menu
   (`js/21-menu.js`) só chama `homeArt()`. Com "reduzir animações" ligado, a tela
   fica parada. (Uma gota escorrendo pelo "vidro" foi testada e retirada.)
 
