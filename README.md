@@ -187,9 +187,11 @@ duas correções pequenas:
 
 ## Pendências conhecidas
 
-- **Mãos nos vídeos:** as cenas b2 a b5 foram refeitas. As cenas `intro`, `b0`
-  e `b1` não foram refeitas; se alguma ainda mostrar as duas mãos iguais, é
-  preciso regerar o vídeo na ferramenta em que foi feito.
+- **Mãos nos vídeos:** as cenas b2 a b5 foram refeitas. As cenas `b0` e `b1`
+  não foram; se alguma ainda mostrar as duas mãos iguais, é preciso regerar o
+  vídeo na ferramenta em que foi feito. As aberturas (`intro`) dos 6 casos foram
+  trocadas por pôsteres animados (9,58 s, com o título desenhado no final); a do
+  caso 2, que tinha mais de 3 s de tela preta no fim, agora está completa.
 
 Itens deixados de propósito para não mexer na lógica:
 
