@@ -138,7 +138,7 @@ fraud:`<rect x=18 y=6 width=28 height=50 rx=6 fill="#2f6a38" ${S1} /><rect x=26 
 press:`<rect x=6 y=10 width=44 height=44 rx=2 fill="#efe9d8" ${S1} /><rect x=10 y=14 width=36 height=8 fill="#1a1d23" /><text x=28 y=20.4 text-anchor=middle font-size=6 fill="#fff" font-weight=700 font-family="monospace">EXTRA!</text><rect x=10 y=26 width=16 height=14 fill="#8d97a6" /><path d="M30 28h16M30 33h16M30 38h12M10 44h36M10 49h30" stroke="#6a5a3a" stroke-width=1.6 /><rect x=40 y=36 width=20 height=16 rx=3 fill="#2a2d33" ${S1} transform="rotate(8 50 44)" /><circle cx=50 cy=44 r=5 fill="#8d97a6" ${S1} transform="rotate(8 50 44)" /><path d="M54 32l5-5M48 30l1-6M58 36l6-1" stroke="#ffe27a" stroke-width=2 stroke-linecap=round />`};
 const ith=id=>EVA[id]?`<span class="i th">${evsvg(id,'evt')}</span>`:`<span class=i>${CL[id].i}</span>`;
 const wic=(k,m)=>`<svg viewBox="0 0 64 64" class=wic aria-hidden=true>${(m?MIC:WIC)[k]||''}</svg>`;
-window.pickA=(k,v)=>{S[k]=v;AU.fx&&AU.fx('tick');save();const m=$('main'),st=m?m.scrollTop:0;render();const n=$('main');if(n)n.scrollTop=st};
+window.pickA=(k,v)=>{S[k]=v;AU.fx&&AU.fx('pick');save();const m=$('main'),st=m?m.scrollTop:0;render();const n=$('main');if(n)n.scrollTop=st};
 const pkgrid=(k,items,sel,fn)=>`<div class=pkg>${items.map(i=>`<button class="pk ${sel===i[0]?'on':''}" onclick="pickA('${k}','${i[0]}')">${fn(i)}<span>${i[1]}</span></button>`).join('')}</div>`;
 
 {let _kt;document.addEventListener('focusin',e=>{if(e.target.matches&&e.target.matches('input,textarea,select')){clearTimeout(_kt);document.body.classList.add('kb')}});document.addEventListener('focusout',()=>{clearTimeout(_kt);_kt=setTimeout(()=>document.body.classList.remove('kb'),500)})}
