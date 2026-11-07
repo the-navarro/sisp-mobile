@@ -27,10 +27,12 @@ Não é preciso instalar nada.
 
 ```
 index.html        Só a estrutura: carrega os estilos e os scripts na ordem certa
-css/              Estilos (7 arquivos, carregados na ordem do número)
-js/               Motor do jogo (25 arquivos, carregados na ordem do número)
+css/              Estilos (8 arquivos, carregados na ordem do número)
+js/               Motor do jogo (26 arquivos, carregados na ordem do número)
 casos/            Dados de cada caso (um arquivo por caso)
 assets/v/         Vídeos (.mp4) e capas (.jpg) das cenas de cada caso
+assets/home/      Camadas da arte da tela inicial (.webp)
+assets/fonts/     Fontes do título da tela inicial, com as licenças
 original/         Cópia intocada do arquivo único original
 ```
 
@@ -45,6 +47,7 @@ original/         Cópia intocada do arquivo único original
 | `04-guia-caderno.css` | painel do guia e caderno |
 | `05-cenas-inspecao-cutscenes.css` | cenas, inspeção de provas, cutscenes |
 | `06-onboarding.css` | tutorial de boas-vindas |
+| `07-home.css` | tela inicial: camadas, névoa, raio, vidro e título |
 
 ### js/
 
@@ -77,6 +80,7 @@ está em `index.html`.
 | `21-menu.js` | tela inicial e mapa de casos |
 | `22-onboarding.js` | tutorial de boas-vindas |
 | `23-minijogos.js` | minijogos (câmeras, registros etc.) |
+| `23a-home.js` | tela inicial em camadas: profundidade, névoa, garoa, raios e a gota no vidro (precisa carregar **antes** de `24-inicio.js`) |
 | `24-inicio.js` | ajustes finais e partida inicial |
 | `25-chuva.js` | chuva da janela do escritório do caso 1 (canvas) |
 
@@ -98,6 +102,15 @@ reordenado.
 Cada `casoN.js` define a função `mkCN()` com suspeitos, locais, provas,
 cronologia e solução. Eles carregam **antes** de `js/02-casos-lista.js`, que
 monta a lista final.
+
+### assets/home/ e assets/fonts/
+
+`assets/home/` tem as 8 camadas da arte da tela inicial (céu, três planos de
+prédios, rua, luz do poste, poste e investigador), cada uma recortada no
+tamanho do seu conteúdo e posicionada por `HOMEL` em `js/23a-home.js`. Juntas
+pesam cerca de 100 KB. As fontes do título são Cormorant Garamond e Josefin
+Sans, licenciadas sob a SIL Open Font License (os textos das licenças estão em
+`assets/fonts/`).
 
 ### assets/v/
 
@@ -142,6 +155,13 @@ duas correções pequenas:
   trocados por um canvas (`js/25-chuva.js`) com gotas em três profundidades,
   respingos, gotas escorrendo no vidro e clarões de raio. Respeita o ajuste
   "reduzir animações" (fica estática) e só anima enquanto a cena está na tela.
+- **Tela inicial nova:** a arte em SVG foi trocada por camadas em imagem
+  (`assets/home/`) com profundidade (o fundo se mexe de leve, com o toque ou o
+  mouse), névoa, luz do poste viva, garoa fina com respingos na rua (mais clara e
+  dourada dentro do cone de luz), raios ocasionais e uma gota que escorre pelo
+  "vidro" a cada ~30 s. O título neon virou um título serifado. Código em
+  `js/23a-home.js` e `css/07-home.css`; o menu (`js/21-menu.js`) só chama
+  `homeArt()` e `homeGlass()`. Com "reduzir animações" ligado, a tela fica parada.
 
 ## Pendências conhecidas
 
