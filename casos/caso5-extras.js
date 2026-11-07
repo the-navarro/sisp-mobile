@@ -1,0 +1,32 @@
+Object.assign(EVA,{
+vaultlog:['monitor',{l:['18:45 CONTAGEM INICIADA','18:47 ABERTURA · SENHA OK','18:49 COFRE ABERTO','18:52 FECHAMENTO MANUAL']}],
+backdoor:['cyl'],
+proposal:['paper',{h:'PROPOSTA DE COMPRA',t:['Joalheria Quintela','Oferta: metade do valor','Carimbo: hoje 18:20','Assinatura da gerente:'],sig:1,r:3}],
+vase:['vase'],
+remote:['monitor',{l:['18:31 LOGIN tec_02','REDE 4G · MÓVEL','CMD: PARAR GRAVAÇÃO','CAM1-4 sem sinal','19:06 RETOMADA']}],
+ticket:['book',{c:'#35527a',t1:'ORDENS',t2:'de serviço · Sentinela',band:1}],
+mug:['mug'],
+glove:['glove'],
+alleycam:['cctv'],
+cig:['butt'],
+gatelog:['monitor',{l:['19:07 PORTÃO ABRE','19:08 ENTRA HATCH CINZA','PLACA 4D (CLONADA)','19:12 SAI VAN BRANCA','LOTE 14 · D. MOURA']}],
+phone:['phone'],
+keyreceipt:['receipt',{h:'CHAVEIRO RÁPIDO',s:'Cópia de chave',l:[['Modelo','Tetra'],['Data','há 3 sem.'],['Nome','D. Moura']],r:2}]});
+SCN['c5:loja']={b:SW('#30262f')+SP.win(86,26,86,56,'city')+SP.door(12,34,56,116,'#3a2a22')+SFL('zfw')+SP.case(186,62,90,72)+SP.vault(292,14,62,1)+SP.desk(76,122,104)+SP.plantb(46,170)+glw(220,100,70)+dust,h:{backdoor:[40,108,.26],vaultlog:[322,100,.22],proposal:[128,148,.22],vase:[56,162,.28]}};
+SCN['c5:seg']={b:SW('#1d2831')+SP.rack(14,26,150)+SP.console(186,92,150)+SFL('zft')+SP.table(40,160,96)+glw(100,100,70)+dust,h:{remote:[256,104,.26],ticket:[96,178,.22],mug:[142,172,.2]}};
+SCN['c5:beco']={b:SW('#12171e')+Array.from({length:7},(_,r)=>Array.from({length:12},(_,c)=>rc(c*32+(r%2?16:0)-8,r*22,30,20,r%2?'#1a2029':'#161c24','opacity=.9')).join('')).join('')+SP.door(290,36,56,114,'#262a30')+rc(30,92,78,58,'#233a2b')+rc(30,88,78,6,'#2e4a38')+SFL('zfc')+rc(40,36,34,14,'#2b313b')+`<circle cx=45 cy=43 r=4 fill="#3a5a8a" />`+rc(55,50,4,10,'#2b313b')+glw(200,120,80)+dust,h:{alleycam:[58,52,.22],glove:[188,198,.22],cig:[238,188,.2]}};
+SCN['c5:ferro']={b:`<rect width=360 height=150 fill="#0b1020" />`+Array.from({length:30},(_,i)=>`<circle cx=${(i*47)%350+5} cy=${(i*29)%80+4} r=.9 fill="#fff" opacity=.5 />`).join('')+rc(0,98,360,3,'#2a3038')+Array.from({length:18},(_,i)=>rc(i*21,92,2,36,'#2a3038')).join('')+rc(18,58,68,74,'#2a2f38')+rc(26,66,52,22,'#c9a93a','opacity=.7')+SP.crate(258,112,36)+SP.crate(300,122,30)+SFL('zfc')+`<g transform="translate(122 116)"><path d="M0 54L10 30Q22 12 52 12H92Q116 12 126 32L144 54z" fill="#8a929c" /><path d="M20 30Q28 18 52 18H66V32H20zM74 18H92Q108 18 116 32H74z" fill="#1a2330" /><circle cx=30 cy=56 r=11 fill="#111" /><circle cx=116 cy=56 r=11 fill="#111" /><circle cx=30 cy=56 r=5 fill="#555" /><circle cx=116 cy=56 r=5 fill="#555" /></g>`+`<circle cx=334 cy=196 r=20 fill="#111" /><circle cx=334 cy=196 r=9 fill="#2a2a2a" />`+glw(190,140,80)+dust,h:{gatelog:[190,138,.34],phone:[172,196,.2],keyreceipt:[290,168,.2]}};
+PDX.armando={e:'down',n:'wide',b:'straight',bt:1.3,lp:.8,mw:1,sp:8.2,sk:'#d9b595',sh:'#b08a6a',hc:'#d4d4d8',hs:'short',bg:['#3a2a2e','#120c0e'],deco:'shelf',out:'sweater',oc:'#4a5a6a',oc2:'#2f3a46',ic:'#4a3a2a',age:61,g:'round',ex:['tape','bags'],ms:-.4};
+PDX.lucia={e:'almond',n:'pointed',b:'arch',bt:.9,lp:1.1,mw:1,sp:7.9,sk:'#d9b496',sh:'#b69273',hc:'#3a2616',hs:'long',bg:['#34344f','#0e0f1a'],deco:'shelf',out:'blazer',oc:'#2f3a56',oc2:'#e8e1d2',ic:'#3a2a1c',age:34,g:'',ex:['lipstick:#a0384c','earr'],ms:.2};
+PDX.sergio={e:'hooded',n:'wide',b:'straight',bt:1.3,lp:.75,mw:1,sp:8.1,sk:'#d4aa88',sh:'#ab8466',hc:'#a9a9ae',hs:'slick',bg:['#33283a','#110c15'],deco:'mirror',out:'suit',oc:'#1c2230',oc2:'#b8962e',ic:'#3a2a1c',age:55,g:'',ex:['mustache','ring'],ms:.5};
+PDX.wesley={e:'down',n:'wide',b:'straight',bt:1.4,lp:.7,mw:1,sp:8.2,sk:'#c9a07e',sh:'#a07a5c',hc:'#2a1d12',hs:'short',bg:['#1f3a44','#08141a'],deco:'lights',out:'uniform',oc:'#1f4a5a',oc2:'#d9d9de',ic:'#2a1c12',age:38,g:'',ex:['stubble','bags'],ms:-.7};
+PDX.neusa={e:'round',n:'button',b:'arch',bt:.85,lp:1.2,mw:1.05,sp:8,sk:'#c9a07e',sh:'#a07a5c',hc:'#b7b7bb',hs:'wavy',bg:['#2f4a3a','#0e1a14'],deco:'fabric',out:'apron',oc:'#4f7a4a',oc2:'#e8e1d2',ic:'#4a3626',age:58,g:'round',ex:['smile','earr'],ms:1.4};
+PDX.davi={e:'narrow',n:'hooked',b:'sharp',bt:1.5,lp:.7,mw:1,sp:7.8,sk:'#b88460',sh:'#926442',hc:'#1c130b',hs:'short',bg:['#3a2a2a','#140d0d'],deco:'posters',out:'tee',oc:'#2b2f3a',oc2:'#c0522d',ic:'#2a1c12',age:29,g:'',ex:['stubble','bags'],ms:-.8};
+PDX.otavio={e:'down',n:'wide',b:'straight',bt:1.4,lp:.75,mw:1.05,sp:8.4,sk:'#c49470',sh:'#9c7050',hc:'#8a8a8e',hs:'bald',bg:['#3a3426','#141108'],deco:'tanks',out:'vest',oc:'#5a4a2a',oc2:'#3a2f18',ic:'#3a2a1c',age:52,g:'',ex:['mustache','jowl','wr'],ms:-.5};
+['lucia','neusa'].forEach(i=>VFEM.add(i));
+VICN.c5=['armando','Armando Teixeira','61 anos · Joalheiro e dono da loja'];
+RECON.c5=[['c5:loja',['backdoor'],'Três semanas antes','Davi, demitido sob suspeita, copia a chave da porta dos fundos, que Armando nunca trocou. Ele conhece a rotina: o cofre abre na contagem das 18h45.'],['c5:seg',['remote','dvr'],'18h31','De um carro na esquina, Wesley usa a senha de acesso tec_02 da Sentinela e derruba as câmeras. A gravação some por 35 minutos.'],['c5:loja',['vaultlog','tray'],'18h45','Os dois entram pelos fundos com a chave copiada. Sob ameaça, Armando abre o cofre às 18h47. Levam 14 relógios e uma bandeja de anéis.'],['c5:ferro',['gatelog','phone'],'19h08','Fogem pelo beco e deixam o carro roubado no lote 14 do ferro-velho. A van da Sentinela leva os dois. A luva e o celular ficam para trás.']];
+WP.c5='<svg class=pwl viewBox="0 0 390 780" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="a5" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#241640"/><stop offset="1" stop-color="#0a0710"/></linearGradient><radialGradient id="b5" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#bfe8ff" stop-opacity=".55"/><stop offset="1" stop-color="#bfe8ff" stop-opacity="0"/></radialGradient></defs><rect width="390" height="780" fill="url(#a5)"/><circle cx="195" cy="250" r="170" fill="url(#b5)"/><path d="M195 170l62 56-62 100-62-100z" fill="#cfeeff" opacity=".85"/><path d="M133 226h124M195 170v156M164 198l31 128M226 198l-31 128" stroke="#7fb6d8" stroke-width="2" fill="none" opacity=".7"/><g fill="#0b0814">'+[0,1,2,3,4,5,6].map(i=>`<rect x="${i*58-8}" y="${520+((i*37)%70)}" width="52" height="300"/>`).join('')+'</g><g fill="#f0c860" opacity=".7">'+Array.from({length:40},(_,i)=>`<rect x="${(i*41)%380}" y="${560+((i*53)%200)}" width="5" height="7"/>`).join('')+'</g></svg>';
+TH.c5=TH.c3;
+Object.assign(AMBM,{'c5:loja':'hum','c5:seg':'hum','c5:beco':'wind,drip','c5:ferro':'wind'});
+
