@@ -181,6 +181,17 @@ duas correções pequenas:
   com as mesmas classes de antes (`.play`, `.tl3 .tile`), então a visita guiada
   continua funcionando. A arte desceu para diminuir o espaço vazio entre ela e o
   botão (`homeGeom()` em `js/23a-home.js`; a arte agora preenche a altura toda).
+- **Sons dos botões:** o clique era uma onda quadrada de 1800 Hz (áspera) e tocava
+  duas vezes por escolha (o ouvinte global de `click` e a própria ação chamavam o
+  mesmo som). Em `js/04-audio.js` o `tick` agora é um toque suave, no mesmo volume
+  do antigo; a escolha na prisão tem um som próprio de duas notas (`pick`); e
+  `tick`/`pick` ignoram outro `tick` por 150 ms, então cada toque dá um só som.
+- **Prisão:** a arma e a motivação certas eram sempre a 1ª opção em todos os casos.
+  `shuf()` em `js/19-telas.js` embaralha indiciado, meio, motivação, vítima e
+  perguntas extras; a ordem é estável (usa `S.ord`, sorteado uma vez por partida e
+  salvo com o jogo).
+- **Fundo dos menus:** avatar, galeria e configurações usavam um preto chapado; agora
+  usam o mesmo degradê da lista de casos (`--menubg` em `css/07-home.css`).
 - **Lista de casos:** as linhas viraram cartazes em grade (2 colunas) com as capas
   novas; um caso sozinho na temporada (treinamento e caso 5) vira um banner com a
   miniatura 16:9; a gaveta de detalhes ganhou a miniatura no topo.

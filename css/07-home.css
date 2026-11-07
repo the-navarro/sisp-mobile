@@ -1,9 +1,12 @@
 /* Tela inicial: arte em camadas, névoa, raio e título. */
 @font-face{font-family:'SISP Serif';src:url(../assets/fonts/cormorant-garamond-latin-600-normal.woff2) format('woff2');font-weight:600;font-display:swap}
 @font-face{font-family:'SISP Thin';src:url(../assets/fonts/josefin-sans-latin-300-normal.woff2) format('woff2');font-weight:300;font-display:swap}
-/* fundo das telas do menu: sem os riscos nem o brilho laranja do desenho antigo */
+/* fundo das telas do menu: sem os riscos nem o brilho laranja do desenho antigo.
+   O mesmo degradê vale para a lista de casos, o avatar, a galeria e as configurações. */
+:root{--menubg:linear-gradient(#06090d 0%,#0b161d 55%,#070d11 100%)}
 .hmw::before,.lamp{display:none}
-.hmw{background:linear-gradient(#06090d 0%,#0b161d 55%,#070d11 100%)}
+.hmw{background:var(--menubg)}
+.ov.ple,.ov.galv,.ov.setv{background:var(--menubg)}
 /* tela inicial: o fundo escurece até terminar em preto, e a arte se funde a ele */
 .hmw.hmh{background:linear-gradient(#06090d 0%,#040608 50%,#000 100%)}
 .hero{background:#05080c;border-radius:0;box-shadow:none}
