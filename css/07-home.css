@@ -51,3 +51,11 @@ body.rm .hfog,body.rm .hflash{animation:none}
 .tile .ti,.tile small{display:none}
 .tile+.tile::before{content:"·";position:absolute;left:-3px;top:50%;transform:translateY(-52%);color:#3b4852;font-size:14px}
 .hmw.hmh .hero{max-height:none}
+/* cartões, linhas, botões e campos do avatar, da galeria e das configurações: translúcidos sobre o degradê */
+.ov.ple,.ov.galv,.ov.setv{--pan:rgba(255,255,255,.035);--pan2:rgba(255,255,255,.055);--line:rgba(255,255,255,.1)}
+/* superfícies com cor fixa do editor de avatar e da galeria, no mesmo tom do degradê */
+.ov.ple .pleh{background:radial-gradient(90% 100% at 50% 0,rgba(52,102,120,.38) 0,rgba(6,9,13,0) 72%)}
+.ov.ple .pls{background:rgba(6,10,14,.55)}
+.ov.ple .plf{background:rgba(5,8,11,.72)}
+.ov.galv .mdc{background:rgba(255,255,255,.035)}
+.ov.galv .mdc.on{background:linear-gradient(rgba(234,167,60,.10),rgba(255,255,255,.035))}

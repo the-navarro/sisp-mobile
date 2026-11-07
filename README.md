@@ -191,7 +191,15 @@ duas correções pequenas:
   perguntas extras; a ordem é estável (usa `S.ord`, sorteado uma vez por partida e
   salvo com o jogo).
 - **Fundo dos menus:** avatar, galeria e configurações usavam um preto chapado; agora
-  usam o mesmo degradê da lista de casos (`--menubg` em `css/07-home.css`).
+  usam o mesmo degradê da lista de casos (`--menubg` em `css/07-home.css`). Os
+  cartões, linhas, botões e campos dessas três telas ficaram translúcidos sobre o
+  degradê (as variáveis `--pan`, `--pan2` e `--line` são redefinidas só dentro
+  delas), assim como o cabeçalho, a barra de abas e a de botões do avatar e os
+  cartões das medalhas da galeria.
+- **Abertura do caso:** os vídeos novos já trazem o título desenhado, então o jogo
+  não pinta mais por cima o busto do detetive nem os textos do topo (`cutIn()` em
+  `js/16-cutscenes.js`); ficam o vídeo, o "Pular" e o "Toque para continuar". Os
+  efeitos sonoros da abertura (carro, sirene e porta) continuam como eram.
 - **Lista de casos:** as linhas viraram cartazes em grade (2 colunas) com as capas
   novas; um caso sozinho na temporada (treinamento e caso 5) vira um banner com a
   miniatura 16:9; a gaveta de detalhes ganhou a miniatura no topo.
