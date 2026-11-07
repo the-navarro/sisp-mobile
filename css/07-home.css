@@ -1,4 +1,4 @@
-/* Tela inicial: arte em camadas, névoa, raio, vidro e título. */
+/* Tela inicial: arte em camadas, névoa, raio e título. */
 @font-face{font-family:'SISP Serif';src:url(../assets/fonts/cormorant-garamond-latin-600-normal.woff2) format('woff2');font-weight:600;font-display:swap}
 @font-face{font-family:'SISP Thin';src:url(../assets/fonts/josefin-sans-latin-300-normal.woff2) format('woff2');font-weight:300;font-display:swap}
 .hero{background:#05080c}
@@ -12,8 +12,7 @@ background:radial-gradient(ellipse 28% 50% at 20% 50%,rgba(150,185,200,.22),tran
 .hflash{position:absolute;inset:0;background:radial-gradient(70% 45% at 70% 28%,rgba(210,228,255,.55),rgba(120,160,210,.18) 60%,transparent);opacity:0;pointer-events:none}
 .hflash.on{animation:hfl 1.1s steps(1) 1}
 @keyframes hfl{0%{opacity:0}8%{opacity:.9}14%{opacity:.1}22%{opacity:.65}40%{opacity:.2}100%{opacity:0}}
-.hrain,.hglass{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-.hglass{z-index:5}
+.hrain{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 .hvig{position:absolute;inset:0;pointer-events:none;background:linear-gradient(#05080cee 0,#05080c66 22%,transparent 40%,transparent 72%,#05080ccc 100%)}
 .hero::after{display:none}
 body.rm .hfog,body.rm .hflash{animation:none}

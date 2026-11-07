@@ -47,7 +47,7 @@ original/         Cópia intocada do arquivo único original
 | `04-guia-caderno.css` | painel do guia e caderno |
 | `05-cenas-inspecao-cutscenes.css` | cenas, inspeção de provas, cutscenes |
 | `06-onboarding.css` | tutorial de boas-vindas |
-| `07-home.css` | tela inicial: camadas, névoa, raio, vidro e título |
+| `07-home.css` | tela inicial: camadas, névoa, raio e título |
 
 ### js/
 
@@ -80,7 +80,7 @@ está em `index.html`.
 | `21-menu.js` | tela inicial e mapa de casos |
 | `22-onboarding.js` | tutorial de boas-vindas |
 | `23-minijogos.js` | minijogos (câmeras, registros etc.) |
-| `23a-home.js` | tela inicial em camadas: profundidade, névoa, garoa, raios e a gota no vidro (precisa carregar **antes** de `24-inicio.js`) |
+| `23a-home.js` | tela inicial em camadas: profundidade, névoa, garoa e raios (precisa carregar **antes** de `24-inicio.js`) |
 | `24-inicio.js` | ajustes finais e partida inicial |
 | `25-chuva.js` | chuva da janela do escritório do caso 1 (canvas) |
 
@@ -158,10 +158,10 @@ duas correções pequenas:
 - **Tela inicial nova:** a arte em SVG foi trocada por camadas em imagem
   (`assets/home/`) com profundidade (o fundo se mexe de leve, com o toque ou o
   mouse), névoa, luz do poste viva, garoa fina com respingos na rua (mais clara e
-  dourada dentro do cone de luz), raios ocasionais e uma gota que escorre pelo
-  "vidro" a cada ~30 s. O título neon virou um título serifado. Código em
-  `js/23a-home.js` e `css/07-home.css`; o menu (`js/21-menu.js`) só chama
-  `homeArt()` e `homeGlass()`. Com "reduzir animações" ligado, a tela fica parada.
+  dourada dentro do cone de luz) e raios ocasionais. O título neon virou um
+  título serifado. Código em `js/23a-home.js` e `css/07-home.css`; o menu
+  (`js/21-menu.js`) só chama `homeArt()`. Com "reduzir animações" ligado, a tela
+  fica parada. (Uma gota escorrendo pelo "vidro" foi testada e retirada.)
 
 ## Pendências conhecidas
 
