@@ -25,7 +25,7 @@ return `<div class=hstage aria-hidden=true>${L('ceu')}${L('distantes')}${L('meio
 function homeGeom(){const h=HM.hero,r=h.getBoundingClientRect(),hw=h.clientWidth||r.width,hh=h.clientHeight||r.height;
 if(!hw||!hh)return;HM.hw=hw;HM.hh=hh;
 h.style.setProperty('--hs',Math.min(1,Math.max(.78,hh/560)).toFixed(3));
-const k=1.06,sw=Math.max(hw,hh/1.5)*k,sh=sw*1.5,lampY=Math.max(150,hh*.38),oy=Math.min(0,Math.max(hh-sh,lampY-sh*.452)),ox=(hw-sw)/2;
+const k=1.06,sw=Math.max(hw,hh/1.5)*k,sh=sw*1.5,lampY=Math.max(170,hh*.6),oy=Math.min(hh*.14,Math.max(hh-sh,lampY-sh*.452)),ox=(hw-sw)/2;
 HM.sw=sw;HM.sh=sh;HM.ox=ox;HM.oy=oy;
 const s=HM.st.style;s.width=sw+'px';s.height=sh+'px';s.left=ox+'px';s.top=oy+'px';
 const dpr=Math.min(window.devicePixelRatio||1,2);const cv=HM.cv;cv.width=Math.round(hw*dpr);cv.height=Math.round(hh*dpr);cv.dataset.dpr=dpr
