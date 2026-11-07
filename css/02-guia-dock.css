@@ -46,3 +46,6 @@ main.chat{padding:0;overflow:hidden;display:flex;flex-direction:column;position:
 main.chat.qo+.dock{display:none}.cmp{flex:0 1 auto;min-height:0;max-height:58%;display:flex;flex-direction:column}.tray{flex:1;min-height:0;max-height:none}.cmb{flex:none}.chl{min-height:96px}
 .ei{width:1.18em;height:1.18em;vertical-align:-.22em;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:none}.ei .f{fill:currentColor;fill-opacity:.2}
 .row .i{width:44px;height:44px;border-radius:10px;background:#0d1117;border:1px solid var(--line);display:grid;place-items:center;font-size:24px;color:var(--amb);flex:none}.rw .i{color:var(--amb)}.btn .ei{margin-right:2px}
+
+/* escolha de guia: centralizada na vertical (a margem inline dos cartões anulava o auto) */
+.ov.lvo>:first-child{margin-top:auto!important}.ov.lvo>:last-child{margin-bottom:auto!important}
