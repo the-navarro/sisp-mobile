@@ -181,15 +181,36 @@ duas correções pequenas:
   com as mesmas classes de antes (`.play`, `.tl3 .tile`), então a visita guiada
   continua funcionando. A arte desceu para diminuir o espaço vazio entre ela e o
   botão (`homeGeom()` em `js/23a-home.js`; a arte agora preenche a altura toda).
+- **Sons dos botões:** o clique era uma onda quadrada de 1800 Hz (áspera) e tocava
+  duas vezes por escolha (o ouvinte global de `click` e a própria ação chamavam o
+  mesmo som). Em `js/04-audio.js` o `tick` agora é um toque suave, no mesmo volume
+  do antigo; a escolha na prisão tem um som próprio de duas notas (`pick`); e
+  `tick`/`pick` ignoram outro `tick` por 150 ms, então cada toque dá um só som.
+- **Prisão:** a arma e a motivação certas eram sempre a 1ª opção em todos os casos.
+  `shuf()` em `js/19-telas.js` embaralha indiciado, meio, motivação, vítima e
+  perguntas extras; a ordem é estável (usa `S.ord`, sorteado uma vez por partida e
+  salvo com o jogo).
+- **Fundo dos menus:** avatar, galeria e configurações usavam um preto chapado; agora
+  usam o mesmo degradê da lista de casos (`--menubg` em `css/07-home.css`). Os
+  cartões, linhas, botões e campos dessas três telas ficaram translúcidos sobre o
+  degradê (as variáveis `--pan`, `--pan2` e `--line` são redefinidas só dentro
+  delas), assim como o cabeçalho, a barra de abas e a de botões do avatar e os
+  cartões das medalhas da galeria.
+- **Abertura do caso:** os vídeos novos já trazem o título desenhado, então o jogo
+  não pinta mais por cima o busto do detetive nem os textos do topo (`cutIn()` em
+  `js/16-cutscenes.js`); ficam o vídeo, o "Pular" e o "Toque para continuar". Os
+  efeitos sonoros da abertura (carro, sirene e porta) continuam como eram.
 - **Lista de casos:** as linhas viraram cartazes em grade (2 colunas) com as capas
   novas; um caso sozinho na temporada (treinamento e caso 5) vira um banner com a
   miniatura 16:9; a gaveta de detalhes ganhou a miniatura no topo.
 
 ## Pendências conhecidas
 
-- **Mãos nos vídeos:** as cenas b2 a b5 foram refeitas. As cenas `intro`, `b0`
-  e `b1` não foram refeitas; se alguma ainda mostrar as duas mãos iguais, é
-  preciso regerar o vídeo na ferramenta em que foi feito.
+- **Mãos nos vídeos:** as cenas b2 a b5 foram refeitas. As cenas `b0` e `b1`
+  não foram; se alguma ainda mostrar as duas mãos iguais, é preciso regerar o
+  vídeo na ferramenta em que foi feito. As aberturas (`intro`) dos 6 casos foram
+  trocadas por pôsteres animados (9,58 s, com o título desenhado no final); a do
+  caso 2, que tinha mais de 3 s de tela preta no fim, agora está completa.
 
 Itens deixados de propósito para não mexer na lógica:
 
