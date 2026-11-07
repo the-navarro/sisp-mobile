@@ -205,8 +205,6 @@ body.rm .onbt{animation:none}
 .tmk{position:absolute;left:50%;top:54px;transform:translateX(-50%);width:min(310px,88%);padding:16px 8px 10px;border-radius:30px;background:linear-gradient(#1b2330,#0f141c);border:2px solid #ffffff1f;box-shadow:0 20px 50px #000}
 .tmk .pgr{padding:6px 4px 4px;gap:14px 2px}.tmk .pic{width:50px;height:50px;border-radius:15px}.tmk .pic svg{width:26px;height:26px}.tmk .pap{pointer-events:none;font-size:10.5px}
 
-/* tela inicial do celular: relógio e data mais abaixo, para as notificações do topo não ficarem por cima */
-.pwp{padding-top:104px}
 
 /* avisos de registro (toasts) no meio da tela; as notificações de app continuam no topo */
 #ntw{bottom:0}
