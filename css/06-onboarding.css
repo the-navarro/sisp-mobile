@@ -1,0 +1,5 @@
+.onm{position:absolute;inset:0;display:flex;align-items:flex-start;justify-content:center;padding:86px 20px 20px;overflow:hidden}
+.onc{width:100%;max-width:340px;background:linear-gradient(180deg,#1d2430,#141a23);border:1px solid #ffffff22;border-radius:20px;padding:22px 18px 18px;text-align:center;box-shadow:0 20px 50px #000c;animation:onup .35s both}
+.onc h3{margin:0 0 4px;font:400 22px var(--ty)}.onc .mut{font-size:12px}
+.onc input{width:100%;margin:16px 0 14px;padding:13px 14px;border-radius:12px;border:1.5px solid #ffffff2a;background:#0b0f14;color:#fff;font:500 17px var(--ui);text-align:center;outline:none;box-sizing:border-box}.onc input:focus{border-color:#eaa73c}
+.onc .btn{width:100%;padding:13px;border-radius:12px;font-size:14px}
