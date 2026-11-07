@@ -28,7 +28,7 @@ Não é preciso instalar nada.
 ```
 index.html        Só a estrutura: carrega os estilos e os scripts na ordem certa
 css/              Estilos (7 arquivos, carregados na ordem do número)
-js/               Motor do jogo (24 arquivos, carregados na ordem do número)
+js/               Motor do jogo (25 arquivos, carregados na ordem do número)
 casos/            Dados de cada caso (um arquivo por caso)
 assets/v/         Vídeos (.mp4) e capas (.jpg) das cenas de cada caso
 original/         Cópia intocada do arquivo único original
@@ -78,6 +78,7 @@ está em `index.html`.
 | `22-onboarding.js` | tutorial de boas-vindas |
 | `23-minijogos.js` | minijogos (câmeras, registros etc.) |
 | `24-inicio.js` | ajustes finais e partida inicial |
+| `25-chuva.js` | chuva da janela do escritório do caso 1 (canvas) |
 
 Os nomes são aproximados: o código original misturava assuntos, e nada foi
 reordenado.
@@ -135,13 +136,18 @@ duas correções pequenas:
   ~150 ms na abertura e ~20 ms entre cenas.
 - **Planta do salão (caso 0):** `SP.plantb` em `js/13-arte-provas-cenas.js`
   passou a usar o mesmo desenho do ícone da lista (`AR.plant`), reduzido.
+- **Vídeos das cenas b2 a b5** dos 6 casos substituídos por versões com mão
+  esquerda e direita diferentes.
+- **Chuva da janela do escritório (caso 1):** os risquinhos retos foram
+  trocados por um canvas (`js/25-chuva.js`) com gotas em três profundidades,
+  respingos, gotas escorrendo no vidro e clarões de raio. Respeita o ajuste
+  "reduzir animações" (fica estática) e só anima enquanto a cena está na tela.
 
 ## Pendências conhecidas
 
-- **Mãos nos vídeos:** em vários vídeos os personagens aparecem com as duas
-  mãos iguais (não esquerda e direita). Já era assim no original. Os `.mp4`
-  vieram prontos, sem o projeto de origem, e não dá para corrigir pelo código:
-  é preciso regerar os vídeos na ferramenta em que foram feitos.
+- **Mãos nos vídeos:** as cenas b2 a b5 foram refeitas. As cenas `intro`, `b0`
+  e `b1` não foram refeitas; se alguma ainda mostrar as duas mãos iguais, é
+  preciso regerar o vídeo na ferramenta em que foi feito.
 
 Itens deixados de propósito para não mexer na lógica:
 
