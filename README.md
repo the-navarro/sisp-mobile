@@ -199,7 +199,11 @@ duas correções pequenas:
 - **Abertura do caso:** os vídeos novos já trazem o título desenhado, então o jogo
   não pinta mais por cima o busto do detetive nem os textos do topo (`cutIn()` em
   `js/16-cutscenes.js`); ficam o vídeo, o "Pular" e o "Toque para continuar". Os
-  efeitos sonoros da abertura (carro, sirene e porta) continuam como eram.
+  efeitos sonoros de carro, sirene e porta foram removidos: cada abertura agora toca
+  a sua trilha (`assets/v/cN_intro.m4a`, 9,58 s) junto com o vídeo, via
+  `introSnd()`/`introStop()` em `js/16-cutscenes.js`. Ela respeita o botão de efeitos
+  sonoros, silencia a música de fundo enquanto toca e para ao pular. A abertura só
+  toca quando o caso não tem progresso salvo (ou ao Reiniciar).
 - **Lista de casos:** as linhas viraram cartazes em grade (2 colunas) com as capas
   novas; um caso sozinho na temporada (treinamento e caso 5) vira um banner com a
   miniatura 16:9; a gaveta de detalhes ganhou a miniatura no topo.
