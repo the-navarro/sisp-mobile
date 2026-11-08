@@ -74,9 +74,9 @@ case 10:return '<g fill="#cfe8ff" fill-opacity=.18 stroke="#9aa6b2" stroke-width
 case 11:return '<g fill="#cfe8ff" fill-opacity=.2 stroke="#d8e4ec" stroke-width=2.200 stroke-opacity=.8><rect x=36 y=45.500 width=12.500 height=9 rx=3.500 /><rect x=51.500 y=45.500 width=12.500 height=9 rx=3.500 /></g><path d="M48.500 49h3" stroke="#d8e4ec" stroke-width=1.600 />';
 case 12:return `<g ${s}><path d="M43 44l5.500 2.800v5.400L43 55l-5.500-2.800v-5.400zM57 44l5.500 2.800v5.400L57 55l-5.500-2.800v-5.400z" /><path d="M48.500 49h3" /></g><g fill="#cfe8ff" opacity=.16><path d="M43 44l5.500 2.800v5.400L43 55l-5.500-2.800v-5.400zM57 44l5.500 2.800v5.400L57 55l-5.500-2.800v-5.400z" /></g>`;
 default:return `<path d="M33 45h34v7q0 4-5 4h-5q-3 0-4-3-1-3-4-3t-4 3q-1 3-4 3h-5q-5 0-5-4z" fill="${lc||'#1a1a22'}" fill-opacity=.9 stroke="#14141a" stroke-width=1.200 /><path d="M37 48h10" stroke="#fff5" stroke-width=1.200 />`}};
-const A2clipId=bod=>`a2c${bod}`;
-const A2cl=(bod,inner)=>`<clipPath id="${A2clipId(bod)}"><path d="${A2BODY(bod)}"/></clipPath><g clip-path="url(#${A2clipId(bod)})">${inner}</g>`;
-const A2out=(i,c,skin,bod)=>{bod=bod==null?1:bod;const tp=`<path d="${A2BODY(bod)}" fill="${c}"/>`,nw=A2NECK[bod],nk=`<rect x=${50-nw/2} y=54 width=${nw} height=22 fill="${skin}"/><path d="M${50-nw/2} 62q${nw/2} 6 ${nw} 0v-3q-${nw/2} 5-${nw} 0z" fill="#0004"/>`,w='#f2f2f2',cl=x=>A2cl(bod,x);
+let A2U=0;
+const A2cl=(bod,inner,u)=>`<clipPath id="a2c${u}"><path d="${A2BODY(bod)}"/></clipPath><g clip-path="url(#a2c${u})">${inner}</g>`;
+const A2out=(i,c,skin,bod)=>{bod=bod==null?1:bod;const tp=`<path d="${A2BODY(bod)}" fill="${c}"/>`,nw=A2NECK[bod],nk=`<rect x=${50-nw/2} y=54 width=${nw} height=22 fill="${skin}"/><path d="M${50-nw/2} 62q${nw/2} 6 ${nw} 0v-3q-${nw/2} 5-${nw} 0z" fill="#0004"/>`,w='#f2f2f2',u=++A2U,cl=x=>A2cl(bod,x,u);
 switch(i){
 case 0:return nk+tp+`<path d="M38 70l12 20 12-20z" fill="${w}"/><path d="M47 75h6l2 20-5 5-5-5z" fill="#a3283a"/><path d="M46 70h8l-1.5 6h-5z" fill="#7a1f2b"/><path d="M30 72l12 24-16 6zM70 72l-12 24 16 6z" fill="#0004"/>`;
 case 1:return nk+tp+`<path d="M40 69l10 12 10-12z" fill="${w}"/><path d="M34 69l12 6-6 14-12-6zM66 69l-12 6 6 14 12-6z" fill="${A2SHD(c,.28)}" stroke="#0006" stroke-width=.7 /><path d="M50 81v20" stroke="#0005" stroke-width=1 />`;
@@ -99,7 +99,9 @@ case 17:return nk+tp+`<path d="M43 70l7 9 7-9z" fill="${skin}"/><path d="M36 68l
 case 18:return nk+tp+`<path d="M37 68L50 91 63 68z" fill="${skin}"/><path d="M37 68L50 91 63 68" stroke="${A2SHD(c,.32)}" stroke-width=2.400 fill=none stroke-linejoin=round />`+cl([76,82,88,94,100].map(y=>`<path d="M0 ${y}Q50 ${y+5} 100 ${y}" stroke="${A2SHD(c,.14)}" stroke-width=.7 fill=none />`).join(''));
 case 19:return nk+cl(`<path d="M0 50H100V110H0z" fill="${skin}"/><path d="M${14-bod} 100L${18-bod} 82Q50 94 ${82+bod} 82L${86+bod} 100z" fill="${c}"/><path d="M${18-bod} 82Q50 94 ${82+bod} 82" stroke="${A2LIT(c,.3)}" stroke-width=2.600 fill=none stroke-linecap=round />`);
 default:return nk+tp+`<path d="M18 74Q50 62 82 74L84 82Q50 70 16 82Z" fill="${A2LIT(c,.15)}" opacity=.9 /><path d="M18 74Q50 62 82 74" stroke="${A2SHD(c,.3)}" stroke-width=1 fill=none />`}};
-const A2bust=l=>{if(!l)return '';const rx=7.5+l*1.2,ry=5.5+l*1.1,dx=6.8+l*1.5,y=82+l*.6;return [-1,1].map(sd=>`<ellipse cx=${50+sd*dx} cy=${y} rx=${rx} ry=${ry} fill="#fff" opacity=.1 /><path d="M${50+sd*dx-rx} ${y+1}Q${50+sd*dx} ${y+ry+3} ${50+sd*dx+rx} ${y+1}" stroke="#000" stroke-opacity=.32 stroke-width=1.600 fill=none stroke-linecap=round />`).join('')+(l>=2?`<path d="M50 ${y-2}v${3+l}" stroke="#000" stroke-opacity=.16 stroke-width=1 stroke-linecap=round />`:'')};
+const A2SOFT=[4,5,7,8,10,11,13,14,15,16,17,18,19];
+const A2bust=(l,bod,o)=>{if(!l||!A2SOFT.includes(o))return '';const u=++A2U;return `<clipPath id="a2c${u}"><path d="${A2BODY(bod)}"/></clipPath><g clip-path="url(#a2c${u})">${A2bust0(l)}</g>`};
+const A2bust0=l=>{const rx=7.5+l*1.2,ry=5.5+l*1.1,dx=6.8+l*1.5,y=82+l*.6;return [-1,1].map(sd=>`<ellipse cx=${50+sd*dx} cy=${y} rx=${rx} ry=${ry} fill="#fff" opacity=.1 /><path d="M${50+sd*dx-rx} ${y+1}Q${50+sd*dx} ${y+ry+3} ${50+sd*dx+rx} ${y+1}" stroke="#000" stroke-opacity=.32 stroke-width=1.600 fill=none stroke-linecap=round />`).join('')+(l>=2?`<path d="M50 ${y-2}v${3+l}" stroke="#000" stroke-opacity=.16 stroke-width=1 stroke-linecap=round />`:'')};
 const A2acc=(i,part)=>{const ear=i===1||i===2||i===3||i===7;if(part==='e'!==ear)return '';
 switch(i){
 case 1:return '<circle cx=31 cy=60 r=2.200 fill="#f4efe6" stroke="#aaa" stroke-width=.4 /><circle cx=69 cy=60 r=2.200 fill="#f4efe6" stroke="#aaa" stroke-width=.4 />';
@@ -132,9 +134,9 @@ if(mk.includes('rubor'))o+='<ellipse cx=38 cy=57.500 rx=5 ry=3 fill="#e0605a" op
 if(mk.includes('olheiras'))o+='<path d="M38 54q5 3 10 0M52 54q5 3 10 0" stroke="#5a4a8a" stroke-width=1.300 fill=none opacity=.28 stroke-linecap=round />';
 if(mk.includes('rugas'))o+=`<path d="M37 41q6-1.500 12 0M51 41q6-1.500 12 0" stroke="${A2SHD(skin,.3)}" stroke-width=.7 fill=none /><path d="M40 61q-3 3 0 6M60 61q3 3 0 6" stroke="${A2SHD(skin,.3)}" stroke-width=.7 fill=none />`;
 if(mk.includes('vitiligo'))o+='<path d="M57 53q3.500-1.500 4.500 1.500 0 2.500-3.500 2.500-1.500-1.500-1-4z" fill="#fff" opacity=.5 /><path d="M39 63q2.500-.8 2.500 1.800-1 1.700-2.500.8z" fill="#fff" opacity=.45 />';
-if(!o)return '';const id='a2m'+A2hash(fcp||'x');return `<clipPath id="${id}">${fcp||''}</clipPath><g clip-path="url(#${id})">${o}</g>`};
+if(!o)return '';const id='a2m'+(++A2U);return `<clipPath id="${id}">${fcp||''}</clipPath><g clip-path="url(#${id})">${o}</g>`};
 /* chaves novas do perfil (todas opcionais) */
-const A2KEYS=['nose2','bcx','tieo','body','skc','face','eye','lash','icx','brow','brc','mouth','lip','hair2','hcx','beard2','gl2','glc','gll','out2','ocx','acc','fr','mk'];
+const A2KEYS=['acce','accn','accp','nose2','bcx','tieo','body','skc','face','eye','lash','icx','brow','brc','mouth','lip','hair2','hcx','beard2','gl2','glc','gll','out2','ocx','acc','fr','mk'];
 const a2used=P=>A2KEYS.some(k=>P[k]!=null&&!(k==='mk'&&!P[k].length));
 /* ===== editor: opções novas entram na MESMA grade das antigas (sem repetir o que já existe) ===== */
 const A2RGB=c=>[1,3,5].map(i=>parseInt(c.slice(i,i+2),16));
@@ -150,7 +152,7 @@ const A2NUL=k=>{const o={};(A2LEG[k]||[]).forEach(n=>o[n]=null);if(k==='ou')o.ti
 const A2D=(a,b)=>{const f=c=>[1,3,5].map(i=>parseInt(c.slice(i,i+2),16));return Math.sqrt(f(a).reduce((t,x,i)=>t+(x-f(b)[i])**2,0))};
 const A2UNI=(nw,leg,t)=>nw.filter(c=>leg.every(l=>A2D(c,l)>(t||9)));
 /* novas opções que NÃO repetem nenhuma antiga: [chave nova, valores] */
-const A2M={fs:['face',[0,1,2,3,4,5]],ey:['eye',[0,1,2,3,4,5,6,7,8,9,10,11]],br:['brow',[0,1,2,3,4,5,6,7]],mo:['mouth',[0,1,2,3,4,5,6,7]],no:['nose2',[0,1,2,3,4,5,6]],hs:['hair2',[0,1,2,3,4,5,6,7,8,9]],bd:['beard2',[0,1,2,3,4,5]],gl:['gl2',[0,1,2,3,4,5,7,8,9,10,11,12,13]],ou:['out2',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]],
+const A2M={fs:['face',[0,1,2,3,4,5]],ey:['eye',[0,2,3,4,5,6,7,8,9,10]],br:['brow',[0,1,2,3,4,5,6,7]],mo:['mouth',[0,1,2,3,4,5,6,7]],no:['nose2',[0,1,2,3,4,5,6]],hs:['hair2',[0,1,2,3,4,5,6,7,8,9]],bd:['beard2',[0,1,2,3,4,5]],gl:['gl2',[0,1,2,3,4,5,7,8,9,10,11,12,13]],ou:['out2',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]],
 sk:['skc',()=>A2UNI(A2SKIN,SK)],ic:['icx',()=>A2UNI(A2EYEC.map(x=>x[1]),ICL)],hc:['hcx',()=>A2UNI(A2HAIRC,HC)],cc:['ocx',()=>A2UNI(A2CLOTHC,CC)]};
 const A2BRS=A2BROWC.map((c,i)=>[c,A2BN[i]]).sort((a,b)=>{const f=c=>{const [h,s]=A2HSV(c);return s>.35&&h>190&&h<340?1000+h:A2LUM(c)};return f(a[0])-f(b[0])});
 const A2SEC={
@@ -159,7 +161,7 @@ brc:[{k:'brc',get v(){return [null,...A2BRS.map(x=>x[0])]},get nm(){return ['Igu
 lip:[{k:'lip',v:A2LIPC.map(x=>x[1]),nm:A2LIPC.map(x=>x[0])}],
 glc:[{k:'glc',t:'Armação',v:[null,...A2FRAMEC],nm:['Padrão',...A2FN]},{k:'gll',t:'Lente (solares e coloridos)',v:[null,...A2LENSC],nm:['Padrão',...A2LN]}],
 body:[{k:'body',v:[null,0,1,2,3,4,5,6,7,8]}],
-acc:[{k:'acc',t:'Acessórios',v:[0,1,2,3,4,5,6,7],z:1},{k:'fr',t:'Sardas',v:[0,1,2,3],z:1},{k:'mk',t:'Marcas (combináveis)',v:A2MKS,m:1}]};
+acc:[{k:'acce',t:'Brincos',v:[0,1,2,3],nm:['Nenhum','Brincos de pérola','Argolas','Pingentes'],z:1},{k:'accn',t:'Colares e lenços',v:[0,4,5,6],nm:['Nenhum','Colar de pérolas','Lenço no pescoço','Corrente'],z:1},{k:'accp',t:'Piercing',v:[0,7],nm:['Nenhum','Piercing no nariz'],z:1},{k:'fr',t:'Sardas',v:[0,1,2,3],z:1},{k:'mk',t:'Marcas (combináveis)',v:A2MKS,m:1}]};
 function plmk(n){plkeep(()=>{const a=(PLT.mk||[]).slice(),i=a.indexOf(n);i<0?a.push(n):a.splice(i,1);PLT.mk=a;render()})}
 const plthx=(k,v,crop)=>{const o=PLT,ex=k==='bcx'?{bd:o.beard2!=null?o.bd:(o.bd||1)}:k==='glc'?{gl2:o.gl2!=null?o.gl2:1}:k==='gll'?{gl2:[4,5,6,7,8,9,13].includes(o.gl2)?o.gl2:5}:{};PLT=Object.assign({},o,ex);try{return plth(k,v,crop)}finally{PLT=o}};
 const a2btn=(k,v,lab,on,crop,fn)=>`<button class="plo ${on?'on':''}" onclick="${fn||`plset('${k}',${v==null?'null':typeof v==='string'?`'${v}'`:v})`}">${plthx(k,fn?[v]:v,crop)}<span>${lab}</span></button>`;
@@ -185,3 +187,5 @@ C.nw().forEach(c=>it.push({c,lab:A2CN[c]||c,on:P[C.k2]===c,k:C.k2,v:c}));
 it.forEach(x=>{if(x.ord==null)x.ord=A2SORT[C.sort](x.c)});
 it.sort((a,b)=>a.ord-b.ord);
 return it.map(x=>`<button class="plo ${x.on?'on':''}" onclick="plset('${x.k}',${typeof x.v==='string'?`'${x.v}'`:x.v})">${plthx(x.k,x.v,crop)}<span>${x.lab}</span></button>`).join('')}
+
+const A2HID={ey:[1,6]};
