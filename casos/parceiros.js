@@ -5,22 +5,23 @@ const PTD=[
   "nome": "Marcos",
   "sobrenome": "Pimenta",
   "idade": 38,
-  "aparencia": "Ruivo, cabelo curto desgrenhado, barba ruiva cheia, ombros largos, jaqueta de couro marrom sobre camiseta xadrez, caderninho amassado e um doce no bolso.",
+  "aparencia": "Ruivo, barba ruiva, óculos escuros, quepe e farda de policial azul, ombros largos, caderninho amassado e um doce no bolso.",
   "cor_cabelo": "#B5471E",
-  "personalidade": "Confiante demais, teimoso mas leal, apaixonado por comida. Confia no próprio faro. Erra de vez em quando e admite de um jeito engraçado.",
+  "personalidade": "Cabeça-dura de nascença, confiante demais e leal até o fim. Apaixonado por comida, confia no próprio faro e sempre acha uma desculpa engraçada quando erra.",
   "bordoes": [
    "Meu faro de sabujo nunca falha.",
    "Isso aqui está mais claro que cafezinho coado.",
-   "Primeiro um lanche, depois a verdade."
+   "Primeiro um lanche, depois a verdade.",
+   "Eu não teimo, eu insisto com convicção."
   ],
   "falas": {
-   "boas_vindas": "Marcos Pimenta, às ordens. Pode rir, eu já me acostumei. Vamos resolver isso!",
-   "confiou_errado": "Tá, tá... dessa vez o faro tirou folga. Prometo comer menos antes de opinar.",
-   "confiou_certo": "Viu? Eu avisei. Merecemos um lanche.",
-   "pediu_prova": "Prova? Ah, claro, prova. Tá, vamos olhar.",
-   "discordou_certo": "Poxa, eu tinha certeza. Mas tá, você tem razão.",
-   "discordou_errado": "Eu sabia que você ia discordar. E eu estava certo, tá?",
-   "troca": "Vou ficar com saudade. Mas deixo meu lanche reserva pra você."
+   "boas_vindas": "Marcos Pimenta, às ordens. Pode rir do sobrenome, já me acostumei. Só não peça para eu mudar de ideia: isso eu nunca fiz.",
+   "confiou_errado": "Tá, tá... o faro tirou folga hoje. Mas anota assim: foi empate entre mim e a realidade.",
+   "confiou_certo": "Viu? Eu avisei! Meu faro e eu merecemos um lanche. Você também, mas o maior pedaço é meu.",
+   "pediu_prova": "Prova? Eu já tinha certeza, mas tudo bem... finjo que também quero ver.",
+   "discordou_certo": "Poxa, eu tinha certeza! Quer dizer, ainda tenho. Mas você tem razão, pelo menos hoje.",
+   "discordou_errado": "Eu sabia que você ia discordar. E eu estava certo, tá? Não vou fazer cara de 'eu avisei'. Já fiz, desculpa.",
+   "troca": "Vou ficar com saudade. Deixei um lanche na gaveta. Se ele sumir, não fui eu. Fui eu, sim."
   }
  },
  {
@@ -28,7 +29,7 @@ const PTD=[
   "nome": "Beatriz",
   "sobrenome": "Faísca",
   "idade": 34,
-  "aparencia": "Ruiva, cabelos longos ondulados cor de cobre, sardas, olhos verdes, batom vermelho, brincos de pérola, sobretudo bege cintado, lenço de seda no pescoço e uma lanterninha na bolsa.",
+  "aparencia": "Ruiva, cabelos longos e cacheados cor de cobre, sardas, olhos verdes, batom vermelho, sobretudo bege de investigadora, crachá no pescoço e uma lanterninha na bolsa.",
   "cor_cabelo": "#C2561F",
   "personalidade": "Esperta, bem-humorada e curiosa. Faz trocadilhos com luz e faíscas. Se empolga com teorias e às vezes tira conclusões cedo demais. Vive com o celular sem bateria.",
   "bordoes": [
