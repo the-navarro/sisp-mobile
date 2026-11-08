@@ -30,5 +30,16 @@ r1:`<rect width=360 height=170 fill="#2a1a24"/><rect y=110 width=360 height=60 f
 r2:`<rect width=360 height=170 fill="#0f1a2c"/><circle cx=300 cy=34 r=14 fill="#f4efdc"/><circle cx=306 cy=30 r=13 fill="#0f1a2c"/><rect y=130 width=360 height=40 fill="#182236"/><path d="M150 130V40l30-22 30 22v90z" fill="#3a3f55"/><circle cx=180 cy=64 r=18 fill="#efe6cf"/><path d="M180 64V52M180 64l9 5" stroke="#26324d" stroke-width=3 /><rect x=170 y=96 width=20 height=34 rx=10 fill="#26324d"/><rect x=60 y=118 width=44 height=12 rx=4 fill="#e8789a"/><path d="M70 130v8M94 130v8" stroke="#aaa" stroke-width=3 /><circle cx=82 cy=112 r=7 fill="#fff"/><path d="M220 96q10-4 20 0" stroke="#888" stroke-width=2 fill=none />`,
 r3:`<rect width=360 height=170 fill="#1a2418"/><rect y=130 width=360 height=40 fill="#2a1f14"/><rect x=20 y=24 width=90 height=106 fill="#4a3322"/><path d="M20 58h90M20 92h90" stroke="#2a1f14" stroke-width=4 /><path d="M26 30h10v26H26zM40 30h8v26h-8zM52 32h12v24H52zM68 30h9v26h-9zM82 31h10v25H82zM26 64h12v26H26zM42 64h8v26h-8zM54 66h10v24H54zM68 64h12v26H68zM84 65h9v25H84z" fill="#a86a4a" opacity=.9 /><rect x=250 y=24 width=90 height=106 fill="#4a3322"/><path d="M250 58h90M250 92h90" stroke="#2a1f14" stroke-width=4 /><path d="M256 30h10v26h-10zM270 32h12v24h-12zM286 30h8v26h-8zM298 31h11v25h-11zM312 30h10v26h-10zM256 64h12v26h-12zM272 66h8v24h-8zM284 64h10v26h-10zM298 65h12v25h-12z" fill="#6a8a5a" opacity=.9 /><rect x=140 y=92 width=80 height=38 rx=3 fill="#6a4a30"/><rect x=148 y=82 width=64 height=14 rx=2 fill="#efe6cf"/><path d="M180 82v14" stroke="#b8ad94" stroke-width=1.5 /><circle cx=300 cy=14 r=0 fill="#fff"/>`
 };
-const rqIl=(id,s)=>`<svg viewBox="0 0 160 110" ${s?`style="${s}"`:''} aria-hidden=true><rect width=160 height=110 fill="#16222a"/>${RQI[id]||''}</svg>`;
+const PVF={};
+const pvReg=(cid,list)=>list.forEach(p=>{if(p.arquivo){const v=/\.mp4$/i.test(p.arquivo);PVF[cid+p.id]={i:v?(p.miniatura||''):p.arquivo,v:v?p.arquivo:''}}});
+const pvMedia=(f,s,m)=>f.v&&m?`<video class=pvv src="${f.v}" poster="${f.i}" controls playsinline autoplay loop muted preload=auto ${s?`style="${s}"`:''}></video>`:`<span class=pvw ${s?`style="${s}"`:''}><img class=pvi src="${f.i}" alt="" draggable=false loading=lazy>${f.v?'<i class=pvp>▶</i>':''}</span>`;
+const rqIl=(id,s,m)=>PVF[id]?pvMedia(PVF[id],s,m):`<svg viewBox="0 0 160 110" ${s?`style="${s}"`:''} aria-hidden=true><rect width=160 height=110 fill="#16222a"/>${RQI[id]||''}</svg>`;
+RQC.forEach(c=>pvReg(c.id,c.provas));
 const rqSc=id=>`<svg viewBox="0 0 360 170" preserveAspectRatio="xMidYMid slice" aria-hidden=true>${RQS[id]||''}</svg>`;
+
+/* ===== r4: retratos ===== */
+(function(){const B=PDX.victor,F=PDX.marta,mk=(b,o)=>Object.assign({},b,o),bg=['#2a3a40','#0b151c'];
+PDX.rq_caiod=mk(B,{e:'wide',n:'button',b:'arch',hc:'#2a1c14',hs:'cap',sk:'#c49470',sh:'#9c7050',bg,deco:'',out:'tee',oc:'#f2efe8',oc2:'#d8d4ca',age:28,ex:['tape']});
+PDX.rq_marisa=mk(F,{e:'round',n:'button',b:'arch',hc:'#5a3520',hs:'long',sk:'#e0bd9c',sh:'#bd9a7c',bg,deco:'',out:'apron',oc:'#7a1f3a',oc2:'#f2efe8',age:24,ex:['smile','lash']});
+PDX.rq_duarte=mk(B,{e:'down',n:'wide',b:'straight',hc:'#8a8a8e',hs:'cap',sk:'#cfa07c',sh:'#a98264',bg,deco:'',out:'vest',oc:'#2f6a4a',oc2:'#e8e1d2',age:58,ex:['mustache']});
+})();
