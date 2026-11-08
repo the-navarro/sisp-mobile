@@ -17,10 +17,10 @@ let g=`<g transform="rotate(${t} ${cx} ${cy})"><ellipse cx=${cx} cy=${cy} rx=${r
 g+=`<path d="M${cx-rx-.4} ${cy}Q${cx} ${cy-ry*1.5} ${cx+rx+.4} ${cy}" fill=none stroke="#0006" stroke-width=1 />`;
 if(lid===2)g+=`<path d="M${cx-rx} ${cy-ry*.5}Q${cx} ${cy-ry*2.2} ${cx+rx} ${cy-ry*.5}L${cx+rx} ${cy-ry*1.4}Q${cx} ${cy-ry*3} ${cx-rx} ${cy-ry*1.4}Z" fill="${A2SHD(skin,.12)}"/>`;
 if(lid===1)g+=`<path d="M${cx-rx} ${cy-ry-.6}Q${cx} ${cy-ry-2.6} ${cx+rx} ${cy-ry-.6}" fill=none stroke="${A2SHD(skin,.35)}" stroke-width=.7 />`;
-if(lash>=1){const w=lash===1?1.1:1.9;g+=`<path d="M${cx-rx-.5} ${cy}Q${cx} ${cy-ry*1.6} ${cx+rx+.5} ${cy}" fill=none stroke="#15151a" stroke-width=${w} stroke-linecap=round />`;
-if(lash===2)g+=`<path d="M${cx+side*(rx+.2)} ${cy-.3}l${side*2.6} -1.6M${cx+side*(rx-1.2)} ${cy-ry*.9}l${side*2.2} -2" stroke="#15151a" stroke-width=1 stroke-linecap=round />`}
+if(lash>=1){const w=lash===1?1.1:1.5;g+=`<path d="M${cx-rx-.3} ${cy}Q${cx} ${cy-ry*1.55} ${cx+rx+.3} ${cy}" fill=none stroke="#15151a" stroke-width=${w} stroke-linecap=round />`;
+if(lash===2)g+=`<path d="M${cx+side*(rx+.3)} ${cy}q${side*1.1} -.1 ${side*2.1} -1.5" stroke="#15151a" stroke-width=1 stroke-linecap=round fill=none />`}
 return g+'</g>'};
-const A2lash=(cx,cy,side,lash)=>{if(!lash)return '';const rx=5.2,ry=3.2,w=lash===1?1.1:1.9;let g=`<path d="M${cx-rx-.5} ${cy}Q${cx} ${cy-ry*1.6} ${cx+rx+.5} ${cy}" fill=none stroke="#15151a" stroke-width=${w} stroke-linecap=round />`;if(lash===2)g+=`<path d="M${cx+side*(rx+.2)} ${cy-.3}l${side*2.6} -1.6M${cx+side*(rx-1.2)} ${cy-ry*.9}l${side*2.2} -2" stroke="#15151a" stroke-width=1 stroke-linecap=round />`;return g};
+const A2lash=(cx,cy,side,lash,shp,r,up)=>{if(!lash)return '';const [sx,sy,t]=EYS[shp]||EYS.almond,w=lash===1?1.15:1.5,e=r+1.4,o=side*e;let g=`<path d="M${-e} .1q${e} ${-r*1.7-(up||0)} ${2*e} 0" fill=none stroke="#15151a" stroke-width=${w} stroke-linecap=round />`;if(lash===2)g+=`<path d="M${o} .1q${side*1.1} -.1 ${side*2.1} -1.5" stroke="#15151a" stroke-width=1 stroke-linecap=round fill=none />`;return `<g transform="translate(${cx} ${cy}) rotate(${-side*t}) scale(${sx} ${sy})">${g}</g>`};
 const A2brow=(sh,col,side)=>{const [p,w]=[['M37 45L48 44',2.4],['M37 46Q43 41 48 45',2.4],['M37 45L48 44',3.9],['M37 46Q43 42.5 48 45',1.3],['M37 46.5L43 42L48 45',2.2],['M37 43L48 46',2.4],['M40 45L47 44.4',2.6],['M37 46.5Q43 40.5 48 45',3.6]][sh];
 return `<path d="${p}" ${side>0?'transform="translate(100 0) scale(-1 1)"':''} stroke="${col}" stroke-width=${w} fill=none stroke-linecap=round stroke-linejoin=round />`};
 const A2mouth=(sh,lipc,skin)=>{const base=lipc||A2SHD(skin,.28),dk=A2SHD(base,.35),y=62;
