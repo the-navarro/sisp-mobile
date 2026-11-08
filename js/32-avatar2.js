@@ -100,9 +100,9 @@ case 18:return nk+tp+`<path d="M37 68L50 91 63 68z" fill="${skin}"/><path d="M37
 case 19:return nk+cl(`<path d="M0 50H100V110H0z" fill="${skin}"/><path d="M${14-bod} 100L${18-bod} 82Q50 94 ${82+bod} 82L${86+bod} 100z" fill="${c}"/><path d="M${18-bod} 82Q50 94 ${82+bod} 82" stroke="${A2LIT(c,.3)}" stroke-width=2.600 fill=none stroke-linecap=round />`);
 default:return nk+tp+`<path d="M18 74Q50 62 82 74L84 82Q50 70 16 82Z" fill="${A2LIT(c,.15)}" opacity=.9 /><path d="M18 74Q50 62 82 74" stroke="${A2SHD(c,.3)}" stroke-width=1 fill=none />`}};
 const A2SOFT=[4,5,7,8,10,11,13,14,15,16,17,18,19];
-const A2bust=(l,bod,o)=>{if(!l||!A2SOFT.includes(o))return '';const u=++A2U;return `<clipPath id="a2c${u}"><path d="${A2BODY(bod)}"/></clipPath><g clip-path="url(#a2c${u})">${A2bust0(l)}</g>`};
-const A2bust0=l=>{const rx=7.5+l*1.2,ry=5.5+l*1.1,dx=6.8+l*1.5,y=82+l*.6;return [-1,1].map(sd=>`<ellipse cx=${50+sd*dx} cy=${y} rx=${rx} ry=${ry} fill="#fff" opacity=.1 /><path d="M${50+sd*dx-rx} ${y+1}Q${50+sd*dx} ${y+ry+3} ${50+sd*dx+rx} ${y+1}" stroke="#000" stroke-opacity=.32 stroke-width=1.600 fill=none stroke-linecap=round />`).join('')+(l>=2?`<path d="M50 ${y-2}v${3+l}" stroke="#000" stroke-opacity=.16 stroke-width=1 stroke-linecap=round />`:'')};
-const A2acc=(i,part)=>{const ear=i===1||i===2||i===3||i===7;if(part==='e'!==ear)return '';
+const A2bust=(l,bod,o)=>{if(!l||!A2SOFT.includes(o))return '';const u=++A2U;return `<clipPath id="a2c${u}"><path d="${A2BODY(bod)}"/></clipPath><g clip-path="url(#a2c${u})">${A2bust0(l,u)}</g>`};
+const A2bust0=(l,u)=>{const rx=8+l*1.3,ry=6+l*1.2,dx=7+l*1.6,y=83+l*.5;return `<defs><radialGradient id="a2bh${u}" cx=.42 cy=.35 r=.65><stop offset=0 stop-color="#fff" stop-opacity=.14 /><stop offset=1 stop-color="#fff" stop-opacity=0 /></radialGradient><radialGradient id="a2bs${u}" cx=.5 cy=.5 r=.5><stop offset=0 stop-color="#000" stop-opacity=.17 /><stop offset=1 stop-color="#000" stop-opacity=0 /></radialGradient></defs>`+[-1,1].map(sd=>`<ellipse cx=${50+sd*dx} cy=${y+ry*.8} rx=${rx*1.05} ry=${ry*.6} fill="url(#a2bs${u})" /><ellipse cx=${50+sd*dx} cy=${y} rx=${rx} ry=${ry} fill="url(#a2bh${u})" />`).join('')};
+const A2acc=(i,part)=>{const ear=[1,2,3,7,8,9,10,11,12,13,21,22,23,24,25].includes(i);if(part==='e'!==ear)return '';
 switch(i){
 case 1:return '<circle cx=31 cy=60 r=2.200 fill="#f4efe6" stroke="#aaa" stroke-width=.4 /><circle cx=69 cy=60 r=2.200 fill="#f4efe6" stroke="#aaa" stroke-width=.4 />';
 case 2:return '<circle cx=31 cy=63 r=4 fill=none stroke="#d9b25a" stroke-width=1.300 /><circle cx=69 cy=63 r=4 fill=none stroke="#d9b25a" stroke-width=1.300 />';
@@ -110,6 +110,23 @@ case 3:return '<path d="M31 58v5" stroke="#d9b25a" stroke-width=.8 /><path d="M3
 case 4:return [35,39.5,44,48.500,53,57.500,62,66.500].map(x=>`<circle cx=${x} cy=${(73.5+(1-((x-50)/17)**2)*6.5).toFixed(1)} r=1.9 fill="#f4efe6" stroke="#bbb" stroke-width=.4 />`).join('');
 case 5:return '<path d="M36 70q14 12 28 0l-3 8q-11 7-22 0z" fill="#d86a8a"/><path d="M46 78l4 12 4-12z" fill="#c05476"/>';
 case 6:return '<path d="M38 70q12 14 24 0" stroke="#d9b25a" stroke-width=1 fill=none /><circle cx=50 cy=82 r=2 fill="#d9b25a"/>';
+case 8:return '<circle cx=31 cy=64 r=5.200 fill=none stroke="#d9b25a" stroke-width=1.200 /><circle cx=69 cy=64 r=5.200 fill=none stroke="#d9b25a" stroke-width=1.200 />';
+case 9:return '<circle cx=31 cy=60.500 r=1.500 fill="#d9b25a"/><circle cx=69 cy=60.500 r=1.500 fill="#d9b25a"/>';
+case 10:return '<path d="M31 58.800l1.800 1.700-1.800 2.200-1.800-2.200z" fill="#eaf6ff" stroke="#8fb4cc" stroke-width=.4 /><path d="M69 58.800l1.800 1.700-1.800 2.200-1.800-2.200z" fill="#eaf6ff" stroke="#8fb4cc" stroke-width=.4 />';
+case 11:return '<path d="M31 60.500v3M69 60.500v3" stroke="#d9b25a" stroke-width=.8 /><circle cx=31 cy=65.500 r=2 fill="#f4efe6" stroke="#aaa" stroke-width=.4 /><circle cx=69 cy=65.500 r=2 fill="#f4efe6" stroke="#aaa" stroke-width=.4 />';
+case 12:return [31,69].map(x=>`<path d="M${x} 59.500l.9 2 2.200.2-1.700 1.400.5 2.200-1.900-1.200-1.900 1.200.5-2.200-1.700-1.400 2.200-.2z" fill="#d9b25a"/>`).join('');
+case 13:return '<circle cx=31 cy=60.500 r=1.800 fill="#c01838" stroke="#d9b25a" stroke-width=.8 /><circle cx=69 cy=60.500 r=1.800 fill="#c01838" stroke="#d9b25a" stroke-width=.8 />';
+case 14:return '<path d="M41 68.500q9 5.500 18 0" stroke="#15151a" stroke-width=2.200 fill=none stroke-linecap=round /><circle cx=50 cy=72 r=1.100 fill="#d9b25a"/>';
+case 15:return [36,40,44,48,52,56,60,64].map((x,k)=>`<circle cx=${x} cy=${(73+(1-((x-50)/16)**2)*6).toFixed(1)} r=1.700 fill="${['#e0605a','#f4c542','#4aa8d8','#7fbf7a','#c46aa6'][k%5]}"/>`).join('');
+case 16:return '<path d="M38 70q12 14 24 0M41 70q9 9.500 18 0" stroke="#d9b25a" stroke-width=.8 fill=none />';
+case 17:return '<path d="M38 70q12 14 24 0" stroke="#d9b25a" stroke-width=.9 fill=none /><path d="M50 87l-3.200-3.200q-1.400-2.200.8-3.200 1.600-.5 2.400 1 .8-1.500 2.400-1 2.200 1 .8 3.200z" fill="#d94a5a"/>';
+case 18:return '<path d="M40 69q10 6 20 0" stroke="#c01838" stroke-width=1.800 fill=none stroke-linecap=round /><path d="M50 72q-5-4-7-1 1 4 7 1zM50 72q5-4 7-1-1 4-7 1z" fill="#c01838"/><circle cx=50 cy=72 r=1.100 fill="#8a1228"/>';
+case 19:return '<path d="M38 70q12 14 24 0" stroke="#d9b25a" stroke-width=.9 fill=none /><circle cx=50 cy=83 r=3.200 fill="#d9b25a" stroke="#a8842a" stroke-width=.6 /><circle cx=50 cy=83 r=1.800 fill="none" stroke="#a8842a" stroke-width=.5 />';
+case 21:return '<circle cx=54.200 cy=57.300 r=1.700 fill=none stroke="#d9b25a" stroke-width=.8 />';
+case 22:return '<circle cx=60 cy=44.600 r=.9 fill="#d9b25a"/><circle cx=62 cy=45.400 r=.9 fill="#d9b25a"/>';
+case 23:return '<circle cx=46.200 cy=64.200 r=1.200 fill=none stroke="#d9b25a" stroke-width=.8 />';
+case 24:return '<circle cx=68.600 cy=54.500 r=1.500 fill=none stroke="#d9b25a" stroke-width=.8 /><circle cx=69.400 cy=57.500 r=1.100 fill=none stroke="#d9b25a" stroke-width=.8 />';
+case 25:return '<path d="M48 58.500q2 2.600 4 0" stroke="#d9b25a" stroke-width=.9 fill=none stroke-linecap=round />';
 case 7:return '<circle cx=54.600 cy=55 r=.9 fill="#d9b25a"/>';
 default:return ''}};
 const A2NZ=(i,sh)=>{const bd=(d,o,w)=>`<path d="${d}" stroke="#000" stroke-width=${w} fill=none opacity=${o} stroke-linecap=round />`,ln=(d,w,o)=>`<path d="${d}" stroke="${sh}" stroke-width=${w} fill=none opacity=${o==null?1:o} stroke-linecap=round />`,nd=(x,y,r)=>`<circle cx=${x} cy=${y} r=${r} fill="#000" opacity=.4 />`;
@@ -161,14 +178,14 @@ brc:[{k:'brc',get v(){return [null,...A2BRS.map(x=>x[0])]},get nm(){return ['Igu
 lip:[{k:'lip',v:A2LIPC.map(x=>x[1]),nm:A2LIPC.map(x=>x[0])}],
 glc:[{k:'glc',t:'Armação',v:[null,...A2FRAMEC],nm:['Padrão',...A2FN]},{k:'gll',t:'Lente (solares e coloridos)',v:[null,...A2LENSC],nm:['Padrão',...A2LN]}],
 body:[{k:'body',v:[null,0,1,2,3,4,5,6,7,8]}],
-acc:[{k:'acce',t:'Brincos',v:[0,1,2,3],nm:['Nenhum','Brincos de pérola','Argolas','Pingentes'],z:1},{k:'accn',t:'Colares e lenços',v:[0,4,5,6],nm:['Nenhum','Colar de pérolas','Lenço no pescoço','Corrente'],z:1},{k:'accp',t:'Piercing',v:[0,7],nm:['Nenhum','Piercing no nariz'],z:1},{k:'fr',t:'Sardas',v:[0,1,2,3],z:1},{k:'mk',t:'Marcas (combináveis)',v:A2MKS,m:1}]};
+acc:[{k:'acce',t:'Brincos',v:[0,1,2,3,8,9,10,11,12,13],nm:['Nenhum','Pérolas','Argolas','Pingentes','Argolas grandes','Botão dourado','Brilhante','Gota de pérola','Estrelas','Rubis'],z:1,crop:'12 36 76 40'},{k:'accn',t:'Colares e lenços',v:[0,4,5,6,14,15,16,17,18,19],nm:['Nenhum','Colar de pérolas','Lenço no pescoço','Corrente','Gargantilha','Contas coloridas','Corrente dupla','Coração','Fita com laço','Medalha'],z:1,crop:'12 40 76 56'},{k:'accp',t:'Piercings',v:[0,7,21,22,23,24,25],nm:['Nenhum','Nariz (pino)','Nariz (argola)','Sobrancelha','Lábio','Orelha','Septo'],z:1,crop:'22 34 56 40'},{k:'fr',t:'Sardas',v:[0,1,2,3],z:1},{k:'mk',t:'Marcas (combináveis)',v:A2MKS,m:1}]};
 function plmk(n){plkeep(()=>{const a=(PLT.mk||[]).slice(),i=a.indexOf(n);i<0?a.push(n):a.splice(i,1);PLT.mk=a;render()})}
 const plthx=(k,v,crop)=>{const o=PLT,ex=k==='bcx'?{bd:o.beard2!=null?o.bd:(o.bd||1)}:k==='glc'?{gl2:o.gl2!=null?o.gl2:1}:k==='gll'?{gl2:[4,5,6,7,8,9,13].includes(o.gl2)?o.gl2:5}:{};PLT=Object.assign({},o,ex);try{return plth(k,v,crop)}finally{PLT=o}};
 const a2btn=(k,v,lab,on,crop,fn)=>`<button class="plo ${on?'on':''}" onclick="${fn||`plset('${k}',${v==null?'null':typeof v==='string'?`'${v}'`:v})`}">${plthx(k,fn?[v]:v,crop)}<span>${lab}</span></button>`;
 /* opções novas anexadas à grade das antigas */
 function plm(cat,crop){const m=A2M[cat];if(!m)return '';const k=m[0],vs=typeof m[1]==='function'?m[1]():m[1];return vs.map(v=>{const lab=typeof v==='string'?(A2CN[v]||v):A2N[k][v];return a2btn(k,v,lab,PLT[k]===v,crop)}).join('')}
 /* seções próprias (abas novas ou blocos com título) */
-function plx(cat,crop){const L=A2SEC[cat];if(!L)return '';return L.map(s=>{const P=PLT,nm=s.nm||[];const b=`<div class=plg>${s.v.map((v,i)=>{const on=s.m?(P.mk||[]).includes(v):(s.z&&P[s.k]==null?v===0:(P[s.k]==null?null:P[s.k])===v),lab=s.m?A2N.mk[A2MKS.indexOf(v)]:nm[i]!=null?nm[i]:v==null?'Atual':A2N[s.k][v];return a2btn(s.k,v,lab,on,crop,s.m?`plmk('${v}')`:'')}).join('')}</div>`;return (s.t?`<div class="pll plsec">${s.t}</div>`:'')+b}).join('')}
+function plx(cat,crop){const L=A2SEC[cat];if(!L)return '';return L.map(s=>{const P=PLT,nm=s.nm||[];const b=`<div class=plg>${s.v.map((v,i)=>{const on=s.m?(P.mk||[]).includes(v):(s.z&&P[s.k]==null?v===0:(P[s.k]==null?null:P[s.k])===v),lab=s.m?A2N.mk[A2MKS.indexOf(v)]:nm[i]!=null?nm[i]:v==null?'Atual':A2N[s.k][v];return a2btn(s.k,v,lab,on,s.crop||crop,s.m?`plmk('${v}')`:'')}).join('')}</div>`;return (s.t?`<div class="pll plsec">${s.t}</div>`:'')+b}).join('')}
 const a2clean=P=>{A2KEYS.forEach(k=>{if(P[k]==null||(k==='mk'&&!P[k].length))delete P[k]});if(a2used(P))P.v=2;else delete P.v;return P};
 
 /* ===== cores em faixa (antigas + novas numa só régua, sem repetir) ===== */
@@ -176,7 +193,7 @@ const A2SORT={skin:c=>-A2LUM(c),
 hair:c=>{const [h,s]=A2HSV(c);return s>.35&&h>190&&h<340?1000+h:A2LUM(c)},
 eye:c=>{const [h,s,v]=A2HSV(c),l=A2LUM(c);return s<.2?(l<40?-1:1000+l):h+l/1000}};
 const A2COL={
-sk:{k2:'skc',len:()=>6,leg:i=>SK[i],lname:i=>PLN.sk[i],nw:()=>A2UNI(A2SKIN,SK),sort:'skin',zero:0},
+sk:{nolab:1,k2:'skc',len:()=>6,leg:i=>SK[i],lname:i=>PLN.sk[i],nw:()=>A2UNI(A2SKIN,SK),sort:'skin',zero:0},
 ic:{k2:'icx',leg:i=>ICL[i],len:()=>5,lname:i=>PLN.ic[i],nw:()=>A2UNI(A2EYEC.map(x=>x[1]),ICL),sort:'eye',zero:0},
 hc:{k2:'hcx',leg:i=>HC[i],len:()=>10,lname:i=>PLN.hc[i],nw:()=>A2UNI(A2HAIRC,HC),sort:'hair',zero:0},
 bc:{k2:'bcx',leg:i=>HC[i-1],len:()=>10,lname:i=>PLN.bc[i],nw:()=>A2UNI(A2HAIRC,HC),sort:'hair',zero:0,off:1,none:'Igual ao cabelo'}};
@@ -186,6 +203,6 @@ for(let i=C.off||0;i<C.len()+(C.off||0);i++){if(C.off&&i===0)continue;it.push({c
 C.nw().forEach(c=>it.push({c,lab:A2CN[c]||c,on:P[C.k2]===c,k:C.k2,v:c}));
 it.forEach(x=>{if(x.ord==null)x.ord=A2SORT[C.sort](x.c)});
 it.sort((a,b)=>a.ord-b.ord);
-return it.map(x=>`<button class="plo ${x.on?'on':''}" onclick="plset('${x.k}',${typeof x.v==='string'?`'${x.v}'`:x.v})">${plthx(x.k,x.v,crop)}<span>${x.lab}</span></button>`).join('')}
+return it.map(x=>`<button class="plo ${x.on?'on':''}" onclick="plset('${x.k}',${typeof x.v==='string'?`'${x.v}'`:x.v})">${plthx(x.k,x.v,crop)}<span>${C.nolab?'':x.lab}</span></button>`).join('')}
 
 const A2HID={ey:[1,6]};
