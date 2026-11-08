@@ -120,7 +120,7 @@ if(has('cmouth')&&!has('grin'))o+=w?'<path d="M45.500 67.500q2-1.800 4.500 0t4.5
 if(has('scar'))o+='<path d="M62.500 51l5 9M61 55l3-1.200M63.500 58l3-1.200" stroke="#c97a6a" stroke-width=1.100 fill=none stroke-linecap=round />';
 if(has('shadescollar'))o+='<g transform="translate(-6 28)"><path d="M30 60h12q1 5-6 5t-6-5zM44 60h12q1 5-6 5t-6-5z" fill="#14141a" /><path d="M42 61h2" stroke="#14141a" stroke-width=1.500 /></g>';
 if(has('blush'))o+=`<ellipse cx=36 cy=57 rx=5 ry=3.4 fill="#e0463a" opacity=.3 /><ellipse cx=64 cy=57 rx=5 ry=3.4 fill="#e0463a" opacity=.3 />`;
-if(has('grin'))o+=`<path d="M45.500 64.600q4.500 7 9 0z" fill="#4a141c" stroke="#2a0a10" stroke-width=.7 stroke-linejoin=round /><path d="M46.500 64.900h7q-.8 2.200-3.500 2.200t-3.500-2.200z" fill="#fff" />`;
+if(has('grin'))o+=`<g transform="translate(0 3.200)"><path d="M45.500 64.600q4.500 7 9 0z" fill="#4a141c" stroke="#2a0a10" stroke-width=.7 stroke-linejoin=round /><path d="M46.500 64.900h7q-.8 2.200-3.500 2.200t-3.500-2.200z" fill="#fff" /></g>`;
 if(has('smilec'))o+=`<path d="M43.500 62.600q6.500 6 13 0" stroke="#7a0f24" stroke-width=2 fill=none stroke-linecap=round /><path d="M43 62q-1.400.4-1.800 1.800M57 62q1.400.4 1.800 1.800" stroke="${sh}" stroke-width=.9 fill=none stroke-linecap=round />`;
 o+=HRF(D.hs,hc);
 if(D.hs==='comb'||D.hs==='bald')o+=`<path d="M34 34q16-12 32 0" stroke="#fff" stroke-width=1.6 fill=none opacity=.18 />`;
