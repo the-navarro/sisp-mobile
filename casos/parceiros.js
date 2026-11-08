@@ -48,3 +48,13 @@ const PTD=[
   }
  }
 ];
+
+/* Falas de fechamento: `caso` = comentário no fim de cada caso (por nível de confiança); `temp` = final da temporada (parceria forte, neutra ou fria). */
+const PTF={
+marcos:{
+ caso:{alta:'Mais um caso fechado, e eu sabia desde o começo. Quer dizer, desde o meio. Mas confiei no meu faro e você confiou em mim. Dupla boa!',media:'Caso encerrado. A gente acertou umas, errou outras, e eu ainda acho que tinha razão na maioria. Tá, na metade.',baixa:'Caso resolvido, mas você me ouviu pouco. Tudo bem, eu não fiquei chateado. Fiquei de cara fechada, que é diferente.'},
+ temp:{forte:'Temporada encerrada. No começo eu achava que meu faro resolvia tudo. Hoje sei que o melhor faro é o seu junto com o meu. Lanche por minha conta, sempre.',neutra:'Temporada encerrada. A gente discordou, acertou, errou e acertou de novo. Não foi perfeito, mas foi nosso. Aceito um lanche para comemorar.',fria:'Temporada encerrada. Você mandou bem e eu fui mais enfeite, né? Sem mágoa. Se um dia precisar de parceiro, meu faro continua aqui. E meu lanche também.'}},
+beatriz:{
+ caso:{alta:'Faísca acesa! Esse caso brilhou, e a gente brilhou junto. Anota aí: dupla de peso.',media:'Caso resolvido! Teve teoria boa e teve teoria que apagou. A gente se acerta no próximo.',baixa:'Caso resolvido... sem muita luz entre a gente, né? Mas eu carreguei o celular. Vamos tentar de novo?'},
+ temp:{forte:'Temporada encerrada, e que luz! A gente se entendeu até no silêncio. Se tiver outro caso, eu levo a lanterna e você leva as ideias. Dupla perfeita.',neutra:'Temporada encerrada. Teve faísca, teve apagão, e no fim a gente resolveu tudo. Da próxima, eu carrego o celular e a gente combina melhor.',fria:'Temporada encerrada. Você resolveu quase tudo por conta própria, e tudo bem. Fico aqui com minha lanterninha, caso um dia queira uma segunda opinião.'}}
+};
