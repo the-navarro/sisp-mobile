@@ -27,10 +27,10 @@ const LBH=['Pois esta não tem relação com o crime. Examinei tudo, só para te
 function lbMuda(id){const nq=SU.flatMap(s=>s.q.filter(q=>q[2]===id&&!S.asked.includes(q[0])).map(q=>[s,q])),nd=pend().filter(k=>k.split('|').includes(id)).length;return (nq.length?`Isso poderá ser questionado na entrevista de ${[...new Set(nq.map(x=>fn(x[0])))].join(' e ')}.`:'Nenhuma pergunta nova com este laudo.')+(nd?` Esta prova entra em ${nd} conexão(ões) possível(is) no Quadro.`:'')}
 const lbNm=id=>CL[id].n;
 function labSend(id){if(S.an.includes(id)||lbSent(id))return;if(IXM[id]&&IXM[id].pz&&!(S.pzd||{})[id]){mgOpen(id,'pz');return}
-S.lb=S.lb||{};S.lq=S.lq||[];S.lb[id]={k:0,ts:Date.now()};lg('🧪','Prova enviada ao laboratório: '+lbNm(id),20);S.lb[id].k=S.tick;S.lq.push({k:'s',id,t:hm(S.clock),n:1});AU.fx&&AU.fx('tick');save();render();tst('🧪 '+lbNm(id)+' foi para a bancada do Dr. José.')}
+S.lb=S.lb||{};S.lq=S.lq||[];S.lb[id]={k:0,ts:Date.now()};lg('🧪','Prova enviada ao laboratório: '+lbNm(id),20);S.lb[id].k=S.tick;{const L=S.lq[S.lq.length-1];if(L&&L.k==='s'&&Date.now()-(L.ts||0)<40000){(L.ids=L.ids||[L.id]).push(id);L.n=1;L.ts=Date.now()}else S.lq.push({k:'s',id,t:hm(S.clock),n:1,ts:Date.now()})};AU.fx&&AU.fx('tick');save();render();tst('🧪 '+lbNm(id)+' foi para a bancada do Dr. José.')}
 function labDone(id){if(S.an.includes(id))return;S.an.push(id);lg('🔬','Laudo concluído: '+lbNm(id),0);S.lq=S.lq||[];S.lq.push({k:'d',id,t:hm(S.clock),n:0});S.lun=(S.lun||0)+1;if(S.tab!=='interrogate')S.bd.interrogate=(S.bd.interrogate||0)+1;AU.fx&&AU.fx('chime');save();
 const viewing=S.tab==='interrogate'&&LBO;if(viewing)S.lun=0;else{tst('🔬 Dr. José: o laudo de "'+lbNm(id)+'" ficou pronto.');const e=document.querySelector('#tc .toast:last-child');if(e)e.onclick=()=>{e.remove();labOpen()}}render()}
-function labPoll(){if(!C||MENU||!S||!S.lb)return;for(const id of lbWait())if(lbReady(id)){labDone(id);return}
+function labPoll(){if(!C||MENU||!S||!S.lb)return;if(Date.now()-(S.lcl||0)>=18000||S.tick-(S.lct||0)>=2)for(const id of lbWait())if(lbReady(id)){S.lcl=Date.now();labDone(id);S.lct=S.tick;break}
 document.querySelectorAll('.lbp').forEach(e=>{const id=e.dataset.id;if(S.lb[id]&&!S.an.includes(id)){e.style.width=lbPct(id)+'%';const t=e.parentNode.nextElementSibling;if(t)t.textContent=lbEta(id)}})}
 const lbEta=id=>{const n=Math.max(1,lbK(id)-(S.tick-S.lb[id].k));return 'Em análise... pronto em cerca de '+n+' ação'+(n>1?'ões':'')+' do caso, ou em instantes se você esperar.'};
 setInterval(()=>{try{labPoll()}catch(e){}},1000);
@@ -40,14 +40,14 @@ const bl=(t,a)=>a?`<div style="display:flex;justify-content:flex-end;align-items
 const jb=(t,x)=>`<div class="bub a" style="margin:0;max-width:100%;${x||''}">${t}</div>`;
 let LBTY=0,LBTM=0;
 function lbBub(e){const id=e.id,c=CL[id],nm=lbNm(id);
-if(e.k==='s')return [bl(`<small style="opacity:.6">${e.t}</small> Dr. José, segue para análise: <b>${nm}</b>.`,1),bl(jb(pk(LBA,id).replace('%',nm)))];
+if(e.k==='s'){const ids=e.ids||[id],ns=ids.map(i=>'<b>'+lbNm(i)+'</b>'),lst=ns.length>1?ns.slice(0,-1).join(', ')+' e '+ns[ns.length-1]:ns[0];return [bl(`<small style="opacity:.6">${e.t}</small> Dr. José, segue para análise: ${lst}.`,1),bl(jb(ids.length>1?`Recebi as ${ids.length} provas. Já estão na bancada e eu vou na ordem, uma de cada vez. Aviso por aqui a cada laudo pronto.`:pk(LBA,id).replace('%',nm)))]}
 const cat=lbCat(id),btn=`<div style="margin-top:8px"><button class=btn style="padding:8px 14px;font-size:13px" onclick="RM='${id}';render()">Rever laudo ilustrado</button></div>`;
-if(c.h)return [bl(jb(pk(LBI,id,1).replace('%',nm))),bl(jb(pk(LBH,id)+btn))];
-return [bl(jb(pk(LBI,id,1).replace('%',nm))),bl(jb(pk(LBM[cat],id))),bl(jb('<b>📄 Laudo:</b> '+RES[id],'border:1px solid var(--amb)')),bl(jb('<small style="opacity:.7">O QUE MUDA</small><br>'+lbMuda(id)+btn))]}
+if(c.h)return [bl(jb(pk(LBI,id,1).replace('%',nm)+'<br><br>'+pk(LBH,id)+btn))];
+return [bl(jb(pk(LBI,id,1).replace('%',nm)+'<br><br>'+pk(LBM[cat],id))),bl(jb('<b>📄 Laudo:</b> '+RES[id]+'<br><br><small style="opacity:.7">O QUE MUDA</small><br>'+lbMuda(id)+btn,'border:1px solid var(--amb)'))]}
 const lbN=e=>e.n==null?99:e.n;
 const lbPend=()=>(S.lq||[]).find(e=>lbN(e)<lbBub(e).length);
 function lbKick(){if(LBTM||!lbPend())return;LBTY=1;const e=lbPend(),t=lbBub(e)[lbN(e)].replace(/<[^>]*>/g,'').length;LBTM=setTimeout(()=>{LBTM=0;LBTY=0;const q=lbPend();if(!q||!LBO||S.tab!=='interrogate')return;q.n=lbN(q)+1;save();AU.fx&&AU.fx('tick');render();const c=$('#cl');if(c)c.scrollTop=c.scrollHeight;lbKick()},Math.min(2600,900+t*14))}
-function labChat(){S.lun=0;const hdr=`<div class=chh><div class=chr><button class=chn onclick="LBO=0;render()" aria-label="Voltar às conversas">${jav(46)}<span style="min-width:0;flex:1"><b>${JN}</b><span class=mut style="display:block;font-size:12px">Perito criminal · Laboratório</span></span></button></div></div>`;
+function labChat(){S.lun=0;{const pd=(S.lq||[]).filter(e=>lbN(e)<lbBub(e).length);pd.slice(0,-1).forEach(e=>e.n=99)}const hdr=`<div class=chh><div class=chr><button class=chn onclick="LBO=0;render()" aria-label="Voltar às conversas">${jav(46)}<span style="min-width:0;flex:1"><b>${JN}</b><span class=mut style="display:block;font-size:12px">Perito criminal · Laboratório</span></span></button></div></div>`;
 const ev=(S.lq||[]).map(e=>lbBub(e).slice(0,lbN(e)).join('')).join('');
 const hi=bl(jb('Olá, delegada. Dr. José Menezes, do laboratório. Mande as provas com calma, que eu cuido delas com muito carinho. Só peço um pouquinho de paciência: perícia boa não tem pressa. Eu aviso por aqui assim que cada laudo ficar pronto.'));
 const wt=lbWait().length;setTimeout(lbKick,0);
