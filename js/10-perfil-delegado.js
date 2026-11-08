@@ -75,7 +75,7 @@ nkx+tp(cc)+`<path d="M40 68q10 12 20 0z" fill="${sk}"/><path d="M40 68q10 12 20 
 nkx+tp('#eeeff2')+`<path d="M38 69l12 8-4 7zM62 69l-12 8 4 7z" fill="#fff" stroke="#9aa" stroke-width=.8 />${tie}<path d="M38 70l8 12-6 20H22c1-14 8-26 16-32zM62 70l-8 12 6 20h18c-1-14-8-26-16-32z" fill="${cc}"/><circle cx=44 cy=90 r=1.100 fill="#0006"/><circle cx=43 cy=96 r=1.100 fill="#0006"/>`];
 const STA=P.beard2!=null?[1,5].includes(P.beard2):[2,7,8].includes(P.bd||0);
 const ACC=[P.acce,P.accn,P.accp,P.acc].filter(Boolean);
-const bodyX=P.out2!=null?A2out(P.out2,cc,sk,P.body)+(P.tieo?`<g transform="${A2SC(P.body)}">${tie}</g>`:''):(BODY[ou]||BODY[0])+(P.body!=null?'</g>':'');
+const bodyX=P.out2!=null?A2out(P.out2,cc,sk,P.body)+(P.tieo&&T>0?`<g transform="${A2SC(P.body)}">${tie}</g>`:''):(BODY[ou]||BODY[0])+(P.body!=null?'</g>':'');
 const FACE=P.face!=null?`<ellipse cx=33 cy=52 rx=3.2 ry=4.4 fill="${sk}"/><ellipse cx=67 cy=52 rx=3.2 ry=4.4 fill="${sk}"/><path d="${A2FACE(P.face)}" fill="${sk}"/><path d="${A2FACE(P.face)}" fill="url(#pfdet)"/>`:`<ellipse cx=${50-fx+.6} cy=52 rx=3.2 ry=4.4 fill="${sk}"/><ellipse cx=${50+fx-.6} cy=52 rx=3.2 ry=4.4 fill="${sk}"/><ellipse cx=50 cy=50 rx=${fx} ry=${fy} fill="${sk}"/><ellipse cx=50 cy=50 rx=${fx} ry=${fy} fill="url(#pfdet)"/>`,
 EYS2=P.eye!=null?A2eye(43,50,P.eye,ic,-1,P.lash||0,sk)+A2eye(57,50,P.eye,ic,1,P.lash||0,sk):eyeR(43,50,ic,ek==='round'?2.8:2.6,w?.5:0,ek,-1,sk)+eyeR(57,50,ic,ek==='round'?2.8:2.6,w?.5:0,ek,1,sk)+A2lash(43,50,-1,P.lash||0,ek,ek==='round'?2.8:2.6,w?.5:0)+A2lash(57,50,1,P.lash||0,ek,ek==='round'?2.8:2.6,w?.5:0),
 brcol=P.brc||hc,
