@@ -61,3 +61,12 @@
 .tlmsg{padding:9px 16px;background:rgba(98,184,142,.12);border-top:2px solid #62b88e;font:400 13px/1.4 Arial,Helvetica,sans-serif;color:#d6ecdf}.tlmsg.bad{background:rgba(208,74,53,.14);border-top-color:#d04a35;color:#f4c9c0}
 .rqt button{white-space:nowrap;font-size:12px;padding:9px 4px}
 .tlfg{font-style:normal;margin-left:8px;background:rgba(208,74,53,.2);color:#f4c9c0;border:1px solid #d04a35;border-radius:8px;padding:2px 7px;font:700 11px Arial}
+
+/* ===== Parceiro ===== */
+.ptcard{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);border-radius:14px;padding:10px;margin:0 0 8px;color:#f4ecdc;cursor:pointer;font-family:Arial,Helvetica,sans-serif}
+.ptcard.on{border-color:#eaa73c;background:rgba(234,167,60,.1)}.ptcard .av{border-radius:14px;flex:none}
+.ptcard b{display:block;font:700 15px Arial}.ptcard small{display:block;font:400 12.5px/1.4 Arial;color:#aab4bd;margin:3px 0}.ptcard em{display:block;font:400 12.5px Arial;font-style:italic;color:#eaa73c}.ptcard i{display:block;font:700 11px Arial;font-style:normal;color:#8b99a5;margin-top:4px}
+.ptbar{height:8px;border-radius:4px;background:rgba(255,255,255,.1);overflow:hidden}.ptbar i{display:block;height:100%;background:#eaa73c}
+.rqnotif{position:absolute;left:12px;right:12px;top:calc(56px + env(safe-area-inset-top,0px));z-index:2;display:flex;gap:10px;align-items:center;text-align:left;border:1px solid rgba(234,167,60,.6);background:rgba(9,17,22,.97);color:#f4ecdc;border-radius:14px;padding:8px 12px;cursor:pointer;box-shadow:0 8px 22px #000b;font:400 13px/1.35 Arial,Helvetica,sans-serif}.rqnotif .av{border-radius:50%;flex:none}.rqnotif small{display:block;font:700 10px Arial;letter-spacing:.12em;color:#eaa73c;margin-bottom:2px}
+.ptrow{display:flex;align-items:center;gap:10px;width:100%;margin-top:12px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:#e6dcc6;border-radius:12px;padding:8px 12px;font:400 13px Arial;cursor:pointer;text-align:left}.ptrow .av{border-radius:50%}
+.ptfin{display:flex;gap:10px;align-items:center;text-align:left;margin:10px 0}.ptfin .av{border-radius:50%;flex:none}.ptfin p{margin:0}
