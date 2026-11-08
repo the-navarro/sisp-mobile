@@ -81,3 +81,5 @@
 .pvv{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:12px;background:#000;margin:0 0 10px}
 .pvp{position:absolute;right:6px;bottom:6px;width:22px;height:22px;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;font:12px/22px Arial;text-align:center;font-style:normal}
 .rqmc>.pvi{margin:0 0 10px;border-radius:12px;aspect-ratio:4/3}
+
+.rcm{max-height:84vh;overflow:auto}.rcimg{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:12px;margin:0 0 10px}.rcl{margin:6px 0;font:400 13px/1.5 Arial,Helvetica,sans-serif;color:#cfd8de}.rcs{margin:12px 0 4px}.rcs small{display:block;color:#8b99a5;font:700 10px Arial;letter-spacing:.1em;margin:0 0 6px}.rcr{display:flex;gap:10px;align-items:center;padding:5px 0}.rcr b{display:block;font:700 13px Arial}.rcr i{display:block;font:400 12px Arial;color:#8b99a5;font-style:normal}
