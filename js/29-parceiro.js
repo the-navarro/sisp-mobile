@@ -1,5 +1,5 @@
 /* ===== Parceiro: escolha, confiança, palpites e conquistas (dados em casos/parceiros.js; palpites em cada caso) ===== */
-const PTM=()=>{META.pt=META.pt||{id:null,conf:{marcos:50,beatriz:50},hist:[]};META.pt.conf=META.pt.conf||{marcos:50,beatriz:50};META.pt.hist=META.pt.hist||[];return META.pt};
+const PTM=()=>{META.pt=META.pt||{id:null,conf:{marcos:50,beatriz:50},hist:[]};META.pt.conf=META.pt.conf||{marcos:50,beatriz:50};META.pt.hist=META.pt.hist||[];META.pt.q=META.pt.q||{};META.pt.no=META.pt.no||{};return META.pt};
 const ptId=()=>PTM().id;
 const ptD=id=>PTD.find(p=>p.id===(id||ptId()));
 const ptConf=id=>PTM().conf[id||ptId()];
@@ -13,12 +13,13 @@ function ptAch(){const h=PTM().hist,nw=[];META.ach=META.ach||{};const put=(k,n)=
 if(h.filter(x=>x.ok===true).length>=5)put('g:g4','Instinto afiado');if(h.filter(x=>x.k==='discordar'&&x.ok===false).length>=3)put('g:g5','Cabeça dura');if(Object.values(PTM().conf).some(v=>v>=100))put('g:g6','Dupla perfeita');return nw}
 window.ptAvt=(id,sz,ex)=>ptAv(id,sz,ex);
 const ptCard=(p,on,fn)=>`<button class="ptcard ${on?'on':''}" onclick="${fn}">${ptAv(p.id,64,'n')}<span><b>${p.nome} ${p.sobrenome}</b><small>${esc(p.personalidade.split('.')[0])}.</small><em>“${esc(p.bordoes[0])}”</em><i>${ptLvl(ptConf(p.id))} · ${ptConf(p.id)}</i></span></button>`;
-window.ptSet=(id,ask)=>{const old=ptId(),first=!old;if(old===id){if(window.RQ)RQ.cho=0;render();return}PTM().id=id;msave();if(window.RQ){RQ.cho=0;RQ.rx=first?{id,fala:'boas_vindas',expr:'a',ach:[]}:{id:old,fala:'troca',expr:'n',ach:[]}}render()};
+window.ptSet=(id,ask)=>{const old=ptId(),first=!old;if(window.RQ){PTM().q[RQ.id]=1;delete PTM().no[RQ.id];RQ.pno=0;RQ.free=!!(PTM().conf[id]>=70)}if(old===id){if(window.RQ)RQ.cho=0;msave();render();return}PTM().id=id;msave();if(window.RQ){RQ.cho=0;RQ.rx=first?{id,fala:'boas_vindas',expr:'a',ach:[]}:{id:old,fala:'troca',expr:'n',ach:[]}}render()};
+window.ptNone=()=>{if(!window.RQ)return;PTM().q[RQ.id]=1;PTM().no[RQ.id]=1;RQ.pno=1;RQ.free=false;RQ.cho=0;RQ.pp=null;msave();rqSave();render()};
 window.ptSetPanel=()=>`<div class=pan><h3>Equipe</h3><p class=mut style="font-size:12px;margin:0 0 8px">Escolha seu parceiro. Cada um guarda a própria confiança, e trocar não zera nada. Ele aparece nos Casos rápidos.</p>${PTD.map(p=>ptCard(p,ptId()===p.id,`ptSet('${p.id}')`)).join('')}</div>`;
-window.ptChooser=()=>`<div class=rqmd><div class=rqmc><small>SEU PARCEIRO</small><h3>${ptId()?'Trocar de parceiro':'Escolha seu parceiro'}</h3><p class=rqp style="margin:0 0 8px">Ele dá palpites durante o caso. Às vezes acerta, às vezes erra: você decide quando confiar.</p>${PTD.map(p=>ptCard(p,ptId()===p.id,`ptSet('${p.id}')`)).join('')}${ptId()?'<button class="rqbtn gh" onclick="RQ.cho=0;render()">Fechar</button>':''}</div></div>`;
+window.ptChooser=()=>`<div class=rqmd><div class=rqmc><small>SEU PARCEIRO</small><h3>Quer um parceiro neste caso?</h3><p class=rqp style="margin:0 0 8px">Ele dá palpites durante o caso. Às vezes acerta, às vezes erra: você decide quando confiar. Você pode jogar sem parceiro.</p>${PTD.map(p=>ptCard(p,ptId()===p.id,`ptSet('${p.id}')`)).join('')}${ptId()?'<button class="rqbtn gh" onclick="ptSet(ptId())">Continuar com '+ptD().nome+'</button>':''}<button class="rqbtn gh" onclick="ptNone()">Jogar sem parceiro</button></div></div>`;
 function ptPal(c){return (c.palpites_parceiro||[])}
 function ptWhen(c,p){const w=p.quando;if(w==='apos_abrir_caderno')return !!RQ.seen&&RQ.v==='main';const m=/^apos_(p\d)$/.exec(w);return m?rqProvas(c).some(x=>x.id===m[1]):false}
-window.rqPal=()=>{if(!RQ||!ptId()||RQ.pp||RQ.res||RQ.cho)return;const c=rqC(RQ.id);for(const p of ptPal(c)){if(RQ.pal[p.id])continue;if(!ptWhen(c,p))continue;if(ptSilent()){RQ.pal[p.id]='calado';rqSave();continue}RQ.pp=p.id;break}};
+window.rqPal=()=>{if(!RQ||!ptId()||RQ.pno||RQ.pp||RQ.res||RQ.cho)return;const c=rqC(RQ.id);for(const p of ptPal(c)){if(RQ.pal[p.id])continue;if(!ptWhen(c,p))continue;if(ptSilent()){RQ.pal[p.id]='calado';rqSave();continue}RQ.pp=p.id;break}};
 window.ptPop=v=>{RQ.pop=v;render()};
 window.ptAns=k=>{const c=rqC(RQ.id),p=ptPal(c).find(x=>x.id===RQ.pp),pt=PTM(),id=ptId(),cor=p.correto;let d=0,fala='',expr='n',ok=null,prova=null;
 if(k==='confiar'){ok=cor;d=ok?10:-10;fala=ok?'confiou_certo':'confiou_errado';expr=ok?'a':'e';if(!ok)RQ.free=false}
