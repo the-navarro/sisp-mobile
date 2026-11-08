@@ -2,3 +2,4 @@
 .plsw{width:34px;height:34px;border-radius:50%;border:2px solid rgba(255,255,255,.25);padding:0;cursor:pointer}
 .plsw.on{border-color:var(--amb);box-shadow:0 0 0 2px rgba(234,167,60,.45)}
 .plsw.n0{background:repeating-linear-gradient(45deg,#2a3350,#2a3350 5px,#1b2236 5px,#1b2236 10px)}
+.plsy{display:block;font:400 46px/64px Arial,sans-serif;height:64px;color:var(--amb)}
