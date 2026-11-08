@@ -14,7 +14,7 @@ else{q='O que ainda não está explicado na linha do tempo da noite?';d='Procure
 return[q,d,s]}
 const HPEN=[0,0,1,2];
 function rr(){const b=$('#gdb')||$('#nbb'),st=b?b.scrollTop:0;render();const b2=$('#gdb')||$('#nbb');if(b2)b2.scrollTop=st}
-function giveHint(n){const x=nxt(),k=hkey(x),tr=hintTiers(x),done=(S.hh||{})[k]||0,c=[0,20,60][S.lv||0];if(n>done+1)return;let cost=0;if(n>done){cost=n===1?Math.round(c/2):c;S.hints=(S.hints||0)+HPEN[n]-HPEN[done];S.hh[k]=n;if(n===3&&x.tab==='mindmap'&&pend().length)S.hl={k:pend()[0],l:2};if(cost)lg('💡','Pediu uma dica (nível '+n+').',cost);else S.log.unshift({t:hm(S.clock),i:'💡',x:'Pediu uma dica (nível '+n+').'})}GHS={k,n,text:tr[n-1],cost,re:n<=done&&cost===0&&n!==done+1};save();rr()}
+function giveHint(n){const x=nxt(),k=hkey(x),tr=hintTiers(x),done=(S.hh||{})[k]||0,c=[0,20,60][S.lv||0];if(n>done+1)return;let cost=0;if(n>done){cost=n===1?Math.round(c/2):c;cost=ptTakeFree(cost);S.hints=(S.hints||0)+HPEN[n]-HPEN[done];S.hh[k]=n;if(n===3&&x.tab==='mindmap'&&pend().length)S.hl={k:pend()[0],l:2};if(cost)lg('💡','Pediu uma dica (nível '+n+').',cost);else S.log.unshift({t:hm(S.clock),i:'💡',x:'Pediu uma dica (nível '+n+').'})}GHS={k,n,text:tr[n-1],cost,re:n<=done&&cost===0&&n!==done+1};save();rr()}
 const NRM=s=>String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
 const STW=new Set('para como mais esta esse essa isso onde quando porque entre sobre foram tinha havia pelo pela seus suas dele dela cada ainda depois antes apenas quem qual estava estao muito muita tambem sendo todos todas pode podem fora dentro mesmo mesma nada algo'.split(' '));
 const wset=s=>new Set(NRM(s).split(/[^a-z0-9]+/).filter(w=>w.length>=4&&!STW.has(w)));
