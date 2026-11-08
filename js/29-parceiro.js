@@ -7,7 +7,7 @@ const ptFree=()=>ptId()&&ptConf()>=70;
 const ptSilent=()=>ptId()&&ptConf()<=30;
 const ptLvl=c=>c>=70?'Confiança alta':c<=30?'Confiança baixa':'Confiança média';
 const ptBar=c=>`<div class=ptbar><i style="width:${c}%"></i></div>`;
-const PTP={r1:{pa:'p1',pb:'p3'},r2:{pa:'p2',pb:'p3'},r3:{pa:'p2',pb:'p1'}};
+const PTP={r1:{pa:'p1',pb:'p3'},r2:{pa:'p2',pb:'p3'},r3:{pa:'p2',pb:'p1'},r4:{pa:'p2',pb:'p5'}};
 ACHG.push(['g4','Instinto afiado','Acerte 5 palpites do parceiro.','#7dd3fc','bulb'],['g5','Cabeça dura','Discorde 3 vezes de palpites certos.','#f0abfc','books'],['g6','Dupla perfeita','Chegue a 100 de confiança com um parceiro.','#ffd166','trophy']);
 function ptAch(){const h=PTM().hist,nw=[];META.ach=META.ach||{};const put=(k,n)=>{if(!META.ach[k]){META.ach[k]=1;nw.push(n)}};
 if(h.filter(x=>x.ok===true).length>=5)put('g:g4','Instinto afiado');if(h.filter(x=>x.k==='discordar'&&x.ok===false).length>=3)put('g:g5','Cabeça dura');if(Object.values(PTM().conf).some(v=>v>=100))put('g:g6','Dupla perfeita');return nw}

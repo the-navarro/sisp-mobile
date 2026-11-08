@@ -426,5 +426,164 @@ const RQC=[
    "acerto": "O Atlas foi recuperado antes do leilão e voltou à vitrine. A biblioteca ganhou um sistema novo de registro.",
    "erro": "A resposta está no horário do registro de acesso. Compare com o que o professor disse."
   }
+ },
+ {
+  "id": "r4",
+  "tipo": "rapido",
+  "titulo": "A Receita Roubada",
+  "cenario": {
+   "local": "Restaurante Sabor da Vovó, sábado depois do almoço",
+   "horario_do_crime": "entre 15h e 15h50",
+   "resumo": "O caderno com a receita secreta do molho da casa sumiu da gaveta da despensa. Ele voltou ao balcão 50 minutos depois, mas as folhas do molho estão com borda preta de fotocópia: alguém copiou a receita."
+  },
+  "abertura_chefe": "A receita do molho de Dona Nair é o segredo do restaurante. O caderno sumiu por 50 minutos e voltou copiado. Três pessoas estavam por perto. Descubra quem copiou.",
+  "suspeitos": [
+   {
+    "id": "caiod",
+    "nome": "Caio Dantas",
+    "idade": 28,
+    "papel": "Cozinheiro",
+    "aparencia": "Touca branca, dólmã branco, tatuagem de colher no antebraço",
+    "perfil": "Calmo e brincalhão. Vive reclamando que ninguém o deixa almoçar em paz."
+   },
+   {
+    "id": "marisa",
+    "nome": "Marisa Silveira",
+    "idade": 24,
+    "papel": "Garçonete",
+    "aparencia": "Avental BORDÔ (único avental bordô do restaurante), rabo de cavalo, tênis branco",
+    "perfil": "Simpática e rápida. Sorri muito, mesmo quando está nervosa."
+   },
+   {
+    "id": "duarte",
+    "nome": "Seu Duarte",
+    "idade": 58,
+    "papel": "Fornecedor de verduras",
+    "aparencia": "Boné verde, camisa xadrez, caderneta de entregas no bolso",
+    "perfil": "Pontual e falante. Adora contar o que viu na rua."
+   }
+  ],
+  "interrogatorio": {
+   "caiod": [
+    {
+     "pergunta": "Onde você estava entre 15h e 15h50?",
+     "resposta": "Almoçando na lanchonete da esquina! Saí às 14h55 e só voltei às 15h50. É o único horário que me deixam respirar. Tenho o recibo no bolso.",
+     "registra_afirmacao": "A0"
+    },
+    {
+     "pergunta": "Quem pode mexer na gaveta da despensa?",
+     "resposta": "A chave fica no quadro de chaves da cozinha, pendurada num gancho. Qualquer um que passe por lá pega, é só querer."
+    }
+   ],
+   "marisa": [
+    {
+     "pergunta": "Onde você estava durante esse tempo?",
+     "resposta": "No salão, o tempo todo! Mesa 4, mesa 6, café, conta. Não saí do salão nem um minutinho desde as 14h.",
+     "registra_afirmacao": "A1"
+    },
+    {
+     "pergunta": "Você conhece a receita do molho?",
+     "resposta": "Ninguém conhece! Nem eu sei o que tem lá. Só sei que tem cheiro de tomate e de saudade.",
+     "libera_prova": null
+    }
+   ],
+   "duarte": [
+    {
+     "pergunta": "Quando o senhor entregou as verduras?",
+     "resposta": "Às 15h10, certinho. Deixei as caixas na cozinha, assinei o recibo e fui embora. A cozinha estava vazia, nem o Caio estava."
+    },
+    {
+     "pergunta": "O senhor viu algo estranho ao sair?",
+     "resposta": "Vi sim! Quando fui pegar a caminhonete, vi a moça de avental bordô atravessando a rua, com pressa, segurando um envelope grande. Entrou na Copiadora Expressa, bem na esquina.",
+     "libera_prova": "p4"
+    }
+   ]
+  },
+  "provas": [
+   {
+    "id": "p1",
+    "nome": "Caderno de ponto da cozinha",
+    "descricao": "Caio marcou saída às 14h55 e volta às 15h50.",
+    "ilustracao_nova": "Folha de ponto de cozinha, manchada de molho, com os horários escritos a lápis",
+    "disponivel": "inicio",
+    "arquivo": "assets/provas/r4_p1_caderno_de_ponto.png"
+   },
+   {
+    "id": "p2",
+    "nome": "Recibo da lanchonete",
+    "descricao": "Prato executivo, hora do pedido 15h02 e conta fechada às 15h40, no bolso de Caio.",
+    "ilustracao_nova": "Recibo térmico de lanchonete ao lado de um palito de dente e um guardanapo dobrado",
+    "disponivel": "inicio",
+    "arquivo": "assets/provas/r4_p2_recibo_lanchonete.png"
+   },
+   {
+    "id": "p3",
+    "nome": "Caderno devolvido",
+    "descricao": "As folhas do molho têm uma borda preta nas laterais, típica de fotocópia feita com a tampa aberta.",
+    "ilustracao_nova": "Caderno de capa de tecido xadrez aberto na receita, com borda escura nas laterais da folha",
+    "disponivel": "inicio",
+    "arquivo": "assets/provas/r4_p3_caderno_devolvido.png"
+   },
+   {
+    "id": "p4",
+    "nome": "Recibo da Copiadora Expressa",
+    "descricao": "15h22: 38 cópias, pagas em dinheiro. O papel traz o nome 'M. Silveira' escrito à mão no campo 'cliente'.",
+    "ilustracao_nova": "Recibo de copiadora com carimbo do horário e nome escrito à caneta, ao lado de um clipe bordô",
+    "disponivel": "apos_duarte_falar",
+    "arquivo": "assets/provas/r4_p4_recibo_copiadora.png"
+   },
+   {
+    "id": "p5",
+    "nome": "Câmera da rua em frente",
+    "descricao": "15h21: uma pessoa de avental bordô atravessa a rua com um envelope grande e entra na copiadora. 15h31: volta pelo mesmo caminho.",
+    "ilustracao_nova": "VIDEO curto (6 s) em preto e branco de câmera de rua, com horário no canto",
+    "video": "r4_camera_rua.mp4",
+    "disponivel": "apos_p4",
+    "arquivo": "assets/provas/r4_camera_rua.mp4",
+    "miniatura": "assets/provas/r4_camera_rua.png"
+   }
+  ],
+  "contradicao": {
+   "suspeito": "marisa",
+   "afirmacao": "A1",
+   "prova": "p4",
+   "explicacao": "Marisa disse que não saiu do salão desde as 14h, mas o recibo da copiadora às 15h22 está no nome dela e a câmera da rua mostra o avental bordô, que só ela usa."
+  },
+  "solucao": {
+   "culpado": "marisa",
+   "motivo": "Uma prima dela vai abrir um restaurante e pediu a receita do molho.",
+   "como": "Pegou a chave no quadro quando Caio saiu para almoçar, tirou o caderno da gaveta, copiou as folhas na copiadora da esquina e devolveu o caderno ao balcão."
+  },
+  "dicas": [
+   "Compare o horário que cada um diz com o que as provas mostram.",
+   "Só uma pessoa usava avental bordô naquele dia.",
+   "Caio tem um recibo que cobre o horário todo dele."
+  ],
+  "palpites_parceiro": [
+   {
+    "id": "pa",
+    "quando": "apos_abrir_caderno",
+    "aponta_para": "caiod",
+    "correto": false,
+    "texto": {
+     "marcos": "O cozinheiro! Quem mais mexe na cozinha? Meu faro de sabujo nunca falha. Não que ele falhe muito... só às vezes.",
+     "beatriz": "Foi na cozinha, então só pode ter sido o Caio. Faísca acesa!"
+    }
+   },
+   {
+    "id": "pb",
+    "quando": "apos_p4",
+    "aponta_para": "marisa",
+    "correto": true,
+    "texto": {
+     "marcos": "Avental bordô e recibo no nome dela! Eu desconfiava desde o começo. Anota aí que eu falei.",
+     "beatriz": "Aquela garçonete sorridente demais... Foi a Marisa, e a prova está no papel."
+    }
+   }
+  ],
+  "final": {
+   "acerto": "Marisa confessou. O caderno ficou com Dona Nair, e a prima de Marisa não abriu o restaurante com o molho.",
+   "erro": "Sem a prova certa, a receita já estava nas mãos de outra cozinha. Releia o que cada um disse e o recibo da copiadora."
+  }
  }
 ];
