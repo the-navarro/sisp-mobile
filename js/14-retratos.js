@@ -99,7 +99,7 @@ o+=`<g class=mth><path d="M${50-hw} ${my}q${hw/2} -1.4 ${hw} -.5q${hw/2} -.9 ${h
 // barba
 if(has('stubble'))o+=`<path d="${jaw}" fill="${hc}" opacity=.2 /><path d="M36 60q14 18 28 0q-4 8 -14 8t-14-8z" fill="${hc}" opacity=.35 />`;
 if(has('nosef'))o+=`<path d="M47.500 54.500q-1.200 2.500 .6 3.800q1.900 1 3.800 0q1.800-1.300 .6-3.800" fill="${sh}" opacity=.55 /><path d="M46.800 58q3.200 1.600 6.400 0" stroke="${sh}" stroke-width=1.200 fill=none stroke-linecap=round /><circle cx=48.600 cy=57.700 r=.8 fill="#5a3a2a" /><circle cx=51.400 cy=57.700 r=.8 fill="#5a3a2a" />`;
-if(has('stache'))o+=`<path d="M35 60.500q7.500-3.500 15-2q7.500-1.500 15 2q1.500 3.500-2.500 4.300q-6 .5-12.500-.8q-6.500 1.300-12.500 .8q-4-.8-2.500-4.300z" fill="${hc}" />`;
+if(has('stache'))o+=`<path d="M40.500 61q4.500-2.800 9.500-1.600q5-1.200 9.500 1.600q1 2.300-1.800 2.800q-3.500 .3-7.700-.5q-4.200 .8-7.700 .5q-2.800-.5-1.800-2.800z" fill="${hc}" />`;
 if(has('copstache'))o+=`<g transform="translate(0 1.500)"><path d="M34 58.500q8-4.500 16-2.500q8-2 16 2.500q1.500 5.500-3 6.500q-6.500 .5-13-1q-6.500 1.500-13 1q-4.500-1-3-6.500z" fill="${hc}" /></g>`;
 if(has('trim'))o+=`<path d="M32 50c1 14 8 22 18 22s17-8 18-22c-2 6-6 10-18 10s-16-4-18-10z" fill="${hc}" /><path d="M43 ${my}q3.4 -1.6 7 -.6q3.6-1 7 .6q-3.6 ${3.4+ms*.6} -7 ${3.4+ms*.6}q-3.4 0 -7 -${3.4+ms*.6}z" fill="#7a4a44" />`;
 if(has('vandyke'))o+=`<path d="M40 61q5-5 10-2q5-3 10 2q-5 2 -10 .6q-5 1.4 -10 -.6z" fill="${hc}" /><path d="M43 66q7 14 14 0q-7 4-14 0z" fill="${hc}" />`;
