@@ -51,10 +51,10 @@ case 10:return ['',`<path d="M30 46C25 22 35 6 52 7C68 8 76 22 70 46c-3-8-5-12-8
 case 11:return ['',`<path d="M31 46C29 24 40 21 52 22S72 26 69 46c-2-7-5-11-9-13-2 2-8 3-14 1-4 1-8 6-13 12z" ${f}/><path d="M42 23q4 7 2 14" stroke="${d}" stroke-width=1.100 fill=none /><path d="M48 24q10 0 18 6" stroke="#fff3" stroke-width=1 fill=none />`];
 case 12:return ['',`<path d="M31 46C28 28 36 22 40 18l3 6 5-8 4 8 6-7 3 8 6-4c4 6 3 14 1 25-3-6-6-9-10-10-6 2-12 2-18 0-3 1-8 5-10 10z" ${f}/>`];
 case 13:return [`<path d="M27 46c-3 14-1 25 4 32l7-3c-3-8-4-18-3-28zM73 46c3 14 1 25-4 32l-7-3c3-8 4-18 3-28z" ${f}/>`,`<path d="M29 47C27 22 40 17 52 19S74 26 71 47c-3-9-9-15-19-15-9 1-17 6-23 15z" ${f}/><path d="M36 24q8-3 18-1M32 32q12-6 24-4" stroke="#fff3" stroke-width=1 fill=none />`];
-case 14:return ['',`<path d="M35 40C34 26 41 21 50 21s16 5 15 19c-3-4-6-6-9-7-4 1-12 1-16 0-3 1-5 3-5 7z" ${f}/><path d="M33 46c-2-7-2-13 1-19 4 3 5 11 5 19zM67 46c2-7 2-13-1-19-4 3-5 11-5 19z" ${f} opacity=.4 />`];
-case 15:return ['',`<path d="M44 38C42 22 44 8 50 5c6 3 8 17 6 33-2-2-4-3-6-3s-4 1-6 3z" ${f}/><path d="M33 46c-2-7-2-13 1-19 4 3 5 11 5 19zM67 46c2-7 2-13-1-19-4 3-5 11-5 19z" ${f} opacity=.4 /><path d="M48 12q2 10 0 22" stroke="#fff3" stroke-width=1 fill=none />`];
+case 14:return ['',`<path d="M34 44C34 35 41 31.500 50 31.500S66 35 66 44c-3-4-6-6-9-7H43c-3 1-6 3-9 7z" ${f} opacity=.3 /><path d="M36 38C35 27 41 22 50 22s15 5 14 16c-2-3-5-5-8-6-4 1-12 1-16 0-3 1-5 3-6 6z" ${f}/><path d="M40 26q10-3 20 0" stroke="#fff3" stroke-width=1 fill=none />`];
+case 15:return ['',`<path d="M34 44C34 35 41 31.500 50 31.500S66 35 66 44c-3-4-6-6-9-7H43c-3 1-6 3-9 7z" ${f} opacity=.28 /><path d="M41 38C39 26 42 12 50 8c8 4 11 18 9 30-3-2-6-3-9-3s-6 1-9 3z" ${f}/><path d="M48 12q2 10 0 22" stroke="#fff3" stroke-width=1 fill=none />`];
 case 16:return [`<ellipse cx=50 cy=13 rx=8 ry=7.500 ${f}/><ellipse cx=50 cy=13 rx=8 ry=7.500 fill=none stroke="${d}" stroke-width=.8 />`,`<path d="M31 46C30 26 38 21 50 21S70 26 69 46c-3-6-7-9-10-10-6 2-12 2-18 0-3 1-8 4-10 10z" ${f}/>`];
-case 17:return ['',`<path d="M30 46C27 28 33 22 42 22L41 31c-4 2-7 6-9 15zM70 46C73 28 67 22 58 22L59 31c4 2 7 6 9 15z" ${f}/><path d="M43 21q7-3 14 0q-3 3-7 3t-7-3z" ${f}/>`];
+case 17:return ['',`<path d="M31 47C29 28 35 21 50 21S71 28 69 47l-3-1c-1-7-3-12-6-16-3 1-6 5-10 5s-7-4-10-5c-3 4-5 9-6 16z" ${f}/><path d="M42 24q8-3 16 0" stroke="#fff3" stroke-width=1 fill=none />`];
 case 18:return ['',`<path d="M32 46C31 30 33 16 38 15h24c5 1 7 15 6 31-2-6-5-10-9-12-4 1-12 1-16 0-4 2-7 6-9 12z" ${f}/><path d="M34 22h32" stroke="${d}" stroke-width=.8 fill=none />`];
 case 19:return ['',`<g ${f}>${[[33,38],[34,30],[39,24],[46,21],[54,21],[61,24],[66,30],[67,38],[40,31],[50,28],[60,31]].map(([x,y])=>`<circle cx=${x} cy=${y} r=5.500 />`).join('')}</g>`];
 default:return [`<path d="M44 78q6 4 12 0l1 16q-7 4-14 0z" ${f}/><rect x=44 y=74 width=12 height=5 rx=2 fill="#d86a8a"/>`,`<path d="M30 46C28 24 38 20 50 20S72 24 70 46c-3-8-8-13-20-13s-17 5-20 13z" ${f}/>`]}};
@@ -225,3 +225,7 @@ it.sort((a,b)=>a.ord-b.ord);
 return it.map(x=>`<button class="plo ${x.on?'on':''}" onclick="plset('${x.k}',${typeof x.v==='string'?`'${x.v}'`:x.v})">${plthx(x.k,x.v,crop)}<span>${C.nolab?'':x.lab}</span></button>`).join('')}
 
 const A2HID={ey:[1,6]};
+
+/* ===== cabelos: todos numa só lista, do mais curto ao mais comprido ===== */
+const A2HORD=[['hs',5],['hs',4],['hair2',14],['hair2',17],['hair2',18],['hair2',15],['hair2',7],['hair2',3],['hs',0],['hair2',11],['hair2',12],['hair2',19],['hair2',8],['hs',10],['hair2',10],['hs',13],['hs',8],['hair2',4],['hair2',16],['hs',3],['hair2',9],['hs',7],['hair2',13],['hs',6],['hair2',2],['hs',11],['hs',2],['hair2',5],['hair2',6],['hs',9],['hs',12],['hs',1],['hair2',0],['hair2',1],['hs',14]];
+function plhair(crop){const P=PLT;return A2HORD.map(([k,v])=>{const on=k==='hs'?(P.hs||0)===v&&P.hair2==null:P.hair2===v,lab=k==='hs'?HS[v]:A2N.hair2[v];return `<button class="plo ${on?'on':''}" onclick="plset('${k}',${v})">${plth(k,v,crop)}<span>${lab}</span></button>`}).join('')}
