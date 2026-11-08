@@ -2,7 +2,7 @@
 const c6art=(x,y,w,h,mode)=>`${rc(x-5,y-5,w+10,h+10,'#6b4a2a')}${rc(x-2,y-2,w+4,h+4,'#c9a44a')}${rc(x,y,w,h,mode==='empty'?'#0d0b10':'#2a3a5a')}${mode==='empty'?'':`<path d="M${x} ${y+h*.7}q${w*.25} -${h*.3} ${w*.5} -${h*.1}t${w*.5} -${h*.2}V${y+h}H${x}z" fill="#3b5a4a" /><circle cx=${x+w*.72} cy=${y+h*.28} r=${w*.09} fill="#e8d9a0" /><path d="M${x} ${y+h*.82}q${w*.3} -${h*.2} ${w} -${h*.05}V${y+h}H${x}z" fill="#1d2e28" />`}`;
 const c6cam=(x,y,rot)=>`<g transform="translate(${x} ${y}) rotate(${rot||0})"><rect x=-9 y=-5 width=18 height=10 rx=2 fill="#1d2127" stroke="#59616e" /><circle cx=7 cy=0 r=3 fill="#07090c" stroke="#8d97a6" /><circle cx=-5 cy=-2 r=1.5 fill="#ff3030"><animate attributeName=opacity values="1;.2;1" dur="1.6s" repeatCount=indefinite /></circle></g><path d="M${x} ${y+4}v-10" stroke="#59616e" stroke-width=2 />`;
 SCN['c6:galeria']={b:SW('#3b3744')+rc(0,118,360,6,'#2a2630')+SP.spot(130,34)+SP.spot(250,34)
-+c6art(96,34,70,58,'empty')+`<path d="M96 92L166 92L174 118H88z" fill="#ffe9a8" opacity=.05 />`+rc(104,102,54,5,'#d9d4c8')+`<text x=131 y=106 font-size=4 fill="#222" text-anchor=middle font-family=serif>Iracema Duarte</text>`
++c6art(96,34,70,58,'empty')+`<path d="M96 92L166 92L174 118H88z" fill="#ffe9a8" opacity=.05 />`+rc(104,102,54,5,'#d9d4c8')+`<text x=131 y=106 font-size=4 fill="#222" text-anchor=middle font-family=serif>Iracema Pontes</text>`
 +c6art(220,40,44,36,'full')+c6art(284,46,38,30,'full')+c6art(24,44,38,32,'full')
 +c6cam(346,10,0)+SFL('zfw')
 +`<path d="M60 168q30 -8 60 0t60 0t60 0t60 0" stroke="#7a1420" stroke-width=3 fill=none opacity=.8 />`+[60,120,180,240,300].map(x=>rc(x-2,160,4,30,'#c9a44a')+`<circle cx=${x} cy=160 r=4 fill="#c9a44a" />`).join('')
