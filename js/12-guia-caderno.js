@@ -35,7 +35,7 @@ const nbmod=()=>{return '';if(!NBO||MENU||!C)return '';const nb=S.nb||[],th=(S.t
 function nudge(){const tab=S.tab,l=LO.find(z=>z.id===S.loc),nq=s=>s.q.filter(q=>!S.asked.includes(q[0])&&(!q[2]||S.an.includes(q[2]))).length;let tx='';
 if(tab==='locations'&&l){const left=l.c.filter(c=>!S.inv.includes(c[0]));if(left.length)tx=`Você ainda não examinou “${left[0][1]}” em ${l.n}.`;else{const o=LO.find(z=>locOpen(z.id)&&z.c.some(c=>!S.inv.includes(c[0])));if(o)tx=`Aqui já está tudo coletado. Em “${o.n}” ainda há provas.`}}
 else if(tab==='interrogate'){const s=SU.find(z=>z.id===S.su);if(s&&nq(s))tx=`${fn(s)} tem ${nq(s)} pergunta(s) nova(s). Que tal usá-las?`;else{const o=SU.find(z=>nq(z));if(o)tx=`${fn(o)} tem perguntas novas esperando.`}}
-else if(tab==='lab'){const pa=S.inv.filter(id=>!S.an.includes(id)&&!(id===C.lock.id&&!S.dec));if(pa.length)tx=`Há ${pa.length} prova(s) esperando laudo. Um laudo pode abrir perguntas novas.`}
+else if(tab==='lab'){const pa=S.inv.filter(id=>!S.an.includes(id)&&!(S.lb||{})[id]&&!(id===C.lock.id&&!S.dec));if(pa.length)tx=`Há ${pa.length} prova(s) para enviar ao Dr. José. Um laudo pode abrir perguntas novas.`}
 else if(tab==='mindmap'){if(pend().length)tx='Existe uma conexão possível. Qual prova explica uma fala sua?'}
 else if(tab==='solve')tx='Antes de acusar, revise suas deduções no Quadro. Elas sustentam a acusação?';
 else tx='Releia a cronologia: algum horário não bate com um depoimento?';

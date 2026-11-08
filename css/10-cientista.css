@@ -1,0 +1,5 @@
+.lbh{display:flex;gap:12px;align-items:center;padding:12px;border-radius:14px;background:linear-gradient(135deg,#143c46,#0a1a20);border:1px solid rgba(46,216,200,.35);margin:0 0 12px}
+.lbh>:first-child{flex:none;border-radius:12px;overflow:hidden;line-height:0}
+.lbh b{font:600 14px var(--ui);color:#2ed8c8}
+.lbs{font:italic 400 13px/1.4 Arial,sans-serif;margin:3px 0 8px;opacity:.92}
+.lbm{padding:7px 12px;font-size:12.5px}
