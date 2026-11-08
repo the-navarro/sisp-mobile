@@ -74,3 +74,5 @@
 .ptmain .ptmb{top:auto;bottom:calc(150px + env(safe-area-inset-bottom,0px))}
 .rqcs img,.rqsc img{width:100%;height:100%;object-fit:cover;display:block}
 .rqcs{height:112px}
+
+.rqcs{height:auto;aspect-ratio:1536/500}
