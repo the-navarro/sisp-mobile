@@ -1,7 +1,7 @@
 /* Linha do tempo: histórias novas. `fatos` está na ordem REAL. `pistas` [a,b] = "a aconteceu antes de b", ditas pela fonte do fato.
    O fato com `falso:true` traz um relato que não bate com as provas (a contradição). Ver tools/ em README: as pistas verdadeiras fixam uma única ordem. */
 const TLC=[
-{id:'t1',titulo:'O Rolo Sumido',cenario:{local:'Cine Estrela, noite da sessão de gala',resumo:'Na sessão de gala, a luz do cinema apagou por alguns minutos. Quando voltou, o rolo do filme raro Aurora tinha sumido da cabine.'},
+{id:'t1',titulo:'O Sumiço do Rolo',cenario:{local:'Cine Estrela, noite da sessão de gala',resumo:'Na sessão de gala, a luz do cinema apagou por alguns minutos. Quando voltou, o rolo do filme raro Aurora tinha sumido da cabine.'},
 abertura:'O filme raro sumiu durante o apagão. Antes de achar o culpado, monte a noite do cinema na ordem certa. Cada fato tem uma prova ou um depoimento que ajuda.',
 suspeitos:[{id:'otavio',nome:'Otávio Lima',papel:'Projecionista'},{id:'dalva',nome:'Dalva Rocha',papel:'Bilheteira'},{id:'nelio',nome:'Sr. Nélio Braga',papel:'Crítico de cinema'}],
 fatos:[

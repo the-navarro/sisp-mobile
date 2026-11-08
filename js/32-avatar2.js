@@ -115,28 +115,31 @@ return o};
 /* chaves novas do perfil (todas opcionais) */
 const A2KEYS=['body','skc','face','eye','lash','icx','brow','brc','mouth','lip','hair2','hcx','beard2','gl2','glc','gll','out2','ocx','acc','fr','mk'];
 const a2used=P=>A2KEYS.some(k=>P[k]!=null&&!(k==='mk'&&!P[k].length));
-/* ===== editor: seções novas dentro das abas existentes ===== */
-const A2N={face:['Oval','Redondo','Quadrado','Coração','Alongado','Diamante'],eye:['Amendoado','Redondo','Estreito','Caído','Puxado','Encapuzado','Grande','Pálpebra única'],brow:['Reta','Arqueada','Grossa','Fina','Angulosa','Caída','Curta','Espessa arqueada'],mouth:['Neutra','Fina','Cheia','Sorriso','Meio sorriso','Aberta leve','Coração','Caída'],hair2:['Franja reta','Franja lateral','Chanel com franja','Pixie','Coque alto','Maria-chiquinha','Trança lateral','Undercut','Afro curto','Cabelo preso baixo'],beard2:['Barba rala','Bigode guidão','Cavanhaque','Barba longa','Barba cheia aparada','Costeletas + bigode'],gl2:['Redondo','Retangular','Gatinho','Meia-lua','Aviador','Quadrado grosso','Redondo escuro','Gatinho solar','Esportivo','Lente colorida','Sem aro','Armação transparente','Hexagonal','Máscara de sol'],out2:['Camisa e gravata','Blazer e camisa','Sobretudo','Jaqueta de couro','Camiseta','Gola alta','Cardigã','Blusa de laço','Vestido decote V','Blazer cintado','Camisa listrada','Moletom com capuz','Jaqueta jeans','Vestido gola canoa'],body:['Ombros estreitos','Padrão','Ombros largos','Forte','Curvilíneo'],acc:['Nenhum','Brincos de pérola','Argolas','Pingentes','Colar de pérolas','Lenço no pescoço','Corrente','Piercing no nariz'],fr:['Nenhuma','Leves','Médias','Muitas'],lash:['Sem','Naturais','Marcados'],mk:['Sinal na bochecha','Sinal no queixo','Sinal no lábio','Sinal na testa','Covinhas','Rubor','Olheiras','Rugas','Vitiligo']};
+/* ===== editor: opções novas entram na MESMA grade das antigas (sem repetir o que já existe) ===== */
+const A2N={face:['Oval','Redondo','Quadrado','Coração','Alongado','Diamante'],eye:['Amendoado','Redondo','Estreito','Caído','Puxado','Encapuzado','Grande','Pálpebra única'],brow:['Reta','Arqueada','Grossa','Fina','Angulosa','Caída','Curta','Espessa arqueada'],mouth:['Neutra','Fina','Cheia','Sorriso','Meio sorriso','Aberta leve','Coração','Caída'],hair2:['Franja reta','Franja lateral','Chanel com franja','Pixie','Coque alto','Maria-chiquinha','Trança lateral','Undercut','Afro curto','Cabelo preso baixo'],beard2:['Barba rala','Bigode guidão','Cavanhaque','Barba longa','Barba cheia aparada','Costeletas e bigode'],gl2:['Redondo','Retangular','Gatinho','Meia-lua','Aviador','Quadrado grosso','Redondo escuro','Gatinho solar','Esportivo','Lente colorida','Sem aro','Armação transparente','Hexagonal','Máscara de sol'],out2:['Camisa e gravata','Blazer e camisa','Sobretudo','Jaqueta de couro','Camiseta','Gola alta','Cardigã','Blusa de laço','Vestido decote V','Blazer cintado','Camisa listrada','Moletom com capuz','Jaqueta jeans','Vestido gola canoa'],body:['Ombros estreitos','Padrão','Ombros largos','Forte','Curvilíneo'],acc:['Nenhum','Brincos de pérola','Argolas','Pingentes','Colar de pérolas','Lenço no pescoço','Corrente','Piercing no nariz'],fr:['Nenhuma','Leves','Médias','Muitas'],lash:['Sem cílios','Naturais','Marcados'],mk:['Sinal na bochecha','Sinal no queixo','Sinal no lábio','Sinal na testa','Covinhas','Rubor','Olheiras','Rugas','Vitiligo']};
+const A2CN={'#fde7d3':'Porcelana','#efc7a5':'Bege','#c08860':'Caramelo','#774a2e':'Castanho escuro','#4a2c1a':'Ébano','#3a2216':'Ébano profundo','#3a2418':'Castanho escuro','#5a3a22':'Castanho médio','#b8863a':'Dourado','#c2561f':'Cobre','#6a3aa0':'Roxo','#2a3550':'Azul-noite','#2f4f6f':'Azul-petróleo','#5b6b3a':'Verde-oliva','#6b4a7a':'Ameixa','#a3283a':'Carmim','#e9e2d3':'Off-white','#8a5a2b':'Caramelo','#d86a8a':'Rosa','#2a8a8a':'Turquesa','#c9962b':'Mostarda','#e8a0b0':'Rosa claro','#9fb4d8':'Azul claro','#4a4a55':'Grafite','#2a2a30':'Grafite escuro','#7a2431':'Vinho','#3a5a3a':'Verde-floresta'};
+A2EYEC.forEach(([n,c])=>{A2CN[c]=n});A2CN['#6a4224']='Castanho médio';
+const A2BN=['Preto','Castanho escuro','Castanho','Castanho claro','Dourado','Loiro','Ruivo escuro','Cobre','Grisalho','Prata','Azul','Rosa'];
+const A2FN=['Grafite','Vinho','Dourado','Azul-petróleo','Rosa','Off-white','Verde','Roxo'],A2LN=['Preto','Marrom','Azul','Verde-água','Vermelho','Rosa','Dourado','Roxo'];
 const A2LEG={sk:['skc'],fs:['face'],ey:['eye'],ic:['icx'],br:['brow'],mo:['mouth'],hs:['hair2'],hc:['hcx'],bd:['beard2'],gl:['gl2'],ou:['out2'],cc:['ocx'],tie:['out2'],tc:['out2']};
 const A2NUL=k=>{const o={};(A2LEG[k]||[]).forEach(n=>o[n]=null);return o};
+const A2D=(a,b)=>{const f=c=>[1,3,5].map(i=>parseInt(c.slice(i,i+2),16));return Math.sqrt(f(a).reduce((t,x,i)=>t+(x-f(b)[i])**2,0))};
+const A2UNI=(nw,leg,t)=>nw.filter(c=>leg.every(l=>A2D(c,l)>(t||13)));
+/* novas opções que NÃO repetem nenhuma antiga: [chave nova, valores] */
+const A2M={fs:['face',[2,3,4,5]],ey:['eye',[7]],br:['brow',[3,5,6,7]],mo:['mouth',[3,4,5,6,7]],hs:['hair2',[0,1,2,3,5,6,7,9]],bd:['beard2',[5]],gl:['gl2',[1,3,5,7,8,9,10,11,12,13]],ou:['out2',[5,6,7,8,9,10,12,13]],
+sk:['skc',()=>A2UNI(A2SKIN,SK)],ic:['icx',()=>A2UNI(A2EYEC.map(x=>x[1]),ICL,36)],hc:['hcx',()=>A2UNI(A2HAIRC,HC)],cc:['ocx',()=>A2UNI(A2CLOTHC,CC)]};
 const A2SEC={
-sk:[{k:'skc',t:'Mais tons de pele',sw:A2SKIN,nm:A2SKIN.map((_,i)=>'Tom '+(i+1))}],
-fs:[{k:'face',t:'Mais formatos de rosto',v:[0,1,2,3,4,5]}],
-ey:[{k:'eye',t:'Mais formatos de olho',v:[0,1,2,3,4,5,6,7]},{k:'lash',t:'Cílios',v:[0,1,2],z:1}],
-ic:[{k:'icx',t:'Mais cores de olho',sw:A2EYEC.map(x=>x[1]),nm:A2EYEC.map(x=>x[0])}],
-br:[{k:'brow',t:'Mais sobrancelhas',v:[0,1,2,3,4,5,6,7]},{k:'brc',t:'Cor da sobrancelha',sw:[null,...A2BROWC],nm:['Igual ao cabelo',...A2BROWC.map((_,i)=>'Cor '+(i+1))]}],
-mo:[{k:'mouth',t:'Mais bocas',v:[0,1,2,3,4,5,6,7]},{k:'lip',t:'Batom e cor da boca',sw:A2LIPC.map(x=>x[1]),nm:A2LIPC.map(x=>x[0])}],
-hs:[{k:'hair2',t:'Mais estilos de cabelo',v:[0,1,2,3,4,5,6,7,8,9]}],
-hc:[{k:'hcx',t:'Mais cores de cabelo',sw:A2HAIRC,nm:A2HAIRC.map((_,i)=>'Cor '+(i+1))}],
-bd:[{k:'beard2',t:'Mais barbas',v:[0,1,2,3,4,5]}],
-gl:[{k:'gl2',t:'Mais óculos (grau, solares e moda)',v:[0,1,2,3,4,5,7,8,9,10,11,12,13]},{k:'glc',t:'Cor da armação',sw:[null,...A2FRAMEC],nm:['Padrão',...A2FRAMEC.map((_,i)=>'Cor '+(i+1))]},{k:'gll',t:'Cor da lente (solares e coloridos)',sw:[null,...A2LENSC],nm:['Padrão',...A2LENSC.map((_,i)=>'Cor '+(i+1))]}],
-ou:[{k:'out2',t:'Mais roupas',v:[0,1,2,3,4,5,6,7,8,9,10,11,12,13]}],
-cc:[{k:'ocx',t:'Mais cores de roupa',sw:A2CLOTHC,nm:A2CLOTHC.map((_,i)=>'Cor '+(i+1))}],
-body:[{k:'body',t:'Formato do corpo',v:[null,0,1,2,3,4]}],
+ey:[{k:'lash',t:'Cílios',v:[0,1,2],z:1}],
+brc:[{k:'brc',v:[null,...A2BROWC],nm:['Igual ao cabelo',...A2BN]}],
+lip:[{k:'lip',v:A2LIPC.map(x=>x[1]),nm:A2LIPC.map(x=>x[0])}],
+glc:[{k:'glc',t:'Armação',v:[null,...A2FRAMEC],nm:['Padrão',...A2FN]},{k:'gll',t:'Lente (solares e coloridos)',v:[null,...A2LENSC],nm:['Padrão',...A2LN]}],
+body:[{k:'body',v:[null,0,1,2,3,4]}],
 acc:[{k:'acc',t:'Acessórios',v:[0,1,2,3,4,5,6,7],z:1},{k:'fr',t:'Sardas',v:[0,1,2,3],z:1},{k:'mk',t:'Marcas (combináveis)',v:A2MKS,m:1}]};
 function plmk(n){plkeep(()=>{const a=(PLT.mk||[]).slice(),i=a.indexOf(n);i<0?a.push(n):a.splice(i,1);PLT.mk=a;render()})}
-function plx(cat,crop){const L=A2SEC[cat];if(!L)return '';return L.map(s=>{const P=PLT;let b;
-if(s.sw)b=`<div class=plsws>${s.sw.map((c,i)=>{const on=P[s.k]==null?c===null:P[s.k]===c;return `<button class="plsw ${on?'on':''} ${c?'':'n0'}" ${c?`style="background:${c}"`:''} title="${(s.nm||[])[i]||''}" aria-label="${(s.nm||[])[i]||''}" onclick="plset('${s.k}',${c?`'${c}'`:'null'})"></button>`}).join('')}</div>`;
-else b=`<div class=plg>${s.v.map(v=>{const on=s.m?(P.mk||[]).includes(v):(s.z&&P[s.k]==null?v===0:(P[s.k]==null?null:P[s.k])===v),lab=s.m?A2N.mk[A2MKS.indexOf(v)]:v==null?'Atual':A2N[s.k][v];return `<button class="plo ${on?'on':''}" onclick="${s.m?`plmk('${v}')`:`plset('${s.k}',${v})`}">${plth(s.k,s.m?[v]:v,crop)}<span>${lab}</span></button>`}).join('')}</div>`;
-return `<div class="pll plsec">${s.t}</div>${b}`}).join('')}
+const plthx=(k,v,crop)=>{const o=PLT,ex=k==='glc'?{gl2:o.gl2!=null?o.gl2:1}:k==='gll'?{gl2:[4,5,6,7,8,9,13].includes(o.gl2)?o.gl2:5}:{};PLT=Object.assign({},o,ex);try{return plth(k,v,crop)}finally{PLT=o}};
+const a2btn=(k,v,lab,on,crop,fn)=>`<button class="plo ${on?'on':''}" onclick="${fn||`plset('${k}',${v==null?'null':typeof v==='string'?`'${v}'`:v})`}">${plthx(k,fn?[v]:v,crop)}<span>${lab}</span></button>`;
+/* opções novas anexadas à grade das antigas */
+function plm(cat,crop){const m=A2M[cat];if(!m)return '';const k=m[0],vs=typeof m[1]==='function'?m[1]():m[1];return vs.map(v=>{const lab=typeof v==='string'?(A2CN[v]||v):A2N[k][v];return a2btn(k,v,lab,PLT[k]===v,crop)}).join('')}
+/* seções próprias (abas novas ou blocos com título) */
+function plx(cat,crop){const L=A2SEC[cat];if(!L)return '';return L.map(s=>{const P=PLT,nm=s.nm||[];const b=`<div class=plg>${s.v.map((v,i)=>{const on=s.m?(P.mk||[]).includes(v):(s.z&&P[s.k]==null?v===0:(P[s.k]==null?null:P[s.k])===v),lab=s.m?A2N.mk[A2MKS.indexOf(v)]:nm[i]!=null?nm[i]:v==null?'Atual':A2N[s.k][v];return a2btn(s.k,v,lab,on,crop,s.m?`plmk('${v}')`:'')}).join('')}</div>`;return (s.t?`<div class="pll plsec">${s.t}</div>`:'')+b}).join('')}
 const a2clean=P=>{A2KEYS.forEach(k=>{if(P[k]==null||(k==='mk'&&!P[k].length))delete P[k]});if(a2used(P))P.v=2;else delete P.v;return P};

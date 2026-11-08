@@ -93,7 +93,7 @@ reordenado.
 
 | Arquivo | Caso |
 |---|---|
-| `caso0.js` | O Troféu Sumido (treinamento) |
+| `caso0.js` | O Sumiço do Troféu (treinamento) |
 | `caso1.js` | A Última Xícara |
 | `caso2.js` | O Último Ato |
 | `caso3.js` | A Última Safra |
