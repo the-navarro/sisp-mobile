@@ -63,4 +63,15 @@ c5:[
 {id:'pc',quando:{an:'keyreceipt'},aponta_para:'davi',correto:true,prova:'keyreceipt',texto:{
  marcos:'Ex-aprendiz com cópia da chave e o recibo do chaveiro no nome dele. Foi o Davi! E eu cheguei nele antes, tá? Anota aí.',
  beatriz:'O recibo do chaveiro mostra a cópia da chave. Faísca acesa: foi o Davi, e a gente tem a prova!'}}
+],
+c6:[
+{id:'pa',quando:{ask:'q_a2'},aponta_para:'alvaro',correto:false,prova:'cam_sala',texto:{
+ marcos:'Dono de galeria cheio de dívidas e de olho no quadro? Foi o Álvaro! Quem deve muito sempre tem um plano. Meu faro nunca falha, e agora sentiu cheiro de verniz.',
+ beatriz:'Ele está endividado e ficou parado diante do quadro na gravação. Faísca acesa: foi o Álvaro!'}},
+{id:'pb',quando:{ask:'q_c2'},aponta_para:'camila',correto:false,prova:'guia_transporte',texto:{
+ marcos:'A curadora mentiu sobre o horário e ainda conferiu a guia do transporte. Foi a Camila! Quem esconde hora sabe mais do que diz. Digo, meu faro sabe.',
+ beatriz:'Ela disse que ficou até meia-noite e saiu às 22h. Quem mente sobre o relógio esconde coisa. Foi a Camila!'}},
+{id:'pc',quando:{an:'registro_atelie'},aponta_para:'heitor',correto:true,prova:'registro_atelie',texto:{
+ marcos:'Restaurador que jurou nunca mais tocar no quadro e assinou uma "revisão" no livro do ateliê? Foi o Heitor! E eu cheguei nele antes, tá? Anota aí.',
+ beatriz:'O livro do ateliê tem a assinatura dele numa revisão que ele negou. Faísca acesa: foi o Heitor, e a prova está no papel!'}}
 ]};
