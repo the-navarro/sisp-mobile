@@ -60,3 +60,4 @@
 .tlfl{text-align:left;margin:12px 0}.tlfl div{display:flex;gap:10px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.08);font:400 13.5px Arial,Helvetica,sans-serif}.tlfl b{color:#eaa73c;width:46px;flex:none}
 .tlmsg{padding:9px 16px;background:rgba(98,184,142,.12);border-top:2px solid #62b88e;font:400 13px/1.4 Arial,Helvetica,sans-serif;color:#d6ecdf}.tlmsg.bad{background:rgba(208,74,53,.14);border-top-color:#d04a35;color:#f4c9c0}
 .rqt button{white-space:nowrap;font-size:12px;padding:9px 4px}
+.tlfg{font-style:normal;margin-left:8px;background:rgba(208,74,53,.2);color:#f4c9c0;border:1px solid #d04a35;border-radius:8px;padding:2px 7px;font:700 11px Arial}
