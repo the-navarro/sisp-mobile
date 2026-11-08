@@ -1,0 +1,36 @@
+/* ===== Parceiro: escolha, confiança, palpites e conquistas (dados em casos/parceiros.js; palpites em cada caso) ===== */
+const PTM=()=>{META.pt=META.pt||{id:null,conf:{marcos:50,beatriz:50},hist:[]};META.pt.conf=META.pt.conf||{marcos:50,beatriz:50};META.pt.hist=META.pt.hist||[];return META.pt};
+const ptId=()=>PTM().id;
+const ptD=id=>PTD.find(p=>p.id===(id||ptId()));
+const ptConf=id=>PTM().conf[id||ptId()];
+const ptFree=()=>ptId()&&ptConf()>=70;
+const ptSilent=()=>ptId()&&ptConf()<=30;
+const ptLvl=c=>c>=70?'Confiança alta':c<=30?'Confiança baixa':'Confiança média';
+const ptBar=c=>`<div class=ptbar><i style="width:${c}%"></i></div>`;
+const PTP={r1:{pa:'p1',pb:'p3'},r2:{pa:'p2',pb:'p3'},r3:{pa:'p2',pb:'p1'}};
+ACHG.push(['g4','Instinto afiado','Acerte 5 palpites do parceiro.','#7dd3fc','bulb'],['g5','Cabeça dura','Discorde 3 vezes de palpites certos.','#f0abfc','books'],['g6','Dupla perfeita','Chegue a 100 de confiança com um parceiro.','#ffd166','trophy']);
+function ptAch(){const h=PTM().hist,nw=[];META.ach=META.ach||{};const put=(k,n)=>{if(!META.ach[k]){META.ach[k]=1;nw.push(n)}};
+if(h.filter(x=>x.ok===true).length>=5)put('g:g4','Instinto afiado');if(h.filter(x=>x.k==='discordar'&&x.ok===false).length>=3)put('g:g5','Cabeça dura');if(Object.values(PTM().conf).some(v=>v>=100))put('g:g6','Dupla perfeita');return nw}
+window.ptAvt=(id,sz,ex)=>ptAv(id,sz,ex);
+const ptCard=(p,on,fn)=>`<button class="ptcard ${on?'on':''}" onclick="${fn}">${ptAv(p.id,64,'n')}<span><b>${p.nome} ${p.sobrenome}</b><small>${esc(p.personalidade.split('.')[0])}.</small><em>“${esc(p.bordoes[0])}”</em><i>${ptLvl(ptConf(p.id))} · ${ptConf(p.id)}</i></span></button>`;
+window.ptSet=(id,ask)=>{const old=ptId(),first=!old;if(old===id){if(window.RQ)RQ.cho=0;render();return}PTM().id=id;msave();if(window.RQ){RQ.cho=0;RQ.rx=first?{id,fala:'boas_vindas',expr:'a',ach:[]}:{id:old,fala:'troca',expr:'n',ach:[]}}render()};
+window.ptSetPanel=()=>`<div class=pan><h3>Equipe</h3><p class=mut style="font-size:12px;margin:0 0 8px">Escolha seu parceiro. Cada um guarda a própria confiança, e trocar não zera nada. Ele aparece nos Casos rápidos.</p>${PTD.map(p=>ptCard(p,ptId()===p.id,`ptSet('${p.id}')`)).join('')}</div>`;
+window.ptChooser=()=>`<div class=rqmd><div class=rqmc><small>SEU PARCEIRO</small><h3>${ptId()?'Trocar de parceiro':'Escolha seu parceiro'}</h3><p class=rqp style="margin:0 0 8px">Ele dá palpites durante o caso. Às vezes acerta, às vezes erra: você decide quando confiar.</p>${PTD.map(p=>ptCard(p,ptId()===p.id,`ptSet('${p.id}')`)).join('')}${ptId()?'<button class="rqbtn gh" onclick="RQ.cho=0;render()">Fechar</button>':''}</div></div>`;
+function ptPal(c){return (c.palpites_parceiro||[])}
+function ptWhen(c,p){const w=p.quando;if(w==='apos_abrir_caderno')return !!RQ.seen&&RQ.v==='main';const m=/^apos_(p\d)$/.exec(w);return m?rqProvas(c).some(x=>x.id===m[1]):false}
+window.rqPal=()=>{if(!RQ||!ptId()||RQ.pp||RQ.res||RQ.cho)return;const c=rqC(RQ.id);for(const p of ptPal(c)){if(RQ.pal[p.id])continue;if(!ptWhen(c,p))continue;if(ptSilent()){RQ.pal[p.id]='calado';rqSave();continue}RQ.pp=p.id;break}};
+window.ptPop=v=>{RQ.pop=v;render()};
+window.ptAns=k=>{const c=rqC(RQ.id),p=ptPal(c).find(x=>x.id===RQ.pp),pt=PTM(),id=ptId(),cor=p.correto;let d=0,fala='',expr='n',ok=null,prova=null;
+if(k==='confiar'){ok=cor;d=ok?10:-10;fala=ok?'confiou_certo':'confiou_errado';expr=ok?'a':'e';if(!ok)RQ.free=false}
+else if(k==='prova'){d=10;fala='pediu_prova';prova=PTP[c.id][p.id];if(!rqLib(prova)&&!rqProvas(c).some(x=>x.id===prova)){RQ.inv.push(prova);RQ.nw.push(prova)}}
+else{ok=!cor;d=ok?10:-5;fala=ok?'discordou_certo':'discordou_errado';expr=ok?'e':'a'}
+pt.conf[id]=Math.max(0,Math.min(100,pt.conf[id]+d));pt.hist.push({c:c.id,p:p.id,pa:id,k,ok});if(pt.hist.length>40)pt.hist.shift();
+RQ.pal[p.id]=k;RQ.pp=null;RQ.pop=0;const ach=ptAch();RQ.rx={id,fala,expr,prova,ach,d};msave();rqSave();render()};
+window.ptRxClose=()=>{const pv=RQ.rx&&RQ.rx.prova;RQ.rx=null;if(pv)RQ.pv=pv;rqPal();render()};
+window.ptPf=v=>{RQ.pf=v;render()};
+window.ptBanner=()=>{if(!RQ||!RQ.pp||RQ.pop||RQ.rx||RQ.cho||RQ.res||RQ.pv||RQ.hs||RQ.pf)return '';const p=ptD();return `<button class=rqnotif onclick="ptPop(1)">${ptAv(p.id,34,'n')}<span><small>MENSAGEM DE ${p.nome.toUpperCase()}</small>Tenho um palpite sobre o caso. Toque para ler.</span></button>`};
+window.ptModals=c=>{let m='';if(RQ.cho)return ptChooser();
+if(RQ.rx){const x=RQ.rx,p=ptD(x.id),pr=x.prova?c.provas.find(q=>q.id===x.prova):null;m+=`<div class=rqmd><div class=rqmc style="text-align:center"><div style="display:flex;justify-content:center">${ptAv(p.id,96,x.expr)}</div><h3>${p.nome} ${p.sobrenome}</h3><p>${esc(p.falas[x.fala])}</p>${x.d?`<p class=rqp style="margin:4px 0">Confiança ${x.d>0?'+':''}${x.d} · agora ${ptConf(p.id)}</p>`:''}${pr?`<div class=rqok style="text-align:left"><small>PROVA ENTREGUE</small><p>${esc(pr.nome)}: ${esc(pr.descricao)}</p></div>`:''}${(x.ach||[]).map(a=>`<div class=rqok style="text-align:left"><small>NOVA CONQUISTA</small><p>${esc(a)}</p></div>`).join('')}<button class=rqbtn onclick="ptRxClose()">Continuar</button></div></div>`;return m}
+if(RQ.pop&&RQ.pp){const p=ptD(),pa=ptPal(c).find(x=>x.id===RQ.pp);m+=`<div class=rqmd><div class=rqmc><small>PALPITE DE ${p.nome.toUpperCase()}</small><div style="display:flex;gap:12px;align-items:center;margin:6px 0">${ptAv(p.id,64,'n')}<p style="margin:0;font-style:italic">“${esc(pa.texto[p.id])}”</p></div><p class=rqp>O que você faz?</p><button class=rqbtn style="margin-top:0" onclick="ptAns('confiar')">Confiar</button><button class="rqbtn gh" onclick="ptAns('prova')">Pedir uma prova</button><button class="rqbtn gh" onclick="ptAns('discordar')">Discordar</button></div></div>`;return m}
+if(RQ.pf){const p=ptD(),h=PTM().hist.filter(x=>x.pa===p.id).slice(-6).reverse();m+=`<div class=rqmd onclick="ptPf(0)"><div class=rqmc onclick="event.stopPropagation()"><small>PERFIL DO PARCEIRO</small><div style="display:flex;gap:12px;align-items:center;margin:6px 0">${ptAv(p.id,64,'n')}<div><b style="font-size:16px">${p.nome} ${p.sobrenome}</b><div class=mut style="font-size:12px">${p.idade} anos</div></div></div><p>${esc(p.personalidade)}</p><div class=rqlb>${ptLvl(ptConf())} · ${ptConf()} de 100</div>${ptBar(ptConf())}<div class=rqlb style="margin-top:12px">Últimos palpites</div>${h.length?h.map(x=>{const cs=rqC(x.c),pa=cs.palpites_parceiro.find(y=>y.id===x.p),su=cs.suspeitos.find(s=>s.id===pa.aponta_para);return `<div class=rqreg style="margin:0 0 6px"><small>${esc(cs.titulo.toUpperCase())}</small>Palpite sobre ${esc(su.nome)}: você ${x.k==='confiar'?'confiou':x.k==='prova'?'pediu prova':'discordou'}${x.ok===true?' (acertou)':x.ok===false?' (errou)':''}.</div>`}).join(''):'<p class=rqp>Ainda sem palpites.</p>'}<button class="rqbtn gh" onclick="ptPf(0)">Fechar</button><button class="rqbtn gh" onclick="RQ.pf=0;RQ.cho=1;render()">Trocar de parceiro</button></div></div>`}
+return m};

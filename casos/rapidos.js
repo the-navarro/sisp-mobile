@@ -122,7 +122,7 @@ const RQC=[
     "aponta_para": "livia",
     "correto": false,
     "texto": {
-     "marcos": "Meu faro de sabujo diz que foi a ajudante. Quem sai na hora do crime é sempre a ajudante.",
+     "marcos": "Meu faro de sabujo diz que foi a ajudante. Quem sai na hora do crime é sempre a ajudante. Está escrito em algum lugar, tenho certeza. Não sei onde, mas tenho.",
      "beatriz": "Ela sumiu justo na hora... Deixa que eu ilumino: só pode ter sido a Lívia, não é?"
     }
    },
@@ -132,7 +132,7 @@ const RQC=[
     "aponta_para": "rogerio",
     "correto": true,
     "texto": {
-     "marcos": "Avental azul! Meu faro nunca falha. Foi o Rogério. E eu cheguei nele antes, tá?",
+     "marcos": "Avental azul! Meu faro nunca falha. Foi o Rogério. E eu cheguei nele antes, tá? Anota aí a hora.",
      "beatriz": "Faísca acesa! Avental azul, e só um dono. É o Rogério."
     }
    }
@@ -265,7 +265,7 @@ const RQC=[
     "aponta_para": "ze",
     "correto": false,
     "texto": {
-     "marcos": "O zelador, claro. Quem tem a chave é sempre suspeito. Meu faro nunca falha.",
+     "marcos": "O zelador, claro. Quem tem o chaveiro maior é sempre suspeito. Meu faro nunca falha, só às vezes demora.",
      "beatriz": "O Zé vive naquela torre, deve ter visto tudo... ou feito tudo!"
     }
    },
@@ -275,7 +275,7 @@ const RQC=[
     "aponta_para": "paulo",
     "correto": true,
     "texto": {
-     "marcos": "Capacete amarelo! Fala sério, quem usa isso? O mestre de obras. Eu já suspeitava, tá?",
+     "marcos": "Capacete amarelo! Quem usa isso numa torre? O mestre de obras. Eu já suspeitava, tá? Desde o café da manhã.",
      "beatriz": "Faísca acesa! Capacete amarelo na janela. Só tem um dono: Paulo."
     }
    }
@@ -407,7 +407,7 @@ const RQC=[
     "aponta_para": "caio",
     "correto": false,
     "texto": {
-     "marcos": "O estudante. Nervoso, jovem, perto de livro raro. Caso fechado, vamos tomar um café.",
+     "marcos": "O estudante. Nervoso, jovem, perto de livro raro. Caso fechado, vamos tomar um café. Com bolo, de preferência.",
      "beatriz": "O Caio está suando mais que sorvete no sol. Aposto nele!"
     }
    },
@@ -417,7 +417,7 @@ const RQC=[
     "aponta_para": "alvaro",
     "correto": true,
     "texto": {
-     "marcos": "Professor ensinando mentira, é? A credencial nº 7 é dele. Faro de sabujo, de novo.",
+     "marcos": "Professor ensinando mentira, é? A credencial nº 7 é dele. Faro de sabujo, de novo. Alguém me dá um biscoito.",
      "beatriz": "Número 7 da sorte... pra gente. É o professor."
     }
    }
