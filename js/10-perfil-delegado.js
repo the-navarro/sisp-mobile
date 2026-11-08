@@ -22,13 +22,13 @@ case 8:back=`<circle cx=50 cy=33 r=30 ${f}/>`;break;
 case 9:back=`<g ${f}>${[58,67,76,85].map(y=>`<ellipse cx=29 cy=${y} rx=4 ry=5 /><ellipse cx=71 cy=${y} rx=4 ry=5 />`).join('')}</g>`;break;
 case 10:front=`<path d="M31 46c-4-22 6-34 21-34 13 0 21 9 18 34-3-8-6-12-10-13-9-3-17-3-22 0-4 2-6 6-7 13z" ${f}/>`;break;
 case 11:back=`<path d="M28 48c-3 12 3 17-1 25-3 6 2 9 7 10h32c5-1 10-4 7-10-4-8 2-13-1-25 0-18-9-26-22-26s-22 8-22 26z" ${f}/>`;break;
-case 12:back=`<path d="M30 44v34M36 40v40M64 40v40M70 44v34M24 50v26M76 50v26" stroke="${hc}" stroke-width=5 stroke-linecap=round fill=none />`;break;
+case 12:back=`<g fill=none stroke-linecap=round>${[[26,84],[31,90],[36,92],[64,92],[69,90],[74,84]].map(([x,L])=>`<path d="M${x} 40V${L}" stroke="${hc}" stroke-width=5.500 /><path d="M${x} 40V${L}" stroke="#0004" stroke-width=5.500 stroke-dasharray="1 4" />`).join('')}</g>`;break;
 case 14:back=`<path d="M23 46c-4 24-2 40 6 50l10 4h22l10-4c8-10 10-26 6-50-4-18-14-26-27-26s-23 8-27 26z" ${f}/><g ${f}>${[[26,50],[24,62],[26,74],[31,84],[74,50],[76,62],[74,74],[69,84],[36,88],[64,88],[28,40],[72,40]].map(([x,y])=>`<circle cx=${x} cy=${y} r=${y>80?8:9.5} />`).join('')}</g><g ${f}>${[[32,32],[41,25],[50,22],[59,25],[68,32]].map(([x,y])=>`<circle cx=${x} cy=${y} r=10 />`).join('')}</g>`;front=`<g ${f}>${[[35,36],[42,32],[50,31],[58,32],[65,36]].map(([x,y])=>`<circle cx=${x} cy=${y} r=5.4 />`).join('')}</g>`;break;
 case 13:front=`<path d="M31 46c-2-18 8-25 20-25 12 0 20 8 18 25-2-9-7-14-14-15-9 3-17 7-24 15z" ${f}/>`;break;
 }
 if(P.hair2!=null){[back,front]=A2hair(P.hair2,hc);if([3,7,9].includes(P.hair2))back=`<ellipse cx=50 cy=44 rx=21 ry=21 ${f}/>`+back}
 else if(hs===10||hs===13)back=`<ellipse cx=50 cy=44 rx=21 ry=21 ${f}/>`+back;
-else if(hs===12){back=`<ellipse cx=50 cy=42 rx=22 ry=23 ${f}/>`+back;front=`<g ${f}>${[[32,33],[41,26],[50,23],[59,26],[68,33]].map(([x,y])=>`<circle cx=${x} cy=${y} r=7.500 />`).join('')}</g><path d="M30 44C29 30 38 25 50 25S71 30 70 44c-3-7-8-11-20-11S33 37 30 44z" ${f}/><path d="M36 28q4 6 2 12M46 25q2 6 0 12M58 25q-1 6 1 12M66 29q-3 6-1 11" stroke="#0005" stroke-width=1.200 fill=none stroke-linecap=round />`}
+else if(hs===12){back=`<ellipse cx=50 cy=42 rx=22 ry=23 ${f}/>`+back;front=`<path d="M30 46C29 27 38 22 50 22S71 27 70 46c-3-8-8-12-20-12s-17 4-20 12z" ${f}/><g fill=none stroke-linecap=round>${[[35,27,-24],[42,23,-10],[50,22,0],[58,23,10],[65,27,24]].map(([x,y,r])=>`<g transform="rotate(${r} ${x} ${y+8})"><path d="M${x} ${y+8}V${y-3}" stroke="${hc}" stroke-width=6 /><path d="M${x} ${y+8}V${y-3}" stroke="#0004" stroke-width=6 stroke-dasharray="1 4" /></g>`).join('')}</g><path d="M50 22V34M41 24q-3 5-3 10M59 24q3 5 3 10" stroke="#0005" stroke-width=1 fill=none stroke-linecap=round />`}
 const shd=(c,a)=>{const n=parseInt(c.slice(1),16);return '#'+[16,8,0].map(q=>Math.round(((n>>q)&255)*(1-a)).toString(16).padStart(2,'0')).join('')};
 const HTC=[null,'#383843','#1c1c20','#8a5a2b','#c9b48a','#7a1f2b','#2a3f6a','#4a6a3a','#a33a2a','#7a808a','#c9962b'],TCL=[null,'#a3283a','#2f5a9a','#2a2a30','#3f7a4a','#c9962b','#6b4a8a','#e4e0d8','#d86a8a','#8a5a2b','#2a8a8a'];
 const HT=[ '',
