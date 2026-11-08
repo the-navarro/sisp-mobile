@@ -32,3 +32,17 @@ window.ptmQ=k=>{const q=MXQ;if(!q)return;PTM().q[q.id]=1;if(k==='none')PTM().no[
 window.ptmQx=()=>{MXQ=null;render()};
 const ptmQView=()=>{if(!MXQ)return '';const c=CASES.find(x=>x.id===MXQ.id);return `<div class=ptmain><div class=rqmd><div class=rqmc><small>ANTES DE COMEÇAR</small><h3>Quer um parceiro neste caso?</h3><p class=rqp style="margin:0 0 8px">${c?esc(c.n)+'. ':''}O parceiro dá palpites durante o caso. Às vezes acerta, às vezes erra: você decide quando confiar. Você pode jogar sem ele.</p>${PTD.map(p=>ptCard(p,ptId()===p.id,`ptmQ('${p.id}')`)).join('')}<button class="rqbtn gh" onclick="ptmQ('none')">Jogar sem parceiro</button><button class="rqbtn gh" onclick="ptmQx()">Voltar</button></div></div></div>`};
 {const _r=render;render=function(){_r.apply(this,arguments);try{if(MXQ){const u=$('#ui');const v=ptmQView();if(u&&u.insertAdjacentHTML&&v)u.insertAdjacentHTML('beforeend',v)}}catch(e){}}}
+
+/* fechamento: comentário do parceiro no fim do caso e final da temporada */
+const ptLvlK=c=>c>=70?'alta':c<=30?'baixa':'media';
+const ptSeasonId=()=>{const h=PTM().hist,n={};h.forEach(x=>n[x.pa]=(n[x.pa]||0)+1);const best=Object.keys(n).sort((a,b)=>n[b]-n[a])[0];return best||ptId()};
+const ptAllDone=()=>CASES.every(c=>META.done[c.id]);
+window.ptEpi=()=>{if(!C||!ptId()||PTM().no[C.id])return '';const id=ptId(),p=ptD(id),k=ptLvlK(ptConf(id)),last=C.id===CASES[CASES.length-1].id&&ptAllDone();
+return `<div class=ptfin style="justify-content:center;margin:10px 0;text-align:left">${ptAv(id,52,k==='alta'?'a':k==='baixa'?'e':'n')}<p style="margin:0;font:400 13px/1.45 Arial">“${esc(PTF[id].caso[k])}”</p></div>${last?'<button class=btn style="padding:10px 18px;margin-bottom:8px" onclick="event.stopPropagation();ptSeasonOpen()">Ver o final da temporada</button>':''}`};
+window.MXS=0;
+window.ptSeasonOpen=()=>{if(!ptSeasonId())return;MXS=1;render()};
+window.ptSeasonClose=()=>{MXS=0;render()};
+const ptSeasonView=()=>{if(!MXS)return '';const id=ptSeasonId();if(!id)return '';const p=ptD(id),c=ptConf(id),lv=c>=70?'forte':c<=30?'fria':'neutra',nome={forte:'Parceria forte',neutra:'Parceria neutra',fria:'Parceria fria'}[lv];
+return `<div class=ptmain style="z-index:500"><div class=rqmd><div class=rqmc style="text-align:center"><small>FIM DA TEMPORADA</small><div style="display:flex;justify-content:center;margin:8px 0">${ptAv(id,110,lv==='forte'?'a':lv==='fria'?'e':'n')}</div><h3>${p.nome} ${p.sobrenome}</h3><div class=rqlb>${nome} · confiança ${c} de 100</div><p style="text-align:left">${esc(PTF[id].temp[lv])}</p><button class=rqbtn onclick="ptSeasonClose()">Fechar</button></div></div></div>`};
+{const _r=render;render=function(){_r.apply(this,arguments);try{if(MXS){const u=$('#ui'),v=ptSeasonView();if(u&&u.insertAdjacentHTML&&v)u.insertAdjacentHTML('beforeend',v)}}catch(e){}}}
+window.ptAllDoneP=()=>ptAllDone()&&!!ptSeasonId();
