@@ -1,6 +1,14 @@
 /* Palpites do parceiro nos casos principais (piloto: caso 1). `quando`: n = nº de perguntas feitas; ask = pergunta feita; an = prova analisada.
    `prova` é a prova que desmente (ou confirma) o palpite. No máximo 3 por caso. */
 const PLP={
+c0:[
+{id:'pa',quando:{n:2},aponta_para:'marta',correto:false,prova:'keybox',texto:{
+ marcos:'A zeladora com o pano de polir perto do troféu? Foi a Marta! Quem limpa a vitrine conhece tudo dela. Meu faro sentiu cheiro de cera.',
+ beatriz:'A Marta polia o troféu pouco antes de ele sumir. Deixa que eu ilumino: foi ela!'}},
+{id:'pb',quando:{an:'keybox'},aponta_para:'lucio',correto:true,prova:'keybox',texto:{
+ marcos:'O registro da chave reserva é do Lúcio. Foi o tesoureiro! Meu faro nunca falha. Dessa vez eu nem precisei de lanche.',
+ beatriz:'Só o tesoureiro mexe na chave reserva. Faísca acesa: foi o Lúcio!'}}
+],
 c1:[
 {id:'pa',quando:{n:2},aponta_para:'eleanor',correto:false,prova:'poison_vial',texto:{
  marcos:'Viúva em briga na justiça por bens? Meu faro de sabujo apita: foi a Eleanor. Cônjuge é sempre o primeiro suspeito. Está no manual. Ou deveria estar.',
