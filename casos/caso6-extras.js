@@ -12,6 +12,6 @@ PDX.rui={e:'down',n:'wide',b:'straight',bt:1.3,lp:.8,mw:1,sp:8.3,sk:'#c49470',sh
 PDX.heitor={e:'hooded',n:'wide',b:'straight',bt:1.4,lp:.75,mw:1,sp:8.2,sk:'#d4aa88',sh:'#ab8466',hc:'#9a9aa2',hs:'short',bg:['#3a2f26','#120d09'],deco:'shelf',out:'apron',oc:'#6a4a2a',oc2:'#d9d2c2',ic:'#3a2a1c',age:49,g:'',ex:['longbeard','bags'],ms:-.3};
 PDX.tiago={e:'narrow',n:'hooked',b:'sharp',bt:1.2,lp:.8,mw:1,sp:7.8,sk:'#c49470',sh:'#9c7050',hc:'#2a1c14',hs:'curly',bg:['#3a2a2a','#140d0d'],deco:'posters',out:'tee',oc:'#3a3a44',oc2:'#c0522d',ic:'#2a1c12',age:26,g:'',ex:['stubble','bags'],ms:-.7};
 ['iracema','camila','paula'].forEach(i=>VFEM.add(i));
-VICN.c6=['iracema','Iracema Duarte','74 anos · Dona do quadro'];
+VICN.c6=['iracema','Iracema Pontes','74 anos · Dona do quadro'];
 RECON.c6=[['c6:atelie',['registro_atelie'],'20 dias antes, 22h30','Heitor anota uma "revisão de verniz" no livro do ateliê. É o álibi que usa para trocar o quadro sem despertar suspeita.'],['c6:atelie',['cam_atelie','celular'],'20 dias antes, 22h41','Combinada por mensagem, a troca é feita com a câmera ligada: Tiago traz a cópia no tubo e os dois retiram o original do cavalete.'],['c6:deposito',['guia_transporte','etiqueta_peso'],'19 dias antes, 8h15','Rui pesa 4,2 kg e entrega a cópia na galeria sem desconfiar. O peso já não era o do seguro.'],['c6:galeria',['laudo_pigmento','laudo_uv'],'Sexta, 9h','A perita encontra branco de titânio e trincas pintadas. O quadro verdadeiro estava escondido, à espera de um comprador.']];
 TH.c6=TH.c3;
