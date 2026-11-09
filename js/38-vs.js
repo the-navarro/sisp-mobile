@@ -28,7 +28,7 @@ const vsSnd=k=>{try{AU.fx&&AU.fx(k)}catch(e){}};
 /* ---------- convite e escolha do caso ---------- */
 window.vsLobby=()=>{if(!DC.on)return '';const both=DC.names[0]&&DC.names[1];
 if(VS.g&&VS.ph==='ask')return `<button class=dbtn onclick="vsPrompt()">🏁 Corrida: ${esc(vsTitle(VS.t,VS.id))}</button>`;
-return DC.host&&both&&VSC.length?`<button class=dbtn style="background:transparent;border:1px solid #eaa73c;color:#eaa73c" onclick="vsPicker()">🏁 Corrida competitiva</button>`:''};
+return DC.host&&both&&VSC.length?`${VS.want&&VSC.some(c=>c.id===VS.want)?`<button class=dbtn onclick="vsStart('r','${VS.want}')">🏁 Começar: ${esc(vsTitle('r',VS.want))}</button>`:''}<button class=dbtn style="background:transparent;border:1px solid #eaa73c;color:#eaa73c" onclick="vsPicker()">🏁 Corrida competitiva</button>`:''};
 window.vsPicker=()=>{const m=vsEl('vsm','duo-m'),P=VS.pk,L=VSC.map(c=>[c.id,c.titulo,(c.cenario&&c.cenario.local||'').split(',')[0]]);
 m.innerHTML=`<div class=dcard style="text-align:left;max-height:94vh;overflow:auto"><small>CORRIDA COMPETITIVA</small><h2 style="margin:2px 0 6px">Quem resolve primeiro?</h2><p class=dsm style="margin-top:0">Casos feitos só para a corrida, que ninguém jogou antes. Os dois jogam o mesmo caso, cada um no seu celular. Quem acusar certo primeiro vence.</p>
 <label class=vsgf><input type=checkbox ${P.gf?'checked':''} onchange="VS.pk.gf=this.checked?1:0"> <span><b>Golpes ligados</b><small>Quem investiga bem ganha golpes para atrapalhar o rival. Desligue para uma corrida pura.</small></span></label>
