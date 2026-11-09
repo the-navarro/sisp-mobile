@@ -52,3 +52,8 @@
 .dcnudge{margin:6px 0;padding:8px 10px;border-radius:9px;border:1px solid rgba(234,167,60,.55);background:rgba(234,167,60,.1);font-size:13px}
 .dcgrp{margin:6px 0}.dcgrp>b{display:flex;align-items:center;gap:8px;font-size:13px;margin-bottom:4px}
 .dcpulse{animation:dcpl 1.6s ease-in-out infinite}@keyframes dcpl{50%{box-shadow:0 0 0 4px rgba(234,167,60,.35)}}
+.dctabs{display:flex;gap:6px;margin:6px 0 10px}.dctabs button{flex:1;padding:9px;border-radius:10px;border:1px solid rgba(234,167,60,.4);background:transparent;color:#efe7d3;font:700 13px Arial;cursor:pointer}.dctabs button.on{background:#eaa73c;color:#1b1406}
+.dcbr{padding:10px 2px;border-bottom:1px solid rgba(255,255,255,.08)}.dcbh{display:flex;justify-content:space-between;gap:10px;font-size:14px}.dcbh span{color:#cfd6d9}.dcbh b{color:#f4ecdc}
+.dcbt2{height:8px;border-radius:5px;background:rgba(255,255,255,.1);margin-top:8px;overflow:hidden}.dcbt2 i{display:block;height:100%;background:#eaa73c;border-radius:5px}
+.dcnote2{font-size:12px;color:#c9b27a;margin:8px 0 0}
+.dcwhy{display:block;width:100%;text-align:left;margin:8px 0;padding:11px 13px;border-radius:11px;border:1px solid rgba(234,167,60,.45);background:rgba(234,167,60,.08);color:#f4ecdc;cursor:pointer;font-family:Arial}.dcwhy b{display:block;font-size:14px}.dcwhy span{font-size:12px;color:#b9c4c9}
