@@ -114,6 +114,7 @@ const c=rqC(RQ.id);duoAsk('Acusar '+rqSu(c,RQ.acc).nome,()=>window.rqAcc())}}
 /* seletor Sozinho / Em dupla (início e Arquivo) */
 function duoSel(){if(window.PLO||window.GAL)return '';const on=DUO.on&&duoCfg(),c=duoCfg();
 return `<div class=dpsel><div class=dpseg><button class="${on?'':'on'}" onclick="duoPick(0)">Sozinho</button><button class="${on?'on':''}" onclick="duoPick(1)">Em dupla</button></div>${on?`<div class=dpinf><span><i style="background:${c.j[0].c}"></i>${esc(c.j[0].n)}</span><span><i style="background:${c.j[1].c}"></i>${esc(c.j[1].n)}</span><small>Papéis sorteados a cada caso</small><button onclick="duoEdit()">Mudar</button></div>`:''}</div>`}
+window.duoPanel=()=>(MENU||!C)&&!window.RQ&&!window.TM?`<div class=pan><h3>👥 Modo de jogo</h3>${duoSel()}</div>`:'';
 window.duoPick=k=>{if(!k){duoOff();render();return}duoStartRev()};
 function duoMod(){let e=document.getElementById('duomod');if(e)e.remove();if(!DUO.mode&&!DUO.setup)return;e=document.createElement('div');e.id='duomod';e.className='duo-m';
 if(DUO.setup){const s=DUO.setup;e.innerHTML=`<div class=dcard style="text-align:left"><small>JOGAR EM DUPLA · UM CELULAR</small><h2 style="margin-bottom:10px">Quem vai jogar?</h2><p class=dsm style="margin-top:0">Cada um tem uma função diferente no caso. O progresso em dupla fica separado do seu jogo solo.</p>${[0,1].map(i=>`<label class=dlb>Jogador ${i+1}<input id=dn${i} maxlength=14 value="${esc(s.j[i].n)}" oninput="DUO.setup.j[${i}].n=this.value"></label><div class=dcol>${DUOCOL.map(c=>`<button class="${s.j[i].c===c?'on':''}" style="background:${c}" onclick="DUO.setup.j[${i}].c='${c}';duoMod()"></button>`).join('')}</div>`).join('')}<p class=dsm>A cada caso, o jogo sorteia o papel de cada um. Cada papel vê só uma parte do caso, e o celular passa quando alguém precisa da área do outro.</p><button class=dbtn onclick="duoSave()">Começar a jogar em dupla</button><button class="dbtn gh" onclick="DUO.setup=null;duoMod()">Cancelar</button></div>`}
@@ -125,7 +126,6 @@ window.duoSave=()=>{const s=DUO.setup;if(!s)return;s.j.forEach((p,i)=>{p.n=(p.n|
 
 /* ligação com a tela */
 {const _r=render;render=function(){_r.apply(this,arguments);try{
-if((MENU||!C)&&!window.RQ&&!window.TM){const u=$('#ui');if(u){const h=u.querySelector('.hbt');if(h&&!h.querySelector('.dpsel'))h.insertAdjacentHTML('afterbegin',duoSel());const ar=u.querySelector('.arh');if(ar&&!u.querySelector('.dpsel'))ar.insertAdjacentHTML('afterend',duoSel())}}
 duoTick()}catch(e){}}}
 setInterval(()=>{try{duoTick()}catch(e){}},600);
 try{if(localStorage.getItem('sisp-modo')==='dupla'&&duoCfg()){duoOn();render()}}catch(e){}
