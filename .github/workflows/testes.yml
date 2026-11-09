@@ -1,0 +1,27 @@
+name: Testar os casos
+
+# Joga todos os casos até o fim num navegador sem tela (testes/jogar-casos.mjs).
+# Roda em cada pull request e é chamado pela publicação antes de ir ao ar.
+on:
+  pull_request:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  jogar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: testes
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Instalar o navegador de teste
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+      - name: Jogar todos os casos
+        run: npm test

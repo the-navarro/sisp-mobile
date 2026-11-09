@@ -144,7 +144,82 @@ outro domínio.
 - Original e versão separada foram comparados num navegador headless: tela
   inicial, tutorial, avatar e início do caso 0 geraram o mesmo HTML e a mesma
   imagem, com 0 erros no console.
-- Não foram jogados até o fim os casos 1 a 5, nem testados som e vozes.
+- Som e vozes não foram testados.
+
+## Testes automáticos
+
+A pasta `testes/` tem um robô que joga o jogo inteiro num navegador sem tela,
+usando as mesmas funções que os botões chamam. São três arquivos:
+
+- `jogar-casos.mjs`: os 7 casos principais (c0 a c6), seguindo o guia do
+  próprio jogo, primeiro sozinho e depois em dupla (um celular, passando o
+  celular e confirmando a acusação em conjunto).
+- `jogar-modos.mjs`: os casos rápidos e as linhas do tempo (sozinho e em
+  dupla) e os casos de dois celulares (duas abas na mesma sala).
+- `conferir-app.mjs`: o jogo como app instalável e abrindo sem internet.
+
+O teste falha se:
+
+- algum caso não puder ser resolvido (algo fica trancado ou o guia não leva a
+  lugar nenhum);
+- a resposta certa for recusada, uma errada for aceita, ou o caso não ficar
+  marcado como concluído;
+- qualquer tela der erro de JavaScript;
+- o jogo pedir um arquivo que não existe no repositório;
+- os dados de uma história não fecharem (por exemplo, uma pista da linha do
+  tempo que contradiz a ordem real, ou uma senha cuja prova nunca aparece);
+- a palavra "teste" aparecer na tela inicial.
+
+Para rodar (precisa de Node 20 ou mais novo; leva cerca de um minuto):
+
+```bash
+cd testes
+npm install
+npx playwright install chromium   # só na primeira vez
+npm test                          # tudo
+node jogar-casos.mjs c3           # só o caso c3
+node jogar-modos.mjs              # só os outros modos
+PARCEIRO=1 npm test               # jogando com um parceiro
+DEPURAR=1 node jogar-casos.mjs    # mostra o estado completo se um caso travar
+```
+
+No GitHub, o teste roda sozinho em cada pull request e antes de cada publicação
+no Firebase (`.github/workflows/testes.yml`): se falhar, nada vai ao ar.
+
+O robô **não** cobre o som, a aparência das telas nem a conexão real com o
+Firebase: o modo de dois celulares é jogado com a rede de teste do próprio jogo
+(`window.NETMOCK`), que troca o servidor pelo armazenamento do navegador.
+
+## App instalável e sem internet
+
+O jogo pode ser instalado como app: ganha ícone na tela do celular, abre em
+tela cheia e funciona sem internet.
+
+- `manifest.webmanifest`: nome, cores e ícones do app (os ícones estão em
+  `assets/logo/`).
+- `sw.js`: guarda os arquivos no aparelho. O programa do jogo (`index.html`,
+  `css/`, `js/`, `casos/`) é guardado inteiro na primeira visita e, com
+  internet, sempre vem a versão mais nova. A arte, os vídeos e os sons
+  (`assets/`) são guardados na primeira vez que aparecem; se um arquivo for
+  trocado, a versão nova chega na visita seguinte.
+- `js/38-app.js`: registra o `sw.js` e desenha o quadro "Instalar como app" nas
+  Configurações (no Android, um botão; no iPhone, a instrução do Safari).
+
+Sem internet, portanto, funciona tudo o que já foi aberto pelo menos uma vez:
+um caso nunca jogado abre, mas os vídeos e as imagens dele que ainda não foram
+vistos não aparecem. O modo em dois celulares sempre precisa de internet.
+
+Só funciona em endereço `https` (Firebase, GitHub Pages) ou em `localhost`.
+`testes/conferir-app.mjs` confere o manifesto, os ícones e o jogo abrindo com o
+servidor desligado.
+
+## Modo teste
+
+O modo teste abre todos os casos sem precisar concluir os anteriores. Ele está
+**ligado** por enquanto e não mostra nada na tela. Para ver o jogo como o
+jogador final verá (cada caso abre depois do anterior), use `?teste=0` no
+endereço: `http://localhost:8000/index.html?teste=0`. Antes de lançar, troque
+`TESTE` para `false` em `js/03-estado.js`.
 
 ## Mudanças feitas depois da separação
 
@@ -228,4 +303,4 @@ Itens deixados de propósito para não mexer na lógica:
 - Parte dos dados de cada caso está fora do arquivo do caso (cenas `SCN`, retratos
   `PDX`, papéis de parede `WP`, falas de relacionamento).
 - `guide0()` em `js/08-progresso-guia.js` parece não ser chamada.
-- `const TESTE=true` faz a tela inicial mostrar "· TESTE".
+- O modo teste está ligado (ver "Modo teste" acima): desligar antes de lançar.
