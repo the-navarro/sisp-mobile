@@ -1,7 +1,14 @@
 const VFEM=new Set(['marta','eleanor','clara','marina','beatriz','celia','helena','sofia','olivia','lidia','bianca','monica','nair']);
-Object.assign(AU,{vo:null,
-vstop(){try{introStop()}catch(e){}try{window.speechSynthesis&&speechSynthesis.cancel()}catch(e){}try{if(this.vo){this.vo.gain.cancelScheduledValues(0);this.vo.gain.value=0;this.vo.disconnect()}}catch(e){}this.vo=null},
+/* Vozes gravadas das ligações: assets/voz/<caso>_<ligação>.mp3, listadas em VOZ (casos/voz.js). Sem arquivo, usa a voz de reserva. */
+window.VOZ=window.VOZ||{};
+Object.assign(AU,{vo:null,vc:null,
+vozArq(id){try{if(typeof C==='undefined'||!C||typeof S==='undefined'||!S||!S.call)return 0;const u=VOZ[C.id+'_'+S.call];if(!u)return 0;this.init();const x=this.x;if(!x||!this.mg)return 0;
+const a=new Audio(u);a.preload='auto';a.volume=.9;this.vc=a;
+const src=x.createMediaElementSource(a),hp=x.createBiquadFilter(),lp=x.createBiquadFilter();hp.type='highpass';hp.frequency.value=260;lp.type='lowpass';lp.frequency.value=3600;src.connect(hp);hp.connect(lp);lp.connect(this.mg);
+const pr=a.play();if(pr&&pr.catch)pr.catch(()=>{});return 1}catch(e){return 0}},
+vstop(){try{if(this.vc){this.vc.pause();this.vc.currentTime=0;this.vc=null}}catch(e){}try{introStop()}catch(e){}try{window.speechSynthesis&&speechSynthesis.cancel()}catch(e){}try{if(this.vo){this.vo.gain.cancelScheduledValues(0);this.vo.gain.value=0;this.vo.disconnect()}}catch(e){}this.vo=null},
 voice(id,len){this.vstop();if(!this.f)return;
+if(this.vozArq(id))return;
 const ss=window.speechSynthesis;if(ss&&window.SpeechSynthesisUtterance&&typeof S!=='undefined'&&S&&S.call&&EV[S.call]){try{const t=gx(String(EV[S.call][1])).replace(/\[[^\]]*\]/g,' ').replace(/<[^>]*>/g,' ').replace(/[*_#~]/g,'').replace(/\s+/g,' ').trim(),u=new SpeechSynthesisUtterance(t),fem=VFEM.has(id),vs=(ss.getVoices()||[]).filter(v=>/^pt/i.test(v.lang)),pk=vs.find(v=>/pt-BR/i.test(v.lang)&&(fem?/maria|francisca|luciana|helo[ií]sa|fernanda|female|feminina/i.test(v.name):/daniel|felipe|ant[oô]nio|ricardo|male|masculin/i.test(v.name)))||vs.find(v=>/pt-BR/i.test(v.lang))||vs[0];u.lang='pt-BR';if(pk)u.voice=pk;u.pitch=fem?1.2:.65;u.rate=1.02;u.volume=.85;ss.cancel();ss.speak(u);return}catch(e){}}
 this.init();const x=this.x;if(!x||!this.mg)return;
 let h=0;for(const ch of id)h=(h*31+ch.charCodeAt(0))>>>0;const r=()=>{h=(h*1664525+1013904223)>>>0;return (h>>>8)/16777216};
