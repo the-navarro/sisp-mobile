@@ -21,7 +21,7 @@ const dcSave=()=>{try{localStorage.setItem(DCK,JSON.stringify({cod:DC.cod,me:DC.
 
 /* ---------- regras: estado a partir dos eventos ---------- */
 function dcState(){const c=DC.cs;if(!c)return null;if(DC.stc&&DC.stv===DC.ver&&DC.stc.g===DC.g)return DC.stc;
-const st={g:DC.g,asked:{},sent:{},facts:{},codes:{},open:{},props:[],cts:{},votes:{},rod:0,strikes:0,fim:null,errs:0,hints:{A:0,B:0},feed:[],div:null,wrong:0,cnt:{A:{ask:0,send:0,open:0,ct:0},B:{ask:0,send:0,open:0,ct:0}}};
+const st={seen:{A:{},B:{}},g:DC.g,asked:{},sent:{},facts:{},codes:{},open:{},props:[],cts:{},votes:{},rod:0,strikes:0,fim:null,errs:0,hints:{A:0,B:0},feed:[],div:null,wrong:0,cnt:{A:{ask:0,send:0,open:0,ct:0},B:{ask:0,send:0,open:0,ct:0}}};
 Object.keys(DC.evs).sort().forEach(id=>{const e=DC.evs[id];if(e.x!==DC.g)return;const w=dcWho(e);let d={};try{d=JSON.parse(e.d||'{}')}catch(x){}
 switch(e.k){
 case 'ask':if(!st.asked[d.q]){st.asked[d.q]=w;st.cnt[w].ask++}break;
@@ -33,6 +33,8 @@ case 'resp':{const pr=st.props.find(x=>x.id===d.id);if(!pr||pr.st!=='pend')break
 case 'vote':{if(d.rod!==st.rod||st.fim)break;st.votes[w]={cul:d.cul,fin:d.fin||[]};if(st.votes.A&&st.votes.B){const a=st.votes.A,b=st.votes.B,ac=c.acusacao||{};
 if(a.cul!==b.cul||JSON.stringify(a.fin)!==JSON.stringify(b.fin)){st.div={A:a,B:b,rod:st.rod};st.rod++;st.votes={}}
 else{const ok=a.cul===ac.culpado&&(ac.perguntas_finais||[]).every((q,i)=>a.fin[i]===q.correta);if(ok)st.fim={ok:1};else{st.strikes++;st.wrong=st.rod;st.div=null;if(st.strikes>=3)st.fim={ok:0};st.rod++;st.votes={}}}}break}
+case 'vis':if(d.p)st.seen[w][d.p]=1;break;
+case 'sendm':(d.ids||[]).forEach(i=>{const k=d.k+':'+i;if(!st.sent[k]){st.sent[k]=w;st.cnt[w].send++}});break;
 case 'chat':st.feed.push({w,x:d.x,t:e.t,r:d.r||null});break;
 case 'hint':st.hints[w]++;break}});
 DC.stc=st;DC.stv=DC.ver;return st}
@@ -70,6 +72,12 @@ window.dcFato=(sid,qid,txt)=>{const c=DC.cs,q=(c.interrogatorio[sid]||[]).find(x
 if(ok){dcEmit('fato',{id:rf.id});return true}dcEmit('code',{p:'f:'+rf.id,ok:0});return false};
 window.dcSenha=(pid,txt)=>{const c=DC.cs,p=dcP(c,pid);if(!p||!p.trava||p.trava.tipo!=='senha')return false;const t=p.trava,ok=[t.resposta].concat(t.aceita||[]).some(a=>dcNorm(a)===dcNorm(txt))&&dcNorm(txt)!=='';dcEmit('code',{p:pid,ok:ok?1:0,pw:1});return ok};
 window.dcCod=(pid,txt)=>{const c=DC.cs,p=dcP(c,pid),w=dcRole();if(!p||!p.trava||p.trava.tipo!=='codigo_dividido')return false;const par=p.trava['parte_'+w];if(!par)return false;const ok=dcNorm(par.valor)===dcNorm(txt)&&dcNorm(txt)!=='';dcEmit('code',{p:pid,w,ok:ok?1:0});return ok};
+/* abrir uma prova conta como 'lida' para o parceiro ver o andamento */
+window.dcOpenP=id=>{DC.pv=id;DC.msg='';const st=dcState(),w=dcRole();if(!st.seen[w][id])dcEmit('vis',{p:id});else render()};
+const dcChunk=(a,n)=>{const o=[];for(let i=0;i<a.length;i+=n)o.push(a.slice(i,i+n));return o};
+window.dcSendAllF=sid=>{const c=DC.cs,st=dcState(),w=dcRole();const ids=dcFalas(c,st,w).filter(f=>f.by===w&&(!sid||f.s.id===sid)&&!st.sent['f:'+f.k]).map(f=>f.k);dcChunk(ids,12).forEach(ch=>dcEmit('sendm',{k:'f',ids:ch}));if(ids.length)dcNote('📤 '+ids.length+(ids.length>1?' falas enviadas':' fala enviada')+' para '+dcPartner())};
+window.dcSendAllP=()=>{const c=DC.cs,st=dcState(),w=dcRole();const ids=dcVisible(c,st,w).filter(p=>dcOwns(p.dono,w)&&!(p.trava&&p.trava.tipo==='parcial')&&!st.sent['p:'+p.id]).map(p=>p.id);dcChunk(ids,10).forEach(ch=>dcEmit('sendm',{k:'p',ids:ch}));if(ids.length)dcNote('📤 '+ids.length+(ids.length>1?' provas enviadas':' prova enviada')+' para '+dcPartner())};
+window.dcSendAll=()=>{dcSendAllF(null);dcSendAllP()};
 window.dcSend=(k,id)=>{const st=dcState();if(st.sent[k+':'+id])return;dcEmit('send',{k,id});dcNote('📤 Enviado para '+dcPartner())};
 window.dcPropose=(s,a,p,s2,a2)=>{const c=DC.cs,st=dcState(),w=dcRole(),fs=dcFalas(c,st,w);const f=fs.find(x=>x.s.id===s&&x.a===a);if(f&&!st.sent['f:'+f.k])dcEmit('send',{k:'f',id:f.k});if(s2){const f2=fs.find(x=>x.s.id===s2&&x.a===a2);if(f2&&!st.sent['f:'+f2.k])dcEmit('send',{k:'f',id:f2.k})}else if(p&&!st.sent['p:'+p])dcEmit('send',{k:'p',id:p});
 dcEmit('prop',{id:'pr'+Date.now().toString(36),s,a,p:p||'',s2:s2||'',a2:a2||''});DC.wiz=null;DC.tab='ms';render()};
@@ -124,7 +132,7 @@ window.dcBack=()=>{DC.open=0;DC.st='lobby';render();dcMod()};
 /* eventos que chegam do outro celular */
 function dcOnEv(id,e){if(!DC.on||!e||DC.evs[id])return;DC.evs[id]=e;DC.ver++;if(e.u===DC.uid&&e.x===DC.g&&DC.v==='intro')DC.v='main';
 if(e.x===DC.g&&e.u!==DC.uid&&(e.t||0)>DC.t0){let d={};try{d=JSON.parse(e.d||'{}')}catch(x){}const n=dcPartner();
-if(e.k==='send'){const c=DC.cs;let nm='';if(c){if(d.k==='p'){const p=dcP(c,d.id);nm=p?p.nome:''}else{const o=dcAllQ(c).find(x=>x.k===d.id);nm=o?'fala de '+dcFirst(o.s.nome):''}}dcNote('📥 '+n+' enviou: '+nm);DC.un++}
+if(e.k==='send'||e.k==='sendm'){DC.nIn=(DC.nIn||0)+(e.k==='sendm'?(d.ids||[]).length:1);clearTimeout(DC.nTm);DC.nTm=setTimeout(()=>{const q=DC.nIn;DC.nIn=0;dcNote('📥 '+n+' enviou '+q+(q>1?' itens':' item')+' para a Mesa');DC.un++;if(DC.open)render()},1400)}
 else if(e.k==='prop'){dcNote('⚖️ '+n+' propôs uma contradição. Veja na Mesa.');DC.un++}
 else if(e.k==='resp'){dcNote(d.ok?'⚖️ '+n+' respondeu à proposta.':'⚖️ '+n+' contestou a proposta.')}
 else if(e.k==='chat'){dcNote('💬 '+n+': '+d.x);DC.un++}
