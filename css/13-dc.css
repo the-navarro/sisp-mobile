@@ -33,3 +33,12 @@
 .dcchh{display:flex;align-items:center;gap:10px;margin-bottom:8px}.dcchh svg{width:40px;height:40px;border-radius:50%;border:2px solid #eaa73c}.dcchh small{margin:0}.dcchh b{display:block;font-size:16px}
 .dcmsgr{display:flex;gap:8px;margin-top:10px}.dcmsgr input{flex:1;margin:0}.dcmsgr .rqbtn{width:auto;margin:0;padding:0 16px}
 .dcbn{margin:0 0 10px;padding:10px 12px;border-radius:12px;background:rgba(234,167,60,.12);border:1px solid rgba(234,167,60,.5);font:13px Arial;color:#f2ead8}.dcbn b{display:block}.dcbn span{display:block;color:#c9c2b0;margin:2px 0 8px}.dcbn div{display:flex;gap:8px}.dcbn button{flex:1;padding:8px;border-radius:10px;border:1px solid rgba(234,167,60,.7);background:transparent;color:#eaa73c;font:700 12.5px Arial;cursor:pointer}
+/* conversa: lista rolável, frases em uma linha e campo sempre embaixo */
+.rqmc.dcchat{display:flex;flex-direction:column;height:78vh;max-height:78vh;overflow:hidden;padding:12px}
+.dcchat .dcchh{margin-bottom:6px;position:relative}.dcchat .dcx{position:absolute;right:0;top:0;width:32px;height:32px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:transparent;color:#e7dfcb;font-size:14px;cursor:pointer}
+.dcchat .cfeed{flex:1;min-height:0;max-height:none;overflow-y:auto;padding:4px 2px;gap:6px}
+.dcphr{display:flex;gap:6px;overflow-x:auto;white-space:nowrap;padding:8px 0 4px;scrollbar-width:none}.dcphr::-webkit-scrollbar{display:none}
+.dcphr button{flex:none;padding:7px 11px;border-radius:999px;border:1px solid rgba(255,255,255,.25);background:transparent;color:#efe7d3;font:12px Arial;cursor:pointer}
+.dcchat .dcmsgr{margin-top:4px}
+.cmsg.rq{border:1px solid rgba(234,167,60,.55);background:rgba(234,167,60,.1)}
+.dcgo{display:block;margin-top:8px;padding:7px 10px;border-radius:9px;border:0;background:#eaa73c;color:#1b1406;font:700 12px Arial;cursor:pointer}

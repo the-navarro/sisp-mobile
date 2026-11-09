@@ -33,7 +33,7 @@ case 'resp':{const pr=st.props.find(x=>x.id===d.id);if(!pr||pr.st!=='pend')break
 case 'vote':{if(d.rod!==st.rod||st.fim)break;st.votes[w]={cul:d.cul,fin:d.fin||[]};if(st.votes.A&&st.votes.B){const a=st.votes.A,b=st.votes.B,ac=c.acusacao||{};
 if(a.cul!==b.cul||JSON.stringify(a.fin)!==JSON.stringify(b.fin)){st.div={A:a,B:b,rod:st.rod};st.rod++;st.votes={}}
 else{const ok=a.cul===ac.culpado&&(ac.perguntas_finais||[]).every((q,i)=>a.fin[i]===q.correta);if(ok)st.fim={ok:1};else{st.strikes++;st.wrong=st.rod;st.div=null;if(st.strikes>=3)st.fim={ok:0};st.rod++;st.votes={}}}}break}
-case 'chat':st.feed.push({w,x:d.x,t:e.t});break;
+case 'chat':st.feed.push({w,x:d.x,t:e.t,r:d.r||null});break;
 case 'hint':st.hints[w]++;break}});
 DC.stc=st;DC.stv=DC.ver;return st}
 const dcPen=st=>st.errs+st.hints.A+st.hints.B+st.strikes*2;
@@ -77,8 +77,11 @@ window.dcResp=(id,ok,m)=>{dcEmit('resp',{id,ok:ok?1:0,m:m||''});DC.rsp=null;rend
 window.dcVote=(cul,fin)=>{const st=dcState();dcEmit('vote',{rod:st.rod,cul,fin})};
 window.dcHint=()=>{dcEmit('hint',{});};
 window.dcChatSay=i=>{dcEmit('chat',{x:DCPHR[i]});};
+/* pedido de ajuda ao parceiro, ligado a uma trava (pergunta bloqueada, senha ou código) */
+window.dcPedir=(kind,key,txt)=>{const st=dcState();if(st.feed.some(f=>f.w===dcRole()&&f.r&&f.r.k===kind&&f.r.i===key&&(Date.now()-f.t)<45000))return;dcEmit('chat',{x:String(txt).slice(0,150),r:{k:kind,i:key}});dcNote('📨 Pedido enviado para '+dcPartner())};
+const dcPedido=(kind,key)=>{const st=dcState();return st.feed.some(f=>f.w===dcRole()&&f.r&&f.r.k===kind&&f.r.i===key&&(Date.now()-f.t)<45000)};
 window.dcChatTxt=()=>{const i=document.getElementById('dcmsg'),x=((i&&i.value)||'').trim().slice(0,140);if(!x)return;i.value='';dcEmit('chat',{x})};
-const DCPHR=['Achei algo importante!','Pode me enviar uma prova?','Preciso de uma informação sua.','Enviei algo para você.','Vamos propor uma contradição?','Concordo.','Ainda não concordo.','Estou travado(a). Alguma ideia?','Calma, vamos juntar as peças.'];
+const DCPHR=['Achei algo importante!','Pode me enviar uma prova?','Vou procurar nas minhas provas.','Preciso de uma informação sua.','Enviei algo para você.','Vamos propor uma contradição?','Concordo.','Ainda não concordo.','Estou travado(a). Alguma ideia?','Calma, vamos juntar as peças.'];
 
 /* 5 erros seguidos em senha, código ou resposta bloqueiam o teclado por 20 segundos */
 function dcLockLeft(){let n=0,last=0;Object.keys(DC.evs).sort().forEach(id=>{const e=DC.evs[id];if(e.x!==DC.g||e.u!==DC.uid)return;if(e.k==='code'||e.k==='fato'){let d={};try{d=JSON.parse(e.d||'{}')}catch(x){}if(e.k==='code'&&!d.ok){n++;last=e.t}else n=0}});return n>0&&n%5===0?Math.max(0,Math.ceil((last+20000-Date.now())/1000)):0}
