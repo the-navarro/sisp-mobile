@@ -5,7 +5,7 @@ const DUOF=['rq','tl','p','done','rk','last'];
 window.DUO={on:0,stash:null,shown:{},lc:{},sg:{},conf:null,mode:0,setup:null,sb:0,t0:{}};
 const DUOCOL=['#eaa73c','#4aa3df','#d86a8a','#5fbf7a','#9a7ad8','#e8e0d0'];
 const DU=()=>{const d=META.duo=META.duo||{};d.ses=d.ses||{};d.store=d.store||{};return d};
-const duoCfg=()=>DU().cfg||null;
+const duoCfg=()=>DUO.net&&window.COOP&&COOP.on?{j:[{n:COOP.names[0]||'Jogador 1',c:DUOCOL[0]},{n:COOP.names[1]||'Jogador 2',c:DUOCOL[1]}],ev:3}:(DU().cfg||null);
 const duoPl=i=>{const c=duoCfg();return c?c.j[i]:{n:'Jogador '+(i+1),c:DUOCOL[i]}};
 
 /* guarda o progresso da dupla separado do solo */
@@ -22,8 +22,8 @@ function duoOff(){if(!DUO.on)return;const d=DU();d.store={};DUOF.forEach(k=>d.st
 function duoAct(){if(!DUO.on||!duoCfg())return null;
 if(window.RQ&&RQ.v==='main')return{k:'r',id:RQ.id,key:'r:'+RQ.id};
 if(window.TM&&TM.v==='main')return{k:'t',id:TM.id,key:'t:'+TM.id};
-if(!window.RQ&&!window.TM&&C&&!MENU)return{k:'c',id:C.id,key:'c:'+C.id};return null}
-const duoSes=a=>{const d=DU(),z=d.ses[a.key]=d.ses[a.key]||{t:0,n:0,pass:0,c:[{},{}],last:null,sb:0};if(z.r===undefined){z.r=Math.random()<.5?0:1;z.t=z.r}return z};
+if(!window.RQ&&!window.TM&&C&&!MENU)return{k:'c',id:C.id,key:(DUO.net&&window.COOP?'n'+COOP.cod+'~':'')+'c:'+C.id};return null}
+const duoSes=a=>{const d=DU(),z=d.ses[a.key]=d.ses[a.key]||{t:0,n:0,pass:0,c:[{},{}],last:null,sb:0};if(z.r===undefined){z.r=Math.random()<.5?0:1;z.t=z.r}if(DUO.net&&window.COOP&&COOP.on){z.r=COOP.r;z.t=COOP.me}return z};
 /* papéis: 0 e 1; z.r = jogador que tem o papel 0; z.t = quem está com o celular */
 const DUOR={c:[{n:'Campo',d:'Conversa com os suspeitos, atende ligações e visita os locais, e coleta as provas.',h:'Não vê Perícia, Quadro nem Caderno.',a:['Conversas','Chamadas','Locais']},{n:'Perícia',d:'Manda as provas para o Dr. José e conversa com ele na Perícia, liga as peças no Quadro e anota no Caderno.',h:'Não vê Conversas, Chamadas nem Locais.',a:['Perícia (com o Dr. José)','Quadro','Caderno']}],
 r:[{n:'Interrogatório',d:'Conversa com os suspeitos e ouve os depoimentos.',h:'Não vê as provas.',a:['Suspeitos','Conversas']},{n:'Perícia',d:'Examina as provas e os laudos.',h:'Não vê as conversas.',a:['Provas']}],
@@ -61,28 +61,30 @@ if(a.k==='r'&&!DUO.swap){const g=duoGate(a,RQ.tab);if(g>=0&&g!==rl){RQ.tab=rl?'p
 let ov=null;
 if(DUO.conf)ov='conf';else if(!DUO.shown[a.key])ov='sort';else if(DUO.swap)ov='swap';else if(DUO.role)ov='role';else if(DUO.sb)ov='sb';
 duoOv(ov,a,z);duoLabUi(0,a,duoHolderRole(a,z),!!ov);
-if(!ov&&!(a.k==='c'&&(CUT||V))){const p=duoPl(z.t),fin=duoDone(a),h=fin?`<b>🏆 Ver placar da dupla</b>`:`<span class=dh-d style="background:${p.c}"></span><b>${esc(p.n)}</b><small>${DUOR[a.k][rl].n}</small>`;
+if(!ov&&!(a.k==='c'&&(CUT||V))){const p=duoPl(z.t),fin=duoDone(a),h=fin?`<b>🏆 Ver placar da dupla</b>`:`<span class=dh-d style="background:${p.c}"></span><b>${esc(p.n)}</b><small>${DUOR[a.k][rl].n}</small>${DUO.net?`<span class=dh-p style="background:${COOP.conn[1-COOP.me]?'#5fbf7a':'#777'}"></span>${COOP.un?`<em class=dh-u>${COOP.un}</em>`:''}`:''}`;
 if(!hud){hud=document.createElement('button');hud.id='duohud';hud.onclick=()=>{const a2=duoAct();if(a2&&duoDone(a2))DUO.sb=1;else DUO.role=1;duoTick()};document.body.appendChild(hud)}
 if(hud.dataset.h!==h){hud.dataset.h=h;hud.innerHTML=h}}else if(hud)hud.remove()}
 
 /* tela cheia: passagem do celular, placar, confirmação */
-function duoOv(kind,a,z){let e=document.getElementById('duoov');const sig=kind&&kind+'|'+(z?z.t+'|'+z.r+'|'+z.go:'')+'|'+(DUO.conf?DUO.conf.st:'')+'|'+DUO.sb+'|'+DUO.role;
+function duoOv(kind,a,z){let e=document.getElementById('duoov');const sig=kind&&kind+'|'+(z?z.t+'|'+z.r+'|'+z.go:'')+'|'+(DUO.conf?DUO.conf.st+DUO.conf.txt:'')+'|'+DUO.sb+'|'+DUO.role+'|'+(window.COOP?COOP.r:'');
 if(!kind){if(e)e.remove();return}
 if(e&&e.dataset.s===sig)return;
 if(!e){e=document.createElement('div');e.id='duoov';document.body.appendChild(e)}
 e.dataset.s=sig;const nxt=1-z.t;let h='';
 const badge=(p,s)=>`<span class=dbd style="background:${p.c};width:${s||64}px;height:${s||64}px;font-size:${(s||64)*.45}px">${esc((p.n||'?').trim().charAt(0).toUpperCase())}</span>`;
 const A0=duoPl(0),role=r=>DUOR[a.k][r];
-if(kind==='sort'){const hp=duoPl(z.t),again=!!z.go;
+if(kind==='sort'&&DUO.net){const rl=duoHolderRole(a,z),R=role(rl),me=duoPl(z.t);h=`<div class=dcard>${badge(me)}<small>${esc(me.n.toUpperCase())} · SEU PAPEL NESTE CASO</small><h2>${R.n}</h2><p style="margin-bottom:10px">${R.d}</p><div class=dpr style="display:block"><b>Você acessa</b><span>${R.a.join(' · ')}</span></div><div class=dpr style="display:block"><b>${esc(duoPl(1-z.t).n)} acessa (${role(1-rl).n})</b><span>${role(1-rl).a.join(' · ')}</span></div><p style="margin-top:10px">Cada um vê só a sua parte. Usem o 💬 para trocar informações.</p><button class=dbtn onclick="DUO.shown[duoAct().key]=1;duoTick()">Entendi · Começar</button></div>`}
+else if(kind==='sort'){const hp=duoPl(z.t),again=!!z.go;
 h=`<div class=dcard><small>PAPÉIS ${again?'DESTE CASO':'SORTEADOS PARA ESTE CASO'}</small>${[0,1].map(r=>{const w=duoWho(z,r),pp=duoPl(w);return `<div class=dpr>${badge(pp,40)}<div><b>${esc(pp.n)} · ${role(r).n}</b><span>${role(r).d}</span><span>Acessa: ${role(r).a.join(', ')}</span></div></div>`}).join('')}<button class=dbtn onclick="duoRoll('keep')">${again?'Manter os papéis · Continuar':esc(hp.n)+' começa · Continuar'}</button><button class="dbtn gh" onclick="duoRoll('new')">Sortear de novo</button><button class="dbtn gh" onclick="duoRoll('swap')">Trocar os papéis entre vocês</button></div>`}
 else if(kind==='role'){const rl=duoHolderRole(a,z),me=duoPl(z.t),R=role(rl),O=role(1-rl);
-h=`<div class=dcard>${badge(me)}<small>${esc(me.n.toUpperCase())} · SEU PAPEL</small><h2>${R.n}</h2><p style="margin-bottom:10px">${R.d}</p><div class=dpr style="display:block"><b>Você acessa</b><span>${R.a.join(' · ')}</span></div><div class=dpr style="display:block"><b>Só ${esc(duoPl(1-z.t).n)} acessa (${O.n})</b><span>${O.a.join(' · ')}</span></div><div class=dpr style="display:block"><b>Telas dos dois</b><span>${DUOSH[a.k]}</span></div><button class=dbtn onclick="duoNow()">Passar o celular para ${esc(duoPl(1-z.t).n)}</button><button class="dbtn gh" onclick="DUO.sb=1;DUO.role=0;duoTick()">Ver placar</button><button class="dbtn gh" onclick="DUO.role=0;duoTick()">Fechar</button></div>`}
+h=`<div class=dcard>${badge(me)}<small>${esc(me.n.toUpperCase())} · SEU PAPEL</small><h2>${R.n}</h2><p style="margin-bottom:10px">${R.d}</p><div class=dpr style="display:block"><b>Você acessa</b><span>${R.a.join(' · ')}</span></div><div class=dpr style="display:block"><b>Só ${esc(duoPl(1-z.t).n)} acessa (${O.n})</b><span>${O.a.join(' · ')}</span></div><div class=dpr style="display:block"><b>Telas dos dois</b><span>${DUOSH[a.k]}</span></div>${DUO.net?`<button class=dbtn onclick="coopChat()">💬 Conversar com ${esc(duoPl(1-z.t).n)}</button>`:`<button class=dbtn onclick="duoNow()">Passar o celular para ${esc(duoPl(1-z.t).n)}</button>`}<button class="dbtn gh" onclick="DUO.sb=1;DUO.role=0;duoTick()">Ver placar</button><button class="dbtn gh" onclick="DUO.role=0;duoTick()">Fechar</button></div>`}
 else if(kind==='swap'){const w=duoWho(z,DUO.swap.r),pp=duoPl(w);
 h=`<div class=dcard>${badge(pp)}<small>ESSA ÁREA É DE ${role(DUO.swap.r).n.toUpperCase()}</small><h2>Passe o celular para ${esc(pp.n)}</h2><p>${esc(pp.n)} está na ${role(DUO.swap.r).n}: ${role(DUO.swap.r).d.toLowerCase()} A tela fica escondida até ${esc(pp.n)} tocar.</p><button class=dbtn onclick="duoGo('swap')">Sou ${esc(pp.n)} · Continuar</button><button class="dbtn gh" onclick="DUO.swap=null;duoTick()">Voltar</button></div>`}
 else if(kind==='sb'){const ca=z.c[0],cb=z.c[1],ta=duoTot(ca),tb=duoTot(cb),pa=duoPl(0),pb=duoPl(1),fin=duoDone(a);
 const row=(p,c,t)=>`<div class=dpr>${badge(p,40)}<div><b>${esc(p.n)}</b><span>${duoTxt(a,c)}</span></div><em>${t}</em></div>`;
 const lead=ta===tb?'Vocês contribuíram igualmente.':(ta>tb?pa:pb).n+' trouxe mais descobertas.';
-h=`<div class=dcard><small>${fin?'CASO ENCERRADO · ':''}PLACAR DA DUPLA</small><h2>${fin?'Bom trabalho, dupla!':'Contribuições até agora'}</h2>${row(pa,ca,ta)}${row(pb,cb,tb)}<p>${lead}</p>${fin?'':`<button class=dbtn onclick="duoNow()">Passar o celular para ${esc(duoPl(1-z.t).n)}</button>`}<button class="dbtn gh" onclick="DUO.sb=0;duoTick()">Fechar</button></div>`}
+h=`<div class=dcard><small>${fin?'CASO ENCERRADO · ':''}PLACAR DA DUPLA</small><h2>${fin?'Bom trabalho, dupla!':'Contribuições até agora'}</h2>${row(pa,ca,ta)}${row(pb,cb,tb)}<p>${lead}</p>${fin||DUO.net?'':`<button class=dbtn onclick="duoNow()">Passar o celular para ${esc(duoPl(1-z.t).n)}</button>`}<button class="dbtn gh" onclick="DUO.sb=0;duoTick()">Fechar</button></div>`}
+else if(kind==='conf'&&DUO.conf.net){const c=DUO.conf,o=duoPl(1-z.t);h=c.st==='w'?`<div class=dcard><small>ACUSAÇÃO EM CONJUNTO</small><h2>${esc(c.txt)}</h2><p>Aguardando ${esc(o.n)} concordar…</p><button class="dbtn gh" onclick="coopAnswer(0)">Cancelar</button></div>`:`<div class=dcard>${badge(o)}<small>${esc(o.n.toUpperCase())} QUER ACUSAR</small><h2>${esc(c.txt)}</h2><p>Em dupla, a acusação só sai se os dois concordarem. Você concorda?</p><button class=dbtn onclick="coopAnswer(1)">Concordo, acusar</button><button class="dbtn gh" onclick="coopAnswer(0)">Ainda não</button></div>`}
 else if(kind==='conf'){const c=DUO.conf,p=duoPl(c.who),q=duoPl(1-c.who);
 if(c.st===0)h=`<div class=dcard>${badge(q)}<small>PASSE O CELULAR PARA</small><h2>${esc(q.n)}</h2><p>${esc(p.n)} quer fazer uma acusação e precisa da sua opinião. Em dupla, a acusação só sai se os dois concordarem.</p><button class=dbtn onclick="duoConf(1)">Sou ${esc(q.n)} · Ver a acusação</button><button class="dbtn gh" onclick="duoConf(9)">Cancelar</button></div>`;
 else h=`<div class=dcard>${badge(p)}<small>ACUSAÇÃO PROPOSTA POR ${esc(p.n.toUpperCase())}</small><h2>${esc(c.txt)}</h2><p>${esc(q.n)}, você concorda com essa acusação?</p><button class=dbtn onclick="duoConf(2)">Concordo, acusar</button><button class="dbtn gh" onclick="duoConf(9)">Ainda não</button></div>`}
@@ -99,15 +101,15 @@ try{AU.fx&&AU.fx('tick')}catch(e){}duoTick()};
 window.duoRoll=k=>{const a=duoAct();if(!a)return;const z=duoSes(a);if(k==='new')z.r=Math.random()<.5?0:1;else if(k==='swap')z.r=1-z.r;if(k!=='keep'){z.go=1;duoFlip(a,z,z.r)}else z.go=1;DUO.shown[a.key]=1;try{AU.fx&&AU.fx('tick')}catch(e){}duoTick()};
 window.duoRole=()=>{DUO.sb=0;DUO.role=1;duoTick()};
 window.duoNow=()=>{const a=duoAct();if(!a)return;const z=duoSes(a);DUO.sb=0;DUO.role=0;DUO.swap={r:1-duoHolderRole(a,z),k:null};duoTick()};
-function duoSwap(a,z,k,r){DUO.swap={r,k};duoTick()}
+function duoSwapReq(r,k){if(DUO.net){const a=duoAct(),z=duoSes(a);tst('Essa área é de '+duoPl(duoWho(z,r)).n+' ('+DUOR[a.k][r].n+'). Peça pelo 💬.');return}DUO.swap={r,k};duoTick()}
 /* bloqueio por papel nas telas */
-{{const _oa=openApp;openApp=function(k,ev){const a=duoAct();if(a&&a.k==='c'){const g=duoGate(a,k),z=duoSes(a);if(g>=0&&g!==duoHolderRole(a,z)){DUO.swap={r:g,k};duoTick();return}}return _oa.apply(this,arguments)}}
-{const _rt=window.rqTab;window.rqTab=function(t){const a=duoAct();if(a&&a.k==='r'){const g=duoGate(a,t),z=duoSes(a);if(g>=0&&g!==duoHolderRole(a,z)){DUO.swap={r:g,k:t};duoTick();return}}return _rt.apply(this,arguments)}}
-const tb=(n,role,allowNull)=>{const _f=window[n];if(!_f)return;window[n]=function(){const a=duoAct();if(a&&a.k==='t'){if(allowNull&&arguments[0]==null)return _f.apply(this,arguments);const z=duoSes(a);if(role!==duoHolderRole(a,z)){DUO.swap={r:role,k:null};duoTick();return}}return _f.apply(this,arguments)}};
+{{const _oa=openApp;openApp=function(k,ev){const a=duoAct();if(a&&a.k==='c'){const g=duoGate(a,k),z=duoSes(a);if(g>=0&&g!==duoHolderRole(a,z)){duoSwapReq(g,k);return}}return _oa.apply(this,arguments)}}
+{const _rt=window.rqTab;window.rqTab=function(t){const a=duoAct();if(a&&a.k==='r'){const g=duoGate(a,t),z=duoSes(a);if(g>=0&&g!==duoHolderRole(a,z)){duoSwapReq(g,t);return}}return _rt.apply(this,arguments)}}
+const tb=(n,role,allowNull)=>{const _f=window[n];if(!_f)return;window[n]=function(){const a=duoAct();if(a&&a.k==='t'){if(allowNull&&arguments[0]==null)return _f.apply(this,arguments);const z=duoSes(a);if(role!==duoHolderRole(a,z)){duoSwapReq(role,null);return}}return _f.apply(this,arguments)}};
 tb('tlSrcOpen',0,1);tb('tlPl',0,0);tb('tlFlag',0,0);tb('tlMove',1,0);tb('tlDown',1,0);tb('tlCheck',1,0);tb('tlHint',1,0)}
 
 /* acusação em conjunto */
-function duoAsk(txt,go){DUO.conf={who:0,st:0,txt,go};const a=duoAct();DUO.conf.who=a?duoSes(a).t:0;duoTick()}
+function duoAsk(txt,go){if(DUO.net&&window.coopAcc)return coopAcc(txt,go);DUO.conf={who:0,st:0,txt,go};const a=duoAct();DUO.conf.who=a?duoSes(a).t:0;duoTick()}
 window.duoConf=k=>{const c=DUO.conf;if(!c)return;if(k===1){c.st=1}else if(k===9){DUO.conf=null}else if(k===2){const go=c.go;DUO.conf=null;DUO.ok=1;duoTick();go()}duoTick()};
 {const _ac=accuse;accuse=function(){if(!DUO.on||DUO.ok||!C){DUO.ok=0;return _ac.apply(this,arguments)}
 const two=!!C.two,xq=C.xq||[],A=S.accs||[];if(!S.wp||!S.mo||(two?A.length!==2:!S.acc)||(C.vic&&!S.vic)||xq.some(q=>!S['x_'+q[0]]))return _ac.apply(this,arguments);
