@@ -62,15 +62,15 @@ if(VS.ph==='run'){
  if(VS.t==='m'&&C&&S&&S.strikes>VS.err&&VS.ph==='run'){VS.pen+=20000*(S.strikes-VS.err);VS.err=S.strikes;vsNote('✖ Acusação errada: +20 s')}}
 for(const k in VS.fx){if(VS.fx[k]<now){delete VS.fx[k];vsFxOff(k)}}
 vsHud()}
-function vsFinish(ok,x){if(VS.ph!=='run')return;x=x||{};const tm=Date.now()-VS.t0+VS.pen;VS.ph=ok?'end':'out';VS.fin.me={ok,tm,er:VS.err,sc:x.sc==null?'':x.sc,ff:x.ff?1:0,ts:Date.now()};
+function vsFinish(ok,x){if(VS.ph!=='run')return;x=x||{};const tm=Date.now()-VS.t0+VS.pen;VS.ph=ok?'end':'out';VS.fin.me={ok,tm,er:VS.err,sc:x.sc==null?'':x.sc,ff:x.ff?1:0,out:x.out?1:0,ts:Date.now()};
 if(VS.t==='m'&&ok){try{CUT=null;clearTimeout(CTM);AU.vstop()}catch(e){}}
-vsEmit('vf',{ok:ok?1:0,tm,er:VS.err,sc:String(x.sc==null?'':x.sc),ff:x.ff?1:0});if(ok){vsNote('🏁 Acusação enviada! Conferindo o resultado…');setTimeout(vsResolve,1600)}else vsResolve()}
+vsEmit('vf',{ok:ok?1:0,tm,er:VS.err,sc:String(x.sc==null?'':x.sc),ff:x.ff?1:0,out:x.out?1:0});if(ok){vsNote('🏁 Acusação enviada! Conferindo o resultado…');setTimeout(vsResolve,1600)}else vsResolve()}
 function vsResolve(){const m=VS.fin.me,r=VS.fin.ri;let w=null;
 if(m&&m.ok&&r&&r.ok)w=m.ts<=r.ts?'me':'ri';else if(m&&m.ok)w='me';else if(r&&r.ok)w='ri';else if(m&&r&&r.ff&&!m.ff)w='me';else if(m&&r&&m.ff)w='ri';else if(m&&r)w='draw';
 if(VS.ph==='out'&&!w){vsHud();return}
 if(w&&!VS.res){VS.res=w;vsResult()}}
 window.vsResult=()=>{const w=VS.res,m=VS.fin.me,r=VS.fin.ri;vsDel('vsw');vsDel('vsg');vsSnd(w==='me'?'chime':'thud');
-const stat=(o,n)=>o?`<div class=vscol><b>${esc(n)}</b><span>${o.ff?'Desistiu':o.ok?'Acusou certo':'Arquivado'}</span><span>Tempo: <b>${vsFmt(o.tm)}</b></span><span>Erros: <b>${o.er}</b></span>${o.sc!==''&&o.sc!=null?`<span>Nota: <b>${VS.t==='r'?'★'.repeat(+o.sc||0):esc(o.sc)}</b></span>`:''}</div>`:`<div class=vscol><b>${esc(n)}</b><span>Ainda jogando…</span></div>`;
+const stat=(o,n)=>o?`<div class=vscol><b>${esc(n)}</b><span>${o.ff?'Desistiu':o.ok?'Acusou certo':o.out?'Arquivado':'Não terminou'}</span><span>Tempo: <b>${vsFmt(o.tm)}</b></span><span>Erros: <b>${o.er}</b></span>${o.sc!==''&&o.sc!=null?`<span>Nota: <b>${VS.t==='r'?'★'.repeat(+o.sc||0):esc(o.sc)}</b></span>`:''}</div>`:`<div class=vscol><b>${esc(n)}</b><span>Ainda jogando…</span></div>`;
 const e=vsEl('vsres','duo-m');e.style.zIndex=2500;e.innerHTML=`<div class=dcard><small>🏁 ${esc(vsTitle(VS.t,VS.id))}</small><div class=vsbig style="color:${w==='me'?'#6fd18f':w==='ri'?'#e0645c':'#eaa73c'}">${w==='me'?'VOCÊ VENCEU':w==='ri'?'VOCÊ PERDEU':'EMPATE'}</div><p class=dsm>${w==='me'?(r&&r.ff?esc(vsOth())+' desistiu.':'Você acusou certo primeiro.'):w==='ri'?(m&&m.ff?'Você saiu da corrida.':esc(vsOth())+' acusou certo primeiro.'):'Os dois ficaram sem solução.'}</p><div class=vscols>${stat(m,vsMe())}${stat(r,vsOth())}</div><button class=dbtn onclick="vsEnd(1)">Voltar à sala</button><button class="dbtn gh" onclick="vsEnd(0)">Sair da corrida</button></div>`};
 window.vsEnd=toLobby=>{clearInterval(VS.iv);VS.iv=null;const sn=VS.snap;
 if(sn){try{if(VS.t==='m'){const c=CASES.find(x=>x.id===VS.id);try{save()}catch(e){}toMenu();try{localStorage.removeItem(c.key)}catch(e){}c.key=sn.key;if(sn.ls!=null)localStorage.setItem(sn.key,sn.ls);if(sn.done===undefined)delete META.done[VS.id];else META.done[VS.id]=sn.done;if(sn.p===undefined)delete META.p[VS.id];else META.p[VS.id]=sn.p;if(META.rk){if(sn.rk===undefined)delete META.rk[VS.id];else META.rk[VS.id]=sn.rk}}
@@ -135,7 +135,7 @@ function vsHold(fn,ctx,args){if(!VS.fx.longo||VS.ph!=='run')return fn.apply(ctx,
  if(e.k==='vp'){VS.rp=d.p|0;vsHud()}
  else if(e.k==='vh')vsIncoming(d,e.u);
  else if(e.k==='vd')vsAnswer(d);
- else if(e.k==='vf'){VS.fin.ri={ok:!!d.ok,tm:d.tm|0,er:d.er|0,sc:d.sc||'',ff:!!d.ff,ts:e.t};if(VS.ph==='run'&&(d.ok||d.ff)){VS.ph=d.ok?'lost':'won'}vsResolve2()}
+ else if(e.k==='vf'){VS.fin.ri={ok:!!d.ok,tm:d.tm|0,er:d.er|0,sc:d.sc||'',ff:!!d.ff,out:!!d.out,ts:e.t};if(VS.ph==='run'&&(d.ok||d.ff)){VS.ph=d.ok?'lost':'won'}vsResolve2()}
 }catch(x){}}}
 function vsResolve2(){if(VS.ph==='lost'||VS.ph==='won'){/* o rival terminou primeiro, ou desistiu */const ok=VS.ph==='won';VS.fin.me=VS.fin.me||{ok:false,tm:Date.now()-VS.t0+VS.pen,er:VS.err,sc:'',ff:ok?0:0,ts:Date.now()};VS.ph='end';if(VS.t==='m'){try{CUT=null;clearTimeout(CTM);AU.vstop()}catch(e){}}}vsResolve()}
 /* corrida chamada pelo outro celular */
