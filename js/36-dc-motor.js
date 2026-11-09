@@ -21,11 +21,11 @@ const dcSave=()=>{try{localStorage.setItem(DCK,JSON.stringify({cod:DC.cod,me:DC.
 
 /* ---------- regras: estado a partir dos eventos ---------- */
 function dcState(){const c=DC.cs;if(!c)return null;if(DC.stc&&DC.stv===DC.ver&&DC.stc.g===DC.g)return DC.stc;
-const st={seen:{A:{},B:{}},g:DC.g,asked:{},sent:{},facts:{},codes:{},open:{},props:[],cts:{},votes:{},rod:0,strikes:0,fim:null,errs:0,hints:{A:0,B:0},feed:[],div:null,wrong:0,cnt:{A:{ask:0,send:0,open:0,ct:0},B:{ask:0,send:0,open:0,ct:0}}};
+const st={seen:{A:{},B:{}},why:{},g:DC.g,asked:{},sent:{},facts:{},codes:{},open:{},props:[],cts:{},votes:{},rod:0,strikes:0,fim:null,errs:0,hints:{A:0,B:0},feed:[],div:null,wrong:0,cnt:{A:{ask:0,send:0,open:0,ct:0},B:{ask:0,send:0,open:0,ct:0}}};
 Object.keys(DC.evs).sort().forEach(id=>{const e=DC.evs[id];if(e.x!==DC.g)return;const w=dcWho(e);let d={};try{d=JSON.parse(e.d||'{}')}catch(x){}
 switch(e.k){
 case 'ask':if(!st.asked[d.q]){st.asked[d.q]=w;st.cnt[w].ask++}break;
-case 'send':if(!st.sent[d.k+':'+d.id]){st.sent[d.k+':'+d.id]=w;st.cnt[w].send++}break;
+case 'send':if(!st.sent[d.k+':'+d.id]){st.sent[d.k+':'+d.id]=w;st.why[d.k+':'+d.id]=d.m|0;st.cnt[w].send++}break;
 case 'fato':if(!st.facts[d.id]){st.facts[d.id]=w;st.cnt[w].open++}break;
 case 'code':{const o=st.codes[d.p]=st.codes[d.p]||{A:0,B:0,err:0};if(d.ok){if(d.w)o[d.w]=1;if(d.pw||(o.A&&o.B)){if(!st.open[d.p]){st.open[d.p]=1;st.cnt[w].open++}}}else{o.err++;st.errs++}break}
 case 'prop':st.props.push({id:d.id,s:d.s,a:d.a,p:d.p,s2:d.s2,a2:d.a2,by:w,st:'pend'});break;
@@ -75,10 +75,7 @@ window.dcCod=(pid,txt)=>{const c=DC.cs,p=dcP(c,pid),w=dcRole();if(!p||!p.trava||
 /* abrir uma prova conta como 'lida' para o parceiro ver o andamento */
 window.dcOpenP=id=>{DC.pv=id;DC.msg='';const st=dcState(),w=dcRole();if(!st.seen[w][id])dcEmit('vis',{p:id});else render()};
 const dcChunk=(a,n)=>{const o=[];for(let i=0;i<a.length;i+=n)o.push(a.slice(i,i+n));return o};
-window.dcSendAllF=sid=>{const c=DC.cs,st=dcState(),w=dcRole();const ids=dcFalas(c,st,w).filter(f=>f.by===w&&(!sid||f.s.id===sid)&&!st.sent['f:'+f.k]).map(f=>f.k);dcChunk(ids,12).forEach(ch=>dcEmit('sendm',{k:'f',ids:ch}));if(ids.length)dcNote('📤 '+ids.length+(ids.length>1?' falas enviadas':' fala enviada')+' para '+dcPartner())};
-window.dcSendAllP=()=>{const c=DC.cs,st=dcState(),w=dcRole();const ids=dcVisible(c,st,w).filter(p=>dcOwns(p.dono,w)&&!(p.trava&&p.trava.tipo==='parcial')&&!st.sent['p:'+p.id]).map(p=>p.id);dcChunk(ids,10).forEach(ch=>dcEmit('sendm',{k:'p',ids:ch}));if(ids.length)dcNote('📤 '+ids.length+(ids.length>1?' provas enviadas':' prova enviada')+' para '+dcPartner())};
-window.dcSendAll=()=>{dcSendAllF(null);dcSendAllP()};
-window.dcSend=(k,id)=>{const st=dcState();if(st.sent[k+':'+id])return;dcEmit('send',{k,id});dcNote('📤 Enviado para '+dcPartner())};
+window.dcSend=(k,id,mv)=>{const st=dcState();if(st.sent[k+':'+id])return;dcEmit('send',{k,id,m:mv||0});dcNote('📤 Enviado para '+dcPartner())};
 window.dcPropose=(s,a,p,s2,a2)=>{const c=DC.cs,st=dcState(),w=dcRole(),fs=dcFalas(c,st,w);const f=fs.find(x=>x.s.id===s&&x.a===a);if(f&&!st.sent['f:'+f.k])dcEmit('send',{k:'f',id:f.k});if(s2){const f2=fs.find(x=>x.s.id===s2&&x.a===a2);if(f2&&!st.sent['f:'+f2.k])dcEmit('send',{k:'f',id:f2.k})}else if(p&&!st.sent['p:'+p])dcEmit('send',{k:'p',id:p});
 dcEmit('prop',{id:'pr'+Date.now().toString(36),s,a,p:p||'',s2:s2||'',a2:a2||''});DC.wiz=null;DC.tab='ms';render()};
 window.dcResp=(id,ok,m)=>{dcEmit('resp',{id,ok:ok?1:0,m:m||''});DC.rsp=null;render()};
