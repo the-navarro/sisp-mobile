@@ -25,10 +25,11 @@ if(window.TM&&TM.v==='main')return{k:'t',id:TM.id,key:'t:'+TM.id};
 if(!window.RQ&&!window.TM&&C&&!MENU)return{k:'c',id:C.id,key:'c:'+C.id};return null}
 const duoSes=a=>{const d=DU(),z=d.ses[a.key]=d.ses[a.key]||{t:0,n:0,pass:0,c:[{},{}],last:null,sb:0};if(z.r===undefined){z.r=Math.random()<.5?0:1;z.t=z.r}return z};
 /* papéis: 0 e 1; z.r = jogador que tem o papel 0; z.t = quem está com o celular */
-const DUOR={c:[{n:'Campo',d:'Conversa com os suspeitos, atende ligações e visita os locais.',h:'Não vê Perícia, Quadro nem Caderno.',a:['Conversas','Chamadas','Locais']},{n:'Perícia',d:'Analisa as provas na Perícia, liga as peças no Quadro e anota no Caderno.',h:'Não vê Conversas, Chamadas nem Locais.',a:['Perícia','Quadro','Caderno']}],
+const DUOR={c:[{n:'Campo',d:'Conversa com os suspeitos, atende ligações e visita os locais, e coleta as provas.',h:'Não vê Perícia, Quadro nem Caderno.',a:['Conversas','Chamadas','Locais']},{n:'Perícia',d:'Manda as provas para o Dr. José e conversa com ele na Perícia, liga as peças no Quadro e anota no Caderno.',h:'Não vê Conversas, Chamadas nem Locais.',a:['Perícia (com o Dr. José)','Quadro','Caderno']}],
 r:[{n:'Interrogatório',d:'Conversa com os suspeitos e ouve os depoimentos.',h:'Não vê as provas.',a:['Suspeitos','Conversas']},{n:'Perícia',d:'Examina as provas e os laudos.',h:'Não vê as conversas.',a:['Provas']}],
 t:[{n:'Leitura',d:'Abre e lê as fontes das pistas. Lê em voz alta para a dupla.',h:'Não mexe na ordem dos fatos.',a:['Abrir as fontes das pistas','Minhas pistas','Marcar o depoimento que não bate']},{n:'Montagem',d:'Coloca os fatos em ordem e confere a linha do tempo.',h:'Não abre as fontes das pistas.',a:['Mover os fatos','Pedir dica','Conferir a ordem']}]};
 const DUOSH={c:'Prisão (acusação), Briefing, Dicas e Ajustes',r:'Acusar',t:'Ver os títulos e horários dos fatos'};
+window.duoLabOk=()=>{const a=duoAct();return a&&a.k==='c'?duoHolderRole(a,duoSes(a))===1:true};
 const duoRoles=a=>DUOR[a.k];
 const duoHolderRole=(a,z)=>z.t===z.r?0:1;
 const duoWho=(z,r)=>r===0?z.r:1-z.r;
@@ -60,9 +61,8 @@ if(a.k==='r'&&!DUO.swap){const g=duoGate(a,RQ.tab);if(g>=0&&g!==rl){RQ.tab=rl?'p
 let ov=null;
 if(DUO.conf)ov='conf';else if(!DUO.shown[a.key])ov='sort';else if(DUO.swap)ov='swap';else if(DUO.role)ov='role';else if(DUO.sb)ov='sb';
 duoOv(ov,a,z);
-if(duoDone(a)&&!z.sb&&!ov){DUO.t0[a.key]=DUO.t0[a.key]||Date.now();if(Date.now()-DUO.t0[a.key]>3500){z.sb=1;msave();DUO.sb=1;duoTick();return}}
-if(!ov){const p=duoPl(z.t),h=`<span class=dh-d style="background:${p.c}"></span><b>${esc(p.n)}</b><small>${DUOR[a.k][rl].n}</small>`;
-if(!hud){hud=document.createElement('button');hud.id='duohud';hud.onclick=()=>{DUO.role=1;duoTick()};document.body.appendChild(hud)}
+if(!ov&&!(a.k==='c'&&(CUT||V))){const p=duoPl(z.t),fin=duoDone(a),h=fin?`<b>🏆 Ver placar da dupla</b>`:`<span class=dh-d style="background:${p.c}"></span><b>${esc(p.n)}</b><small>${DUOR[a.k][rl].n}</small>`;
+if(!hud){hud=document.createElement('button');hud.id='duohud';hud.onclick=()=>{const a2=duoAct();if(a2&&duoDone(a2))DUO.sb=1;else DUO.role=1;duoTick()};document.body.appendChild(hud)}
 if(hud.dataset.h!==h){hud.dataset.h=h;hud.innerHTML=h}}else if(hud)hud.remove()}
 
 /* tela cheia: passagem do celular, placar, confirmação */
