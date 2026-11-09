@@ -50,7 +50,7 @@ const duoTxt=(a,c)=>{const L=a.k==='t'?Object.assign({},DUOLBL,DUOLBLT):DUOLBL,r
 const duoTot=c=>Object.keys(c).reduce((s,k)=>s+(c[k]||0),0);
 
 function duoTick(){const a=duoAct();let hud=document.getElementById('duohud');
-if(!a){duoOv(null);if(hud)hud.remove();DUO.shown={};DUO.t0={};DUO.sb=0;DUO.role=0;DUO.swap=null;return}
+if(!a){duoOv(null);duoLabUi(0,null,0,1);if(hud)hud.remove();DUO.shown={};DUO.t0={};DUO.sb=0;DUO.role=0;DUO.swap=null;return}
 const d=DU(),z=duoSes(a),cur=duoCnt(a,z);
 if(!z.last){z.last=cur}
 else{let ch=0;Object.keys(cur).forEach(k=>{const dl=(cur[k]||0)-(z.last[k]||0);if(dl>0){z.c[z.t][k]=(z.c[z.t][k]||0)+dl;ch=1}z.last[k]=cur[k]});if(ch)msave()}
@@ -60,7 +60,7 @@ if(a.k==='c'&&!DUO.conf&&!DUO.swap){const g=duoGate(a,S.tab);if(g>=0&&g!==rl){S.
 if(a.k==='r'&&!DUO.swap){const g=duoGate(a,RQ.tab);if(g>=0&&g!==rl){RQ.tab=rl?'pr':'su';RQ.pv=null;RQ.su=null;render();return}}
 let ov=null;
 if(DUO.conf)ov='conf';else if(!DUO.shown[a.key])ov='sort';else if(DUO.swap)ov='swap';else if(DUO.role)ov='role';else if(DUO.sb)ov='sb';
-duoOv(ov,a,z);
+duoOv(ov,a,z);duoLabUi(0,a,duoHolderRole(a,z),!!ov);
 if(!ov&&!(a.k==='c'&&(CUT||V))){const p=duoPl(z.t),fin=duoDone(a),h=fin?`<b>🏆 Ver placar da dupla</b>`:`<span class=dh-d style="background:${p.c}"></span><b>${esc(p.n)}</b><small>${DUOR[a.k][rl].n}</small>`;
 if(!hud){hud=document.createElement('button');hud.id='duohud';hud.onclick=()=>{const a2=duoAct();if(a2&&duoDone(a2))DUO.sb=1;else DUO.role=1;duoTick()};document.body.appendChild(hud)}
 if(hud.dataset.h!==h){hud.dataset.h=h;hud.innerHTML=h}}else if(hud)hud.remove()}
@@ -128,6 +128,28 @@ document.body.appendChild(e)}
 window.duoStartRev=()=>{DUO.mode=0;const c=duoCfg();if(c){duoOn();duoMod();render();return}duoEdit()};
 window.duoEdit=()=>{const c=duoCfg();DUO.mode=0;DUO.setup=c?JSON.parse(JSON.stringify(c)):{j:[{n:(META.pl&&META.pl.n)||'Jogador 1',c:DUOCOL[0]},{n:'Jogador 2',c:DUOCOL[1]}],ev:3};duoMod()};
 window.duoSave=()=>{const s=DUO.setup;if(!s)return;s.j.forEach((p,i)=>{p.n=(p.n||'').trim()||'Jogador '+(i+1)});if(s.j[0].n.toLowerCase()===s.j[1].n.toLowerCase())s.j[1].n+=' 2';DU().cfg={j:s.j,ev:s.ev};DUO.setup=null;duoOn();msave();duoMod();render()};
+
+/* Dr. José em dupla: sem chat. Dois formatos para testar: 'modal' (cartão do laudo) e 'bar' (explicação na parte de baixo) */
+const duoLabMode=()=>DU().labui||'modal';
+const duoLabPend=()=>(S.lq||[]).find(q=>q.k==='d'&&!q.sn);
+function duoLabMsg(q){const id=q.id,nm=lbNm(id),h=CL[id].h;return{id,nm,h,intro:pk(LBI,id,1).replace('%',nm),body:h?pk(LBH,id):pk(LBM[lbCat(id)],id),laudo:h?'':RES[id],muda:h?'':lbMuda(id)}}
+window.duoLbClose=id=>{const q=(S.lq||[]).find(x=>x.k==='d'&&x.id===id);if(q){q.sn=1;save()}DUO.lbx=0;duoLabUi(1);render()};
+window.duoLbRM=id=>{const q=(S.lq||[]).find(x=>x.k==='d'&&x.id===id);if(q){q.sn=1;save()}DUO.lbx=0;RM=id;duoLabUi(1);render()};
+window.duoLbX=()=>{DUO.lbx=DUO.lbx?0:1;duoLabUi(1)};
+function duoLabUi(force,a,rl,busy){let m=document.getElementById('dlbm'),b=document.getElementById('dlbb');
+const off=()=>{if(m)m.remove();if(b)b.remove()};
+if(!DUO.on||!C||MENU||window.RQ||window.TM||CUT||V||RM||window.MG||busy||DUO.sbBusy){off();return}
+a=a||duoAct();if(!a||a.k!=='c'){off();return}const z=duoSes(a);rl=duoHolderRole(a,z);if(rl!==1){off();return}
+const q=duoLabPend(),mode=duoLabMode();let sig,html;
+if(mode==='modal'){if(b)b.remove();if(!q){if(m)m.remove();return}const x=duoLabMsg(q);sig='m|'+q.id;
+html=`<div class=dlbc>${jav(64)}<small>DR. JOSÉ MENEZES · LAUDO PRONTO</small><h3>${esc(x.nm)}</h3><p>${x.intro}</p><p>${x.body}</p>${x.laudo?`<div class=dlbx><b>📄 Laudo</b><span>${x.laudo}</span></div><div class=dlbx><b>O que muda</b><span>${x.muda}</span></div>`:''}<button class=dbtn onclick="duoLbRM('${x.id}')">Rever laudo ilustrado</button><button class="dbtn gh" onclick="duoLbClose('${x.id}')">Entendi</button></div>`;
+if(!m||m.dataset.s!==sig||force){if(!m){m=document.createElement('div');m.id='dlbm';document.body.appendChild(m)}m.dataset.s=sig;m.innerHTML=html}return}
+if(m)m.remove();
+const w=lbWait(),hd=lbHead();let inner;
+if(q){const x=duoLabMsg(q);sig='b|'+q.id+'|'+(DUO.lbx?1:0);inner=`<div class=dlbr>${jav(40)}<div class=dlbt><small>DR. JOSÉ · LAUDO PRONTO</small><b>${esc(x.nm)}</b><span>${x.intro}</span></div></div>${DUO.lbx?`<div class=dlbd><p>${x.body}</p>${x.laudo?`<div class=dlbx><b>📄 Laudo</b><span>${x.laudo}</span></div><div class=dlbx><b>O que muda</b><span>${x.muda}</span></div>`:''}</div>`:''}<div class=dlba><button onclick="duoLbX()">${DUO.lbx?'Recolher':'Ler mais'}</button><button onclick="duoLbRM('${x.id}')">Laudo ilustrado</button><button class=on onclick="duoLbClose('${x.id}')">Entendi</button></div>`}
+else if(S.tab==='lab'){const t=w.length?`Analisando “${esc(lbNm(hd))}”${w.length>1?' · '+(w.length-1)+' na fila':''}. Eu aviso quando o laudo ficar pronto.`:S.inv.length?'Pode mandar as provas, delegada. Sem pressa, que perícia boa não tem pressa.':'Ainda sem provas por aqui. Colete na cena e traga.';sig='b|s|'+t;inner=`<div class=dlbr>${jav(40)}<div class=dlbt><small>DR. JOSÉ · PERÍCIA</small><span>${t}</span></div></div>`}
+else{if(b)b.remove();return}
+if(!b){b=document.createElement('div');b.id='dlbb';document.body.appendChild(b)}if(b.dataset.s!==sig||force){b.dataset.s=sig;b.innerHTML=inner}}
 
 /* ligação com a tela */
 {const _r=render;render=function(){_r.apply(this,arguments);try{
