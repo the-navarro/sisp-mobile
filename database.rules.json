@@ -4,21 +4,22 @@
     ".write": false,
     "salas": {
       "$cod": {
-        ".read": "auth != null && data.child('j').child(auth.uid).exists()",
-        ".write": "auth != null && !data.exists() && newData.child('j').child(auth.uid).exists()",
-        ".validate": "newData.hasChildren(['j', 'c'])",
+        ".read": "auth != null && (data.child('p1').child('u').val() == auth.uid || data.child('p2').child('u').val() == auth.uid)",
+        ".write": "auth != null && !data.exists() && newData.child('p1').child('u').val() == auth.uid",
+        ".validate": "newData.hasChildren(['p1', 'c'])",
         "c": { ".validate": "newData.isNumber()" },
         "m": { ".validate": "newData.isString() && newData.val().length <= 20" },
         "k": { ".validate": "newData.isString() && newData.val().length <= 20" },
-        "j": {
-          "$uid": {
-            ".write": "auth != null && auth.uid == $uid && !data.exists() && root.child('salas').child($cod).child('j').numChildren() < 2",
-            ".validate": "newData.hasChildren(['n']) && newData.child('n').isString() && newData.child('n').val().length <= 14"
-          }
+        "p1": {
+          ".validate": "newData.hasChildren(['u', 'n']) && newData.child('n').isString() && newData.child('n').val().length <= 14"
+        },
+        "p2": {
+          ".write": "auth != null && !data.exists() && newData.child('u').val() == auth.uid && root.child('salas').child($cod).child('p1').exists()",
+          ".validate": "newData.hasChildren(['u', 'n']) && newData.child('n').isString() && newData.child('n').val().length <= 14"
         },
         "ev": {
           "$id": {
-            ".write": "auth != null && root.child('salas').child($cod).child('j').child(auth.uid).exists() && !data.exists()",
+            ".write": "auth != null && !data.exists() && (root.child('salas').child($cod).child('p1').child('u').val() == auth.uid || root.child('salas').child($cod).child('p2').child('u').val() == auth.uid)",
             ".validate": "newData.hasChildren(['u', 't', 'k']) && newData.child('u').val() == auth.uid && newData.child('k').isString() && newData.child('k').val().length <= 20"
           }
         }
