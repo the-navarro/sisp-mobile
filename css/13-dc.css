@@ -12,3 +12,6 @@
 .dcpr.ok{border-color:#5fbf7a}.dcpr.no,.dcpr.wrong{border-color:#c0584f}.dcpr em{display:block;margin-top:6px;font-size:12.5px;color:#c9c2b0}.dcpr em.ok{color:#5fbf7a}.dcpr em.bad{color:#e08a82}
 .dcbt{display:flex;gap:8px;margin-top:6px}.dcbt .rqbtn{margin:0;flex:1}
 .dcsum{text-align:left;margin:10px 0}
+.dcsend{display:block;margin:4px 0 10px 40px;padding:7px 11px;border-radius:10px;border:1px solid rgba(234,167,60,.6);background:transparent;color:#eaa73c;font:600 12px Arial;cursor:pointer}
+.dcsn2{display:block;margin:2px 0 10px 40px;font:11px Arial;color:#8fbf9b}
+.dchv{display:flex;gap:2px}.dchv .dcimg{width:50%;aspect-ratio:auto;object-fit:contain;background:#16222a}
