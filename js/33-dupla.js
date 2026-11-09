@@ -12,7 +12,7 @@ const duoPl=i=>{const c=duoCfg();return c?c.j[i]:{n:'Jogador '+(i+1),c:DUOCOL[i]
 {const _si=Storage.prototype.setItem;Storage.prototype.setItem=function(k,v){if(k==='sisp-meta'&&DUO.on&&DUO.stash){try{const o=JSON.parse(v);o.duo=o.duo||{};o.duo.store={};DUOF.forEach(f=>o.duo.store[f]=o[f]);DUOF.forEach(f=>{if(DUO.stash[f]===undefined)delete o[f];else o[f]=DUO.stash[f]});v=JSON.stringify(o)}catch(e){}}return _si.call(this,k,v)}}
 function duoOn(){if(DUO.on)return;const st=DU().store||{};DUO.stash={};DUOF.forEach(k=>DUO.stash[k]=META[k]);
 META.rq=st.rq||{done:{},prog:{}};META.tl=st.tl||{done:{},prog:{}};META.p=st.p||{};META.done=st.done||{};META.rk=st.rk||{};if(st.last===undefined)delete META.last;else META.last=st.last;
-DUO.on=1;try{localStorage.setItem('sisp-modo','dupla')}catch(e){}}
+DUO.on=1;DUO.shown={};try{localStorage.setItem('sisp-modo','dupla')}catch(e){}}
 function duoOff(){if(!DUO.on)return;const d=DU();d.store={};DUOF.forEach(k=>d.store[k]=META[k]);DUOF.forEach(k=>{if(DUO.stash[k]===undefined)delete META[k];else META[k]=DUO.stash[k]});DUO.on=0;DUO.stash=null;try{localStorage.setItem('sisp-modo','solo')}catch(e){}msave()}
 {const _sc=startCase;startCase=function(id,fr){const c=CASES.find(x=>x.id===id);if(c){if(!c.k0)c.k0=c.key;c.key=DUO.on?c.k0+'-duo':c.k0}if(DUO.on&&fr)delete DU().ses['c:'+id];return _sc.apply(this,arguments)}}
 {const _rp=window.rqReplay;if(_rp)window.rqReplay=function(){if(DUO.on&&RQ)delete DU().ses['r:'+RQ.id];return _rp.apply(this,arguments)}}
@@ -25,9 +25,10 @@ if(window.TM&&TM.v==='main')return{k:'t',id:TM.id,key:'t:'+TM.id};
 if(!window.RQ&&!window.TM&&C&&!MENU)return{k:'c',id:C.id,key:'c:'+C.id};return null}
 const duoSes=a=>{const d=DU(),z=d.ses[a.key]=d.ses[a.key]||{t:0,n:0,pass:0,c:[{},{}],last:null,sb:0};if(z.r===undefined){z.r=Math.random()<.5?0:1;z.t=z.r}return z};
 /* papéis: 0 e 1; z.r = jogador que tem o papel 0; z.t = quem está com o celular */
-const DUOR={c:[{n:'Campo',d:'Conversa com os suspeitos, atende ligações e visita os locais.',h:'Não vê Perícia, Quadro nem Caderno.'},{n:'Perícia',d:'Analisa as provas na Perícia, liga as peças no Quadro e anota no Caderno.',h:'Não vê Conversas, Chamadas nem Locais.'}],
-r:[{n:'Interrogatório',d:'Conversa com os suspeitos e ouve os depoimentos.',h:'Não vê as provas.'},{n:'Perícia',d:'Examina as provas e os laudos.',h:'Não vê as conversas.'}],
-t:[{n:'Leitura',d:'Abre e lê as fontes das pistas. Lê em voz alta para a dupla.',h:'Não mexe na ordem dos fatos.'},{n:'Montagem',d:'Coloca os fatos em ordem e confere a linha do tempo.',h:'Não abre as fontes das pistas.'}]};
+const DUOR={c:[{n:'Campo',d:'Conversa com os suspeitos, atende ligações e visita os locais.',h:'Não vê Perícia, Quadro nem Caderno.',a:['Conversas','Chamadas','Locais']},{n:'Perícia',d:'Analisa as provas na Perícia, liga as peças no Quadro e anota no Caderno.',h:'Não vê Conversas, Chamadas nem Locais.',a:['Perícia','Quadro','Caderno']}],
+r:[{n:'Interrogatório',d:'Conversa com os suspeitos e ouve os depoimentos.',h:'Não vê as provas.',a:['Suspeitos','Conversas']},{n:'Perícia',d:'Examina as provas e os laudos.',h:'Não vê as conversas.',a:['Provas']}],
+t:[{n:'Leitura',d:'Abre e lê as fontes das pistas. Lê em voz alta para a dupla.',h:'Não mexe na ordem dos fatos.',a:['Abrir as fontes das pistas','Minhas pistas','Marcar o depoimento que não bate']},{n:'Montagem',d:'Coloca os fatos em ordem e confere a linha do tempo.',h:'Não abre as fontes das pistas.',a:['Mover os fatos','Pedir dica','Conferir a ordem']}]};
+const DUOSH={c:'Prisão (acusação), Briefing, Dicas e Ajustes',r:'Acusar',t:'Ver os títulos e horários dos fatos'};
 const duoRoles=a=>DUOR[a.k];
 const duoHolderRole=(a,z)=>z.t===z.r?0:1;
 const duoWho=(z,r)=>r===0?z.r:1-z.r;
@@ -48,7 +49,7 @@ const duoTxt=(a,c)=>{const L=a.k==='t'?Object.assign({},DUOLBL,DUOLBLT):DUOLBL,r
 const duoTot=c=>Object.keys(c).reduce((s,k)=>s+(c[k]||0),0);
 
 function duoTick(){const a=duoAct();let hud=document.getElementById('duohud');
-if(!a){duoOv(null);if(hud)hud.remove();return}
+if(!a){duoOv(null);if(hud)hud.remove();DUO.shown={};DUO.t0={};DUO.sb=0;DUO.role=0;DUO.swap=null;return}
 const d=DU(),z=duoSes(a),cur=duoCnt(a,z);
 if(!z.last){z.last=cur}
 else{let ch=0;Object.keys(cur).forEach(k=>{const dl=(cur[k]||0)-(z.last[k]||0);if(dl>0){z.c[z.t][k]=(z.c[z.t][k]||0)+dl;ch=1}z.last[k]=cur[k]});if(ch)msave()}
@@ -57,23 +58,25 @@ const rl=duoHolderRole(a,z);
 if(a.k==='c'&&!DUO.conf&&!DUO.swap){const g=duoGate(a,S.tab);if(g>=0&&g!==rl){S.tab='phone';CHO=0;QTO=0;try{LBO=0}catch(e){}render();return}}
 if(a.k==='r'&&!DUO.swap){const g=duoGate(a,RQ.tab);if(g>=0&&g!==rl){RQ.tab=rl?'pr':'su';RQ.pv=null;RQ.su=null;render();return}}
 let ov=null;
-if(DUO.conf)ov='conf';else if(!DUO.shown[a.key])ov='sort';else if(DUO.swap)ov='swap';else if(DUO.sb)ov='sb';
+if(DUO.conf)ov='conf';else if(!DUO.shown[a.key])ov='sort';else if(DUO.swap)ov='swap';else if(DUO.role)ov='role';else if(DUO.sb)ov='sb';
 duoOv(ov,a,z);
 if(duoDone(a)&&!z.sb&&!ov){DUO.t0[a.key]=DUO.t0[a.key]||Date.now();if(Date.now()-DUO.t0[a.key]>3500){z.sb=1;msave();DUO.sb=1;duoTick();return}}
 if(!ov){const p=duoPl(z.t),h=`<span class=dh-d style="background:${p.c}"></span><b>${esc(p.n)}</b><small>${DUOR[a.k][rl].n}</small>`;
-if(!hud){hud=document.createElement('button');hud.id='duohud';hud.onclick=()=>{DUO.sb=1;duoTick()};document.body.appendChild(hud)}
+if(!hud){hud=document.createElement('button');hud.id='duohud';hud.onclick=()=>{DUO.role=1;duoTick()};document.body.appendChild(hud)}
 if(hud.dataset.h!==h){hud.dataset.h=h;hud.innerHTML=h}}else if(hud)hud.remove()}
 
 /* tela cheia: passagem do celular, placar, confirmação */
-function duoOv(kind,a,z){let e=document.getElementById('duoov');const sig=kind&&kind+'|'+(z?z.t+'|'+z.n:'')+'|'+(DUO.conf?DUO.conf.st:'')+'|'+DUO.sb;
+function duoOv(kind,a,z){let e=document.getElementById('duoov');const sig=kind&&kind+'|'+(z?z.t+'|'+z.r+'|'+z.go:'')+'|'+(DUO.conf?DUO.conf.st:'')+'|'+DUO.sb+'|'+DUO.role;
 if(!kind){if(e)e.remove();return}
 if(e&&e.dataset.s===sig)return;
 if(!e){e=document.createElement('div');e.id='duoov';document.body.appendChild(e)}
 e.dataset.s=sig;const nxt=1-z.t;let h='';
 const badge=(p,s)=>`<span class=dbd style="background:${p.c};width:${s||64}px;height:${s||64}px;font-size:${(s||64)*.45}px">${esc((p.n||'?').trim().charAt(0).toUpperCase())}</span>`;
 const A0=duoPl(0),role=r=>DUOR[a.k][r];
-if(kind==='sort'){const hp=duoPl(z.t),hr=duoHolderRole(a,z),o=1-z.t;
-h=`<div class=dcard><small>PAPÉIS SORTEADOS PARA ESTE CASO</small>${[0,1].map(r=>{const w=duoWho(z,r),pp=duoPl(w);return `<div class=dpr>${badge(pp,40)}<div><b>${esc(pp.n)} · ${role(r).n}</b><span>${role(r).d} ${role(r).h}</span></div></div>`}).join('')}<p>Cada um só vê a sua parte. Para saber o que o outro viu, é só conversar. Quando precisar da área do outro, passem o celular.</p><button class=dbtn onclick="duoGo('sort')">${esc(hp.n)} começa · Continuar</button></div>`}
+if(kind==='sort'){const hp=duoPl(z.t),again=!!z.go;
+h=`<div class=dcard><small>PAPÉIS ${again?'DESTE CASO':'SORTEADOS PARA ESTE CASO'}</small>${[0,1].map(r=>{const w=duoWho(z,r),pp=duoPl(w);return `<div class=dpr>${badge(pp,40)}<div><b>${esc(pp.n)} · ${role(r).n}</b><span>${role(r).d}</span><span>Acessa: ${role(r).a.join(', ')}</span></div></div>`}).join('')}<button class=dbtn onclick="duoRoll('keep')">${again?'Manter os papéis · Continuar':esc(hp.n)+' começa · Continuar'}</button><button class="dbtn gh" onclick="duoRoll('new')">Sortear de novo</button><button class="dbtn gh" onclick="duoRoll('swap')">Trocar os papéis entre vocês</button></div>`}
+else if(kind==='role'){const rl=duoHolderRole(a,z),me=duoPl(z.t),R=role(rl),O=role(1-rl);
+h=`<div class=dcard>${badge(me)}<small>${esc(me.n.toUpperCase())} · SEU PAPEL</small><h2>${R.n}</h2><p style="margin-bottom:10px">${R.d}</p><div class=dpr style="display:block"><b>Você acessa</b><span>${R.a.join(' · ')}</span></div><div class=dpr style="display:block"><b>Só ${esc(duoPl(1-z.t).n)} acessa (${O.n})</b><span>${O.a.join(' · ')}</span></div><div class=dpr style="display:block"><b>Telas dos dois</b><span>${DUOSH[a.k]}</span></div><button class=dbtn onclick="duoNow()">Passar o celular para ${esc(duoPl(1-z.t).n)}</button><button class="dbtn gh" onclick="DUO.sb=1;DUO.role=0;duoTick()">Ver placar</button><button class="dbtn gh" onclick="DUO.role=0;duoTick()">Fechar</button></div>`}
 else if(kind==='swap'){const w=duoWho(z,DUO.swap.r),pp=duoPl(w);
 h=`<div class=dcard>${badge(pp)}<small>ESSA ÁREA É DE ${role(DUO.swap.r).n.toUpperCase()}</small><h2>Passe o celular para ${esc(pp.n)}</h2><p>${esc(pp.n)} está na ${role(DUO.swap.r).n}: ${role(DUO.swap.r).d.toLowerCase()} A tela fica escondida até ${esc(pp.n)} tocar.</p><button class=dbtn onclick="duoGo('swap')">Sou ${esc(pp.n)} · Continuar</button><button class="dbtn gh" onclick="DUO.swap=null;duoTick()">Voltar</button></div>`}
 else if(kind==='sb'){const ca=z.c[0],cb=z.c[1],ta=duoTot(ca),tb=duoTot(cb),pa=duoPl(0),pb=duoPl(1),fin=duoDone(a);
@@ -93,7 +96,9 @@ if(k==='swap'&&DUO.swap){const sw=DUO.swap;DUO.swap=null;duoFlip(a,z,duoWho(z,sw
 else if(k==='sort'&&!z.go){z.go=1;duoFlip(a,z,z.r)}
 try{AU.fx&&AU.fx('tick')}catch(e){}duoTick()};
 /* troca de visão pedida pelo jogador */
-window.duoNow=()=>{const a=duoAct();if(!a)return;const z=duoSes(a);DUO.sb=0;DUO.swap={r:1-duoHolderRole(a,z),k:null};duoTick()};
+window.duoRoll=k=>{const a=duoAct();if(!a)return;const z=duoSes(a);if(k==='new')z.r=Math.random()<.5?0:1;else if(k==='swap')z.r=1-z.r;if(k!=='keep'){z.go=1;duoFlip(a,z,z.r)}else z.go=1;DUO.shown[a.key]=1;try{AU.fx&&AU.fx('tick')}catch(e){}duoTick()};
+window.duoRole=()=>{DUO.sb=0;DUO.role=1;duoTick()};
+window.duoNow=()=>{const a=duoAct();if(!a)return;const z=duoSes(a);DUO.sb=0;DUO.role=0;DUO.swap={r:1-duoHolderRole(a,z),k:null};duoTick()};
 function duoSwap(a,z,k,r){DUO.swap={r,k};duoTick()}
 /* bloqueio por papel nas telas */
 {{const _oa=openApp;openApp=function(k,ev){const a=duoAct();if(a&&a.k==='c'){const g=duoGate(a,k),z=duoSes(a);if(g>=0&&g!==duoHolderRole(a,z)){DUO.swap={r:g,k};duoTick();return}}return _oa.apply(this,arguments)}}
