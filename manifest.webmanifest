@@ -1,0 +1,19 @@
+{
+  "name": "SISP Mobile",
+  "short_name": "SISP",
+  "description": "Jogo de investigação policial: colete provas, interrogue suspeitos e descubra o culpado.",
+  "lang": "pt-BR",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#06090d",
+  "theme_color": "#0e1116",
+  "categories": ["games", "entertainment"],
+  "icons": [
+    { "src": "assets/logo/icone_192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/logo/icone_512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/logo/icone_maskable_512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

@@ -149,13 +149,14 @@ outro domínio.
 ## Testes automáticos
 
 A pasta `testes/` tem um robô que joga o jogo inteiro num navegador sem tela,
-usando as mesmas funções que os botões chamam. São dois arquivos:
+usando as mesmas funções que os botões chamam. São três arquivos:
 
 - `jogar-casos.mjs`: os 7 casos principais (c0 a c6), seguindo o guia do
   próprio jogo, primeiro sozinho e depois em dupla (um celular, passando o
   celular e confirmando a acusação em conjunto).
 - `jogar-modos.mjs`: os casos rápidos e as linhas do tempo (sozinho e em
   dupla) e os casos de dois celulares (duas abas na mesma sala).
+- `conferir-app.mjs`: o jogo como app instalável e abrindo sem internet.
 
 O teste falha se:
 
@@ -188,6 +189,29 @@ no Firebase (`.github/workflows/testes.yml`): se falhar, nada vai ao ar.
 O robô **não** cobre o som, a aparência das telas nem a conexão real com o
 Firebase: o modo de dois celulares é jogado com a rede de teste do próprio jogo
 (`window.NETMOCK`), que troca o servidor pelo armazenamento do navegador.
+
+## App instalável e sem internet
+
+O jogo pode ser instalado como app: ganha ícone na tela do celular, abre em
+tela cheia e funciona sem internet.
+
+- `manifest.webmanifest`: nome, cores e ícones do app (os ícones estão em
+  `assets/logo/`).
+- `sw.js`: guarda os arquivos no aparelho. O programa do jogo (`index.html`,
+  `css/`, `js/`, `casos/`) é guardado inteiro na primeira visita e, com
+  internet, sempre vem a versão mais nova. A arte, os vídeos e os sons
+  (`assets/`) são guardados na primeira vez que aparecem; se um arquivo for
+  trocado, a versão nova chega na visita seguinte.
+- `js/38-app.js`: registra o `sw.js` e desenha o quadro "Instalar como app" nas
+  Configurações (no Android, um botão; no iPhone, a instrução do Safari).
+
+Sem internet, portanto, funciona tudo o que já foi aberto pelo menos uma vez:
+um caso nunca jogado abre, mas os vídeos e as imagens dele que ainda não foram
+vistos não aparecem. O modo em dois celulares sempre precisa de internet.
+
+Só funciona em endereço `https` (Firebase, GitHub Pages) ou em `localhost`.
+`testes/conferir-app.mjs` confere o manifesto, os ícones e o jogo abrindo com o
+servidor desligado.
 
 ## Modo teste
 
