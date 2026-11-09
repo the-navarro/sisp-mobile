@@ -5,7 +5,7 @@
 window.DCC=window.DCC||[];window.DCI=window.DCI||{};
 const dcFirst=n=>{const w=String(n).split(' ');return /^(Dona|Seu|Dr\.?|Dra\.?|Sr\.?|Sra\.?)$/i.test(w[0])&&w[1]?w[1]:w[0]};
 const dcCase=id=>DCC.find(c=>c.id===id);
-window.DC={on:0,cod:null,uid:null,me:0,host:0,names:['',''],p1u:null,p2u:null,r:0,k:null,g:'g1',conn:[0,0],evs:{},ver:0,offs:[],cs:null,v:'intro',tab:'su',su:null,pv:null,sel:{},msg:'',err:'',busy:0,open:0,st:'home',myName:'',joinK:null,feed:[],un:0,lobby:0,chat:0,hint:0,wiz:null,rsp:null,stc:null,stv:-1,t0:0,seenNote:{}};
+window.DC={avs:['',''],reopen:0,on:0,cod:null,uid:null,me:0,host:0,names:['',''],p1u:null,p2u:null,r:0,k:null,g:'g1',conn:[0,0],evs:{},ver:0,offs:[],cs:null,v:'intro',tab:'su',su:null,pv:null,sel:{},msg:'',err:'',busy:0,open:0,st:'home',myName:'',joinK:null,feed:[],un:0,lobby:0,chat:0,hint:0,wiz:null,rsp:null,stc:null,stv:-1,t0:0,seenNote:{}};
 const DCK='sisp-dc',COD='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
 const dcCode=()=>Array.from({length:5},()=>COD[Math.floor(Math.random()*COD.length)]).join('');
 const dcRole=()=>DC.me===DC.r?'A':'B';
@@ -16,6 +16,7 @@ const dcPartner=()=>DC.names[1-DC.me]||'Parceiro(a)';
 const dcNorm=s=>String(s==null?'':s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]/g,'');
 const dcWho=e=>{const i=e.u===DC.p1u?0:1;return i===DC.r?'A':'B'};
 const dcOwns=(o,w)=>o==='ambos'||o===w;
+const dcMyAv=()=>{try{const o=JSON.parse(JSON.stringify(META.pl||{}));delete o.n;const j=JSON.stringify(o);return j.length<=950?j:''}catch(e){return ''}};
 const dcSave=()=>{try{localStorage.setItem(DCK,JSON.stringify({cod:DC.cod,me:DC.me,host:DC.host,n:DC.myName}))}catch(e){}};
 
 /* ---------- regras: estado a partir dos eventos ---------- */
@@ -76,6 +77,7 @@ window.dcResp=(id,ok,m)=>{dcEmit('resp',{id,ok:ok?1:0,m:m||''});DC.rsp=null;rend
 window.dcVote=(cul,fin)=>{const st=dcState();dcEmit('vote',{rod:st.rod,cul,fin})};
 window.dcHint=()=>{dcEmit('hint',{});};
 window.dcChatSay=i=>{dcEmit('chat',{x:DCPHR[i]});};
+window.dcChatTxt=()=>{const i=document.getElementById('dcmsg'),x=((i&&i.value)||'').trim().slice(0,140);if(!x)return;i.value='';dcEmit('chat',{x})};
 const DCPHR=['Achei algo importante!','Pode me enviar uma prova?','Preciso de uma informação sua.','Enviei algo para você.','Vamos propor uma contradição?','Concordo.','Ainda não concordo.','Estou travado(a). Alguma ideia?','Calma, vamos juntar as peças.'];
 
 /* 5 erros seguidos em senha, código ou resposta bloqueiam o teclado por 20 segundos */
@@ -86,14 +88,14 @@ const dcErr=m=>{DC.err=m;DC.busy=0;if(window.dcMod)dcMod()};
 const dcMsg=e=>{const m=String(e&&e.message||e),cod=String((e&&e.code)||m).replace(/^Firebase:\s*/,'').slice(0,60);if(/Sala n|Sem internet|Sem conex|Escreva|Não consegui/.test(m))return m;if(/admin-restricted|operation-not-allowed|ADMIN_ONLY/i.test(cod+m))return 'O login do servidor ainda não está liberado para o jogo em dupla (login anônimo desativado no Firebase). Código: '+cod;return 'Não foi possível falar com o servidor. Confira a internet e tente de novo. Código: '+cod};
 const dcNm=()=>{const i=document.getElementById('dn');return((i&&i.value)||DC.myName||(META.pl&&META.pl.n)||'').trim().slice(0,14)};
 window.dcCreate=async()=>{const n=dcNm();if(!n)return dcErr('Escreva o seu nome.');DC.myName=n;DC.err='';DC.busy=1;dcMod();
-try{await NET.init();let ok=0;for(let i=0;i<6&&!ok;i++){const cod=dcCode();try{await NET.criar(cod,{c:Date.now(),m:'dupla',r:Math.random()<.5?0:1,p1:{u:NET.uid(),n}});DC.cod=cod;ok=1}catch(e){if(!/PERMISSION/i.test(String(e&&e.message)))throw e}}
+try{await NET.init();let ok=0;for(let i=0;i<6&&!ok;i++){const cod=dcCode();try{await NET.criar(cod,{c:Date.now(),m:'dupla',r:Math.random()<.5?0:1,p1:{u:NET.uid(),n,a:dcMyAv()}});DC.cod=cod;ok=1}catch(e){if(!/PERMISSION/i.test(String(e&&e.message)))throw e}}
 if(!ok)throw new Error('Não consegui criar a sala. Tente de novo.');DC.me=0;DC.host=1;dcAttach()}catch(e){dcErr(dcMsg(e))}};
 window.dcJoin=async()=>{const n=dcNm(),i=document.getElementById('dcc'),cod=((i&&i.value)||'').toUpperCase().replace(/[^A-Z0-9]/g,'');if(!n)return dcErr('Escreva o seu nome.');if(cod.length!==5)return dcErr('O código tem 5 letras ou números.');DC.myName=n;DC.err='';DC.busy=1;dcMod();
-try{await NET.init();try{await NET.entrar(cod,{u:NET.uid(),n})}catch(e){if(/PERMISSION/i.test(String(e&&e.message)))throw new Error('Sala não encontrada, ou já tem duas pessoas.');throw e}DC.cod=cod;DC.me=1;DC.host=0;dcAttach()}catch(e){dcErr(dcMsg(e))}};
+try{await NET.init();try{await NET.entrar(cod,{u:NET.uid(),n,a:dcMyAv()})}catch(e){if(/PERMISSION/i.test(String(e&&e.message)))throw new Error('Sala não encontrada, ou já tem duas pessoas.');throw e}DC.cod=cod;DC.me=1;DC.host=0;dcAttach()}catch(e){dcErr(dcMsg(e))}};
 function dcAttach(){DC.on=1;DC.busy=0;DC.st='lobby';DC.err='';DC.uid=NET.uid();DC.evs={};DC.ver++;DC.cs=null;DC.open=0;DC.v='intro';DC.feed=[];DC.t0=Date.now()-2000;dcSave();
 const c=DC.cod,o=DC.offs;o.forEach(f=>{try{f()}catch(e){}});o.length=0;
-o.push(NET.on(c,'p1',v=>{DC.names[0]=v?v.n:'';DC.p1u=v&&v.u;dcRefresh()}));
-o.push(NET.on(c,'p2',v=>{DC.names[1]=v?v.n:'';DC.p2u=v&&v.u;dcRefresh()}));
+o.push(NET.on(c,'p1',v=>{DC.names[0]=v?v.n:'';DC.avs[0]=v&&v.a||'';DC.p1u=v&&v.u;dcRefresh()}));
+o.push(NET.on(c,'p2',v=>{DC.names[1]=v?v.n:'';DC.avs[1]=v&&v.a||'';DC.p2u=v&&v.u;dcRefresh()}));
 o.push(NET.on(c,'r',v=>{if(v!=null)DC.r=v;DC.ver++;dcRefresh()}));
 o.push(NET.on(c,'k',v=>{DC.k=v;dcK()}));
 o.push(NET.on(c,'on',v=>{v=v||{};DC.conn=[DC.p1u&&v[DC.p1u]?1:0,DC.p2u&&v[DC.p2u]?1:0];dcRefresh()}));
@@ -101,13 +103,13 @@ o.push(NET.onAdd(c,'ev',dcOnEv));
 o.push(NET.presenca(c));
 dcMod();render()}
 function dcRefresh(){if(window.dcMod&&document.getElementById('dcm'))dcMod();if(DC.open)render()}
-window.dcLeave=()=>{DC.offs.forEach(f=>{try{f()}catch(e){}});DC.offs.length=0;DC.on=0;DC.cod=null;DC.k=null;DC.cs=null;DC.open=0;DC.names=['',''];DC.conn=[0,0];DC.evs={};DC.feed=[];DC.st='home';DC.err='';try{localStorage.removeItem(DCK)}catch(e){}
+window.dcLeave=()=>{DC.offs.forEach(f=>{try{f()}catch(e){}});DC.offs.length=0;DC.on=0;DC.cod=null;DC.k=null;DC.cs=null;DC.open=0;DC.names=['',''];DC.avs=['',''];DC.conn=[0,0];DC.evs={};DC.feed=[];DC.st='home';DC.err='';try{localStorage.removeItem(DCK)}catch(e){}
 ['dcm','dcch'].forEach(i=>{const e=document.getElementById(i);if(e)e.remove()});render()};
-async function dcResume(){let s;try{s=JSON.parse(localStorage.getItem(DCK))}catch(e){}if(!s||!s.cod)return;try{await NET.init();DC.cod=s.cod;DC.me=s.me;DC.host=s.host;DC.myName=s.n||'';dcAttach();DC.st='lobby';const m=document.getElementById('dcm');if(m)m.remove()}catch(e){setTimeout(dcResume,15000)}}
+async function dcResume(){let s;try{s=JSON.parse(localStorage.getItem(DCK))}catch(e){}if(!s||!s.cod)return;try{await NET.init();DC.cod=s.cod;DC.me=s.me;DC.host=s.host;DC.myName=s.n||'';DC.reopen=1;dcAttach();DC.st='lobby';const m=document.getElementById('dcm');if(m)m.remove()}catch(e){setTimeout(dcResume,15000)}}
 /* caso escolhido pela pessoa que criou a sala: k = 'd:<caso>:<partida>' */
 function dcK(){if(!DC.on)return;const m=/^d:([^:]+):(g\d+)$/.exec(DC.k||'');if(!m){dcRefresh();return}const c=dcCase(m[1]);if(!c){dcRefresh();return}
 if(DC.g!==m[2]||!DC.cs||DC.cs.id!==c.id){DC.g=m[2];DC.cs=c;DC.ver++;DC.v=Object.keys(DC.evs).some(i=>DC.evs[i].x===DC.g&&DC.evs[i].u===DC.uid)?'main':'intro';DC.tab='su';DC.su=null;DC.pv=null;DC.sel={};DC.stc=null;
-if(DC.host){DC.open=1;const mm=document.getElementById('dcm');if(mm)mm.remove()}else{DC.joinK=c.id}}
+if(DC.host||DC.reopen){DC.open=1;DC.reopen=0;DC.joinK=null;const mm=document.getElementById('dcm');if(mm)mm.remove()}else{DC.joinK=c.id}}
 dcRefresh()}
 window.dcEnter=()=>{DC.joinK=null;DC.open=1;const m=document.getElementById('dcm');if(m)m.remove();render()};
 window.dcStart=id=>{if(!DC.host||!dcCase(id))return;const n=1+Math.max(0,...Object.keys(DC.evs).map(i=>+(/g(\d+)/.exec(DC.evs[i].x)||[0,0])[1]),+(/g(\d+)/.exec(DC.g)||[0,0])[1]);
@@ -117,7 +119,7 @@ window.dcRoll=()=>{if(DC.host)NET.set(DC.cod,'r',Math.random()<.5?0:1).catch(()=
 window.dcBack=()=>{DC.open=0;DC.st='lobby';render();dcMod()};
 
 /* eventos que chegam do outro celular */
-function dcOnEv(id,e){if(!DC.on||!e||DC.evs[id])return;DC.evs[id]=e;DC.ver++;
+function dcOnEv(id,e){if(!DC.on||!e||DC.evs[id])return;DC.evs[id]=e;DC.ver++;if(e.u===DC.uid&&e.x===DC.g&&DC.v==='intro')DC.v='main';
 if(e.x===DC.g&&e.u!==DC.uid&&(e.t||0)>DC.t0){let d={};try{d=JSON.parse(e.d||'{}')}catch(x){}const n=dcPartner();
 if(e.k==='send'){const c=DC.cs;let nm='';if(c){if(d.k==='p'){const p=dcP(c,d.id);nm=p?p.nome:''}else{const o=dcAllQ(c).find(x=>x.k===d.id);nm=o?'fala de '+dcFirst(o.s.nome):''}}dcNote('📥 '+n+' enviou: '+nm);DC.un++}
 else if(e.k==='prop'){dcNote('⚖️ '+n+' propôs uma contradição. Veja na Mesa.');DC.un++}

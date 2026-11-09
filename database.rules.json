@@ -20,13 +20,15 @@
         "p1": {
           ".validate": "newData.hasChildren(['u', 'n']) && newData.child('n').isString() && newData.child('n').val().length <= 14",
           "u": { ".validate": "newData.isString()" },
-          "n": { ".validate": "newData.isString()" }
+          "n": { ".validate": "newData.isString()" },
+          "a": { ".validate": "newData.isString() && newData.val().length <= 1000" }
         },
         "p2": {
           ".write": "auth != null && !data.exists() && newData.child('u').val() == auth.uid && root.child('salas').child($cod).child('p1').exists()",
           ".validate": "newData.hasChildren(['u', 'n']) && newData.child('n').isString() && newData.child('n').val().length <= 14",
           "u": { ".validate": "newData.isString()" },
-          "n": { ".validate": "newData.isString()" }
+          "n": { ".validate": "newData.isString()" },
+          "a": { ".validate": "newData.isString() && newData.val().length <= 1000" }
         },
         "s1": {
           ".write": "auth != null && root.child('salas').child($cod).child('p1').child('u').val() == auth.uid",
