@@ -19,8 +19,8 @@
 
    "Avisos" são coisas que o robô estranhou mas que não impedem terminar o caso
    (por exemplo, o guia apontar para uma tela ainda trancada). Só problemas de
-   verdade (caso sem solução, erro de JavaScript, arquivo faltando, modo teste
-   ligado) fazem o teste falhar. */
+   verdade (caso sem solução, erro de JavaScript, arquivo faltando) fazem o
+   teste falhar. */
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -219,15 +219,17 @@ await page.addInitScript(() => {
   /* jogador que já passou pela apresentação, com o som desligado */
   if (!localStorage.getItem('sisp-meta')) localStorage.setItem('sisp-meta', JSON.stringify({ done: {}, p: {}, onb: 1, pl: { n: 'Teste' } }));
 });
-await page.goto(url);
+/* ?teste=0: joga como o jogador final, com os casos abrindo um depois do outro */
+await page.goto(url + '?teste=0');
 if (process.env.DEPURAR) await page.evaluate(() => { window.DEPURAR = 1; });
 await page.clock.runFor(1500);
 
 let falhou = 0;
 const avisos = {};
-const inicio = await page.evaluate(() => { ONS = null; render(); return { teste: TESTE, casos: CASES.map(c => c.id) }; });
+const inicio = await page.evaluate(() => { ONS = null; render(); return { teste: TESTE, casos: CASES.map(c => c.id), naTela: /\bteste\b/i.test(document.body.innerText) }; });
 if (erros.length) { console.log('✗ erro ao abrir o jogo: ' + erros[0]); falhou++; }
-if (inicio.teste) { console.log('✗ o modo teste está ligado (TESTE=true): todos os casos ficam abertos para o jogador'); falhou++; }
+if (inicio.teste) { console.log('✗ ?teste=0 não desligou o modo teste'); falhou++; }
+if (inicio.naTela) { console.log('✗ a palavra "teste" aparece na tela inicial'); falhou++; }
 
 const lista = SO.length ? inicio.casos.filter(c => SO.includes(c)) : inicio.casos;
 for (const caso of (falhou ? [] : lista)) {
