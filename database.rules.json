@@ -50,6 +50,7 @@
             "t": { ".validate": "newData.isNumber()" },
             "k": { ".validate": "newData.isString() && newData.val().length <= 8" },
             "x": { ".validate": "newData.isString() && newData.val().length <= 240" },
+            "d": { ".validate": "newData.isString() && newData.val().length <= 400" },
             "$other": { ".validate": false }
           }
         },
