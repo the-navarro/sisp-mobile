@@ -1,4 +1,4 @@
-/* ===== Modo dupla: Revezamento (um celular, duas pessoas) =====
+/* ===== Modo dupla: Papéis (um celular, duas pessoas, visões diferentes) =====
    Regra: o jogo solo não muda. Em dupla, o progresso fica em outro lugar
    (META.duo.store e chaves '-duo'), trocado por baixo dos panos. */
 const DUOF=['rq','tl','p','done','rk','last'];
@@ -23,7 +23,17 @@ function duoAct(){if(!DUO.on||!duoCfg())return null;
 if(window.RQ&&RQ.v==='main')return{k:'r',id:RQ.id,key:'r:'+RQ.id};
 if(window.TM&&TM.v==='main')return{k:'t',id:TM.id,key:'t:'+TM.id};
 if(!window.RQ&&!window.TM&&C&&!MENU)return{k:'c',id:C.id,key:'c:'+C.id};return null}
-const duoSes=a=>{const d=DU(),z=d.ses[a.key]=d.ses[a.key]||{t:0,n:0,pass:0,c:[{},{}],last:null,sb:0};return z};
+const duoSes=a=>{const d=DU(),z=d.ses[a.key]=d.ses[a.key]||{t:0,n:0,pass:0,c:[{},{}],last:null,sb:0};if(z.r===undefined){z.r=Math.random()<.5?0:1;z.t=z.r}return z};
+/* papéis: 0 e 1; z.r = jogador que tem o papel 0; z.t = quem está com o celular */
+const DUOR={c:[{n:'Campo',d:'Conversa com os suspeitos, atende ligações e visita os locais.',h:'Não vê Perícia, Quadro nem Caderno.'},{n:'Perícia',d:'Analisa as provas na Perícia, liga as peças no Quadro e anota no Caderno.',h:'Não vê Conversas, Chamadas nem Locais.'}],
+r:[{n:'Interrogatório',d:'Conversa com os suspeitos e ouve os depoimentos.',h:'Não vê as provas.'},{n:'Perícia',d:'Examina as provas e os laudos.',h:'Não vê as conversas.'}],
+t:[{n:'Leitura',d:'Abre e lê as fontes das pistas. Lê em voz alta para a dupla.',h:'Não mexe na ordem dos fatos.'},{n:'Montagem',d:'Coloca os fatos em ordem e confere a linha do tempo.',h:'Não abre as fontes das pistas.'}]};
+const duoRoles=a=>DUOR[a.k];
+const duoHolderRole=(a,z)=>z.t===z.r?0:1;
+const duoWho=(z,r)=>r===0?z.r:1-z.r;
+const DUOAPP=[['interrogate','calls','locations'],['lab','mindmap','caderno']];
+const DUORQ=[['su','cv'],['pr']];
+const duoGate=(a,k)=>{const L=a.k==='c'?DUOAPP:DUORQ;for(let i=0;i<2;i++)if(L[i].includes(k))return i;return -1};
 function duoCnt(a,z){
 if(a.k==='c'){const lc=DUO.lc[a.key];if(lc===undefined)DUO.lc[a.key]=S.loc;else if(lc!==S.loc){DUO.lc[a.key]=S.loc;z.vv=(z.vv||0)+1}return{q:S.asked.length,e:S.inv.length,a:S.an.length,v:z.vv||0}}
 if(a.k==='r')return{q:RQ.asked.length,e:RQ.inv.length};
@@ -41,14 +51,16 @@ function duoTick(){const a=duoAct();let hud=document.getElementById('duohud');
 if(!a){duoOv(null);if(hud)hud.remove();return}
 const d=DU(),z=duoSes(a),cur=duoCnt(a,z);
 if(!z.last){z.last=cur}
-else{let ch=0;Object.keys(cur).forEach(k=>{const dl=(cur[k]||0)-(z.last[k]||0);if(dl>0){z.c[z.t][k]=(z.c[z.t][k]||0)+dl;z.n+=dl;ch=1}z.last[k]=cur[k]});if(ch){const ev=d.cfg.ev;if(z.n>=ev)z.pass=1;msave()}}
-const free=duoFree(a);
+else{let ch=0;Object.keys(cur).forEach(k=>{const dl=(cur[k]||0)-(z.last[k]||0);if(dl>0){z.c[z.t][k]=(z.c[z.t][k]||0)+dl;ch=1}z.last[k]=cur[k]});if(ch)msave()}
+const rl=duoHolderRole(a,z);
+/* cada um só fica nas telas do seu papel */
+if(a.k==='c'&&!DUO.conf&&!DUO.swap){const g=duoGate(a,S.tab);if(g>=0&&g!==rl){S.tab='phone';CHO=0;QTO=0;try{LBO=0}catch(e){}render();return}}
+if(a.k==='r'&&!DUO.swap){const g=duoGate(a,RQ.tab);if(g>=0&&g!==rl){RQ.tab=rl?'pr':'su';RQ.pv=null;RQ.su=null;render();return}}
 let ov=null;
-if(DUO.conf)ov='conf';else if(!DUO.shown[a.key])ov='pass0';else if(z.pass&&free)ov='pass';else if(DUO.sb)ov='sb';
+if(DUO.conf)ov='conf';else if(!DUO.shown[a.key])ov='sort';else if(DUO.swap)ov='swap';else if(DUO.sb)ov='sb';
 duoOv(ov,a,z);
 if(duoDone(a)&&!z.sb&&!ov){DUO.t0[a.key]=DUO.t0[a.key]||Date.now();if(Date.now()-DUO.t0[a.key]>3500){z.sb=1;msave();DUO.sb=1;duoTick();return}}
-/* indicador de vez */
-if(!ov){const p=duoPl(z.t),ev=d.cfg.ev,left=Math.max(0,ev-z.n);const h=`<span class=dh-d style="background:${p.c}"></span><b>${esc(p.n)}</b><small>${z.pass?'passe o celular':left+(left===1?' ação':' ações')}</small>`;
+if(!ov){const p=duoPl(z.t),h=`<span class=dh-d style="background:${p.c}"></span><b>${esc(p.n)}</b><small>${DUOR[a.k][rl].n}</small>`;
 if(!hud){hud=document.createElement('button');hud.id='duohud';hud.onclick=()=>{DUO.sb=1;duoTick()};document.body.appendChild(hud)}
 if(hud.dataset.h!==h){hud.dataset.h=h;hud.innerHTML=h}}else if(hud)hud.remove()}
 
@@ -59,17 +71,35 @@ if(e&&e.dataset.s===sig)return;
 if(!e){e=document.createElement('div');e.id='duoov';document.body.appendChild(e)}
 e.dataset.s=sig;const nxt=1-z.t;let h='';
 const badge=(p,s)=>`<span class=dbd style="background:${p.c};width:${s||64}px;height:${s||64}px;font-size:${(s||64)*.45}px">${esc((p.n||'?').trim().charAt(0).toUpperCase())}</span>`;
-if(kind==='pass0'){const p=duoPl(z.t);h=`<div class=dcard>${badge(p)}<small>VEZ DE</small><h2>${esc(p.n)}</h2><p>Só ${esc(p.n)} deve olhar a tela agora. ${duoCfg().ev} ações e o celular passa para ${esc(duoPl(nxt).n)}.</p><button class=dbtn onclick="duoGo('pass0')">Sou ${esc(p.n)} · Continuar</button></div>`}
-else if(kind==='pass'){const p=duoPl(nxt);h=`<div class=dcard>${badge(p)}<small>PASSE O CELULAR PARA</small><h2>${esc(p.n)}</h2><p>A tela está escondida. Quando ${esc(p.n)} estiver com o celular, é só tocar.</p><button class=dbtn onclick="duoGo('pass')">Sou ${esc(p.n)} · Continuar</button></div>`}
+const A0=duoPl(0),role=r=>DUOR[a.k][r];
+if(kind==='sort'){const hp=duoPl(z.t),hr=duoHolderRole(a,z),o=1-z.t;
+h=`<div class=dcard><small>PAPÉIS SORTEADOS PARA ESTE CASO</small>${[0,1].map(r=>{const w=duoWho(z,r),pp=duoPl(w);return `<div class=dpr>${badge(pp,40)}<div><b>${esc(pp.n)} · ${role(r).n}</b><span>${role(r).d} ${role(r).h}</span></div></div>`}).join('')}<p>Cada um só vê a sua parte. Para saber o que o outro viu, é só conversar. Quando precisar da área do outro, passem o celular.</p><button class=dbtn onclick="duoGo('sort')">${esc(hp.n)} começa · Continuar</button></div>`}
+else if(kind==='swap'){const w=duoWho(z,DUO.swap.r),pp=duoPl(w);
+h=`<div class=dcard>${badge(pp)}<small>ESSA ÁREA É DE ${role(DUO.swap.r).n.toUpperCase()}</small><h2>Passe o celular para ${esc(pp.n)}</h2><p>${esc(pp.n)} está na ${role(DUO.swap.r).n}: ${role(DUO.swap.r).d.toLowerCase()} A tela fica escondida até ${esc(pp.n)} tocar.</p><button class=dbtn onclick="duoGo('swap')">Sou ${esc(pp.n)} · Continuar</button><button class="dbtn gh" onclick="DUO.swap=null;duoTick()">Voltar</button></div>`}
 else if(kind==='sb'){const ca=z.c[0],cb=z.c[1],ta=duoTot(ca),tb=duoTot(cb),pa=duoPl(0),pb=duoPl(1),fin=duoDone(a);
 const row=(p,c,t)=>`<div class=dpr>${badge(p,40)}<div><b>${esc(p.n)}</b><span>${duoTxt(a,c)}</span></div><em>${t}</em></div>`;
 const lead=ta===tb?'Vocês contribuíram igualmente.':(ta>tb?pa:pb).n+' trouxe mais descobertas.';
-h=`<div class=dcard><small>${fin?'CASO ENCERRADO · ':''}PLACAR DA DUPLA</small><h2>${fin?'Bom trabalho, dupla!':'Contribuições até agora'}</h2>${row(pa,ca,ta)}${row(pb,cb,tb)}<p>${lead}</p><button class=dbtn onclick="DUO.sb=0;duoTick()">Fechar</button></div>`}
+h=`<div class=dcard><small>${fin?'CASO ENCERRADO · ':''}PLACAR DA DUPLA</small><h2>${fin?'Bom trabalho, dupla!':'Contribuições até agora'}</h2>${row(pa,ca,ta)}${row(pb,cb,tb)}<p>${lead}</p>${fin?'':`<button class=dbtn onclick="duoNow()">Passar o celular para ${esc(duoPl(1-z.t).n)}</button>`}<button class="dbtn gh" onclick="DUO.sb=0;duoTick()">Fechar</button></div>`}
 else if(kind==='conf'){const c=DUO.conf,p=duoPl(c.who),q=duoPl(1-c.who);
 if(c.st===0)h=`<div class=dcard>${badge(q)}<small>PASSE O CELULAR PARA</small><h2>${esc(q.n)}</h2><p>${esc(p.n)} quer fazer uma acusação e precisa da sua opinião. Em dupla, a acusação só sai se os dois concordarem.</p><button class=dbtn onclick="duoConf(1)">Sou ${esc(q.n)} · Ver a acusação</button><button class="dbtn gh" onclick="duoConf(9)">Cancelar</button></div>`;
 else h=`<div class=dcard>${badge(p)}<small>ACUSAÇÃO PROPOSTA POR ${esc(p.n.toUpperCase())}</small><h2>${esc(c.txt)}</h2><p>${esc(q.n)}, você concorda com essa acusação?</p><button class=dbtn onclick="duoConf(2)">Concordo, acusar</button><button class="dbtn gh" onclick="duoConf(9)">Ainda não</button></div>`}
 e.innerHTML=h}
-window.duoGo=k=>{const a=duoAct();if(!a)return;const z=duoSes(a);DUO.shown[a.key]=1;if(k==='pass'){z.t=1-z.t;z.n=0;z.pass=0;msave()}try{AU.fx&&AU.fx('tick')}catch(e){}duoTick()};
+function duoFlip(a,z,to){z.t=to;
+if(a.k==='c'){S.tab='phone';CHO=0;QTO=0;try{LBO=0}catch(e){}try{INS=null}catch(e){}}
+else if(a.k==='r'){RQ.pv=null;RQ.su=null;RQ.tab=duoHolderRole(a,z)?'pr':'su'}
+else{TM.sv=null;TM.pl=0}msave()}
+window.duoGo=k=>{const a=duoAct();if(!a)return;const z=duoSes(a);DUO.shown[a.key]=1;
+if(k==='swap'&&DUO.swap){const sw=DUO.swap;DUO.swap=null;duoFlip(a,z,duoWho(z,sw.r));if(sw.k!=null&&a.k==='c')try{openApp(sw.k)}catch(e){}else if(sw.k!=null&&a.k==='r')try{rqTab(sw.k)}catch(e){}render()}
+else if(k==='sort'&&!z.go){z.go=1;duoFlip(a,z,z.r)}
+try{AU.fx&&AU.fx('tick')}catch(e){}duoTick()};
+/* troca de visão pedida pelo jogador */
+window.duoNow=()=>{const a=duoAct();if(!a)return;const z=duoSes(a);DUO.sb=0;DUO.swap={r:1-duoHolderRole(a,z),k:null};duoTick()};
+function duoSwap(a,z,k,r){DUO.swap={r,k};duoTick()}
+/* bloqueio por papel nas telas */
+{{const _oa=openApp;openApp=function(k,ev){const a=duoAct();if(a&&a.k==='c'){const g=duoGate(a,k),z=duoSes(a);if(g>=0&&g!==duoHolderRole(a,z)){DUO.swap={r:g,k};duoTick();return}}return _oa.apply(this,arguments)}}
+{const _rt=window.rqTab;window.rqTab=function(t){const a=duoAct();if(a&&a.k==='r'){const g=duoGate(a,t),z=duoSes(a);if(g>=0&&g!==duoHolderRole(a,z)){DUO.swap={r:g,k:t};duoTick();return}}return _rt.apply(this,arguments)}}
+const tb=(n,role,allowNull)=>{const _f=window[n];if(!_f)return;window[n]=function(){const a=duoAct();if(a&&a.k==='t'){if(allowNull&&arguments[0]==null)return _f.apply(this,arguments);const z=duoSes(a);if(role!==duoHolderRole(a,z)){DUO.swap={r:role,k:null};duoTick();return}}return _f.apply(this,arguments)}};
+tb('tlSrcOpen',0,1);tb('tlPl',0,0);tb('tlFlag',0,0);tb('tlMove',1,0);tb('tlDown',1,0);tb('tlCheck',1,0);tb('tlHint',1,0)}
 
 /* acusação em conjunto */
 function duoAsk(txt,go){DUO.conf={who:0,st:0,txt,go};const a=duoAct();DUO.conf.who=a?duoSes(a).t:0;duoTick()}
@@ -83,10 +113,10 @@ const c=rqC(RQ.id);duoAsk('Acusar '+rqSu(c,RQ.acc).nome,()=>window.rqAcc())}}
 
 /* seletor Sozinho / Em dupla (início e Arquivo) */
 function duoSel(){if(window.PLO||window.GAL)return '';const on=DUO.on&&duoCfg(),c=duoCfg();
-return `<div class=dpsel><div class=dpseg><button class="${on?'':'on'}" onclick="duoPick(0)">Sozinho</button><button class="${on?'on':''}" onclick="duoPick(1)">Em dupla</button></div>${on?`<div class=dpinf><span><i style="background:${c.j[0].c}"></i>${esc(c.j[0].n)}</span><span><i style="background:${c.j[1].c}"></i>${esc(c.j[1].n)}</span><small>O celular passa a cada ${c.ev} ações</small><button onclick="duoEdit()">Mudar</button></div>`:''}</div>`}
+return `<div class=dpsel><div class=dpseg><button class="${on?'':'on'}" onclick="duoPick(0)">Sozinho</button><button class="${on?'on':''}" onclick="duoPick(1)">Em dupla</button></div>${on?`<div class=dpinf><span><i style="background:${c.j[0].c}"></i>${esc(c.j[0].n)}</span><span><i style="background:${c.j[1].c}"></i>${esc(c.j[1].n)}</span><small>Papéis sorteados a cada caso</small><button onclick="duoEdit()">Mudar</button></div>`:''}</div>`}
 window.duoPick=k=>{if(!k){duoOff();render();return}duoStartRev()};
 function duoMod(){let e=document.getElementById('duomod');if(e)e.remove();if(!DUO.mode&&!DUO.setup)return;e=document.createElement('div');e.id='duomod';e.className='duo-m';
-if(DUO.setup){const s=DUO.setup;e.innerHTML=`<div class=dcard style="text-align:left"><small>JOGAR EM DUPLA · UM CELULAR</small><h2 style="margin-bottom:10px">Quem vai jogar?</h2><p class=dsm style="margin-top:0">Vocês revezam o mesmo celular. O progresso em dupla fica separado do seu jogo solo.</p>${[0,1].map(i=>`<label class=dlb>Jogador ${i+1}<input id=dn${i} maxlength=14 value="${esc(s.j[i].n)}" oninput="DUO.setup.j[${i}].n=this.value"></label><div class=dcol>${DUOCOL.map(c=>`<button class="${s.j[i].c===c?'on':''}" style="background:${c}" onclick="DUO.setup.j[${i}].c='${c}';duoMod()"></button>`).join('')}</div>`).join('')}<label class=dlb>O celular passa a cada…</label><div class=dev>${[2,3,4,5].map(n=>`<button class="${s.ev===n?'on':''}" onclick="DUO.setup.ev=${n};duoMod()">${n} ações</button>`).join('')}</div><p class=dsm>Contam: perguntar, achar prova, analisar, visitar um local.</p><button class=dbtn onclick="duoSave()">Começar a jogar em dupla</button><button class="dbtn gh" onclick="DUO.setup=null;duoMod()">Cancelar</button></div>`}
+if(DUO.setup){const s=DUO.setup;e.innerHTML=`<div class=dcard style="text-align:left"><small>JOGAR EM DUPLA · UM CELULAR</small><h2 style="margin-bottom:10px">Quem vai jogar?</h2><p class=dsm style="margin-top:0">Cada um tem uma função diferente no caso. O progresso em dupla fica separado do seu jogo solo.</p>${[0,1].map(i=>`<label class=dlb>Jogador ${i+1}<input id=dn${i} maxlength=14 value="${esc(s.j[i].n)}" oninput="DUO.setup.j[${i}].n=this.value"></label><div class=dcol>${DUOCOL.map(c=>`<button class="${s.j[i].c===c?'on':''}" style="background:${c}" onclick="DUO.setup.j[${i}].c='${c}';duoMod()"></button>`).join('')}</div>`).join('')}<p class=dsm>A cada caso, o jogo sorteia o papel de cada um. Cada papel vê só uma parte do caso, e o celular passa quando alguém precisa da área do outro.</p><button class=dbtn onclick="duoSave()">Começar a jogar em dupla</button><button class="dbtn gh" onclick="DUO.setup=null;duoMod()">Cancelar</button></div>`}
 else{e.remove();return}
 document.body.appendChild(e)}
 window.duoStartRev=()=>{DUO.mode=0;const c=duoCfg();if(c){duoOn();duoMod();render();return}duoEdit()};

@@ -10,7 +10,7 @@
 .dbtn{display:block;width:100%;margin:10px 0 0;padding:14px;border:0;border-radius:14px;background:#eaa73c;color:#1b1406;font:700 15px inherit;cursor:pointer}
 .dbtn.gh{background:transparent;border:1px solid rgba(255,255,255,.22);color:#e7dfcb}
 .dpr{display:flex;align-items:center;gap:12px;text-align:left;padding:10px 12px;margin:8px 0;border-radius:14px;background:rgba(255,255,255,.06)}
-.dpr div{flex:1;min-width:0}.dpr b{display:block;font-size:15px}.dpr span{display:block;font-size:12px;color:#b9b2a0;margin-top:2px}.dpr em{font-style:normal;font-weight:800;font-size:22px;color:#eaa73c}
+.dpr div{flex:1;min-width:0}.dpr b{display:block;font-size:15px}.dpr div span{display:block;font-size:12px;color:#b9b2a0;margin-top:2px}.dpr em{font-style:normal;font-weight:800;font-size:22px;color:#eaa73c}
 .dlb{display:block;font-size:12px;color:#b9b2a0;margin:8px 0 4px;text-align:left}
 .dlb input{display:block;width:100%;box-sizing:border-box;margin-top:4px;padding:11px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.07);color:#fff;font:16px inherit}
 .dcol,.dev{display:flex;gap:8px;margin:6px 0 4px}.dcol button{width:30px;height:30px;border-radius:50%;border:2px solid transparent;cursor:pointer}.dcol button.on{border-color:#fff;box-shadow:0 0 0 2px #0008}
