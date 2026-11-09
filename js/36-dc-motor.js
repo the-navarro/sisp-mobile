@@ -83,7 +83,7 @@ function dcLockLeft(){let n=0,last=0;Object.keys(DC.evs).sort().forEach(id=>{con
 
 /* ---------- sala ---------- */
 const dcErr=m=>{DC.err=m;DC.busy=0;if(window.dcMod)dcMod()};
-const dcMsg=e=>{const m=String(e&&e.message||e);return /Sala n|Sem internet|Sem conex|Escreva|Não consegui/.test(m)?m:'Sem conexão com o servidor. Confira a internet e tente de novo.'};
+const dcMsg=e=>{const m=String(e&&e.message||e),cod=String((e&&e.code)||m).replace(/^Firebase:\s*/,'').slice(0,60);if(/Sala n|Sem internet|Sem conex|Escreva|Não consegui/.test(m))return m;if(/admin-restricted|operation-not-allowed|ADMIN_ONLY/i.test(cod+m))return 'O login do servidor ainda não está liberado para o jogo em dupla (login anônimo desativado no Firebase). Código: '+cod;return 'Não foi possível falar com o servidor. Confira a internet e tente de novo. Código: '+cod};
 const dcNm=()=>{const i=document.getElementById('dn');return((i&&i.value)||DC.myName||(META.pl&&META.pl.n)||'').trim().slice(0,14)};
 window.dcCreate=async()=>{const n=dcNm();if(!n)return dcErr('Escreva o seu nome.');DC.myName=n;DC.err='';DC.busy=1;dcMod();
 try{await NET.init();let ok=0;for(let i=0;i<6&&!ok;i++){const cod=dcCode();try{await NET.criar(cod,{c:Date.now(),m:'dupla',r:Math.random()<.5?0:1,p1:{u:NET.uid(),n}});DC.cod=cod;ok=1}catch(e){if(!/PERMISSION/i.test(String(e&&e.message)))throw e}}
