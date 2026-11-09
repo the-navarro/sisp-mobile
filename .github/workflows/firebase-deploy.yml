@@ -6,7 +6,12 @@ on:
   workflow_dispatch:
 
 jobs:
+  # só publica se todos os casos forem jogados até o fim sem erro
+  testar:
+    uses: ./.github/workflows/testes.yml
+
   deploy:
+    needs: testar
     runs-on: ubuntu-latest
     env:
       FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}

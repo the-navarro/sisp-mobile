@@ -144,7 +144,46 @@ outro domínio.
 - Original e versão separada foram comparados num navegador headless: tela
   inicial, tutorial, avatar e início do caso 0 geraram o mesmo HTML e a mesma
   imagem, com 0 erros no console.
-- Não foram jogados até o fim os casos 1 a 5, nem testados som e vozes.
+- Som e vozes não foram testados.
+
+## Testes automáticos
+
+A pasta `testes/` tem um robô que joga os 7 casos (c0 a c6) do começo ao fim
+num navegador sem tela. Ele segue o guia do próprio jogo e usa as mesmas
+funções dos botões (coletar, perícia, perguntar, atender ligação, contradizer,
+Quadro, mandado). O teste falha se:
+
+- algum caso não puder ser resolvido (algo fica trancado ou o guia não leva a
+  lugar nenhum);
+- o mandado com a solução certa for negado, ou o caso não ficar marcado como
+  concluído (é isso que abre o caso seguinte no menu);
+- qualquer tela der erro de JavaScript;
+- o jogo pedir um arquivo que não existe no repositório;
+- o modo teste estiver ligado.
+
+Para rodar (precisa de Node 20 ou mais novo; leva cerca de meio minuto):
+
+```bash
+cd testes
+npm install
+npx playwright install chromium   # só na primeira vez
+npm test                          # todos os casos
+npm test -- c3                    # só o caso c3
+PARCEIRO=1 npm test               # jogando com um parceiro
+DEPURAR=1 npm test                # mostra o estado completo se um caso travar
+```
+
+No GitHub, o teste roda sozinho em cada pull request e antes de cada publicação
+no Firebase (`.github/workflows/testes.yml`): se falhar, nada vai ao ar.
+
+O robô **não** cobre os casos rápidos, a linha do tempo, o modo dupla, o modo em
+dois celulares, o som nem a aparência das telas.
+
+## Modo teste
+
+Para o jogador, cada caso só abre depois que o anterior é concluído (ou se já
+tiver progresso salvo). Para abrir todos de uma vez durante o desenvolvimento,
+use `?teste` no endereço: `http://localhost:8000/index.html?teste`.
 
 ## Mudanças feitas depois da separação
 
@@ -228,4 +267,9 @@ Itens deixados de propósito para não mexer na lógica:
 - Parte dos dados de cada caso está fora do arquivo do caso (cenas `SCN`, retratos
   `PDX`, papéis de parede `WP`, falas de relacionamento).
 - `guide0()` em `js/08-progresso-guia.js` parece não ser chamada.
-- `const TESTE=true` faz a tela inicial mostrar "· TESTE".
+- O teste automático aponta três avisos que não impedem o jogo: logo depois de
+  enviar as primeiras provas, o guia manda conversar com os suspeitos enquanto
+  Conversas ainda está trancada (até sair o primeiro laudo); quando só falta
+  esperar o laboratório e já há deduções feitas, o guia diz "Rodada concluída:
+  há um novo cenário no mapa"; e a tela final dos casos 5 e 6 mostra mais falas
+  feitas do que o total (por exemplo "26/24").
