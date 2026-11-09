@@ -102,6 +102,8 @@ window.duoRoll=k=>{const a=duoAct();if(!a)return;const z=duoSes(a);if(k==='new')
 window.duoRole=()=>{DUO.sb=0;DUO.role=1;duoTick()};
 window.duoNow=()=>{const a=duoAct();if(!a)return;const z=duoSes(a);DUO.sb=0;DUO.role=0;DUO.swap={r:1-duoHolderRole(a,z),k:null};duoTick()};
 function duoSwapReq(r,k){if(DUO.net){const a=duoAct(),z=duoSes(a);tst('Essa área é de '+duoPl(duoWho(z,r)).n+' ('+DUOR[a.k][r].n+'). Peça pelo 💬.');return}DUO.swap={r,k};duoTick()}
+/* atalhos que abrem uma tela direto (botão do guia, avisos): se a tela é do outro papel, pede o celular em vez de não fazer nada */
+window.duoGoGate=t=>{const a=duoAct();if(!a||a.k!=='c')return false;const g=duoGate(a,t);if(g<0||g===duoHolderRole(a,duoSes(a)))return false;duoSwapReq(g,t);return true};
 /* bloqueio por papel nas telas */
 {{const _oa=openApp;openApp=function(k,ev){const a=duoAct();if(a&&a.k==='c'){const g=duoGate(a,k),z=duoSes(a);if(g>=0&&g!==duoHolderRole(a,z)){duoSwapReq(g,k);return}}return _oa.apply(this,arguments)}}
 {const _rt=window.rqTab;window.rqTab=function(t){const a=duoAct();if(a&&a.k==='r'){const g=duoGate(a,t),z=duoSes(a);if(g>=0&&g!==duoHolderRole(a,z)){duoSwapReq(g,t);return}}return _rt.apply(this,arguments)}}

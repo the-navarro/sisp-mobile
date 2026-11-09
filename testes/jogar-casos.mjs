@@ -12,46 +12,25 @@
    O relógio do navegador é controlado pelo teste, então esperas longas
    (laudos, digitação das respostas) passam em instantes.
 
+   Depois de jogar tudo sozinho, o robô liga o modo "Em dupla" (um celular,
+   dois papéis) e joga os casos de novo, passando o celular sempre que a tela
+   pertence ao outro papel e confirmando a acusação em conjunto.
+
    Uso:  cd testes && npm install && npm test
-         npm test -- c3          joga só o caso c3
-         PARCEIRO=1 npm test     joga escolhendo um parceiro em cada caso
-         DEPURAR=1 npm test      mostra o estado completo quando um caso trava
+         node jogar-casos.mjs c3            joga só o caso c3
+         PARCEIRO=1 node jogar-casos.mjs    joga escolhendo um parceiro em cada caso
+         DEPURAR=1 node jogar-casos.mjs     mostra o estado completo quando um caso trava
 
    "Avisos" são coisas que o robô estranhou mas que não impedem terminar o caso
    (por exemplo, o guia apontar para uma tela ainda trancada). Só problemas de
    verdade (caso sem solução, erro de JavaScript, arquivo faltando) fazem o
    teste falhar. */
-import http from 'node:http';
-import fs from 'node:fs';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-import { chromium } from 'playwright';
+import { servidor, abrirNavegador, novoContexto, ouvirErros, META_INICIAL, arquivosFaltando } from './base.mjs';
 
-const RAIZ = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SO = process.argv.slice(2).filter(a => /^c\d+$/.test(a));
 const PARCEIRO = !!process.env.PARCEIRO;
 const MAX_PASSOS = 1500;      // por caso
 const MAX_PARADO = 80;        // passos seguidos sem progresso
-const TIPOS = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.json': 'application/json', '.png': 'image/png', '.jpg': 'image/jpeg', '.webp': 'image/webp', '.svg': 'image/svg+xml', '.mp4': 'video/mp4', '.m4a': 'audio/mp4', '.mp3': 'audio/mpeg', '.woff2': 'font/woff2' };
-
-function servidor() {
-  const faltando = new Set();
-  const srv = http.createServer((req, res) => {
-    const u = decodeURIComponent(new URL(req.url, 'http://x').pathname);
-    const arq = path.join(RAIZ, u === '/' ? 'index.html' : u);
-    if (!arq.startsWith(RAIZ) || !fs.existsSync(arq) || fs.statSync(arq).isDirectory()) {
-      faltando.add(u); res.writeHead(404); res.end(); return;
-    }
-    res.writeHead(200, { 'Content-Type': TIPOS[path.extname(arq)] || 'application/octet-stream' });
-    fs.createReadStream(arq).pipe(res);
-  });
-  return new Promise(ok => srv.listen(0, '127.0.0.1', () => ok({ srv, faltando, url: `http://127.0.0.1:${srv.address().port}/` })));
-}
-
-async function abrirNavegador() {
-  try { return await chromium.launch(); }
-  catch (e) { return await chromium.launch({ channel: 'chrome' }); }
-}
 
 /* ---------- funções que rodam dentro da página ---------- */
 
@@ -59,6 +38,14 @@ async function abrirNavegador() {
 function passo() {
   const fim = (a, w, x) => ({ a, w: w || 300, x: x || '' });
   if (MENU || !C) return fim('menu');
+  /* modo dupla (um celular): sorteio dos papéis, passagem do celular e acusação em conjunto */
+  const duo = window.DUO && DUO.on ? duoAct() : null;
+  if (duo) {
+    if (!DUO.shown[duo.key]) { duoRoll('keep'); return fim('dupla: papéis sorteados'); }
+    if (DUO.conf) { const st = DUO.conf.st; duoConf(st === 0 ? 1 : 2); return fim(st === 0 ? 'dupla: passou o celular para ver a acusação' : 'dupla: concordou com a acusação', 600); }
+    if (DUO.swap) { duoGo('swap'); return fim('dupla: passou o celular'); }
+    if (DUO.role || DUO.sb) { DUO.role = 0; DUO.sb = 0; duoTick(); return fim('dupla: fechou o cartão'); }
+  }
   if (CUT) { cutEnd(); return fim('pulou a cena'); }
   if (V) return fim(V.w ? 'venceu' : 'mandado negado', 0, V.t + ' · ' + V.m);
   if (S.seen < 4) { brN(1); return fim('briefing'); }
@@ -84,7 +71,18 @@ function passo() {
   if (window.ARRQ && ARRQ.length) { arrGo(1); return fim('recebeu suspeito novo'); }
   if ((S.mq || []).length) { if (Date.now() < QOK) return fim('esperando o registro', 500); doreg(); return fim('registrou'); }
 
+  if (duo && duoLabPend() && duoHolderRole(duo, duoSes(duo)) === 1) { duoLbClose(duoLabPend().id); return fim('dupla: leu o laudo'); }
+
   const x = nxt();
+  /* em dupla, a tela do passo pode ser do outro papel: pede o celular como o jogador faria */
+  if (duo && tabOpen(x.tab === 'dossier' || x.tab === 'timeline' ? 'caderno' : x.tab)) {
+    const t = x.tab === 'dossier' || x.tab === 'timeline' ? 'caderno' : x.tab, g = duoGate(duo, t);
+    if (g >= 0 && g !== duoHolderRole(duo, duoSes(duo))) {
+      go(t); /* o mesmo que tocar no botão do guia */
+      if (!DUO.swap) return fim('guia sem saída', 0, 'em dupla, o botão do guia para ' + t + ' não pediu a troca do celular');
+      return fim('dupla: pediu o celular para ' + t);
+    }
+  }
   /* o guia mandou para uma tela que ainda está trancada: anota e espera */
   if (!tabOpen(x.tab === 'dossier' || x.tab === 'timeline' ? 'caderno' : x.tab)) return fim('guia aponta para tela trancada', 4000, '"' + x.t.replace(/\s*\(.*\)$/, '') + '" manda abrir ' + x.tab + ', que responde: ' + (LK[x.tab] || 'Ainda bloqueado.'));
   if (x.tab === 'caderno') {
@@ -148,9 +146,11 @@ function assinatura() {
 /* Abre todas as telas liberadas do caso, para pegar erro de desenho. */
 function visitarTelas() {
   const abertas = [];
-  APPTABS.filter(t => tabOpen(t)).forEach(t => { go(t); abertas.push(t); });
-  CDT.forEach(t => { S.f.cd = t[0]; go('caderno'); S.f.cd = t[0]; render(); abertas.push('caderno/' + t[0]); });
-  SU.forEach(s => { if (tabOpen('interrogate')) { S.su = s.id; CHPRE = 1; go('interrogate'); } });
+  /* em dupla, só as telas do papel de quem está com o celular (e as que são dos dois) */
+  const duo = window.DUO && DUO.on ? duoAct() : null, meu = t => { if (!duo) return true; const g = duoGate(duo, t); return g < 0 || g === duoHolderRole(duo, duoSes(duo)); };
+  APPTABS.filter(t => tabOpen(t) && meu(t)).forEach(t => { go(t); abertas.push(t); });
+  if (meu('caderno')) CDT.forEach(t => { S.f.cd = t[0]; go('caderno'); S.f.cd = t[0]; render(); abertas.push('caderno/' + t[0]); });
+  if (meu('interrogate')) SU.forEach(s => { if (tabOpen('interrogate')) { S.su = s.id; CHPRE = 1; go('interrogate'); } });
   S.tab = 'phone'; save(); render();
   return abertas;
 }
@@ -185,9 +185,10 @@ async function jogarCaso(page, caso, erros) {
     if (p.a === 'guia aponta para tela trancada' || p.a === 'guia não avisa da espera') avisos.add('o guia ' + p.x.replace(/esperar \d+ laudo\(s\)/, 'esperar o laboratório'));
     if (erros.length) return { ok: false, motivo: 'erro de JavaScript depois de "' + p.a + '": ' + erros[0], linhas, nome: info.n };
     if (p.a === 'venceu') {
-      const f = await page.evaluate(() => { const r = { won: S.won, done: META.done[C.id], nota: META.rk && META.rk[C.id], ded: S.ded.length, tot: NT, perg: S.asked.filter(q => TS[q]).length, totq: TOTAL_Q }; FIN = 1; render(); FIN = 0; V = null; toMenu(); return r; });
+      const f = await page.evaluate(() => { const r = { won: S.won, done: META.done[C.id], nota: META.rk && META.rk[C.id], ded: S.ded.length, tot: NT, perg: S.asked.filter(q => TS[q]).length, totq: TOTAL_Q }; FIN = 1; render(); FIN = 0; if (window.DUO && DUO.on) { DUO.sb = 1; duoTick(); r.placar = !!document.getElementById('duoov'); DUO.sb = 0; duoTick(); } V = null; toMenu(); return r; });
       if (erros.length) return { ok: false, motivo: 'erro de JavaScript na tela final: ' + erros[0], linhas, nome: info.n };
       if (!f.won || !f.done) return { ok: false, motivo: 'o mandado saiu mas o caso não ficou marcado como concluído', linhas, nome: info.n };
+      if (f.placar === false) return { ok: false, motivo: 'o placar da dupla não abriu no fim do caso', linhas, nome: info.n };
       return { ok: true, passos: n, telas, nome: info.n, f, avisos: [...avisos] };
     }
     if (['mandado negado', 'erro de dados', 'guia sem saída', 'menu'].includes(p.a))
@@ -207,18 +208,12 @@ async function jogarCaso(page, caso, erros) {
 
 const { srv, faltando, url } = await servidor();
 const browser = await abrirNavegador();
-const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true });
-/* o jogo solo não usa internet: qualquer pedido para fora é cortado */
-await ctx.route(u => !u.href.startsWith(url), r => r.abort());
+const ctx = await novoContexto(browser, url);
 const page = await ctx.newPage();
 const erros = [];
-page.on('pageerror', e => erros.push(String(e.stack || e).split('\n').slice(0, 3).join(' | ')));
-page.on('console', m => { if (process.env.DEPURAR && m.type() === 'log') console.log('  [página] ' + m.text()); if (m.type() === 'error' && !/Failed to load resource|net::ERR/.test(m.text())) erros.push('console: ' + m.text()); });
+ouvirErros(page, erros);
 await page.clock.install();
-await page.addInitScript(() => {
-  /* jogador que já passou pela apresentação, com o som desligado */
-  if (!localStorage.getItem('sisp-meta')) localStorage.setItem('sisp-meta', JSON.stringify({ done: {}, p: {}, onb: 1, pl: { n: 'Teste' } }));
-});
+await page.addInitScript(m => { if (!localStorage.getItem('sisp-meta')) localStorage.setItem('sisp-meta', m); }, META_INICIAL);
 /* ?teste=0: joga como o jogador final, com os casos abrindo um depois do outro */
 await page.goto(url + '?teste=0');
 if (process.env.DEPURAR) await page.evaluate(() => { window.DEPURAR = 1; });
@@ -232,30 +227,48 @@ if (inicio.teste) { console.log('✗ ?teste=0 não desligou o modo teste'); falh
 if (inicio.naTela) { console.log('✗ a palavra "teste" aparece na tela inicial'); falhou++; }
 
 const lista = SO.length ? inicio.casos.filter(c => SO.includes(c)) : inicio.casos;
-for (const caso of (falhou ? [] : lista)) {
-  if (SO.length) await page.evaluate(id => { const i = CASES.findIndex(c => c.id === id); if (i > 0) META.done[CASES[i - 1].id] = META.done[CASES[i - 1].id] || 'Investigador'; }, caso);
-  const r = await jogarCaso(page, caso, erros);
-  if (r.ok) {
-    console.log(`✓ ${caso} ${r.nome}: resolvido em ${r.passos} passos · ${r.f.ded}/${r.f.tot} deduções · ${r.f.perg}/${r.f.totq} perguntas · nota ${r.f.nota} · ${r.telas} telas abertas sem erro`);
-    if (r.f.perg > r.f.totq) r.avisos.push(`a tela final mostra "${r.f.perg}/${r.f.totq} falas": o total de falas do caso está contado a menos`);
-    else if (r.f.ded > r.f.tot) r.avisos.push(`a tela final teria mais deduções feitas (${r.f.ded}) que o total (${r.f.tot})`);
-    r.avisos.forEach(a => { (avisos[a] = avisos[a] || []).push(caso); });
-  }
-  else {
-    falhou++;
-    console.log(`✗ ${caso} ${r.nome || ''}: ${r.motivo}`);
-    if (r.estado) console.log('  onde parou → ' + r.estado);
-    console.log('  últimos passos → ' + r.linhas.slice(-12).join(' › '));
-    erros.length = 0;
-    if (!SO.length) { console.log('  (os casos seguintes dependem deste e não foram jogados)'); break; }
+
+async function rodada(titulo, sufixo) {
+  console.log('\n' + titulo);
+  for (const caso of lista) {
+    if (SO.length) await page.evaluate(id => { const i = CASES.findIndex(c => c.id === id); if (i > 0) META.done[CASES[i - 1].id] = META.done[CASES[i - 1].id] || 'Investigador'; }, caso);
+    const r = await jogarCaso(page, caso, erros);
+    if (r.ok) {
+      console.log(`✓ ${caso} ${r.nome}: resolvido em ${r.passos} passos · ${r.f.ded}/${r.f.tot} deduções · ${r.f.perg}/${r.f.totq} perguntas · nota ${r.f.nota} · ${r.telas} telas abertas sem erro`);
+      if (r.f.perg > r.f.totq) r.avisos.push(`a tela final mostra "${r.f.perg}/${r.f.totq} falas": o total de falas do caso está contado a menos`);
+      else if (r.f.ded > r.f.tot) r.avisos.push(`a tela final teria mais deduções feitas (${r.f.ded}) que o total (${r.f.tot})`);
+      r.avisos.forEach(a => { (avisos[a] = avisos[a] || []).push(caso + sufixo); });
+    }
+    else {
+      falhou++;
+      console.log(`✗ ${caso} ${r.nome || ''}: ${r.motivo}`);
+      if (r.estado) console.log('  onde parou → ' + r.estado);
+      console.log('  últimos passos → ' + r.linhas.slice(-12).join(' › '));
+      erros.length = 0;
+      if (!SO.length) { console.log('  (os casos seguintes dependem deste e não foram jogados)'); break; }
+    }
   }
 }
 
-const sumidos = [...faltando].filter(u => u !== '/favicon.ico');
+if (!falhou) await rodada('Casos principais, sozinho' + (PARCEIRO ? ' (com parceiro)' : ''), '');
+
+if (!falhou) {
+  /* liga o modo dupla do jeito que a tela faz: nomes dos dois jogadores e "Começar" */
+  const dupla = await page.evaluate(() => { if (!MENU) toMenu(); duoEdit(); DUO.setup.j[0].n = 'Ana'; DUO.setup.j[1].n = 'Bia'; duoSave(); return { on: DUO.on, feitos: Object.keys(META.done).length }; });
+  if (!dupla.on) { console.log('✗ o modo dupla não ligou'); falhou++; }
+  else if (dupla.feitos) { console.log('✗ o progresso da dupla não começou separado do jogo solo'); falhou++; }
+  else {
+    await rodada('Casos principais, em dupla (um celular)', ' em dupla');
+    const volta = await page.evaluate(() => { if (!MENU) toMenu(); duoPick(0); return { on: DUO.on, feitos: Object.keys(META.done).length }; });
+    if (volta.on || volta.feitos < lista.length) { console.log('✗ ao voltar para "Sozinho", o progresso solo não reapareceu'); falhou++; }
+  }
+}
+
+const sumidos = arquivosFaltando(faltando);
 if (sumidos.length) { falhou++; console.log('✗ arquivos pedidos pelo jogo que não existem no repositório:\n  ' + sumidos.join('\n  ')); }
 
 await browser.close(); srv.close();
 const nAvisos = Object.keys(avisos).length;
 if (nAvisos) { console.log('\nAvisos (não impedem o jogo, mas valem uma olhada):'); Object.entries(avisos).forEach(([a, cs]) => console.log(`  • ${a} [${cs.join(', ')}]`)); }
-console.log(falhou ? `\n${falhou} problema(s) encontrado(s).` : '\nTudo certo: todos os casos têm solução e nenhuma tela deu erro.');
+console.log(falhou ? `\n${falhou} problema(s) encontrado(s).` : '\nTudo certo: todos os casos têm solução, sozinho e em dupla, e nenhuma tela deu erro.');
 process.exit(falhou ? 1 : 0);

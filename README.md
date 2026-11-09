@@ -148,42 +148,54 @@ outro domínio.
 
 ## Testes automáticos
 
-A pasta `testes/` tem um robô que joga os 7 casos (c0 a c6) do começo ao fim
-num navegador sem tela. Ele segue o guia do próprio jogo e usa as mesmas
-funções dos botões (coletar, perícia, perguntar, atender ligação, contradizer,
-Quadro, mandado). O teste falha se:
+A pasta `testes/` tem um robô que joga o jogo inteiro num navegador sem tela,
+usando as mesmas funções que os botões chamam. São dois arquivos:
+
+- `jogar-casos.mjs`: os 7 casos principais (c0 a c6), seguindo o guia do
+  próprio jogo, primeiro sozinho e depois em dupla (um celular, passando o
+  celular e confirmando a acusação em conjunto).
+- `jogar-modos.mjs`: os casos rápidos e as linhas do tempo (sozinho e em
+  dupla) e os casos de dois celulares (duas abas na mesma sala).
+
+O teste falha se:
 
 - algum caso não puder ser resolvido (algo fica trancado ou o guia não leva a
   lugar nenhum);
-- o mandado com a solução certa for negado, ou o caso não ficar marcado como
-  concluído (é isso que abre o caso seguinte no menu);
+- a resposta certa for recusada, uma errada for aceita, ou o caso não ficar
+  marcado como concluído;
 - qualquer tela der erro de JavaScript;
 - o jogo pedir um arquivo que não existe no repositório;
-- o modo teste estiver ligado.
+- os dados de uma história não fecharem (por exemplo, uma pista da linha do
+  tempo que contradiz a ordem real, ou uma senha cuja prova nunca aparece);
+- a palavra "teste" aparecer na tela inicial.
 
-Para rodar (precisa de Node 20 ou mais novo; leva cerca de meio minuto):
+Para rodar (precisa de Node 20 ou mais novo; leva cerca de um minuto):
 
 ```bash
 cd testes
 npm install
 npx playwright install chromium   # só na primeira vez
-npm test                          # todos os casos
-npm test -- c3                    # só o caso c3
+npm test                          # tudo
+node jogar-casos.mjs c3           # só o caso c3
+node jogar-modos.mjs              # só os outros modos
 PARCEIRO=1 npm test               # jogando com um parceiro
-DEPURAR=1 npm test                # mostra o estado completo se um caso travar
+DEPURAR=1 node jogar-casos.mjs    # mostra o estado completo se um caso travar
 ```
 
 No GitHub, o teste roda sozinho em cada pull request e antes de cada publicação
 no Firebase (`.github/workflows/testes.yml`): se falhar, nada vai ao ar.
 
-O robô **não** cobre os casos rápidos, a linha do tempo, o modo dupla, o modo em
-dois celulares, o som nem a aparência das telas.
+O robô **não** cobre o som, a aparência das telas nem a conexão real com o
+Firebase: o modo de dois celulares é jogado com a rede de teste do próprio jogo
+(`window.NETMOCK`), que troca o servidor pelo armazenamento do navegador.
 
 ## Modo teste
 
-Para o jogador, cada caso só abre depois que o anterior é concluído (ou se já
-tiver progresso salvo). Para abrir todos de uma vez durante o desenvolvimento,
-use `?teste` no endereço: `http://localhost:8000/index.html?teste`.
+O modo teste abre todos os casos sem precisar concluir os anteriores. Ele está
+**ligado** por enquanto e não mostra nada na tela. Para ver o jogo como o
+jogador final verá (cada caso abre depois do anterior), use `?teste=0` no
+endereço: `http://localhost:8000/index.html?teste=0`. Antes de lançar, troque
+`TESTE` para `false` em `js/03-estado.js`.
 
 ## Mudanças feitas depois da separação
 
@@ -267,9 +279,4 @@ Itens deixados de propósito para não mexer na lógica:
 - Parte dos dados de cada caso está fora do arquivo do caso (cenas `SCN`, retratos
   `PDX`, papéis de parede `WP`, falas de relacionamento).
 - `guide0()` em `js/08-progresso-guia.js` parece não ser chamada.
-- O teste automático aponta três avisos que não impedem o jogo: logo depois de
-  enviar as primeiras provas, o guia manda conversar com os suspeitos enquanto
-  Conversas ainda está trancada (até sair o primeiro laudo); quando só falta
-  esperar o laboratório e já há deduções feitas, o guia diz "Rodada concluída:
-  há um novo cenário no mapa"; e a tela final dos casos 5 e 6 mostra mais falas
-  feitas do que o total (por exemplo "26/24").
+- O modo teste está ligado (ver "Modo teste" acima): desligar antes de lançar.
