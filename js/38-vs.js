@@ -2,6 +2,7 @@
    Dois celulares, mesma sala da Dupla Online. Os dois jogam o MESMO caso (principal ou rápido) cada um no seu aparelho,
    com o motor normal do jogo. Pela sala só trafegam: pronto, andamento, golpes, defesas e resultado.
    Eventos: vr (pronto) · vp (andamento) · vh (golpe) · vd (resposta ao golpe) · vf (fim). */
+window.VSC=window.VSC||[];
 window.VS={g:null,t:'m',id:null,gf:1,ph:'',rdy:{},tOpen:0,t0:0,p:0,ch:0,held:0,pen:0,err:0,lastP:0,sentP:0,sentT:0,rp:0,fx:{},inc:null,q:[],fin:{me:null,ri:null},snap:null,egg:0,eggN:0,eggT:0,iv:null,gone:0,used:0,lf:null,res:null,pk:{t:'m',gf:1}};
 const VSCH=20;
 const VSG={
@@ -15,7 +16,7 @@ const VSG={
  rel:{n:'Relógio roubado',i:'⏱️',d:'Soma 20 segundos ao tempo do rival.'},
  isca:{n:'Isca',i:'🎭',d:'Finge um golpe para o rival gastar o escudo à toa.'}};
 const VSFALSA=['“Vi alguém de chapéu saindo pela porta dos fundos.”','“O culpado é canhoto, tenho certeza.”','“Ouvi dizer que a vítima devia dinheiro a todo mundo.”','“A prova mais importante está no último lugar que você pensa em olhar.”','“Ignore o primeiro suspeito: ele estava em outro lugar a noite toda.”','“Quem mais fala é quem menos sabe.”'];
-const vsTitle=(t,id)=>{try{if(t==='r'){const c=RQC.find(x=>x.id===id);return c?c.titulo:id}const c=CASES.find(x=>x.id===id);return c?c.n:id}catch(e){return id}};
+const vsTitle=(t,id)=>{try{if(t==='r'){const c=VSC.concat(RQC).find(x=>x.id===id);return c?c.titulo:id}const c=CASES.find(x=>x.id===id);return c?c.n:id}catch(e){return id}};
 const vsOth=()=>DC.names[1-DC.me]||'Rival';
 const vsMe=()=>DC.names[DC.me]||'Você';
 const vsEmit=(k,d)=>{if(!DC.on||!VS.g)return;const id=Date.now().toString(36)+Math.random().toString(36).slice(2,6),e={u:DC.uid,t:Date.now(),k,x:VS.g,d:JSON.stringify(d||{})};NET.set(DC.cod,'ev/'+id,e).catch(()=>{})};
@@ -27,12 +28,11 @@ const vsSnd=k=>{try{AU.fx&&AU.fx(k)}catch(e){}};
 /* ---------- convite e escolha do caso ---------- */
 window.vsLobby=()=>{if(!DC.on)return '';const both=DC.names[0]&&DC.names[1];
 if(VS.g&&VS.ph==='ask')return `<button class=dbtn onclick="vsPrompt()">🏁 Corrida: ${esc(vsTitle(VS.t,VS.id))}</button>`;
-return DC.host&&both?`<button class=dbtn style="background:transparent;border:1px solid #eaa73c;color:#eaa73c" onclick="vsPicker()">🏁 Corrida competitiva</button>`:''};
-window.vsPicker=()=>{const m=vsEl('vsm','duo-m'),P=VS.pk,L=P.t==='m'?CASES.map(c=>[c.id,c.n,c.tut?'Tutorial':(c.place||'')]):RQC.map(c=>[c.id,c.titulo,(c.cenario&&c.cenario.local||'').split(',')[0]]);
-m.innerHTML=`<div class=dcard style="text-align:left;max-height:94vh;overflow:auto"><small>CORRIDA COMPETITIVA</small><h2 style="margin:2px 0 6px">Quem resolve primeiro?</h2><p class=dsm style="margin-top:0">Os dois jogam o mesmo caso, cada um no seu celular. Quem acusar certo primeiro vence.</p>
-<div class=vstabs><button class="${P.t==='m'?'on':''}" onclick="VS.pk.t='m';vsPicker()">Principais</button><button class="${P.t==='r'?'on':''}" onclick="VS.pk.t='r';vsPicker()">Rápidos</button></div>
+return DC.host&&both&&VSC.length?`<button class=dbtn style="background:transparent;border:1px solid #eaa73c;color:#eaa73c" onclick="vsPicker()">🏁 Corrida competitiva</button>`:''};
+window.vsPicker=()=>{const m=vsEl('vsm','duo-m'),P=VS.pk,L=VSC.map(c=>[c.id,c.titulo,(c.cenario&&c.cenario.local||'').split(',')[0]]);
+m.innerHTML=`<div class=dcard style="text-align:left;max-height:94vh;overflow:auto"><small>CORRIDA COMPETITIVA</small><h2 style="margin:2px 0 6px">Quem resolve primeiro?</h2><p class=dsm style="margin-top:0">Casos feitos só para a corrida, que ninguém jogou antes. Os dois jogam o mesmo caso, cada um no seu celular. Quem acusar certo primeiro vence.</p>
 <label class=vsgf><input type=checkbox ${P.gf?'checked':''} onchange="VS.pk.gf=this.checked?1:0"> <span><b>Golpes ligados</b><small>Quem investiga bem ganha golpes para atrapalhar o rival. Desligue para uma corrida pura.</small></span></label>
-${L.map(o=>`<button class=dopt onclick="vsStart('${P.t}','${o[0]}')"><b>${esc(o[1])}</b><span>${esc(o[2]||'')}</span></button>`).join('')}<button class="dbtn gh" onclick="vsDel('vsm')">Voltar</button></div>`};
+${L.map(o=>`<button class=dopt onclick="vsStart('r','${o[0]}')"><b>${esc(o[1])}</b><span>${esc(o[2]||'')}</span></button>`).join('')}<button class="dbtn gh" onclick="vsDel('vsm')">Voltar</button></div>`};
 window.vsStart=(t,id)=>{if(!DC.host)return;const n=1+Math.max(0,...Object.keys(DC.evs).map(i=>+(/^v(\d+)$/.exec(DC.evs[i].x||'')||[0,0])[1]),+(/^v(\d+)$/.exec(VS.g||'')||[0,0])[1]);const g='v'+n;
 NET.set(DC.cod,'k',`v:${t}${VS.pk.gf?1:0}:${id}:${g}`).catch(()=>{});vsDel('vsm');vsSet(t,id,VS.pk.gf,g)};
 function vsSet(t,id,gf,g){if(VS.ph==='run'||VS.ph==='cd')return;vsReset();VS.g=g;VS.t=t;VS.id=id;VS.gf=+gf?1:0;VS.ph='ask';VS.tOpen=Date.now()-1500;const dm=document.getElementById('dcm');if(dm)dm.remove();vsPrompt()}
@@ -49,7 +49,7 @@ function vsCheckGo(){if(VS.ph!=='ask')return;if(Object.keys(VS.rdy).length>=2){V
 /* ---------- começar, acompanhar e terminar ---------- */
 function vsGo(){VS.ph='run';VS.t0=Date.now();DC.open=0;const id=VS.id;
 if(VS.t==='m'){const c=CASES.find(x=>x.id===id);VS.snap={ls:localStorage.getItem(c.key),key:c.key,done:META.done[id],p:META.p[id],rk:META.rk&&META.rk[id]};c.key=c.key+'-vs';try{localStorage.removeItem(c.key)}catch(e){}startCase(id,true)}
-else{const r=RQM();VS.snap={prog:r.prog[id]?JSON.parse(JSON.stringify(r.prog[id])):undefined,done:r.done[id],how:(META.how||{}).rq};delete r.prog[id];META.how=META.how||{};META.how.rq=1;rqOpen(id);RQ.pno=1;RQ.cho=0;rqStart();RQ.cho=0}
+else{const cc=VSC.find(x=>x.id===id);if(cc&&!RQC.includes(cc)){RQC.push(cc);VS.added=cc}const r=RQM();VS.snap={prog:r.prog[id]?JSON.parse(JSON.stringify(r.prog[id])):undefined,done:r.done[id],how:(META.how||{}).rq};delete r.prog[id];META.how=META.how||{};META.how.rq=1;rqOpen(id);RQ.pno=1;RQ.cho=0;rqStart();RQ.cho=0}
 document.body.classList.add('vsrun');vsHud();clearInterval(VS.iv);VS.iv=setInterval(vsTick,400);render()}
 function vsProg(){try{if(VS.t==='m'){return C&&S?pct():0}const c=rqC(VS.id);if(!RQ||!c)return VS.p;const tq=Object.values(c.interrogatorio).reduce((n,a)=>n+a.length,0)||1,tp=c.provas.length||1;return Math.min(100,Math.round(RQ.asked.length/tq*60+Math.min(RQ.inv.length+0,tp)/tp*40))}catch(e){return VS.p}}
 function vsTick(){if(VS.ph!=='run'&&VS.ph!=='out')return;const now=Date.now();
@@ -76,6 +76,7 @@ window.vsEnd=toLobby=>{clearInterval(VS.iv);VS.iv=null;const sn=VS.snap;
 if(sn){try{if(VS.t==='m'){const c=CASES.find(x=>x.id===VS.id);try{save()}catch(e){}toMenu();try{localStorage.removeItem(c.key)}catch(e){}c.key=sn.key;if(sn.ls!=null)localStorage.setItem(sn.key,sn.ls);if(sn.done===undefined)delete META.done[VS.id];else META.done[VS.id]=sn.done;if(sn.p===undefined)delete META.p[VS.id];else META.p[VS.id]=sn.p;if(META.rk){if(sn.rk===undefined)delete META.rk[VS.id];else META.rk[VS.id]=sn.rk}}
  else{const r=RQM();if(sn.prog===undefined)delete r.prog[VS.id];else r.prog[VS.id]=sn.prog;if(sn.done===undefined)delete r.done[VS.id];else r.done[VS.id]=sn.done;if(sn.how===undefined&&META.how)delete META.how.rq;try{rqExit()}catch(e){}}
  msave()}catch(e){}}
+if(VS.added){const i=RQC.indexOf(VS.added);if(i>=0)RQC.splice(i,1);VS.added=null}
 VS.snap=null;const g=VS.g;vsReset();VS.g=g;VS.ph='over';document.body.classList.remove('vsrun');
 if(toLobby&&DC.on){DC.st='lobby';dcMod()}else{try{DC.open=0}catch(e){}render()}}
 window.vsQuit=()=>{if(!confirm('Desistir da corrida? O rival vence.'))return;vsFinish(0,{ff:1})};
