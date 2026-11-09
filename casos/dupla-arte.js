@@ -8,3 +8,5 @@ PDX.dc_denise=mk(F,{e:'round',n:'button',b:'arch',hc:'#1c1a1a',hs:'bun',sk:'#c99
 PDX.dc_tobias=mk(B,{e:'narrow',n:'pointed',b:'straight',hc:'#4a2e1a',hs:'slick',sk:'#e2c4a6',sh:'#bc9c80',bg,deco:'',out:'vest',oc:'#6e7681',oc2:'#26324a',age:29,g:'',ex:[]});
 PDX.dc_cassio=mk(B,{e:'round',n:'hooked',b:'arch',hc:'#ececf1',hs:'comb',sk:'#e2c4a6',sh:'#bc9c80',bg,deco:'',out:'suit',oc:'#d8cfb8',oc2:'#3f6fa0',age:61,g:'',ex:['mustache','jowl','ring','wr']});
 PDX.dc_ilda=mk(F,{e:'round',n:'button',b:'arch',hc:'#ececf1',hs:'bun',sk:'#e6c3a3',sh:'#c3a085',bg,deco:'',out:'dress',oc:'#1f7a55',oc2:'#f2efe8',age:78,g:'',ex:['wr','pearl','earrg']})})();
+/* capas noir instaladas em assets/casos (capa, cartão da lista e faixa da introdução) */
+window.DCART=window.DCART||{};DCART.d0={capa:1,cartao:1,mini:1};DCART.d1={capa:1,cartao:1,mini:1};
