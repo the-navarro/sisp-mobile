@@ -17,10 +17,16 @@
 .dev button{flex:1;padding:10px 0;border-radius:12px;border:1px solid rgba(255,255,255,.22);background:transparent;color:#e7dfcb;font:600 13px inherit;cursor:pointer}.dev button.on{background:#eaa73c;border-color:#eaa73c;color:#1b1406}
 .dopt{display:block;width:100%;text-align:left;margin:8px 0;padding:14px;border-radius:14px;border:1px solid rgba(234,167,60,.55);background:rgba(234,167,60,.1);color:#f2ead8;cursor:pointer;font:inherit}
 .dopt b{display:block;font-size:16px;margin-bottom:3px}.dopt span{display:block;font-size:12.5px;color:#c9c2b0;line-height:1.4}.dopt.off{opacity:.5;border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.04);cursor:default}.dopt i{font:700 9px Arial;letter-spacing:.1em;color:#eaa73c;margin-left:6px;font-style:normal}
-#duohud{position:fixed;bottom:64px;left:50%;transform:translateX(-50%);z-index:1500;display:flex;align-items:center;gap:7px;padding:4px 12px 4px 9px;border-radius:999px;border:1px solid rgba(255,255,255,.22);background:rgba(8,14,20,.86);color:#f2ead8;font:12px Arial,Helvetica,sans-serif;cursor:pointer;max-width:90vw;white-space:nowrap}
+#duohud{position:fixed;bottom:50px;left:10px;z-index:1500;display:flex;align-items:center;gap:7px;padding:4px 12px 4px 9px;border-radius:999px;border:1px solid rgba(255,255,255,.22);background:rgba(8,14,20,.86);color:#f2ead8;font:12px Arial,Helvetica,sans-serif;cursor:pointer;max-width:90vw;white-space:nowrap}
 #duohud b{font-weight:700}#duohud small{color:#eaa73c;font-size:10.5px}.dh-d{width:9px;height:9px;border-radius:50%;flex:none}
 .dpsel{margin:0 0 12px;text-align:center}
 .dpseg{display:inline-flex;padding:3px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14)}
 .dpseg button{border:0;background:transparent;color:#cfc8b6;padding:7px 18px;border-radius:999px;font:600 13px Arial,Helvetica,sans-serif;cursor:pointer}.dpseg button.on{background:#eaa73c;color:#1b1406}
 .dpinf{display:flex;flex-wrap:wrap;gap:4px 12px;justify-content:center;align-items:center;margin-top:8px;font:12px Arial,Helvetica,sans-serif;color:#e7dfcb}
 .dpinf i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}.dpinf small{width:100%;color:#a9a392;font-size:11px}.dpinf button{border:0;background:none;color:#eaa73c;font:600 12px Arial;text-decoration:underline;cursor:pointer}
+/* Dr. José em dupla */
+#dlbm{position:fixed;inset:0;z-index:1800;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(3,7,11,.82);overflow-y:auto}
+.dlbc{width:100%;max-width:340px;margin:auto;padding:18px;border-radius:18px;background:#0c161d;border:1px solid rgba(234,167,60,.6);color:#f2ead8;text-align:center;box-shadow:0 16px 40px #000c}
+.dlbc>svg,.dlbc>span:first-child{display:inline-block}.dlbc small{display:block;font:700 10px Arial,Helvetica,sans-serif;letter-spacing:.14em;color:#eaa73c;margin:8px 0 4px}
+.dlbc h3{margin:0 0 8px;font-size:20px}.dlbc p{margin:0 0 10px;font-size:14px;line-height:1.45;color:#d8d1bf;text-align:left}
+.dlbx{margin:8px 0;padding:10px 12px;border-radius:12px;background:rgba(234,167,60,.1);border:1px solid rgba(234,167,60,.45);text-align:left}.dlbx b{display:block;font:700 11px Arial;letter-spacing:.08em;color:#eaa73c;margin-bottom:4px}.dlbx span{font-size:13.5px;line-height:1.4;color:#efe7d3}
