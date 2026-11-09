@@ -26,3 +26,10 @@
 .dcsheet .dbtn{padding:11px;font-size:14px;margin-top:8px}
 .dcsm{margin:4px 0 10px;font-size:12.5px;line-height:1.4;color:#b9b2a0}
 .dcv .dcchips{margin:10px 0 6px}
+.dcpav{position:relative;flex:none;width:38px;height:38px;border-radius:50%;border:2px solid #eaa73c;background:#0f1a22;padding:0;cursor:pointer;margin-left:2px}.dcpav svg{width:100%;height:100%;border-radius:50%;display:block}
+.dcpav0{display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:#2d6f9c;color:#fff;font-weight:800}
+.dcon{position:absolute;right:-2px;bottom:-2px;width:11px;height:11px;border-radius:50%;background:#777;border:2px solid #0b151c}.dcon.on{background:#5fbf7a}
+.dcun{position:absolute;left:-4px;top:-4px;min-width:16px;height:16px;border-radius:8px;background:#e04f4f;color:#fff;font:700 10px/16px Arial;text-align:center;font-style:normal;padding:0 3px}
+.dcchh{display:flex;align-items:center;gap:10px;margin-bottom:8px}.dcchh svg{width:40px;height:40px;border-radius:50%;border:2px solid #eaa73c}.dcchh small{margin:0}.dcchh b{display:block;font-size:16px}
+.dcmsgr{display:flex;gap:8px;margin-top:10px}.dcmsgr input{flex:1;margin:0}.dcmsgr .rqbtn{width:auto;margin:0;padding:0 16px}
+.dcbn{margin:0 0 10px;padding:10px 12px;border-radius:12px;background:rgba(234,167,60,.12);border:1px solid rgba(234,167,60,.5);font:13px Arial;color:#f2ead8}.dcbn b{display:block}.dcbn span{display:block;color:#c9c2b0;margin:2px 0 8px}.dcbn div{display:flex;gap:8px}.dcbn button{flex:1;padding:8px;border-radius:10px;border:1px solid rgba(234,167,60,.7);background:transparent;color:#eaa73c;font:700 12.5px Arial;cursor:pointer}
