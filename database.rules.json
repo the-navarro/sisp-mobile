@@ -9,20 +9,51 @@
         ".validate": "newData.hasChildren(['p1', 'c'])",
         "c": { ".validate": "newData.isNumber()" },
         "m": { ".validate": "newData.isString() && newData.val().length <= 20" },
-        "k": { ".validate": "newData.isString() && newData.val().length <= 20" },
+        "r": {
+          ".write": "auth != null && (root.child('salas').child($cod).child('p1').child('u').val() == auth.uid || root.child('salas').child($cod).child('p2').child('u').val() == auth.uid)",
+          ".validate": "newData.isNumber() && (newData.val() == 0 || newData.val() == 1)"
+        },
+        "k": {
+          ".write": "auth != null && (root.child('salas').child($cod).child('p1').child('u').val() == auth.uid || root.child('salas').child($cod).child('p2').child('u').val() == auth.uid)",
+          ".validate": "newData.isString() && newData.val().length <= 24"
+        },
         "p1": {
-          ".validate": "newData.hasChildren(['u', 'n']) && newData.child('n').isString() && newData.child('n').val().length <= 14"
+          ".validate": "newData.hasChildren(['u', 'n']) && newData.child('n').isString() && newData.child('n').val().length <= 14",
+          "u": { ".validate": "newData.isString()" },
+          "n": { ".validate": "newData.isString()" }
         },
         "p2": {
           ".write": "auth != null && !data.exists() && newData.child('u').val() == auth.uid && root.child('salas').child($cod).child('p1').exists()",
-          ".validate": "newData.hasChildren(['u', 'n']) && newData.child('n').isString() && newData.child('n').val().length <= 14"
+          ".validate": "newData.hasChildren(['u', 'n']) && newData.child('n').isString() && newData.child('n').val().length <= 14",
+          "u": { ".validate": "newData.isString()" },
+          "n": { ".validate": "newData.isString()" }
+        },
+        "s1": {
+          ".write": "auth != null && root.child('salas').child($cod).child('p1').child('u').val() == auth.uid",
+          ".validate": "newData.isString() && newData.val().length <= 60000"
+        },
+        "s2": {
+          ".write": "auth != null && root.child('salas').child($cod).child('p2').child('u').val() == auth.uid",
+          ".validate": "newData.isString() && newData.val().length <= 60000"
+        },
+        "on": {
+          "$u": {
+            ".write": "auth != null && auth.uid == $u && (root.child('salas').child($cod).child('p1').child('u').val() == auth.uid || root.child('salas').child($cod).child('p2').child('u').val() == auth.uid)",
+            ".validate": "newData.isBoolean()"
+          }
         },
         "ev": {
           "$id": {
             ".write": "auth != null && !data.exists() && (root.child('salas').child($cod).child('p1').child('u').val() == auth.uid || root.child('salas').child($cod).child('p2').child('u').val() == auth.uid)",
-            ".validate": "newData.hasChildren(['u', 't', 'k']) && newData.child('u').val() == auth.uid && newData.child('k').isString() && newData.child('k').val().length <= 20"
+            ".validate": "newData.hasChildren(['u', 't', 'k']) && newData.child('u').val() == auth.uid",
+            "u": { ".validate": "newData.isString()" },
+            "t": { ".validate": "newData.isNumber()" },
+            "k": { ".validate": "newData.isString() && newData.val().length <= 8" },
+            "x": { ".validate": "newData.isString() && newData.val().length <= 240" },
+            "$other": { ".validate": false }
           }
-        }
+        },
+        "$other": { ".validate": false }
       }
     }
   }

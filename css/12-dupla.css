@@ -30,3 +30,11 @@
 .dlbc>svg,.dlbc>span:first-child{display:inline-block}.dlbc small{display:block;font:700 10px Arial,Helvetica,sans-serif;letter-spacing:.14em;color:#eaa73c;margin:8px 0 4px}
 .dlbc h3{margin:0 0 8px;font-size:20px}.dlbc p{margin:0 0 10px;font-size:14px;line-height:1.45;color:#d8d1bf;text-align:left}
 .dlbx{margin:8px 0;padding:10px 12px;border-radius:12px;background:rgba(234,167,60,.1);border:1px solid rgba(234,167,60,.45);text-align:left}.dlbx b{display:block;font:700 11px Arial;letter-spacing:.08em;color:#eaa73c;margin-bottom:4px}.dlbx span{font-size:13.5px;line-height:1.4;color:#efe7d3}
+/* Cooperativo em dois celulares */
+.ccod{font:800 44px/1.1 Arial,Helvetica,sans-serif;letter-spacing:.2em;text-align:center;color:#eaa73c;margin:6px 0 4px}
+.cdot{display:inline-block;width:11px;height:11px;border-radius:50%;background:#666;flex:none;margin-right:8px}.cdot.on{background:#5fbf7a;box-shadow:0 0 0 3px rgba(95,191,122,.25)}.dpr .cdot{margin:0}
+.cerr{margin:8px 0;padding:9px 11px;border-radius:10px;background:rgba(216,80,80,.16);border:1px solid rgba(216,80,80,.5);color:#ffd0d0;font-size:13px}
+.dh-p{width:8px;height:8px;border-radius:50%;flex:none}.dh-u{font:700 10px Arial;font-style:normal;background:#eaa73c;color:#1b1406;border-radius:9px;padding:1px 6px}
+.cfeed{max-height:30vh;overflow:auto;display:flex;flex-direction:column;gap:6px;padding:2px}
+.cmsg{align-self:flex-start;max-width:88%;padding:8px 11px;border-radius:12px;background:rgba(255,255,255,.08);font-size:13px;line-height:1.35}.cmsg b{display:block;font:700 10px Arial;color:#eaa73c;margin-bottom:2px}.cmsg.me{align-self:flex-end;background:rgba(234,167,60,.18)}
+.cph{display:flex;flex-wrap:wrap;gap:6px}.cph button{padding:8px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.25);background:transparent;color:#efe7d3;font:12.5px Arial,Helvetica,sans-serif;cursor:pointer;text-align:left}
