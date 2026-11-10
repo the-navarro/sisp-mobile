@@ -26,9 +26,12 @@ const vsDel=id=>{const e=document.getElementById(id);if(e)e.remove()};
 const vsSnd=k=>{try{AU.fx&&AU.fx(k)}catch(e){}};
 
 /* ---------- convite e escolha do caso ---------- */
-window.vsLobby=()=>{if(!DC.on)return '';const both=DC.names[0]&&DC.names[1];
+window.vsLobby=()=>{if(!DC.on||(window.amMode&&amMode()!=='comp'))return '';const both=DC.names[0]&&DC.names[1];
 if(VS.g&&VS.ph==='ask')return `<button class=dbtn onclick="vsPrompt()">🏁 Corrida: ${esc(vsTitle(VS.t,VS.id))}</button>`;
-return DC.host&&both&&VSC.length?`${VS.want&&VSC.some(c=>c.id===VS.want)?`<button class=dbtn onclick="vsStart('r','${VS.want}')">🏁 Começar: ${esc(vsTitle('r',VS.want))}</button>`:''}<button class=dbtn style="background:transparent;border:1px solid #eaa73c;color:#eaa73c" onclick="vsPicker()">🏁 Corrida competitiva</button>`:''};
+if(!VSC.length)return '';
+if(!both)return `<p class=dsm>Quando a outra pessoa entrar, vocês poderão escolher o caso da corrida.</p>`;
+if(!DC.host)return `<p class=dsm>Quando quem criou a sala escolher o caso, o convite aparece aqui.</p>`;
+return `<p class=dsm style="margin:10px 0 6px">Escolha o caso da corrida:</p><label class=vsgf><input type=checkbox ${VS.pk.gf?'checked':''} onchange="VS.pk.gf=this.checked?1:0"> <span><b>Golpes ligados</b><small>Quem investiga bem ganha golpes para atrapalhar o rival.</small></span></label>${VSC.map(c=>`<button class=dopt onclick="vsStart('r','${c.id}')"><b>${esc(c.titulo)}</b><span>${esc(c.cenario.local.split(',')[0])} · ~${c.duracao_min||10} min</span></button>`).join('')}`};
 window.vsPicker=()=>{const m=vsEl('vsm','duo-m'),P=VS.pk,L=VSC.map(c=>[c.id,c.titulo,(c.cenario&&c.cenario.local||'').split(',')[0]]);
 m.innerHTML=`<div class=dcard style="text-align:left;max-height:94vh;overflow:auto"><small>CORRIDA COMPETITIVA</small><h2 style="margin:2px 0 6px">Quem resolve primeiro?</h2><p class=dsm style="margin-top:0">Casos feitos só para a corrida, que ninguém jogou antes. Os dois jogam o mesmo caso, cada um no seu celular. Quem acusar certo primeiro vence.</p>
 <label class=vsgf><input type=checkbox ${P.gf?'checked':''} onchange="VS.pk.gf=this.checked?1:0"> <span><b>Golpes ligados</b><small>Quem investiga bem ganha golpes para atrapalhar o rival. Desligue para uma corrida pura.</small></span></label>
@@ -36,7 +39,7 @@ ${L.map(o=>`<button class=dopt onclick="vsStart('r','${o[0]}')"><b>${esc(o[1])}<
 window.vsStart=(t,id)=>{if(!DC.host)return;const n=1+Math.max(0,...Object.keys(DC.evs).map(i=>+(/^v(\d+)$/.exec(DC.evs[i].x||'')||[0,0])[1]),+(/^v(\d+)$/.exec(VS.g||'')||[0,0])[1]);const g='v'+n;
 NET.set(DC.cod,'k',`v:${t}${VS.pk.gf?1:0}:${id}:${g}`).catch(()=>{});vsDel('vsm');vsSet(t,id,VS.pk.gf,g)};
 function vsSet(t,id,gf,g){if(VS.ph==='run'||VS.ph==='cd')return;vsReset();VS.g=g;VS.t=t;VS.id=id;VS.gf=+gf?1:0;VS.ph='ask';VS.tOpen=Date.now()-1500;const dm=document.getElementById('dcm');if(dm)dm.remove();vsPrompt()}
-function vsReset(){clearInterval(VS.iv);VS.iv=null;Object.assign(VS,{ph:'',rdy:{},t0:0,p:0,ch:0,held:0,pen:0,err:0,lastP:0,sentP:0,sentT:0,rp:0,fx:{},inc:null,q:[],fin:{me:null,ri:null},egg:0,eggN:0,used:0,lf:null,res:null,gone:0});['vsw','vsb','vsn','vsr','vst','vsfog','vsres','vscd','vsg'].forEach(vsDel);document.body.classList.remove('vsrun','vs-fog')}
+function vsReset(){clearInterval(VS.iv);VS.iv=null;Object.assign(VS,{ph:'',rdy:{},t0:0,p:0,ch:0,held:0,pen:0,err:0,lastP:0,sentP:0,sentT:0,rp:0,fx:{},inc:null,q:[],fin:{me:null,ri:null},egg:0,eggN:0,used:0,lf:null,res:null,gone:0});['vsw','vsb','vsn','vsr','vst','vsfog','vsres','vscd','vsg','vshud','vsm'].forEach(vsDel);document.body.classList.remove('vsrun','vs-fog')}
 window.vsPrompt=()=>{if(VS.ph!=='ask')return;const m=vsEl('vsm','duo-m'),me=VS.rdy[DC.uid],oth=Object.keys(VS.rdy).some(u=>u!==DC.uid);
 m.innerHTML=`<div class=dcard style="text-align:left"><small>🏁 CORRIDA COMPETITIVA</small><h2 style="margin:2px 0 6px">${esc(vsTitle(VS.t,VS.id))}</h2><p class=dsm style="margin-top:0">${esc(DC.host?'Você chamou':vsOth()+' chamou')} ${DC.host?esc(vsOth()):'você'} para uma corrida. Os dois jogam o mesmo caso ao mesmo tempo. Vence quem acusar certo primeiro. Erros custam 20 segundos.</p>
 <div class=vsrules><span>${VS.gf?'⚡ Golpes ligados: investigar bem enche a barra e dá um golpe para atrapalhar o rival. Com um golpe guardado, dá para defender ou rebater o do rival.':'🏁 Corrida pura, sem golpes.'}</span></div>
@@ -82,7 +85,7 @@ if(toLobby&&DC.on){DC.st='lobby';dcMod()}else{try{DC.open=0}catch(e){}render()}}
 window.vsQuit=()=>{if(!confirm('Desistir da corrida? O rival vence.'))return;vsFinish(0,{ff:1})};
 
 /* ---------- barra no topo ---------- */
-function vsHud(){if(VS.ph!=='run'&&VS.ph!=='out')return vsDel('vshud');const e=vsEl('vshud');const now=Date.now(),t=vsFmt(now-VS.t0+VS.pen),ch=Math.round(100*VS.ch/VSCH);
+function vsHud(){if((VS.ph!=='run'&&VS.ph!=='out')||DC.open)return vsDel('vshud');const e=vsEl('vshud');const now=Date.now(),t=vsFmt(now-VS.t0+VS.pen),ch=Math.round(100*VS.ch/VSCH);
 e.innerHTML=`<span class=vsav>${dcAvParc(24)}</span><span class=vsrb><i style="width:${VS.rp}%"></i><em>${esc(dcFirst(vsOth()))} ${VS.rp}%</em></span><button class=vstm onclick="vsEgg()" aria-label="Tempo">${VS.ph==='out'?'⌛':t}</button>${VS.gf?`<button class="vsgb ${VS.held?'on':''}" onclick="vsGolpes()" aria-label="Golpes"><i style="height:${VS.held?100:ch}%"></i><b>⚡</b></button>`:''}<button class=vsx onclick="vsQuit()" aria-label="Desistir">✕</button>`;
 if(VS.ph==='out'&&!VS.res){e.querySelector('.vstm').title='Arquivado'}}
 window.vsEgg=()=>{const now=Date.now();if(now-VS.eggT>2500)VS.eggN=0;VS.eggT=now;VS.eggN++;if(VS.eggN>=7&&!VS.egg&&VS.gf){VS.egg=1;VS.held=1;VS.ch=0;vsNote('🔥 Você achou o isqueiro do chefe! Golpe grátis.');vsSnd('chime');vsHud()}};
@@ -140,5 +143,9 @@ function vsHold(fn,ctx,args){if(!VS.fx.longo||VS.ph!=='run')return fn.apply(ctx,
 }catch(x){}}}
 function vsResolve2(){if(VS.ph==='lost'||VS.ph==='won'){/* o rival terminou primeiro, ou desistiu */const ok=VS.ph==='won';VS.fin.me=VS.fin.me||{ok:false,tm:Date.now()-VS.t0+VS.pen,er:VS.err,sc:'',ff:ok?0:0,ts:Date.now()};VS.ph='end';if(VS.t==='m'){try{CUT=null;clearTimeout(CTM);AU.vstop()}catch(e){}}}vsResolve()}
 /* corrida chamada pelo outro celular */
-{const _k=dcK;dcK=function(){const m=/^v:([pmr])([01]):([A-Za-z0-9_]+):(v\d+)$/.exec(DC.k||'');if(!m)return _k.apply(this,arguments);if(VS.g===m[4])return;const t=m[1]==='r'?'r':'m',id=m[3],gf=m[2],g=m[4];
+window.vsAbort=()=>{if(VS.ph==='run'||VS.ph==='cd'||VS.ph==='out'||VS.ph==='end'||VS.ph==='ask'){if(VS.ph==='run'||VS.ph==='out'||VS.ph==='end'||VS.ph==='ask')vsEnd(0);else{vsReset();document.body.classList.remove('vsrun')}}};
+{const _k=dcK;dcK=function(){const m=/^v:([pmr])([01]):([A-Za-z0-9_]+):(v\d+)$/.exec(DC.k||'');if(!m){if(/^d:/.test(DC.k||''))vsAbort();const r=_k.apply(this,arguments);if(DC.joinK&&!DC.open&&!DC.host&&!document.getElementById('dcm')){DC.st='lobby';dcMod();try{tst('🤝 '+vsOth()+' chamou você para um caso cooperativo!')}catch(e){}}return r}if(VS.g===m[4])return;const t=m[1]==='r'?'r':'m',id=m[3],gf=m[2],g=m[4];
  if(DC.host)return;setTimeout(()=>{if(VS.g===g)return;const done=Object.keys(DC.evs).some(i=>DC.evs[i].x===g&&DC.evs[i].k==='vf');if(done)return;vsSet(t,id,gf,g);try{tst('🏁 '+vsOth()+' chamou você para uma corrida!')}catch(e){}},1200)}}
+
+/* iniciar o cooperativo derruba uma corrida que ainda esteja aberta neste celular */
+{const _ds=window.dcStart;window.dcStart=function(){vsAbort();return _ds.apply(this,arguments)}}
