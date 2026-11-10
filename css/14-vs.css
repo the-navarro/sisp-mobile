@@ -27,3 +27,5 @@ body.vsrun .app{padding-top:calc(env(safe-area-inset-top,0px) + 40px)}
 body.vsrun .rqv{top:calc(env(safe-area-inset-top,0px) + 40px)}body.vsrun .rqtop{padding-top:8px}
 .amchip{display:flex;align-items:center;justify-content:space-between;width:100%;margin:2px 0 8px;padding:10px 14px;border-radius:12px;border:1px solid rgba(234,167,60,.55);background:rgba(234,167,60,.1);color:#f4ecdc;font:700 14px Arial;cursor:pointer}.amchip b{font-size:12px;color:#eaa73c}
 .dopt.amcur{border-color:#eaa73c;background:rgba(234,167,60,.2)}
+/* App instalado: a altura é a da tela inteira (evita faixa escura em cima quando o celular entra em tela cheia). Com o teclado aberto, vale a conta em JS. */
+@media (display-mode: standalone),(display-mode: fullscreen){html:has(body:not(.kb)),html:has(body:not(.kb)) body{height:100dvh!important;min-height:100dvh}}

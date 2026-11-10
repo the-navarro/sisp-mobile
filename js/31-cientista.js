@@ -43,19 +43,22 @@ const labItem=()=>{if(!tabOpen('lab')||window.DUO&&DUO.on)return '';const q=(S.l
 const bl=(t,a)=>a?`<div style="display:flex;justify-content:flex-end;align-items:flex-end;gap:6px;margin-top:8px"><div class="bub q" style="margin:0;max-width:calc(100% - 40px)">${t}</div>${av('det',28)}</div>`:`<div style="display:flex;align-items:flex-end;gap:6px;margin-top:8px">${jav(28)}<div style="max-width:calc(100% - 40px)">${t}</div></div>`;
 const jb=(t,x)=>`<div class="bub a" style="margin:0;max-width:100%;${x||''}">${t}</div>`;
 let LBTY=0,LBTM=0;
+const LBA2=['Recebi! Vou com calma, que pressa é inimiga da perícia.','Chegou. Já está na bancada, e eu aviso aqui quando terminar.','Anotado. Eu cuido dela com carinho.','Recebida. Hmm... parece promissora!'];
+const LBI2=['Delegada, saiu o laudo, e está muito interessante!','Ah, a senhora vai gostar deste.','Terminei. Foi devagar, mas valeu cada minuto.','Pronto! Veja só o que a bancada me mostrou.','Com o perdão da empolgação, mas saiu!'];
+const LBH2=['Esta não tem relação com o crime. Examinei tudo e posso descartar. Às vezes um objeto é só um objeto.','Fiz os exames e não achei nada que ligue isto ao crime. Descarte, delegada, mas foi bom conferir.'];
 function lbBub(e){const id=e.id,c=CL[id],nm=lbNm(id);
-if(e.k==='s'){const ids=e.ids||[id],ns=ids.map(i=>'<b>'+lbNm(i)+'</b>'),lst=ns.length>1?ns.slice(0,-1).join(', ')+' e '+ns[ns.length-1]:ns[0];return [bl(`<small style="opacity:.6">${e.t}</small> Para análise: ${lst}.`,1)]}
+if(e.k==='s'){const ids=e.ids||[id],ns=ids.map(i=>'<b>'+lbNm(i)+'</b>'),lst=ns.length>1?ns.slice(0,-1).join(', ')+' e '+ns[ns.length-1]:ns[0];return [bl(`<small style="opacity:.6">${e.t}</small> Para análise: ${lst}.`,1),bl(jb(ids.length>1?`Recebi as ${ids.length} provas! Vou na ordem, com calma, e aviso a cada laudo.`:pk(LBA2,id)))]}
 const cat=lbCat(id),btn=`<div style="margin-top:8px"><button class=btn style="padding:8px 14px;font-size:13px" onclick="RM='${id}';render()">Rever laudo ilustrado</button></div>`;
 const mu=lbMuda(id),mt=/^Nenhuma pergunta nova com este laudo\.$/.test(mu)?'':'<br><small style="opacity:.7">O QUE MUDA</small><br>'+mu;
-if(c.h)return [bl(jb('<b>📄 '+nm+':</b> sem relação com o crime. Pode descartar.'+btn))];
-return [bl(jb('<b>📄 Laudo: '+nm+'</b><br>'+RES[id]+mt+btn,'border:1px solid var(--amb)'))]}
+if(c.h)return [bl(jb(pk(LBH2,id)+'<br><br><b>📄 '+nm+':</b> sem relação com o crime.'+btn))];
+return [bl(jb(pk(LBI2,id,1)+'<br><br><b>📄 Laudo: '+nm+'</b><br>'+RES[id]+mt+btn,'border:1px solid var(--amb)'))]}
 const lbN=e=>e.n==null?99:e.n;
 const lbPend=()=>(S.lq||[]).find(e=>lbN(e)<lbBub(e).length);
 function lbKick(){if(LBTM||!lbPend())return;LBTY=1;const e=lbPend(),t=lbBub(e)[lbN(e)].replace(/<[^>]*>/g,'').length;LBTM=setTimeout(()=>{LBTM=0;LBTY=0;const q=lbPend();if(!q||!LBO||S.tab!==lbTab())return;q.n=lbN(q)+1;save();AU.fx&&AU.fx('tick');render();const c=$('#cl');if(c)c.scrollTop=c.scrollHeight;lbKick()},Math.min(2600,900+t*14))}
 let LBSB=0;
 function labChat(){LBSB=1;S.lun=0;{const pd=(S.lq||[]).filter(e=>lbN(e)<lbBub(e).length);pd.slice(0,-1).forEach(e=>e.n=99)}const hdr=`<div class=chh><div class=chr><button class=chn onclick="lbBack()" aria-label="Voltar">${jav(46)}<span style="min-width:0;flex:1"><b>${JN}</b><span class=mut style="display:block;font-size:12px">Perito criminal · Laboratório</span></span></button></div></div>`;
 const ev=(S.lq||[]).map(e=>lbBub(e).slice(0,lbN(e)).join('')).join('');
-const hi=bl(jb('Dr. José, do laboratório. Mande as provas, uma por vez. Aviso aqui quando cada laudo ficar pronto.'));
+const hi=bl(jb('Olá, delegada! Dr. José, do laboratório. Mande as provas com calma, que eu cuido delas e aviso aqui quando cada laudo ficar pronto.'));
 const wt=lbWait().length;setTimeout(lbKick,0);
 return hdr+`<div class=chl id=cl>${hi}${ev}${lbPend()?`<div style="display:flex;align-items:flex-end;gap:6px;margin-top:8px">${jav(28)}<div class="bub a"><span class=dots><span></span><span></span><span></span></span></div></div>`:''}${wt&&!lbPend()?`<div class=pill>🧪 ${wt} prova${wt>1?'s':''} na bancada</div>`:''}</div><div class=cmp><button class="cmb" onclick="${window.DUO&&DUO.on?'LBO=0;render()':'go(\'lab\')'}"><span>${window.DUO&&DUO.on?'Ver a bancada':'Abrir a Perícia'}</span><svg viewBox="0 0 24 24">${PIC.lab}</svg></button></div>`}
 function labScreen(){const dk=S.inv.includes(C.lock.id)&&!S.dec,fl=S.f.lab,st=id=>S.an.includes(id)?'d':lbSent(id)?'w':'p',L=S.inv.filter(id=>fl==='all'||(fl==='pend'?st(id)!=='d':st(id)==='d'));
