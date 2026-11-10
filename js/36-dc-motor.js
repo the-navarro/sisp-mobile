@@ -17,7 +17,10 @@ const dcNorm=s=>String(s==null?'':s).toLowerCase().normalize('NFD').replace(/[̀
 const dcWho=e=>{const i=e.u===DC.p1u?0:1;return i===DC.r?'A':'B'};
 const dcOwns=(o,w)=>o==='ambos'||o===w;
 const dcMyAv=()=>{try{const o=JSON.parse(JSON.stringify(META.pl||{}));delete o.n;const j=JSON.stringify(o);return j.length<=950?j:''}catch(e){return ''}};
-const dcSave=()=>{try{localStorage.setItem(DCK,JSON.stringify({cod:DC.cod,me:DC.me,host:DC.host,n:DC.myName}))}catch(e){}};
+const dcInGame=()=>{try{return !!(DC.on&&DC.open&&DC.cs&&!dcState().fim)}catch(e){return false}};
+const dcSave=()=>{try{DC._o=dcInGame()?1:0;localStorage.setItem(DCK,JSON.stringify({cod:DC.cod,me:DC.me,host:DC.host,n:DC.myName,o:DC._o,t:Date.now()}))}catch(e){}};
+/* só reabre a partida ao voltar para o app se a pessoa estava dentro dela ao fechar */
+{const _r=render;render=function(){_r.apply(this,arguments);try{if(DC.on&&(dcInGame()?1:0)!==DC._o)dcSave()}catch(e){}}}
 
 /* ---------- regras: estado a partir dos eventos ---------- */
 function dcState(){const c=DC.cs;if(!c)return null;if(DC.stc&&DC.stv===DC.ver&&DC.stc.g===DC.g)return DC.stc;
@@ -113,11 +116,11 @@ dcMod();render()}
 function dcRefresh(){if(window.dcMod&&document.getElementById('dcm'))dcMod();if(DC.open)render()}
 window.dcLeave=()=>{DC.offs.forEach(f=>{try{f()}catch(e){}});DC.offs.length=0;DC.on=0;DC.cod=null;DC.k=null;DC.cs=null;DC.open=0;DC.names=['',''];DC.avs=['',''];DC.conn=[0,0];DC.evs={};DC.feed=[];DC.st='home';DC.err='';try{localStorage.removeItem(DCK)}catch(e){}
 ['dcm','dcch'].forEach(i=>{const e=document.getElementById(i);if(e)e.remove()});render()};
-async function dcResume(){let s;try{s=JSON.parse(localStorage.getItem(DCK))}catch(e){}if(!s||!s.cod)return;try{await NET.init();DC.cod=s.cod;DC.me=s.me;DC.host=s.host;DC.myName=s.n||'';DC.reopen=1;dcAttach();DC.st='lobby';const m=document.getElementById('dcm');if(m)m.remove()}catch(e){setTimeout(dcResume,15000)}}
+async function dcResume(){let s;try{s=JSON.parse(localStorage.getItem(DCK))}catch(e){}if(!s||!s.cod)return;if(s.t&&Date.now()-s.t>6*3600e3){try{localStorage.removeItem(DCK)}catch(e){}return}DC.noOpen=s.o?0:1;try{await NET.init();DC.cod=s.cod;DC.me=s.me;DC.host=s.host;DC.myName=s.n||'';DC.reopen=1;dcAttach();DC.st='lobby';const m=document.getElementById('dcm');if(m)m.remove()}catch(e){setTimeout(dcResume,15000)}}
 /* caso escolhido pela pessoa que criou a sala: k = 'd:<caso>:<partida>' */
 function dcK(){if(!DC.on)return;const m=/^d:([^:]+):(g\d+)$/.exec(DC.k||'');if(!m){dcRefresh();return}const c=dcCase(m[1]);if(!c){dcRefresh();return}
 if(DC.g!==m[2]||!DC.cs||DC.cs.id!==c.id){DC.g=m[2];DC.cs=c;DC.ver++;DC.v=Object.keys(DC.evs).some(i=>DC.evs[i].x===DC.g&&DC.evs[i].u===DC.uid)?'main':'intro';DC.tab='su';DC.su=null;DC.pv=null;DC.sel={};DC.stc=null;
-if(DC.host||DC.reopen){DC.open=1;DC.reopen=0;DC.joinK=null;const mm=document.getElementById('dcm');if(mm)mm.remove()}else{DC.joinK=c.id}}
+if((DC.host||DC.reopen)&&!DC.noOpen){DC.open=1;DC.reopen=0;DC.joinK=null;const mm=document.getElementById('dcm');if(mm)mm.remove()}else{DC.joinK=c.id;DC.reopen=0}DC.noOpen=0}
 dcRefresh()}
 window.dcEnter=()=>{DC.joinK=null;DC.open=1;const m=document.getElementById('dcm');if(m)m.remove();render()};
 window.dcStart=id=>{if(!DC.host||!dcCase(id))return;const n=1+Math.max(0,...Object.keys(DC.evs).map(i=>+(/g(\d+)/.exec(DC.evs[i].x)||[0,0])[1]),+(/g(\d+)/.exec(DC.g)||[0,0])[1]);
