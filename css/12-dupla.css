@@ -1,6 +1,6 @@
 /* Modo dupla: Revezamento */
 #duoov,.duo-m{position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px;background:radial-gradient(120% 90% at 50% 20%,#14202c 0%,#070b12 70%);font-family:inherit;overflow-y:auto}
-.duo-m{z-index:1990;background:rgba(4,8,12,.92)}
+.duo-m{z-index:1990;background:rgba(4,8,12,.985)}
 .dcard{width:100%;max-width:340px;margin:auto;text-align:center;color:#f2ead8}
 .dcard small{display:block;font:700 10px Arial,Helvetica,sans-serif;letter-spacing:.16em;color:#eaa73c;margin:10px 0 6px}
 .dcard h2{margin:0 0 10px;font-size:26px;line-height:1.15}
