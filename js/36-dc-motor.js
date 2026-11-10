@@ -116,7 +116,10 @@ dcMod();render()}
 function dcRefresh(){if(window.dcMod&&document.getElementById('dcm'))dcMod();if(DC.open)render()}
 window.dcLeave=()=>{DC.offs.forEach(f=>{try{f()}catch(e){}});DC.offs.length=0;DC.on=0;DC.cod=null;DC.k=null;DC.cs=null;DC.open=0;DC.names=['',''];DC.avs=['',''];DC.conn=[0,0];DC.evs={};DC.feed=[];DC.st='home';DC.err='';try{localStorage.removeItem(DCK)}catch(e){}
 ['dcm','dcch'].forEach(i=>{const e=document.getElementById(i);if(e)e.remove()});render()};
-async function dcResume(){let s;try{s=JSON.parse(localStorage.getItem(DCK))}catch(e){}if(!s||!s.cod)return;if(s.t&&Date.now()-s.t>6*3600e3){try{localStorage.removeItem(DCK)}catch(e){}return}DC.noOpen=s.o?0:1;try{await NET.init();DC.cod=s.cod;DC.me=s.me;DC.host=s.host;DC.myName=s.n||'';DC.reopen=1;dcAttach();DC.st='lobby';const m=document.getElementById('dcm');if(m)m.remove()}catch(e){setTimeout(dcResume,15000)}}
+const DCEXP=3600e3;
+/* a sala vale enquanto alguém estiver online: este celular avisa que está aqui a cada minuto. Depois de 1 hora fora, e sem o parceiro online, a sala expira. */
+setInterval(()=>{if(DC.on&&!document.hidden)dcSave()},60000);
+async function dcResume(){let s;try{s=JSON.parse(localStorage.getItem(DCK))}catch(e){}if(!s||!s.cod)return;DC.noOpen=s.o?0:1;DC.stale=s.t&&Date.now()-s.t>DCEXP;try{await NET.init();DC.cod=s.cod;DC.me=s.me;DC.host=s.host;DC.myName=s.n||'';DC.reopen=1;dcAttach();DC.st='lobby';if(DC.stale){DC.stale=0;setTimeout(()=>{if(DC.on&&!DC.conn[1-DC.me]){dcLeave();try{tst('⌛ A sala expirou: ficou 1 hora sem ninguém online.')}catch(e){}}},4000)}const m=document.getElementById('dcm');if(m)m.remove()}catch(e){setTimeout(dcResume,15000)}}
 /* caso escolhido pela pessoa que criou a sala: k = 'd:<caso>:<partida>' */
 function dcK(){if(!DC.on)return;const m=/^d:([^:]+):(g\d+)$/.exec(DC.k||'');if(!m){dcRefresh();return}const c=dcCase(m[1]);if(!c){dcRefresh();return}
 if(DC.g!==m[2]||!DC.cs||DC.cs.id!==c.id){DC.g=m[2];DC.cs=c;DC.ver++;DC.v=Object.keys(DC.evs).some(i=>DC.evs[i].x===DC.g&&DC.evs[i].u===DC.uid)?'main':'intro';DC.tab='su';DC.su=null;DC.pv=null;DC.sel={};DC.stc=null;
