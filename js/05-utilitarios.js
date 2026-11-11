@@ -18,7 +18,7 @@ const hm=m=>String(Math.floor(m/60)%24).padStart(2,'0')+':'+String(m%60).padStar
 const fmt=t=>gx(t).replace(/\[(.*?)\]/,'<em>[$1]</em>');
 const lg=(i,x,c)=>{S.tick++;S.clock+=c;S.log.unshift({t:hm(S.clock),i,x})};
 const fchips=(k,o)=>`<div class=loc style="margin:6px 0">${o.map(([v,t])=>`<button class="chip ${S.f[k]===v?'on':''}" onclick="S.f.${k}='${v}';save();render()">${t}</button>`).join('')}</div>`;
-const avail=()=>items().filter(i=>!(i.id===C.lock.id&&!i.t&&!S.dec)).map(i=>i.id);
+const avail=()=>items().filter(i=>!(isLk(i.id)&&!i.t&&!S.dec)).map(i=>i.id);
 const pend=()=>{const a=avail();return Object.keys(DD).filter(k=>!S.ded.includes(k)&&k.split('|').every(x=>a.includes(x)))};
 const rem=id=>pend().filter(k=>k.split('|').includes(id)).length;
 function callchk(){if(S.seen<4||S.call||V||S.tick-S.lc<3||S.asked.length<3||S.an.length<1||S.tab==='interrogate'||S.typing||T||AN||RM||ND)return;for(const id in EV)if(!S.asked.includes(id)&&C.EVW[id]()){S.call=id;S.callst=0;const s=SU.find(x=>x.id===EV[id][0]);S.notes.unshift({t:'📞 '+fn(s)+' ligou para você.',tab:'interrogate',r:0,h:hm(S.clock)});getA('vib')&&navigator.vibrate&&navigator.vibrate([200,100,200]);break}}
