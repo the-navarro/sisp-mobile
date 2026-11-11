@@ -77,7 +77,7 @@ window.espEpiGo=()=>{const v=document.getElementById('espepvw');if(v)v.remove();
 window.espEpilogo=()=>{if(!C||!C.epilogo||!S.won||S.epi)return;S.epi=1;try{save()}catch(e){}const ep=C.epilogo,n=(C.notas||[]).find(x=>x.id===ep.nota),id=C.id;
 const e=espEl('espepi','duo-m');e.style.zIndex=2600;
 e.innerHTML=`<div class=espepvw id=espepvw><video id=espepv playsinline autoplay ${window.AU&&AU.f?'':'muted'} src="assets/v/${id}_epi.mp4" poster="assets/v/${id}_epi.jpg"></video><button class=espepsk onclick="espEpiGo()">Pular ›</button></div><div class="dcard espepi" id=espepc style="display:none">${n?`<div class=espnota style="margin-bottom:14px"><small>ÚLTIMA NOTA DO CONSULTOR · ${esc(n.fecha||'')}</small><p>${esc(n.txt)}</p></div>`:''}<div class=espepf>${av(ep.quem,110,0)}</div><p class=espepq>${ep.dir?`<small style="display:block;font:12px Arial;color:#9fb0b8;margin-bottom:6px">${esc(ep.dir)}</small>`:''}“${esc(ep.fala)}”</p><button class=dbtn onclick="espDel('espepi')">Encerrar o caso</button></div>`;
-const v=document.getElementById('espepv');if(v){v.onended=espEpiGo;v.onerror=espEpiGo;const pr=v.play&&v.play();if(pr&&pr.catch)pr.catch(()=>espEpiGo())}else espEpiGo()};
+const v=document.getElementById('espepv');if(v){v.onended=espEpiGo;v.onerror=espEpiGo;const pr=v.play&&v.play();if(pr&&pr.catch)pr.catch(()=>{v.muted=true;const p2=v.play&&v.play();if(p2&&p2.catch)p2.catch(()=>espEpiGo())})}else espEpiGo()};
 {const _ce=cutEnd;cutEnd=function(){const k=CUT&&CUT.k;const r=_ce.apply(this,arguments);if(k==='end'&&C&&C.epilogo&&S.won)setTimeout(espEpilogo,250);return r}}
 
 /* ---------- ligações de tela ---------- */
