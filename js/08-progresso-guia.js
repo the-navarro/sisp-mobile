@@ -1,8 +1,10 @@
 let SU,LO,CL,RES,TL,DD,DH,EV,TS,NT,TOTAL_Q,TOTAL_C,LOCT,SL;
-const roomDone=l=>l.c.every(c=>S.inv.includes(c[0])&&(c[0]===C.lock.id||(CL[c[0]]&&CL[c[0]].h)||S.an.includes(c[0])));
+const isLk=id=>!!(C&&C.lock&&(id===C.lock.id||(C.lock.libera||[]).includes(id)));const isOpc=id=>!!(C&&C.opcional&&C.opcional.includes(id));
+const qOk=q=>(!q[2]||S.an.includes(q[2]))&&(!q[5]||S.asked.includes(q[5]));
+const roomDone=l=>l.c.every(c=>S.inv.includes(c[0])&&(isLk(c[0])||isOpc(c[0])||(CL[c[0]]&&CL[c[0]].h)||S.an.includes(c[0])));
 const lbWt=()=>Object.keys(S.lb||{}).filter(i=>!S.an.includes(i));
-const toAn=()=>S.inv.filter(id=>!S.an.includes(id)&&!(CL[id]&&CL[id].h)&&id!==C.lock.id);
-const talkLeft=()=>SU.reduce((n,s)=>n+s.q.filter(q=>!S.asked.includes(q[0])&&(!q[2]||S.an.includes(q[2]))).length,0);
+const toAn=()=>S.inv.filter(id=>!S.an.includes(id)&&!(CL[id]&&CL[id].h)&&!isLk(id)&&!isOpc(id));
+const talkLeft=()=>SU.reduce((n,s)=>n+s.q.filter(q=>!S.asked.includes(q[0])&&qOk(q)).length,0);
 const isLo=id=>id===C.start||(S.lo||[]).includes(id);
 const cAv=id=>!CL[id]||!CL[id].req||S.an.includes(CL[id].req);
 const rdState=()=>{const it=LO.filter(l=>isLo(l.id)).flatMap(l=>l.c.map(c=>c[0])).filter(cAv),got=it.filter(i=>S.inv.includes(i)).length;return{col:[got,it.length],an:toAn().length,talk:talkLeft(),ded:pend().length}};
