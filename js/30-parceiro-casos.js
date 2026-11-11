@@ -1,7 +1,7 @@
 /* ===== Parceiro nos casos principais: palpites em momentos livres, mesma mecânica dos Casos rápidos ===== */
 window.MX={pp:null,pop:0,rx:null,cho:0};
 const ptmPal=()=>(typeof PLP!=='undefined'&&C&&PLP[C.id])||[];
-const ptmFree=()=>!(MENU||!C||RM||S.call||V||T||S.typing||S.seen<4||ND||Date.now()<QOK||CUT||PLO||SET||GAL||GD||HT||FIN||(S.mq&&S.mq.length)||window.MG||window.RQ||window.TM||LVO||(typeof ONS!=='undefined'&&ONS));
+const ptmFree=()=>!(MENU||!C||(C&&C.solo)||RM||S.call||V||T||S.typing||S.seen<4||ND||Date.now()<QOK||CUT||PLO||SET||GAL||GD||HT||FIN||(S.mq&&S.mq.length)||window.MG||window.RQ||window.TM||LVO||(typeof ONS!=='undefined'&&ONS));
 function ptmWhen(q){const w=q.quando;if(w.n!=null)return S.asked.length>=w.n;if(w.ask)return S.asked.includes(w.ask);if(w.an)return S.an.includes(w.an);return false}
 function ptmCheck(){if(!C||MX.pp||MX.pop||MX.rx||!ptmFree())return;const L=ptmPal();if(!L.length||!ptId()||PTM().no[C.id])return;S.pal=S.pal||{};
 for(const q of L){if(S.pal[q.id])continue;if(!ptmWhen(q))continue;if(ptSilent()){S.pal[q.id]='calado';save();continue}MX.pp=q.id;break}}
@@ -37,7 +37,7 @@ const ptmQView=()=>{if(!MXQ)return '';const c=CASES.find(x=>x.id===MXQ.id);retur
 const ptLvlK=c=>c>=70?'alta':c<=30?'baixa':'media';
 const ptSeasonId=()=>{const h=PTM().hist,n={};h.forEach(x=>n[x.pa]=(n[x.pa]||0)+1);const best=Object.keys(n).sort((a,b)=>n[b]-n[a])[0];return best||ptId()};
 const ptAllDone=()=>CASES.every(c=>META.done[c.id]);
-window.ptEpi=()=>{if(!C||!ptId()||PTM().no[C.id])return '';const id=ptId(),p=ptD(id),k=ptLvlK(ptConf(id)),last=C.id===CASES[CASES.length-1].id&&ptAllDone();
+window.ptEpi=()=>{if(!C||C.solo||!ptId()||PTM().no[C.id])return '';const id=ptId(),p=ptD(id),k=ptLvlK(ptConf(id)),last=C.id===CASES[CASES.length-1].id&&ptAllDone();
 return `<div class=ptfin style="justify-content:center;margin:10px 0;text-align:left">${ptAv(id,52,k==='alta'?'a':k==='baixa'?'e':'n')}<p style="margin:0;font:400 13px/1.45 Arial">“${esc(PTF[id].caso[k])}”</p></div>${last?'<button class=btn style="padding:10px 18px;margin-bottom:8px" onclick="event.stopPropagation();ptSeasonOpen()">Ver o final da temporada</button>':''}`};
 window.MXS=0;
 window.ptSeasonOpen=()=>{if(!ptSeasonId())return;MXS=1;render()};
