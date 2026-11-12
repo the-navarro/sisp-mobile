@@ -44,14 +44,14 @@ const espFreiOk=f=>f.k==='abre'?S.seen>=4:f.k==='loc'?(S.tab==='locations'&&S.lo
 const espFreiNome=()=>(C&&C.consultor)||'Consultor';
 window.espFreiCard=id=>{const f=espFreiFalas().find(x=>x.id===id);if(!f)return;const e=espEl('espfcard');e.innerHTML=`<div class=espfc onclick="espFreiAbrir()"><span>${av('anselmo',44)}</span><div><small>${esc(espFreiNome().toUpperCase())} · AO SEU LADO</small><p>${esc(gx(f.t))}</p></div><button onclick="event.stopPropagation();espDel('espfcard')" aria-label="Fechar">✕</button></div>`;clearTimeout(window.ESPFT);window.ESPFT=setTimeout(()=>espDel('espfcard'),Math.min(22000,6000+f.t.length*55))};
 function espFreiSync(){if(!espOk()||!C.frei||CUT||S.seen<4)return;if(!S.frStart){S.frStart=1;ESPT=Date.now()}S.fr=S.fr||[];const nw=espFreiFalas().find(f=>!S.fr.includes(f.id)&&espFreiOk(f));
-if(nw&&!S.typing&&!document.getElementById('espfcard')&&!document.getElementById('espguia')&&!document.querySelector('#espfsheet')){S.fr.push(nw.id);window.ESPLF=Date.now();try{save()}catch(e){}espFreiCard(nw.id);try{AU.fx&&AU.fx('tick')}catch(e){}espFreiUi()}}
+if(nw&&!S.typing){S.fr.push(nw.id);window.ESPLF=Date.now();try{save()}catch(e){}try{AU.fx&&AU.fx('tick')}catch(e){}espFreiUi()}}
 window.espNotasSync=espFreiSync;
 const espFreiNovas=()=>{const r=S.frR||[];return (S.fr||[]).filter(i=>!r.includes(i)).length};
 window.espFreiAbrir=()=>{S.frR=(S.fr||[]).slice();try{save()}catch(e){}espDel('espfcard');const L=espFreiFalas().filter(f=>(S.fr||[]).includes(f.id)).reverse();const e=espEl('espfsheet','duo-m');e.style.zIndex=2300;
 e.innerHTML=`<div class="dcard espfs"><div class=esphd><span class=espfav>${av('anselmo',40)}</span><div style="flex:1"><b>${esc(espFreiNome())}</b><small>Capelão e historiador · ao seu lado</small></div><button class=dcx onclick="espDel('espfsheet');espFreiUi()" aria-label="Fechar">✕</button></div><div class=espfl>${L.length?L.map(f=>`<div class=espfb>${f.k==='loc'?'<small>📍 '+esc(((C.LO.find(l=>l.id===f.loc)||{}).n||'').replace(' (cena do crime)',''))+'</small>':''}${esc(gx(f.t))}</div>`).join(''):'<p class=mut>Ele ainda não disse nada.</p>'}</div><p class=mut style="margin:8px 0 0;font-size:12px">O que o Frei diz é opinião dele. As provas são fatos.</p></div>`;espFreiUi()};
 function espFreiUi(){let c=document.getElementById('espfchip');const show=espOk()&&C.frei&&S&&S.seen>=4&&!CUT&&!RM&&!INS&&!document.getElementById('espfsheet')&&!document.querySelector('#ui .ov');
 if(!show){if(c)c.remove();return}if(!c){c=document.createElement('button');c.id='espfchip';c.setAttribute('aria-label','Conversar com o Frei');c.onclick=()=>espFreiAbrir();document.body.appendChild(c)}
-const n=espFreiNovas();c.innerHTML=`${av('anselmo',44)}${n?`<b>${n}</b>`:''}`}
+const n=espFreiNovas();c.innerHTML=`${av('anselmo',44)}${n?`<b>${n}</b>`:''}`;if(n>(window.ESPFN||0)){c.classList.remove('jump');void c.offsetWidth;c.classList.add('jump')}window.ESPFN=n}
 
 /* ---------- diário com páginas ---------- */
 window.ESPG={};
