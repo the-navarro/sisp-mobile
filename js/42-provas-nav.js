@@ -6,3 +6,5 @@ if(ov&&INS&&C){const l=LO.find(x=>x.c.some(c=>c[0]===INS)),ids=l?l.c.map(c=>c[0]
 if(ids.length>1&&!ov.querySelector('.insnav')){const i=ids.indexOf(INS);ov.insertAdjacentHTML('beforeend',`<button class="insnav l" onclick="insn(-1)" aria-label="Prova anterior">‹</button><button class="insnav r" onclick="insn(1)" aria-label="Próxima prova">›</button><div class=insct>${i+1} / ${ids.length}</div>`)}}
 const on=document.querySelector('.sgi.on');if(on&&on.scrollIntoView){const g=on.parentElement;if(g)g.scrollTo({left:on.offsetLeft-g.clientWidth/2+on.clientWidth/2,behavior:'smooth'})}
 }catch(e){}return r}}
+/* enquanto um vídeo de cena está tocando, qualquer render() não pode recriar o vídeo (isso congelava a abertura) */
+{const _r=render;render=function(){if(typeof CUT!=='undefined'&&CUT&&document.querySelector('#cutb .cvv[src]'))return;return _r.apply(this,arguments)}}
