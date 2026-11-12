@@ -17,6 +17,7 @@ OPW.forEach(k=>{WIC['e1_'+k]='<image href="assets/casos/e1_op_'+k+'.webp" width=
 const SCE={"coro": {"img": "assets/casos/e1_loc_coro.webp", "h": {"terco": [144.0, 151.8, 0.245], "lanterna": [298.8, 75.9, 0.234]}}, "cela": {"img": "assets/casos/e1_loc_cela.webp", "h": {"xicara": [280.8, 154.1, 0.15], "diario": [216.0, 149.5, 0.226]}}, "enf": {"img": "assets/casos/e1_loc_enf.webp", "h": {"cadmed": [165.6, 151.8, 0.218], "chaves": [208.8, 149.5, 0.216]}}, "porta": {"img": "assets/casos/e1_loc_porta.webp", "h": {"alarme": [169.2, 158.7, 0.344], "portao": [295.2, 177.1, 0.21]}}, "capela": {"img": "assets/casos/e1_loc_capela.webp", "h": {"termica": [320.4, 85.1, 0.228], "fotovig": [79.2, 167.9, 0.21]}}, "arq": {"img": "assets/casos/e1_loc_arq.webp", "h": {"fatura": [144.0, 151.8, 0.238], "tombo": [205.2, 149.5, 0.27], "recibo": [313.2, 167.9, 0.188]}}};
 Object.keys(SCE).forEach(l=>{SCN['e1:'+l]={b:'<image href="'+SCE[l].img+'" width=360 height=230 preserveAspectRatio="xMidYMid slice" />',h:SCE[l].h}});
 /* ligações de lembrança */
+E.TS=E.TS||{};E.TS.r_v=E.TS.r_v||{s:'Verônica',t:'O Frei Anselmo tinha pedido mais tempo para o inventário'};E.TS.r_b=E.TS.r_b||{s:'Benedita',t:'A garrafa azul nunca voltou para a cozinha'};E.TS.r_t=E.TS.r_t||{s:'Matias',t:'A réplica foi encomenda do Frei Anselmo'};
 E.EVW={};Object.keys(J.EVW).forEach(k=>{const w=J.EVW[k];E.EVW[k]=()=>S.asked.includes(w.depois)&&S.tick>=w.acoes});
 E.EV.r_b[1]='[ao telefone, falando alto demais] Delegado, é a Irmã Benedita! Está me ouvindo? A garrafa azul nunca voltou para a cozinha. Ela sempre volta de manhã, eu lavo, eu guardo. Hoje não voltou, e fiquei pensando.';
 /* o Frei ao lado do jogador: abertura, visita a cada local, notas e reações */
@@ -35,7 +36,7 @@ msgs:[
 {se:{strikes:1},t:G.proximo_passo[11][1]},
 {se:{ded:11},t:'O mandado está liberado. Revise com calma o que o Frei disse antes de acusar.'},
 {se:{ded:6},t:'Ainda há deduções a fazer. Ligue cada prova ao depoimento que a explica: o mandado só abre quando o caso estiver quase fechado.'},
-{se:{inv:['pgC'],dedlt:6},t:G.proximo_passo[9][1]},
+{se:{an:['pgC'],dedlt:6},t:G.proximo_passo[9][1]},
 {se:{loc:['arq'],nodec:1,inv:['tombo']},t:G.proximo_passo[8][1]},
 {se:{asked:['q_m3'],noasked:['q_m4']},t:G.proximo_passo[7][1]},
 {se:{inv:['fotovig'],an:['fotovig'],noasked:['q_m3']},t:G.proximo_passo[6][1]},

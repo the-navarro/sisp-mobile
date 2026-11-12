@@ -5,6 +5,7 @@ const E=Object.assign({},J);
 ['guias','LOCREQ','DDPESO','secao','mecanica','parceiro','modos_dupla','guia','epilogo','reconstrucao','opcional_pericia','EVCHEFE','EVW','desfecho','fios_alibi'].forEach(k=>delete E[k]);
 E.esp=true;E.solo=true;E.mec=['🕰️ O culpado já é conhecido'];E.opcional=J.opcional_pericia;E.solveAt=11;
 E.fios=J.fios_alibi;
+E.TS.r_c={s:'Cecília',t:'A "Noêmia" na bancada mexia o braço devagar, de tempos em tempos'};E.TS.r_r={s:'Rafael',t:'Havia dois jalecos iguais na oficina, com as iniciais N.P.'};E.TS.r_d={s:'Seu Dalmo',t:'O pedestal do autômato estava vazio às 20h15, com marca de rodinha'};
 /* resumo de cada fala (o jogo mostra nos pop-ups de contradição e de dedução) */
 Object.keys(E.TS).forEach(k=>{if(!E.TS[k].t){const q=E.SU.flatMap(x=>x.q).find(x=>x[0]===k);if(q)E.TS[k].t=q[4]||q[1]}});
 /* provas: tabela CL (locais + entregues em conversa), descrição com o fio solto no fim e imagem */
@@ -18,9 +19,10 @@ E.wp=E.wp.map(w=>['e2_'+w[0],w[1]]);E.mo=E.mo.map(w=>['e2_'+w[0],w[1]]);E.sol=[E
 OPW.forEach(k=>{WIC['e2_'+k]='<image href="assets/casos/e2_op_'+k+'.webp" width=64 height=64 />'});OPM.forEach(k=>{MIC['e2_'+k]='<image href="assets/casos/e2_op_'+k+'.webp" width=64 height=64 />'});
 /* cenários ilustrados, com as provas sobre a cena */
 const SCE={"torre": {"img": "assets/casos/e2_loc_torre.webp", "h": {"bolso": [108.0, 181.7, 0.192], "alavanca": [223.2, 179.4, 0.225], "contador": [309.6, 154.1, 0.176]}}, "oficina": {"img": "assets/casos/e2_loc_oficina.webp", "h": {"oleo": [118.8, 172.5, 0.195], "molde": [237.6, 172.5, 0.18]}}, "salao": {"img": "assets/casos/e2_loc_salao.webp", "h": {"automato": [180.0, 127.6, 1.642]}}, "portaria": {"img": "assets/casos/e2_loc_portaria.webp", "h": {"camlog": [79.2, 170.2, 0.311], "ronda": [172.8, 170.2, 0.21], "chaves": [288.0, 133.4, 0.227]}}, "escritorio": {"img": "assets/casos/e2_loc_escritorio.webp", "h": {"contrato": [86.4, 165.6, 0.408], "agenda": [165.6, 163.3, 0.225], "telefone": [255.6, 151.8, 0.28]}}, "arquivo": {"img": "assets/casos/e2_loc_arquivo.webp", "h": {"desenhos": [136.8, 165.6, 0.285], "caderno": [230.4, 165.6, 0.221]}}};
+SCE.salao.h.automato=[180,127,0.72];
 Object.keys(SCE).forEach(l=>{SCN['e2:'+l]={b:'<image href="'+SCE[l].img+'" width=360 height=230 preserveAspectRatio="xMidYMid slice" />',h:SCE[l].h}});
 /* ligações de lembrança */
-E.EVW={};Object.keys(J.EVW).forEach(k=>{const w=J.EVW[k];E.EVW[k]=()=>S.asked.includes(w.depois)&&S.tick>=w.acoes});
+E.EVW={};const EVT={r_c:{depois:'q_c1',acoes:6},r_r:{depois:'q_c1',acoes:10},r_d:{depois:'q_d1',acoes:8}};Object.keys(J.EVW).forEach(k=>{const w=EVT[k]||J.EVW[k];E.EVW[k]=()=>S.asked.includes(w.depois)&&S.tick>=w.acoes});
 /* guia: só aparece quando o jogador para (mais avançado primeiro) */
 const G=J.guia,P=G.proximo_passo;
 E.guia={parado:130000,obj:G.objetivos,
@@ -28,8 +30,8 @@ msgs:[
 {se:{strikes:1},t:P[11][1]},
 {se:{ded:11},t:'O mandado está liberado. Revise com calma o que cada um disse antes de acusar.'},
 {se:{ded:6},t:'Ainda há deduções a fazer. Ligue cada prova ao depoimento que a explica: o mandado só abre quando o caso estiver quase fechado.'},
-{se:{inv:['desenhos','caderno'],dedlt:6},t:P[10][1]},
-{se:{inv:['agenda','telefone','contrato'],dedlt:6},t:P[9][1]},
+{se:{an:['desenhos','caderno'],dedlt:6},t:P[10][1]},
+{se:{an:['agenda','telefone','contrato'],dedlt:6},t:P[9][1]},
 {se:{an:['automato'],noasked:['q_n4']},t:P[8][1]},
 {se:{an:['camlog'],noasked:['q_n3']},t:P[7][1]},
 {se:{loc:['portaria'],noinv:['camlog']},t:P[6][1]},
@@ -40,7 +42,7 @@ msgs:[
 {se:{inv:['bolso','alavanca','contador'],noasked:['q_n1']},t:P[1][1]},
 {se:{noinv:['bolso','alavanca','contador']},t:P[0][1]}
 ],
-chefe:[{id:'regina',se:{ded:8},t:J.EVCHEFE.r_regina.texto.replace('[ao telefone] ','')}]};
+chefe:[{id:'regina',se:{ded:8,an:['agenda','telefone','contrato']},t:J.EVCHEFE.r_regina.texto.replace('[ao telefone] ','')}]};
 E.dicas=J.dicas;
 E.desfecho=J.desfecho.replace(/\s*\(Regina\)\s*$/,'');
 E.epilogo={quem:'noemia',fala:J.epilogo.fala,fala_a:J.epilogo.fala_delegada,dir:'Calma, quase um sussurro, com um sorriso cansado.'};

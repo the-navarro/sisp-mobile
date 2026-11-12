@@ -13,7 +13,7 @@ const pct=()=>Math.min(100,Math.round((S.inv.length/LO.reduce((n,l)=>n+l.c.lengt
 const stress=id=>SU.find(s=>s.id===id).q.filter(q=>q[2]&&S.asked.includes(q[0])).length;
 const items=()=>[...S.inv.map(id=>({id,t:0})),...S.asked.filter(q=>TS[q]).map(id=>({id,t:1}))];
 const label=i=>i.t?TS[i.id].t:CL[i.id].n;
-const fn=s=>{const p=s.n.split(' ');return /^(Dra?\.?|Dona|Sr\.?)$/.test(p[0])?p[1]:/^(Ir[mM][ãa]|Frei|Madre)$/.test(p[0])&&p[1]?p[0]+' '+p[1]:p[0]};
+const fn=s=>nm1(s.n);
 const hm=m=>String(Math.floor(m/60)%24).padStart(2,'0')+':'+String(m%60).padStart(2,'0');
 const fmt=t=>gx(t).replace(/\[(.*?)\]/,'<em>[$1]</em>');
 const lg=(i,x,c)=>{S.tick++;S.clock+=c;S.log.unshift({t:hm(S.clock),i,x})};
