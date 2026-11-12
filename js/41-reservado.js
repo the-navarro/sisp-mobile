@@ -84,7 +84,7 @@ const v=document.getElementById('espepv');if(v){v.onended=espEpiGo;v.onerror=esp
 {const _ce=cutEnd;cutEnd=function(){const k=CUT&&CUT.k;const r=_ce.apply(this,arguments);if(k==='end'&&C&&C.epilogo&&S.won)setTimeout(espEpilogo,250);return r}}
 
 /* ---------- ligações de tela ---------- */
-{const _r=render;render=function(){const r=_r.apply(this,arguments);try{espPurge();if(espOk()){espMudoUi();espObjetivo();espFreiSync()}else{espDel('espfcard');espDel('espfsheet')}espFreiUi()}catch(e){}return r}}
+{const _r=render;render=function(){const r=_r.apply(this,arguments);try{espPurge();if(espOk()){espEntregas();espMudoUi();espObjetivo();espFreiSync()}else{espDel('espfcard');espDel('espfsheet')}espFreiUi()}catch(e){}return r}}
 
 /* ligação da chefe (uma vez) quando a condição acontece */
 setInterval(()=>{try{if(!espOk()||!C.guia||!C.guia.chefe||CUT||S.typing||S.seen<4)return;S.ech=S.ech||{};for(const x of C.guia.chefe){if(!S.ech[x.id]&&espGuiaCond(x.se)){S.ech[x.id]=1;try{save()}catch(e){}espGuiaShow(x.t);break}}}catch(e){}},5000);
@@ -99,3 +99,7 @@ setInterval(()=>{try{if(!espOk()||!C.guia||!C.guia.chefe||CUT||S.typing||S.seen<
 {const _lb=window.lbBub;if(_lb)window.lbBub=function(e){const r=_lb.apply(this,arguments);try{if(e.k!=='s'&&C&&C.paginas&&C.paginas[e.id]&&!(CL[e.id]||{}).h){const L=C.paginas[e.id];r.push(bl(jb('Delegada, as páginas '+(L.map((p,i)=>p.lab?i+1:0).filter(Boolean).join(' e '))+' ficaram legíveis. Leia aqui mesmo, com calma, e depois me diga o que achou.<div style="margin-top:8px"><button class=btn style="padding:8px 14px;font-size:13px" onclick="espPag(\''+e.id+'\','+L.findIndex(p=>p.lab)+')">📔 Ler as páginas</button></div>')))}}catch(x){}return r}}
 /* Prisão só abre perto do fim */
 try{Object.defineProperty(LK,'solve',{configurable:true,get(){return 'Faça '+((typeof C!=='undefined'&&C&&C.solveAt)||2)+' deduções no Quadro para liberar o mandado.'}})}catch(e){}
+
+/* provas entregues numa conversa (ex.: Margarida entrega os desenhos) */
+function espEntregas(){if(!espOk()||!C.entregas||CUT)return;let n=[];Object.keys(C.entregas).forEach(q=>{if(S.asked.includes(q))C.entregas[q].forEach(id=>{if(!S.inv.includes(id)&&CL[id]){S.inv.push(id);try{galE(id)}catch(e){}try{lg('📦','Recebeu: '+CL[id].n,6)}catch(e){}n.push(CL[id].n)}})});
+if(n.length){try{save()}catch(e){}try{AU.fx('grab')}catch(e){}setTimeout(()=>{try{tst('📦 Margarida lhe entregou: '+n.join(' e '))}catch(e){}},900)}}
