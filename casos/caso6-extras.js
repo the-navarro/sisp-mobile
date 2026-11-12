@@ -1,6 +1,6 @@
 /* Caso 6: provas em imagem/vídeo, retratos e textos de apoio */
 {const _ph=AR.photo;AR.photo=o=>!(o&&o.src)&&_ph?_ph(o):`<rect width=240 height=180 fill="#0c1418" /><image href="${o.src}" width=240 height=180 preserveAspectRatio="xMidYMid slice" />${o.v?'<g><circle cx=120 cy=90 r=22 fill="#000" opacity=.55 /><path d="M112 78l22 12-22 12z" fill="#fff" /></g>':''}`}
-const EVV=id=>{const e=EVA[id];return e&&e[0]==='photo'&&e[1].v?`<video class=pvv src="${e[1].v}" poster="${e[1].src}" controls playsinline autoplay loop muted preload=auto></video>`:''};
+const EVV=id=>{const e=EVA[id];return e&&e[0]==='photo'&&e[1]&&e[1].v?`<video class=pvv src="${e[1].v}" poster="${e[1].src}" controls playsinline autoplay loop muted preload=auto></video>`:''};
 (()=>{const f=(id,png,mp4)=>{EVA[id]=['photo',mp4?{src:'assets/provas/'+png,v:'assets/provas/'+mp4}:{src:'assets/provas/'+png}]};
 f('cam_sala','c6_cam_sala.png','c6_cam_sala.mp4');f('laudo_uv','c6_laudo_uv.png');f('laudo_pigmento','c6_laudo_pigmento.png');f('etiqueta_peso','c6_etiqueta_peso.png');f('seguro_foto','c6_seguro_foto.png');
 f('registro_atelie','c6_registro_atelie.png');f('cam_atelie','c6_cam_atelie.png','c6_cam_atelie.mp4');f('pincel_lixo','c6_pincel_lixo.png');f('celular','c6_celular.png');f('guia_transporte','c6_guia_transporte.png')})();

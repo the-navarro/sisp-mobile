@@ -5,6 +5,8 @@ const E=Object.assign({},J);
 ['guias','LOCREQ','DDPESO','secao','mecanica','parceiro','modos_dupla','guia','epilogo','reconstrucao','opcional_pericia','EVCHEFE','EVW','desfecho','fios_alibi'].forEach(k=>delete E[k]);
 E.esp=true;E.solo=true;E.mec=['🕰️ O culpado já é conhecido'];E.opcional=J.opcional_pericia;E.solveAt=11;
 E.fios=J.fios_alibi;
+/* resumo de cada fala (o jogo mostra nos pop-ups de contradição e de dedução) */
+Object.keys(E.TS).forEach(k=>{if(!E.TS[k].t){const q=E.SU.flatMap(x=>x.q).find(x=>x[0]===k);if(q)E.TS[k].t=q[4]||q[1]}});
 /* provas: tabela CL (locais + entregues em conversa), descrição com o fio solto no fim e imagem */
 const ENT=[{"id": "carta", "nome": "Carta de Aurélio ao pai de Noêmia", "emoji": "✉️", "descricao": "Carta escrita à mão por Aurélio, dirigida ao pai de Noêmia, guardada num envelope amarelado.", "opcional": false, "na_pergunta": "q_r2"}];
 E.CL={};E.LO.forEach(l=>l.c.forEach(x=>{E.CL[x[0]]={id:x[0],n:x[1],i:x[2],d:x[3],h:x[4]}}));ENT.forEach(p=>{E.CL[p.id]={id:p.id,n:p.nome,i:p.emoji,d:p.descricao,h:p.opcional?1:0}});
