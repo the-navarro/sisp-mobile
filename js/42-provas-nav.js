@@ -4,7 +4,7 @@ window.insn=d=>{if(!INS||!C)return;const l=LO.find(x=>x.c.some(c=>c[0]===INS));i
 const ov=document.querySelector('.ov.insv');
 if(ov&&INS&&C){const l=LO.find(x=>x.c.some(c=>c[0]===INS)),ids=l?l.c.map(c=>c[0]).filter(id=>EVA[id]):[];
 if(ids.length>1&&!ov.querySelector('.insnav')){const i=ids.indexOf(INS);ov.insertAdjacentHTML('beforeend',`<button class="insnav l" onclick="insn(-1)" aria-label="Prova anterior">‹</button><button class="insnav r" onclick="insn(1)" aria-label="Próxima prova">›</button><div class=insct>${i+1} / ${ids.length}</div>`)}}
-const on=document.querySelector('.sgi.on');if(on&&on.scrollIntoView){const g=on.parentElement;if(g)g.scrollTo({left:on.offsetLeft-g.clientWidth/2+on.clientWidth/2,behavior:'smooth'})}
+const on=document.querySelector('.sgi.on');if(on){const g=on.parentElement;if(g){const gr=g.getBoundingClientRect(),or=on.getBoundingClientRect();g.scrollLeft=window.__sgL||0;const alvo=Math.max(0,g.scrollLeft+(or.left-gr.left)-(g.clientWidth-on.clientWidth)/2);g.scrollTo({left:alvo,behavior:'smooth'});window.__sgL=alvo}}else window.__sgL=0;
 }catch(e){}return r}}
 /* enquanto um vídeo de cena está tocando, qualquer render() não pode recriar o vídeo (isso congelava a abertura) */
 {const _r=render;render=function(){if(typeof CUT!=='undefined'&&CUT&&document.querySelector('#cutb .cvv[src]'))return;return _r.apply(this,arguments)}}
