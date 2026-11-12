@@ -56,3 +56,47 @@ Vozes em inglês com sílabas inventadas (Piper, `en_US-ljspeech-medium` e `en_U
 
 ## Regravações (12/11/2026)
 Nove arquivos foram regravados com o mesmo modelo e as mesmas vozes, em mais dois projetos gratuitos do Google AI Studio (seis no total): `c3_r_a`, `c3_r_h_a`, `c4_r_b`, `c4_r_b_a`, `c4_r_h`, `c6_r_perita_a`, `e1_r_v`, `e1_r_b`, `e1_r_b_a`. As ressalvas acima continuam valendo. O texto da ligação da Bianca (caso 4) passou de "o barman" para "o rapaz do bar", só nessa ligação.
+
+
+---
+
+# Licenças das vozes · Arquivo Reservado 02 (assets/voz)
+
+## Ferramenta
+- **Gemini API (Google), modelo `gemini-2.5-flash-preview-tts`**, vozes pré-definidas do Google. Nenhuma voz de pessoa real foi clonada.
+- Silêncio do começo e do fim ajustado para 0,25 s em todos os arquivos (alguns saíram com até 0,5 s). Geradas em 12/11/2026 em projetos gratuitos do Google AI Studio (limite de 10 pedidos por dia por projeto).
+- Pós-processamento com ffmpeg: MP3 mono, 44,1 kHz, 128 kbps, normalização perto de -16 LUFS, 0,25 s de silêncio no começo e no fim.
+- O modelo foi anunciado como "saindo de linha" em 17/11/2026 (fonte: cloudprice.net). Depois disso, novas faixas podem exigir outro modelo, com vozes um pouco diferentes.
+
+## Uso comercial com anúncios: ressalva pendente
+- Pelos Termos Adicionais da Gemini API (versão de 28/04/2026, https://ai.google.dev/gemini-api/terms), o Google não reivindica a propriedade do conteúdo gerado; a responsabilidade pelo uso é de quem gera. Li um resumo da página, não o texto integral.
+- Os termos **não mencionam anúncios** de forma específica. **Não há prova explícita de que o uso em app com anúncios é permitido.** Confirmar nos termos vigentes antes de publicar e guardar uma cópia.
+- No nível gratuito o Google pode usar os textos enviados para melhorar produtos. Usar vários projetos para contornar a cota gratuita pode contrariar os termos; não consegui confirmar.
+
+## Vozes e durações
+| Arquivo | Personagem | Voz (Gemini) | Duração |
+|---|---|---|---|
+| e2_r_c.mp3 | Cecília Moura | Aoede | 12.6 s |
+| e2_r_c_a.mp3 | Cecília Moura (delegada) | Aoede | 12.9 s |
+| e2_r_r.mp3 | Rafael Quintela | Rasalgethi | 12.0 s |
+| e2_r_r_a.mp3 | Rafael Quintela (delegada) | Rasalgethi | 13.0 s |
+| e2_r_d.mp3 | Seu Dalmo Siqueira | Umbriel | 12.4 s |
+| e2_r_d_a.mp3 | Seu Dalmo Siqueira (delegada) | Umbriel | 12.7 s |
+| e2_r_regina.mp3 | Regina Vaz (opcional) | Erinome | 9.2 s |
+| e2_r_regina_a.mp3 | Regina Vaz (opcional, delegada) | Erinome | 8.9 s |
+| e2_epi_voz.mp3 | Noêmia Prado (fala final) | Vindemiatrix | 4.3 s |
+| e2_epi_voz_a.mp3 | Noêmia Prado (fala final, delegada) | Vindemiatrix | 4.7 s |
+
+Vozes diferentes entre si no caso e diferentes das já usadas nos casos anteriores (Gacrux, Kore, Sulafat, Charon, Puck, Leda, Algenib, Orus). A Regina não estava na tabela de arquivos esperados; usei o nome `e2_r_regina` por analogia com as outras.
+
+## Fala final da Noêmia: encaixe no vídeo
+A fala termina em cerca de 4,0 s (`e2_epi_voz`) e 4,4 s (`e2_epi_voz_a`) do início do arquivo, e o arquivo dura 4,3 s e 4,7 s. O briefing pedia terminar por volta de 3,5 s. Para chegar perto disso, a fala foi pedida em ritmo mais ligeiro e acelerada em 25% no ffmpeg. Acelerar mais soaria artificial.
+Como o vídeo `e2_epi.mp4` tem 18 s e o áudio entra em 14,35 s, ele passa de 18 s em cerca de 0,6 a 1,0 s. Opções: entrar um pouco antes (em torno de 13,5 s) ou estender o vídeo.
+
+## Não foi possível ouvir ou conferir
+- Eu não ouvi os áudios; só medi (duração, volume, pico, altura da voz) e comparei com uma transcrição automática (Whisper local), que erra nomes e números. A escuta final é sua.
+- Possíveis falhas a ouvir com atenção: a pronúncia de "Noêmia" (a transcrição escreveu "noímia" em `e2_r_c`), "autômato", "Teodoro" (em `e2_r_regina`), "ene pê" em `e2_r_r` e `e2_r_r_a` (pedi "ene pê" por extenso em vez de "N.P." para a voz não ler "N ponto P"), "pedi emprestado" em `e2_epi_voz_a`.
+- A transcrição automática mais forte (Whisper medium) bateu com o texto em todos os arquivos, exceto por números escritos em dígitos pelo próprio transcritor e por "porquê" em `e2_r_r`.
+- Rafael usa a voz Rasalgethi (a pedido) e Seu Dalmo usa a Umbriel; ambos foram refeitos depois da primeira versão. Não confirmei se o Rafael soa jovem e fino como pede o briefing, nem se o Seu Dalmo ficou grave: a altura da voz medida ficou em torno de 150 a 180 Hz nos dois.
+- Não conferi se o toque fluminense apareceu.
+- Os valores de volume ficaram entre -17,6 e -15,8 LUFS, com pico de -1,7 dBFS ou menos; todas as faixas têm menos de 13 s, abaixo do limite de 25 s.
