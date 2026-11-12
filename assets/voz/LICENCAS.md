@@ -53,3 +53,6 @@ A fala de `e1_epi_voz` e `e1_epi_voz_a` foi gerada em ritmo mais rápido e acele
 
 ## Vozes de reserva (padrao_f.mp3 e padrao_m.mp3)
 Vozes em inglês com sílabas inventadas (Piper, `en_US-ljspeech-medium` e `en_US-norman-medium`, ambas de domínio público), usadas apenas se uma ligação não tiver arquivo próprio.
+
+## Regravações (12/11/2026)
+Nove arquivos foram regravados com o mesmo modelo e as mesmas vozes, em mais dois projetos gratuitos do Google AI Studio (seis no total): `c3_r_a`, `c3_r_h_a`, `c4_r_b`, `c4_r_b_a`, `c4_r_h`, `c6_r_perita_a`, `e1_r_v`, `e1_r_b`, `e1_r_b_a`. As ressalvas acima continuam valendo. O texto da ligação da Bianca (caso 4) passou de "o barman" para "o rapaz do bar", só nessa ligação.
