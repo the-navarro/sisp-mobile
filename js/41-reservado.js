@@ -36,15 +36,15 @@ const em=document.querySelector('.cmb span');if(em&&/Nenhuma|Sem perguntas novas
 /* ---------- o consultor ao lado do jogador (não fica no Caderno) ---------- */
 function espCond(q){if(q==null||q==='inicio')return true;if(typeof q==='string')return false;
 if(q.all)return q.all.every(espCond);if(q.q)return S.asked.includes(q.q);if(q.c)return S.inv.includes(q.c);if(q.an)return S.an.includes(q.an);
-if(q.nasked!=null)return S.asked.length>=q.nasked;if(q.ded!=null)return S.ded.length>=q.ded;if(q.loc)return isLo(q.loc);if(q.win)return !!S.won;if(q.thr)return S.ded.length>=C.thr;return false}
+if(q.nasked!=null)return S.asked.length>=q.nasked;if(q.idle){const fr=S.fr||[],now=Date.now();return q.idle===1?now-ESPT>75000:fr.includes('R13')&&now-Math.max(ESPT,window.ESPLF||0)>90000}if(q.ded!=null)return S.ded.length>=q.ded;if(q.loc)return isLo(q.loc);if(q.win)return !!S.won;if(q.thr)return S.ded.length>=C.thr;return false}
 const espNotas=()=>(C&&C.notas||[]).filter(n=>espCond(n.quando));
 /* todas as falas do consultor: abertura, visitas aos locais e comentários dos marcos */
 const espFreiFalas=()=>{const f=C&&C.frei;if(!f)return [];const o=[];if(f.abertura)o.push({id:'abertura',t:f.abertura,k:'abre'});Object.keys(f.visitas||{}).forEach(l=>o.push({id:'v_'+l,t:f.visitas[l],k:'loc',loc:l}));(C.notas||[]).forEach(n=>o.push({id:n.id,t:n.txt,k:'nota',q:n.quando}));return o};
 const espFreiOk=f=>f.k==='abre'?S.seen>=4:f.k==='loc'?(S.tab==='locations'&&S.loc===f.loc&&isLo(f.loc)):espCond(f.q);
 const espFreiNome=()=>(C&&C.consultor)||'Consultor';
 window.espFreiCard=id=>{const f=espFreiFalas().find(x=>x.id===id);if(!f)return;const e=espEl('espfcard');e.innerHTML=`<div class=espfc onclick="espFreiAbrir()"><span>${av('anselmo',44)}</span><div><small>${esc(espFreiNome().toUpperCase())} · AO SEU LADO</small><p>${esc(gx(f.t))}</p></div><button onclick="event.stopPropagation();espDel('espfcard')" aria-label="Fechar">✕</button></div>`;clearTimeout(window.ESPFT);window.ESPFT=setTimeout(()=>espDel('espfcard'),Math.min(22000,6000+f.t.length*55))};
-function espFreiSync(){if(!espOk()||!C.frei||CUT||S.seen<4)return;S.fr=S.fr||[];const nw=espFreiFalas().find(f=>!S.fr.includes(f.id)&&espFreiOk(f));
-if(nw&&!S.typing&&!document.getElementById('espfcard')&&!document.getElementById('espguia')&&!document.querySelector('#espfsheet')){S.fr.push(nw.id);try{save()}catch(e){}espFreiCard(nw.id);try{AU.fx&&AU.fx('tick')}catch(e){}espFreiUi()}}
+function espFreiSync(){if(!espOk()||!C.frei||CUT||S.seen<4)return;if(!S.frStart){S.frStart=1;ESPT=Date.now()}S.fr=S.fr||[];const nw=espFreiFalas().find(f=>!S.fr.includes(f.id)&&espFreiOk(f));
+if(nw&&!S.typing&&!document.getElementById('espfcard')&&!document.getElementById('espguia')&&!document.querySelector('#espfsheet')){S.fr.push(nw.id);window.ESPLF=Date.now();try{save()}catch(e){}espFreiCard(nw.id);try{AU.fx&&AU.fx('tick')}catch(e){}espFreiUi()}}
 window.espNotasSync=espFreiSync;
 const espFreiNovas=()=>{const r=S.frR||[];return (S.fr||[]).filter(i=>!r.includes(i)).length};
 window.espFreiAbrir=()=>{S.frR=(S.fr||[]).slice();try{save()}catch(e){}espDel('espfcard');const L=espFreiFalas().filter(f=>(S.fr||[]).includes(f.id)).reverse();const e=espEl('espfsheet','duo-m');e.style.zIndex=2300;
