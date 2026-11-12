@@ -3,8 +3,9 @@ const SK=['#f1d3b8','#e0b898','#c99a76','#a87752','#8a5a3a','#5c3a26'],HC=['#1c1
 const rl=z=>z.r+(PDX[z.id]&&PDX[z.id].age?' · '+PDX[z.id].age+' anos':'');
 const plv=()=>PLO&&PLT?PLT:Object.assign({},DEFPL,META.pl||{});
 function TT(){const p=plv();return{D:p.g==='f'?'Delegada':p.g==='n'?'Delegade':'Delegado',n:(p.n||'').trim()}}
-function gx(t){if(typeof t!=='string')return t;const p=plv(),g=p.g,n=(p.n||'').trim();if(g==='m'&&!n)return t;const F=g==='f',N=g==='n',d=F?'delegada':N?'delegade':'delegado',D=F?'Delegada':N?'Delegade':'Delegado',nm=n?' '+n:'';
+function gx0(t){if(typeof t!=='string')return t;const p=plv(),g=p.g,n=(p.n||'').trim();if(g==='m'&&!n)return t;const F=g==='f',N=g==='n',d=F?'delegada':N?'delegade':'delegado',D=F?'Delegada':N?'Delegade':'Delegado',nm=n?' '+n:'';
 return t.replace(/de volta, delegado\b/g,()=>'de volta, '+d+nm).replace(/\bBem-vindo\b/g,()=>F?'Bem-vinda':N?'Bem-vinde':'Bem-vindo').replace(/\bao delegado\b/g,()=>F?'à delegada':N?'a delegade':'ao delegado').replace(/\bdo delegado\b/g,()=>F?'da delegada':N?'de delegade':'do delegado').replace(/\b([Oo]) delegado\b/g,(m,o)=>F?(o==='O'?'A':'a')+' delegada':N?(o==='O'?'Delegade':'delegade'):m).replace(/\bDelegado-/g,()=>D+'-').replace(/\bDelegado\b/g,()=>D+nm).replace(/\bdelegado\b/g,()=>d)}
+function gx(t){const r=gx0(t);if(typeof r!=='string')return r;const n=(plv().n||'').trim();if(!n)return r;const e=n.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');return r.replace(new RegExp('(\\b'+e+')(\\s+'+e+')+(?![\\wÀ-ÿ])','g'),'$1')}
 let NOBG=0;
 const headOnly=(id,st)=>{NOBG=1;try{return PDX[id]?pt(id,st):detSvg(st>=2,null)}finally{NOBG=0}};
 const hdsv=(id,st,x,y,w)=>`<svg x=${x} y=${y} width=${w} height=${w*66/68} viewBox="16 8 68 66">${headOnly(id,st)}</svg>`;
