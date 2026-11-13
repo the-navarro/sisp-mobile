@@ -154,3 +154,114 @@ Todas abaixo de 25 s. A mais longa é a da Madame Zora, com cerca de 21 s (pausa
   - **"Mentem"**: a pausa antes da palavra não foi medida.
 - Os valores de volume ficaram entre -17.8 e -16.1 LUFS, com pico de -1.5 dBFS ou menos.
 
+---
+
+# Licenças das vozes · Caso 04, "A Voz da Madrugada" (assets/voz)
+
+## Ferramenta
+- **Gemini API (Google), modelo `gemini-2.5-flash-preview-tts`**, vozes pré-definidas do Google. Nenhuma voz de pessoa real foi clonada.
+- Geradas em 13/11/2026 em projetos gratuitos do Google AI Studio (limite de 10 pedidos por dia por projeto, por isso o uso de vários projetos).
+- Pós-processamento com ffmpeg: MP3 mono, 44,1 kHz, 128 kbps, normalização perto de -16 LUFS, 0,25 s de silêncio no começo e no fim. **Nenhum áudio foi acelerado.** Nenhum efeito, música, eco ou som de fundo.
+- O modelo foi anunciado como "saindo de linha" em 17/11/2026 (fonte: cloudprice.net). Depois disso, novas faixas podem exigir outro modelo, com vozes um pouco diferentes.
+
+## Uso comercial com anúncios: ressalva pendente
+- Pelos Termos Adicionais da Gemini API (versão de 28/04/2026, https://ai.google.dev/gemini-api/terms), o Google não reivindica a propriedade do conteúdo gerado; a responsabilidade pelo uso é de quem gera. Li um resumo da página, não o texto integral.
+- Os termos **não mencionam anúncios** de forma específica. **Não há prova explícita de que o uso em app com anúncios é permitido.** Confirmar nos termos vigentes antes de publicar e guardar uma cópia.
+- No nível gratuito o Google pode usar os textos enviados para melhorar produtos. Usar vários projetos para contornar a cota gratuita pode contrariar os termos; não consegui confirmar.
+
+## Voz de cada personagem
+- **Davi**: Algieba
+- **Lia**: Achernar
+- **Dona Beth**: Gacrux (trocada de Callirrhoe após o teste: não soava idosa)
+- **Cléo**: Zephyr
+- **Tadeu**: Achird
+- **Wagner**: Zubenelgenubi
+- **Seu Horácio**: Alnilam
+- **Regina Vaz**: Erinome
+- **Hora certa**: Leda
+- **Porteiro automático**: Sadaltager
+- **Locutor de vinheta**: Sadachbia
+
+A Dona Beth agora usa a Gacrux, que já foi usada em idosas dos casos 00, 01 e 02. A hora certa reaproveita a Leda, que já foi usada em personagens de outros casos (falta voz feminina nova no catálogo). Regina Vaz usa a Erinome, a mesma do caso 02. As demais vozes não repetem as dos casos anteriores.
+
+## Vozes e durações
+| Arquivo | Personagem | Voz (Gemini) | Duração |
+|---|---|---|---|
+| ar_abertura__01.mp3 | Davi | Algieba | 12.2 s |
+| ar_boletim__01.mp3 | Davi | Algieba | 8.9 s |
+| ar_boletim__02.mp3 | Davi | Algieba | 6.4 s |
+| ar_beth__01.mp3 | Davi | Algieba | 5.8 s |
+| ar_beth__02.mp3 | Dona Beth | Callirrhoe | 6.5 s |
+| ar_beth__03.mp3 | Davi | Algieba | 5.5 s |
+| ar_beth__04.mp3 | Dona Beth | Callirrhoe | 5.6 s |
+| ensaio_davi__01.mp3 | Davi | Algieba | 16.4 s |
+| ensaio_davi__02.mp3 | Davi | Algieba | 12.1 s |
+| ensaio_davi__03.mp3 | Davi | Algieba | 7.4 s |
+| cleo_demo__01.mp3 | Hora certa | Leda | 4.3 s |
+| cleo_demo__02.mp3 | Cléo | Zephyr | 7.4 s |
+| cleo_demo__04.mp3 | Hora certa | Leda | 6.3 s |
+| cleo_demo__05.mp3 | Cléo | Zephyr | 2.4 s |
+| xarope__01.mp3 | Lia | Achernar | 5.9 s |
+| xarope__02.mp3 | Davi | Algieba | 4.1 s |
+| xarope__03.mp3 | Lia | Achernar | 5.7 s |
+| recado_davi__01.mp3 | Davi | Algieba | 12.9 s |
+| recado_lia__01.mp3 | Lia | Achernar | 10.4 s |
+| porta_manual__01.mp3 | Porteiro automático | Sadaltager | 7.9 s |
+| porta_manual__02.mp3 | Porteiro automático | Sadaltager | 1.1 s |
+| porta_manual__03.mp3 | Porteiro automático | Sadaltager | 1.1 s |
+| porta_manual__04.mp3 | Porteiro automático | Sadaltager | 1.3 s |
+| porta_manual__05.mp3 | Porteiro automático | Sadaltager | 1.3 s |
+| porta_manual__06.mp3 | Porteiro automático | Sadaltager | 3.0 s |
+| porta_manual__07.mp3 | Porteiro automático | Sadaltager | 2.8 s |
+| porta_corredor__01.mp3 | Hora certa | Leda | 3.1 s |
+| porta_corredor__02.mp3 | Hora certa | Leda | 5.1 s |
+| porta_corredor__03.mp3 | Hora certa | Leda | 4.9 s |
+| porta_corredor__04.mp3 | Hora certa | Leda | 4.8 s |
+| porta_corredor__05.mp3 | Hora certa | Leda | 1.6 s |
+| porta_corredor__06.mp3 | Hora certa | Leda | 3.6 s |
+| reuniao__01.mp3 | Seu Horácio | Alnilam | 8.1 s |
+| reuniao__02.mp3 | Lia | Achernar | 4.5 s |
+| reuniao__03.mp3 | Davi | Algieba | 8.2 s |
+| reuniao__04.mp3 | Wagner | Zubenelgenubi | 7.1 s |
+| entrevista__01.mp3 | Davi | Algieba | 13.3 s |
+| entrevista__02.mp3 | Davi | Algieba | 10.8 s |
+| entrevista__03.mp3 | Davi | Algieba | 3.9 s |
+| jingle_novo__01.mp3 | Locutor de vinheta | Sadachbia | 4.3 s |
+| jingle_antigo__01.mp3 | Locutor de vinheta | Sadachbia | 5.8 s |
+| bootleg__01.mp3 | Davi | Algieba | 10.2 s |
+| r_b.mp3 | Dona Beth | Callirrhoe | 11.7 s |
+| r_b_a.mp3 | Dona Beth (delegada) | Callirrhoe | 10.5 s |
+| r_c.mp3 | Cléo | Zephyr | 7.7 s |
+| r_c_a.mp3 | Cléo (delegada) | Zephyr | 8.3 s |
+| r_t.mp3 | Tadeu | Achird | 6.7 s |
+| r_t_a.mp3 | Tadeu (delegada) | Achird | 7.0 s |
+| r_regina.mp3 | Regina Vaz | Erinome | 10.1 s |
+| r_regina_a.mp3 | Regina Vaz (delegada) | Erinome | 10.2 s |
+| e4_epi_fala.mp3 | Lia | Achernar | 5.0 s |
+| e4_epi_fala_a.mp3 | Lia (delegada) | Achernar | 5.4 s |
+| e4_intro_voz.mp3 | Davi | Algieba | 3.0 s |
+
+Os 53 nomes de arquivo seguem exatamente a tabela do briefing. As ligações (`r_b`, `r_c`, `r_t`, `r_regina`), as falas finais (`e4_epi_fala`) e a abertura (`e4_intro_voz`) ficaram sem o prefixo `e4_` quando o briefing não o trazia; se houver conflito com arquivos de outros casos, renomeie.
+
+## Alterações após os testes
+- `porta_corredor__05` e `__06` agora dizem "Meia-noite." e "Meia-noite e quinze." (sugestão sua; o texto do jogo precisa ser igual).
+- Regravados: ar_beth__02/04, r_b, r_b_a, cleo_demo__02, xarope__01, r_c_a, porta_corredor__04/05/06, jingle_antigo__01, bootleg__01, e4_epi_fala e e4_epi_fala_a.
+- `xarope__01`: refeito para a Lia soar com a mesma altura de voz das outras falas (218 Hz; as outras ficam entre 216 e 232 Hz). A transcrição ouviu "vós" em vez de "voz".
+- `cleo_demo__02`: duas tentativas novas saíram piores (a transcrição ouviu só 3 a 4 "lá"); ficou a de 7,9 s. Cantado, não conferi.
+
+## Escolhas de leitura do briefing
+- Os trechos "aparelho de rádio ligado ao fundo" e "leve ambiente de sala diferente" foram ignorados, porque a regra geral pede voz limpa e sem reverb; você aplica o efeito depois.
+- `ar_beth__01` e `ar_beth__03` são o Davi com a mesma voz dele, sem efeito de sala. `ar_beth__02` é a Dona Beth.
+- `cleo_demo__02` foi gerado uma só vez (canto de oito "lá", cerca de 7 s).
+- A pausa nas pontas é de 0,25 s (menos de 0,3 s, como pedido).
+
+## Não foi possível ouvir ou conferir
+- Eu não ouvi os áudios; só medi (duração, volume, pico, silêncios, altura) e comparei com uma transcrição automática (Whisper medium), que erra nomes e números. A escuta final é sua.
+- **Cléo, canto (`cleo_demo__02`):** a transcrição ouviu oito "lá", mas não consigo saber se saiu realmente cantado, com melodia, ou só falado em tom longo. A primeira tentativa tinha 30 s e foi descartada.
+- **Tadeu:** `r_t_a` foi refeito porque a primeira versão saiu sussurrada e a `r_t` saiu falada. A nova está falada, mas a altura da voz ficou mais grave que a `r_t` (113 Hz contra 150 Hz); ouça os dois juntos.
+- **Voz sintética (hora certa e porteiro):** se soam neutras e "de sistema", sem emoção.
+- **Hora certa:** `porta_corredor__02` foi o mais difícil de gerar (precisou de várias tentativas pelo modelo devolver resposta vazia) e `porta_corredor__06` também.
+- **Pronúncia:** "A Voz de Veludo" em `ar_abertura__01` (a transcrição ouviu "Vós"), "noventa e oito vírgula sete" e os nomes Pirulita, Natal Solidário e Íris. O sotaque mineiro leve foi pedido por texto, mas não confirmei se apareceu.
+- **Mesma voz por pessoa:** pedi a mesma voz do Gemini para cada personagem, mas cada geração sai com pequenas variações de timbre e tom. O Davi, com 16 arquivos, é o mais exposto; ouça-o em sequência (abertura, boletim, ensaio, xarope, recado, reunião, entrevista, bootleg).
+- **Volume:** a maioria ficou perto de -16 LUFS, entre -18.5 e -14.5. Os nomes soltos do porteiro (`porta_manual__03`, `04`, `06` e `07`) ficaram em cerca de -18 LUFS, porque palavras curtas têm pico alto e não dá para subir mais sem passar de -1 dBFS. Pico máximo de -1.3 dBFS; maior duração de 16.4 s.
+
