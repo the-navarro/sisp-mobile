@@ -49,8 +49,8 @@ window.espNotasSync=espFreiSync;
 const espFreiNovas=()=>{const r=S.frR||[];return (S.fr||[]).filter(i=>!r.includes(i)).length};
 /* quebra a fala em balões curtos (até ~150 caracteres, frases inteiras) */
 const espBaloes=t=>{const fr=String(t).split(/(?<=[.!?…])\s+/),o=[];let cur='';fr.forEach(f=>{if(cur&&(cur+' '+f).length>150){o.push(cur);cur=f}else cur=cur?cur+' '+f:f});if(cur)o.push(cur);return o};
-window.espFreiAbrir=()=>{S.frR=(S.fr||[]).slice();try{save()}catch(e){}espDel('espfcard');const all=espFreiFalas(),L=(S.fr||[]).map(id=>all.find(f=>f.id===id)).filter(Boolean);const e=espEl('espfsheet','duo-m');e.style.zIndex=2300;
-const bl=L.map(f=>espBaloes(gx(f.t)).map((t,i)=>`<div class=espfb>${i===0&&f.k==='loc'?'<small>📍 '+esc(((C.LO.find(l=>l.id===f.loc)||{}).n||'').replace(' (cena do crime)',''))+'</small>':''}${esc(t)}</div>`).join('')).join('');
+window.espFreiAbrir=()=>{const prevR=(S.frR||[]).slice();S.frR=(S.fr||[]).slice();try{save()}catch(e){}espDel('espfcard');const all=espFreiFalas(),L=(S.fr||[]).map(id=>all.find(f=>f.id===id)).filter(Boolean);const e=espEl('espfsheet','duo-m');e.style.zIndex=2300;
+const one=f=>espBaloes(gx(f.t)).map((t,i)=>`<div class=espfb>${i===0&&f.k==='loc'?'<small>📍 '+esc(((C.LO.find(l=>l.id===f.loc)||{}).n||'').replace(' (cena do crime)',''))+'</small>':''}${esc(t)}</div>`).join('');let nw=L.filter(f=>!prevR.includes(f.id));if(!nw.length&&L.length)nw=[L[L.length-1]];const old=L.filter(f=>!nw.includes(f));const bl=(old.length?`<button class=espmore onclick="this.nextElementSibling.style.display='flex';this.remove()">▴ Ver mensagens anteriores (${old.length})</button><div class=espold style="display:none;flex-direction:column;gap:8px">${old.map(one).join('')}</div>`:'')+nw.map(one).join('');
 e.innerHTML=`<div class="dcard espfs"><div class=esphd><span class=espfav>${av('anselmo',40)}</span><div style="flex:1"><b>${esc(espFreiNome())}</b><small>Capelão e historiador · ao seu lado</small></div><button class=dcx onclick="espDel('espfsheet');espFreiUi()" aria-label="Fechar">✕</button></div><div class=espfl id=espfl>${L.length?bl:'<p class=mut>Ele ainda não disse nada.</p>'}</div><p class=mut style="margin:8px 0 0;font-size:12px">O que o Frei diz é opinião dele. As provas são fatos.</p></div>`;const l=document.getElementById('espfl');if(l)l.scrollTop=l.scrollHeight;espFreiUi()};
 function espFreiUi(){let c=document.getElementById('espfchip');const show=espOk()&&C.frei&&S&&S.seen>=4&&!CUT&&!RM&&!INS&&!document.getElementById('espfsheet')&&!document.querySelector('#ui .ov');
 if(!show){if(c)c.remove();return}if(!c){c=document.createElement('button');c.id='espfchip';c.setAttribute('aria-label','Conversar com o Frei');c.onclick=()=>espFreiAbrir();document.body.appendChild(c)}
@@ -105,7 +105,7 @@ try{Object.defineProperty(LK,'solve',{configurable:true,get(){return 'Faça '+((
 
 /* provas entregues numa conversa (ex.: Margarida entrega os desenhos) */
 function espEntregas(){if(!espOk()||!C.entregas||CUT)return;let n=[];Object.keys(C.entregas).forEach(q=>{if(S.asked.includes(q))C.entregas[q].forEach(id=>{if(!S.inv.includes(id)&&CL[id]){S.inv.push(id);try{galE(id)}catch(e){}try{lg('📦','Recebeu: '+CL[id].n,6)}catch(e){}n.push(CL[id].n)}})});
-if(n.length){try{save()}catch(e){}try{AU.fx('grab')}catch(e){}setTimeout(()=>{try{tst('📦 Margarida lhe entregou: '+n.join(' e '))}catch(e){}},900)}}
+if(n.length){try{save()}catch(e){}try{AU.fx('grab')}catch(e){}setTimeout(()=>{try{tst('📎 Recebeu: '+n.join(' e '))}catch(e){}},900)}}
 
 /* ---------- painel do álibi (caso do culpado conhecido): aba "Álibi" no Caderno ---------- */
 const espFioOk=i=>{const c=(C.CT||[])[i];return !!(c&&(S.ct||[]).includes(c[0]+'|'+c[1]))};
