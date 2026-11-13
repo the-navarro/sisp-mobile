@@ -100,3 +100,57 @@ Como o vídeo `e2_epi.mp4` tem 18 s e o áudio entra em 14,35 s, ele passa de 18
 - Rafael usa a voz Rasalgethi (a pedido) e Seu Dalmo usa a Umbriel; ambos foram refeitos depois da primeira versão. Não confirmei se o Rafael soa jovem e fino como pede o briefing, nem se o Seu Dalmo ficou grave: a altura da voz medida ficou em torno de 150 a 180 Hz nos dois.
 - Não conferi se o toque fluminense apareceu.
 - Os valores de volume ficaram entre -17,6 e -15,8 LUFS, com pico de -1,7 dBFS ou menos; todas as faixas têm menos de 13 s, abaixo do limite de 25 s.
+
+---
+
+# Arquivo Reservado 03, "O Último Número do Circo Esperança" (assets/voz)
+
+## Ferramenta
+- **Gemini API (Google), modelo `gemini-2.5-flash-preview-tts`**, vozes pré-definidas do Google. Nenhuma voz de pessoa real foi clonada.
+- Geradas em 12/11/2026 em projetos gratuitos do Google AI Studio (limite de 10 pedidos por dia por projeto).
+- Pós-processamento com ffmpeg: MP3 mono, 44,1 kHz, 128 kbps, normalização perto de -16 LUFS, 0,25 s de silêncio no começo e no fim. **Nenhum áudio foi acelerado.**
+- O modelo foi anunciado como "saindo de linha" em 17/11/2026 (fonte: cloudprice.net). Depois disso, novas faixas podem exigir outro modelo, com vozes um pouco diferentes.
+
+## Uso comercial com anúncios: ressalva pendente
+- Pelos Termos Adicionais da Gemini API (versão de 28/04/2026, https://ai.google.dev/gemini-api/terms), o Google não reivindica a propriedade do conteúdo gerado; a responsabilidade pelo uso é de quem gera. Li um resumo da página, não o texto integral.
+- Os termos **não mencionam anúncios** de forma específica. **Não há prova explícita de que o uso em app com anúncios é permitido.** Confirmar nos termos vigentes antes de publicar e guardar uma cópia.
+- No nível gratuito o Google pode usar os textos enviados para melhorar produtos. Usar vários projetos para contornar a cota gratuita pode contrariar os termos; não consegui confirmar.
+
+## Vozes e durações
+| Arquivo | Personagem | Voz (Gemini) | Duração |
+|---|---|---|---|
+| e3_r_z.mp3 | Madame Zora Campos | Despina | 20.3 s |
+| e3_r_z_a.mp3 | Madame Zora Campos (delegada) | Despina | 20.8 s |
+| e3_r_v.mp3 | Valquíria Nunes | Laomedeia | 11.5 s |
+| e3_r_v_a.mp3 | Valquíria Nunes (delegada) | Laomedeia | 11.5 s |
+| e3_r_r.mp3 | Rocco Bellini | Schedar | 16.2 s |
+| e3_r_r_a.mp3 | Rocco Bellini (delegada) | Schedar | 16.6 s |
+| e3_r_regina.mp3 | Regina Vaz (opcional) | Pulcherrima | 9.4 s |
+| e3_r_regina_a.mp3 | Regina Vaz (opcional) (delegada) | Pulcherrima | 10.3 s |
+| e3_epi_voz.mp3 | Dona Gertrudes Tavares (fala final) | Autonoe | 6.7 s |
+| e3_epi_voz_a.mp3 | Dona Gertrudes Tavares (fala final) (delegada) | Autonoe | 7.2 s |
+
+Vozes diferentes entre si e das já usadas nos casos anteriores (Gacrux, Kore, Sulafat, Charon, Puck, Leda, Algenib, Orus, Aoede, Rasalgethi, Umbriel, Erinome, Vindemiatrix). O Tico "Pimenta" é surdo e não tem ligação: nada foi gravado. A ligação da Regina é a opcional.
+
+## Duas trocas de grafia no texto enviado ao gerador
+- "toc" foi enviado como "**tóque**", como pede o briefing. O áudio diz "tóque"; o texto na tela pode continuar "toc".
+- Nenhuma outra troca de palavra.
+
+## Fala da Gertrudes: voz mais velha, mas bem mais longa que a janela
+A primeira versão (voz Achernar) soou jovem para uma bilheteira de 61 anos, então foi trocada pela voz **Autonoe**, pedindo "avó, rouca e grave, gasta pela idade". A altura medida caiu de cerca de 220 Hz para cerca de 165 Hz, o que indica voz mais madura, mas só a escuta confirma. Em troca, a fala ficou mais lenta: termina em **cerca de 6,5 s** (`e3_epi_voz`, arquivo de 6,7 s) e **cerca de 6,9 s** (`e3_epi_voz_a`, arquivo de 7,2 s), sem acelerar. O briefing pedia 3,5 a 4 s e a janela do vídeo `e3_epi.mp4` é de 4,5 s (entra em 13,5 s, o vídeo tem 18 s). Para caber, o áudio teria de entrar em cerca de 11,3 s, ou o vídeo ser estendido. A voz Achernar (fala em 4,8 s, mais jovem) ficou guardada como alternativa.
+As duas versões foram escolhidas entre as gerações para ter altura parecida (cerca de 168 e 167 Hz). A pausa antes de "Mentem" tem 0,66 s em `e3_epi_voz` e 0,77 s em `e3_epi_voz_a`.
+
+## Duração das ligações
+Todas abaixo de 25 s. A mais longa é a da Madame Zora, com cerca de 21 s (pausas teatrais).
+
+## Não foi possível ouvir ou conferir
+- Eu não ouvi os áudios; só medi (duração, volume, pico, silêncios) e comparei com uma transcrição automática (Whisper medium), que erra nomes e números. A escuta final é sua.
+- Pontos para ouvir com atenção:
+  - **"Rocco"** em `e3_r_r` (a transcrição ouviu "eu Rocco") e em `e3_r_r_a` (ouviu "Rocco" certo); versões anteriores saíram "Pio", "Loco" e "Oco".
+  - **"Delegada"** em `e3_r_r_a`: uma versão anterior disse "delegado". Esta passou na transcrição, mas confirme na escuta.
+  - **"Delegado/Delegada"** com D claro em todas.
+  - **Valquíria**: `e3_r_v` ficou em -17,8 LUFS e `e3_r_v_a` em -17,3 LUFS, um pouco abaixo de -16; a transcrição ouviu "cumprido" no lugar de "comprido" em `e3_r_v`.
+  - **Zora e Gertrudes**: se a voz soa idosa, e se a Gertrudes soa terna sem tom de vilã.
+  - **"Mentem"**: a pausa antes da palavra não foi medida.
+- Os valores de volume ficaram entre -17.8 e -16.1 LUFS, com pico de -1.5 dBFS ou menos.
+

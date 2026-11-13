@@ -206,5 +206,5 @@ body.rm .onbt{animation:none}
 .tmk .pgr{padding:6px 4px 4px;gap:14px 2px}.tmk .pic{width:50px;height:50px;border-radius:15px}.tmk .pic svg{width:26px;height:26px}.tmk .pap{pointer-events:none;font-size:10.5px}
 .cvw.fo{opacity:0;transition:opacity .9s ease-in}
 
-.cvw[data-c=e2] .cvp,.cvw[data-c=e2] .cvv{object-fit:contain}
+.cvw[data-c=e2] .cvp,.cvw[data-c=e2] .cvv,.cvw[data-c=e3] .cvp,.cvw[data-c=e3] .cvv{object-fit:contain}
 .insnav{position:absolute;top:50%;z-index:14;width:44px;height:64px;margin-top:-32px;border:0;border-radius:12px;background:rgba(14,18,24,.72);color:#eaa73c;font:700 38px/1 Arial;display:flex;align-items:center;justify-content:center;padding:0 0 6px;box-shadow:0 2px 12px #000a}.insnav.l{left:8px}.insnav.r{right:8px}.insct{position:absolute;top:58px;left:50%;transform:translateX(-50%);z-index:14;background:rgba(14,18,24,.72);color:#cfd5de;font:600 12px Arial;padding:4px 10px;border-radius:10px}
