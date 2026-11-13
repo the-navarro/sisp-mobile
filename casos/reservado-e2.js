@@ -50,5 +50,6 @@ E.epilogo={quem:'noemia',fala:J.epilogo.fala,fala_a:J.epilogo.fala_delegada,dir:
 const RL=['oficina','salao','torre','torre'];
 RECON.e2=J.reconstrucao.map((r,i)=>['e2:'+RL[i],r.provas,r.hora,r.texto]);
 E.entregas={};ENT.forEach(p=>{(E.entregas[p.na_pergunta]=E.entregas[p.na_pergunta]||[]).push(p.id)});
+E.EVA={};Object.keys(E.CL).forEach(id=>{E.EVA[id]=EVA[id]});
 ESP.push(E);
 })();

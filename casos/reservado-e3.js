@@ -42,5 +42,6 @@ E.matriz=X.matriz;
 const RL=['pista','pista','bilheteria','som'];
 RECON.e3=X.reconstrucao.map((r,i)=>['e3:'+RL[i],r.provas,r.hora,r.texto]);
 E.entregas={};ENT.forEach(p=>{(E.entregas[p.na_pergunta]=E.entregas[p.na_pergunta]||[]).push(p.id)});
+E.EVA={};Object.keys(E.CL).forEach(id=>{E.EVA[id]=EVA[id]});
 ESP.push(E);
 })();
