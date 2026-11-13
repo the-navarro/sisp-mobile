@@ -1,4 +1,4 @@
-window.IMV=id=>({e1:'',e2:'?v=2',e3:'?v=3',e4:'?v=3',c6:'?v=2'}[id]||'');
+window.IMV=id=>({e1:'',e2:'?v=2',e3:'?v=3',e4:'?v=3',c6:'?v=3'}[id]||'');
 /* primeiro nome sem deixar título sozinho (Seu, Dona, Irmã, Frei, Comandante...) */
 function nm1(n){const p=String(n).split(' ');if(/^(Dra?\.?|Sra?\.?)$/.test(p[0])&&p[1])return p[1];if(/^(Seu|Sua|Dona|Ir[mM][ãa]o?|Frei|Madre|Padre|Dom|Comandante|Cmte\.?|Capit[ãa]o|Doutor|Doutora|Madame|Mestre|Palha[cç]o)$/.test(p[0])&&p[1])return p[0]+' '+p[1];return p[0]}
 const CASES=[mkC0(),Object.assign(mkC1(),{id:'c1',key:'sisp104b',n:'A Última Xícara',num:'Inquérito nº 104/2026',place:'Mansão Sterling',blurb:'Um bioquímico morre num escritório trancado por dentro, numa noite de tempestade. Três suspeitos e um chá frio.',dif:2,t0:1392,dead:1800,thr:4,top:9,start:'office',LOCT:{copa:'q_c1',lab:'q_e1',vault:'q_e2'},LN:{copa:'Copa e portaria',lab:'Laboratório',vault:'Cofre oculto'},
