@@ -8,7 +8,7 @@ try{if(x&&x.state==='suspended')x.resume()}catch(e){}
 try{if(!x||!this.mg)throw 0;const src=x.createMediaElementSource(a),hp=x.createBiquadFilter(),lp=x.createBiquadFilter();hp.type='highpass';hp.frequency.value=260;lp.type='lowpass';lp.frequency.value=3600;src.connect(hp);hp.connect(lp);lp.connect(this.mg)}catch(e){a.volume=.9}
 const pr=a.play();if(pr&&pr.catch)pr.catch(()=>{});
 return 1}catch(e){return 0}},
-vstop(){try{if(this.vc){this.vc.pause();this.vc.currentTime=0;this.vc=null}}catch(e){}try{introStop()}catch(e){}try{window.speechSynthesis&&speechSynthesis.cancel()}catch(e){}try{if(this.vo){this.vo.gain.cancelScheduledValues(0);this.vo.gain.value=0;this.vo.disconnect()}}catch(e){}this.vo=null},
+vstop(){try{if(this.vc){this.vc.pause();this.vc.currentTime=0;this.vc=null}}catch(e){}try{introStop()}catch(e){}try{if(window.speechSynthesis&&(speechSynthesis.speaking||speechSynthesis.pending))speechSynthesis.cancel()}catch(e){}try{if(this.vo){this.vo.gain.cancelScheduledValues(0);this.vo.gain.value=0;this.vo.disconnect()}}catch(e){}this.vo=null},
 voice(id,len){this.vstop();if(!this.f)return;
 if(this.vozArq(id))return;
 this.init();const x=this.x;if(!x||!this.mg)return;
