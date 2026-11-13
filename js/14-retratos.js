@@ -77,7 +77,7 @@ if(has('tape'))o+=`<path d="M34 70q16 18 32 0" stroke="#e8d44a" stroke-width=3.4
 if(has('lanyard'))o+=`<path d="M40 70l10 28 10-28" stroke="#c0392b" stroke-width=2.4 fill=none /><rect x=45 y=92 width=10 height=8 rx=1 fill="#fff" stroke="#999" />`;
 if(has('pearl'))o+=`<path d="M38 70q12 14 24 0" stroke="#f4efe6" stroke-width=2.4 stroke-dasharray="2.2 .6" fill=none />`;
 o+=`</g><g transform="${HDT}">`;
-if(has('headset'))o+=`<path d="M27 52c-4 -26 14 -34 24 -34" stroke="#f2f4f8" stroke-width=2.4 fill=none /><rect x=24 y=48 width=6 height=12 rx=3 fill="#f2f4f8" /><path d="M27 60q2 10 14 12" stroke="#f2f4f8" stroke-width=1.6 fill=none /><circle cx=42 cy=72 r=2 fill="#f2f4f8" />`;
+if(has('headset'))o+=`<path d="M27 52C22 8 78 8 73 52" stroke="#f2f4f8" stroke-width=2.4 fill=none stroke-linecap=round /><path d="M27 52C22 8 78 8 73 52" stroke="#0003" stroke-width=.6 fill=none transform="translate(0 1.200)" /><rect x=24 y=48 width=6 height=12 rx=3 fill="#f2f4f8" /><rect x=70 y=48 width=6 height=12 rx=3 fill="#f2f4f8" /><path d="M27 60q2 10 14 12" stroke="#f2f4f8" stroke-width=1.6 fill=none /><circle cx=42 cy=72 r=2 fill="#f2f4f8" />`;
 // orelhas + rosto
 o+=`<ellipse cx=${cx-fa-.6} cy=51 rx=3.6 ry=5 fill="${sk}" /><ellipse cx=${cx+fa+.6} cy=51 rx=3.6 ry=5 fill="${sk}" /><path d="M${cx-fa-1} 49q-2 2 0 5M${cx+fa+1} 49q2 2 0 5" stroke="${sh}" stroke-width=1 fill=none />`;
 if(has('aid'))o+=`<path d="M${cx+fa+2.6} 47q3.6 1.4 3 6.6q-.6 2-2.4 1.4q.8-3.4-.6-6z" fill="#d9c4a0" stroke="#a08a62" stroke-width=.5 />`;
