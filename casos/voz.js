@@ -10,3 +10,6 @@ VOZ.c0_r_m='assets/voz/c0_r_m.mp3';VOZ.c0_r_m_a='assets/voz/c0_r_m_a.mp3';VOZ.c1
 
 /* Arquivo Reservado 02 */
 VOZ.e2_r_c='assets/voz/e2_r_c.mp3';VOZ.e2_r_c_a='assets/voz/e2_r_c_a.mp3';VOZ.e2_r_d='assets/voz/e2_r_d.mp3';VOZ.e2_r_d_a='assets/voz/e2_r_d_a.mp3';VOZ.e2_r_r='assets/voz/e2_r_r.mp3';VOZ.e2_r_r_a='assets/voz/e2_r_r_a.mp3';
+
+/* Arquivo Reservado 03 */
+VOZ.e3_r_z='assets/voz/e3_r_z.mp3';VOZ.e3_r_z_a='assets/voz/e3_r_z_a.mp3';VOZ.e3_r_v='assets/voz/e3_r_v.mp3';VOZ.e3_r_v_a='assets/voz/e3_r_v_a.mp3';VOZ.e3_r_r='assets/voz/e3_r_r.mp3';VOZ.e3_r_r_a='assets/voz/e3_r_r_a.mp3';
