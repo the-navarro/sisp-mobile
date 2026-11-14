@@ -108,7 +108,7 @@ function espEntregas(){if(!espOk()||!C.entregas||CUT)return;let n=[];Object.keys
 if(n.length){try{save()}catch(e){}try{AU.fx('grab')}catch(e){}setTimeout(()=>{try{tst('📎 Recebeu: '+n.join(' e '))}catch(e){}},900)}}
 
 /* ---------- painel do álibi (caso do culpado conhecido): aba "Álibi" no Caderno ---------- */
-const espFioOk=i=>{const c=(C.CT||[])[i];return !!(c&&(S.ct||[]).includes(c[0]+'|'+c[1]))};
+const espFioOk=i=>{const c=(C.CT||[])[i],a=(C.fioAuto||{})[i];return !!(c&&(S.ct||[]).includes(c[0]+'|'+c[1]))||!!(a&&S.asked.includes(a))};
 const espAlibiHtml=()=>{const n=C.fios.filter((f,i)=>espFioOk(i)).length,nom=(C.SU.find(x=>x.id==='noemia')||C.SU[0]);
 return `<div class=pan style="margin-top:0;border-color:var(--amb)"><h3 style="color:var(--amb)">🕰️ Fios do álibi de ${esc(nom.n.split(' ')[0])}</h3><p class=mut style="margin:0 0 10px">Você sabe quem foi. Cada fio é uma parte do álibi dela. Derrube todos com provas. <b>${n} de ${C.fios.length}</b> derrubados.</p>${C.fios.map((f,i)=>{const ok=espFioOk(i),q=nom.q.find(x=>x[0]===f.versao),vis=S.asked.includes(f.versao);return `<div class="espfio ${ok?'ok':''}"><span class=espfst>${ok?'✓':'●'}</span><div><b>${esc(f.rotulo)}</b><small>${ok?'Derrubado':'Firme'}</small>${vis&&q?`<p>${esc(q[4]||'')}</p>`:'<p class=mut>Ainda não ouvido.</p>'}</div></div>`}).join('')}</div>`};
 {const _vc=V_.caderno;V_.caderno=function(){if(!(C&&C.fios&&C.fios.length))return _vc.apply(this,arguments);

@@ -57,6 +57,8 @@ const RL=['porta','cela','capela','arq'];
 RECON.e1=J.reconstrucao.map((r,i)=>['e1:'+RL[i],r.provas,r.hora,r.texto]);
 /* Margarida entrega os desenhos na própria conversa */
 E.entregas={};ENT.forEach(p=>{(E.entregas[p.na_pergunta]=E.entregas[p.na_pergunta]||[]).push(p.id)});
+/* prova opcional que entra em dedução: precisa poder ser usada no Quadro */
+Object.keys(E.CL).forEach(id=>{if(E.CL[id].h&&Object.keys(E.DD).some(k=>k.split('|').includes(id)))E.CL[id].h=0});
 E.EVA={};Object.keys(E.CL).forEach(id=>{E.EVA[id]=EVA[id]});
 ESP.push(E);
 })();
