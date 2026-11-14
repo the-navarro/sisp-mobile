@@ -76,8 +76,9 @@ window.espClipUi=espClipUi;window.espMarcaUi=espMarcaUi;
 const _in=window.insp;window.insp=function(id){if(has()&&C.clipes[id]){espClipUi(id);return}return _in.apply(this,arguments)};
 /* painel "Marcas de som": hora declarada x hora pelo som */
 const found=r=>S.inv.includes(r.marca);
+const mkTot=()=>(C.marcas||[]).length,mkOk=()=>(C.marcas||[]).filter(m=>S.inv.includes(m.id)).length;
 window.espMarcasHtml=()=>{const L=C.msom,n=L.filter(found).length;
-return `<div class=pan style="margin-top:0;border-color:var(--amb)"><h3 style="color:var(--amb)">🎧 Marcas de som</h3><p class=mut style="margin:0 0 10px">Compare a hora que cada trecho diz ter com a hora que o som revela. Verde: bate. Vermelho: não bate. <b>${n} de ${L.length}</b> marcas.</p>${L.map(r=>{if(!found(r))return `<div class=sentrow><div class=senthd><b>? ? ?</b><i class=mut>?</i></div><p class=mut>Ainda não ouvido: marque o que escuta nas gravações.</p></div>`;const cl=C.clipes[r.clip]||{nome:r.clip},m=CL[r.marca]||{n:r.marca},col=r.bate?'#6fcf8a':'#ff6b5a';
+return `<div class=pan style="margin-top:0;border-color:var(--amb)"><h3 style="color:var(--amb)">🎧 Marcas de som</h3><p class=mut style="margin:0 0 10px">Você registrou <b>${mkOk()} de ${mkTot()}</b> marcas de som. As ${L.length} linhas abaixo comparam a hora que cada trecho diz ter com a hora que o som revela (verde: bate; vermelho: não bate), e <b>${n}</b> já foram reveladas.</p>${L.map(r=>{if(!found(r))return `<div class=sentrow><div class=senthd><b>? ? ?</b><i class=mut>?</i></div><p class=mut>Ainda não ouvido: marque o que escuta nas gravações.</p></div>`;const cl=C.clipes[r.clip]||{nome:r.clip},m=CL[r.marca]||{n:r.marca},col=r.bate?'#6fcf8a':'#ff6b5a';
 return `<div class=sentrow style="border-color:${col}55"><div class=senthd><b>${esc(cl.nome)}</b><i style="color:${col};border-color:${col}">${r.bate?'Bate':'Não bate'}</i></div><p><span>🔊</span>${esc(m.n)}</p><p><span>🕐</span>Diz ser <b>${esc(r.hora_declarada)}</b> · o som diz <b style="color:${col}">${esc(r.hora_pelo_som)}</b></p></div>`}).join('')}</div>`};
 {const _vc=V_.caderno;V_.caderno=function(){if(!has())return _vc.apply(this,arguments);
 if(!CDT.some(x=>x[0]==='msom'))CDT.push(['msom','Marcas']);
@@ -86,9 +87,9 @@ const k='msom',nn=(S.nb||[]).length,bar=`<div class=cdtabs>${CDT.map(([v,t])=>`<
 return bar+espMarcasHtml()}}
 window.espMarcasAbrir=()=>{const e=espEl('espmsheet','duo-m');e.style.zIndex=2300;e.innerHTML=`<div class="dcard espfs"><div class=esphd><div style="flex:1"><b>Marcas de som</b><small>Hora declarada x hora pelo som</small></div><button class=dcx onclick="espDel('espmsheet');espMarcaUi()" aria-label="Fechar">✕</button></div><div class=espfl>${espMarcasHtml()}</div></div>`;espMarcaUi()};
 function espMarcaUi(){let c=document.getElementById('espmchip');const show=has()&&S&&S.seen>=4&&S.tab!=='grav'&&!CUT&&!RM&&!INS&&!document.getElementById('espmsheet')&&!document.getElementById('espclip')&&!document.getElementById('espfsheet')&&!document.querySelector('#ui .ov');
-if(!show){if(c)c.remove();return}const n=C.msom.filter(found).length;
+if(!show){if(c)c.remove();return}const n=mkOk();
 if(!c){c=document.createElement('button');c.id='espmchip';c.setAttribute('aria-label','Marcas de som');c.onclick=()=>espMarcasAbrir();document.body.appendChild(c)}
-c.innerHTML=`<span>🎧</span><b>${n}/${C.msom.length}</b>`;if(n>(window.ESPMN||0)){c.classList.remove('jump');void c.offsetWidth;c.classList.add('jump')}window.ESPMN=n}
+c.innerHTML=`<span>🎧</span><b>${n}/${mkTot()}</b>`;if(n>(window.ESPMN||0)){c.classList.remove('jump');void c.offsetWidth;c.classList.add('jump')}window.ESPMN=n}
 {const _r=render;render=function(){if(window.CDT){const i=CDT.findIndex(x=>x[0]==='msom');if(i>=0&&!has())CDT.splice(i,1);else if(i<0&&has())CDT.push(['msom','Marcas'])}const r=_r.apply(this,arguments);try{espMarcaUi()}catch(e){}return r}}
 {const _tm=window.toMenu||toMenu;toMenu=function(){stop();espDel('espclip');return _tm.apply(this,arguments)}}
 })();
