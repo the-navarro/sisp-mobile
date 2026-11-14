@@ -79,7 +79,7 @@ window.VSC=window.VSC||[];
     },
     {
      "pergunta": "Conhece a tripulação?",
-     "resposta": "Só o Zeca. Ele me disse ontem que o patrão ainda ia se arrepender de recusar minha oferta."
+     "resposta": "Só o Zeca. Ele me disse ontem que o patrão ainda ia se arrepender de recusar minha oferta e que, se eu quisesse, ele \"dava um jeito\" de me vender a caixa por fora. Eu ri e disse que só compro no leilão."
     },
     {
      "pergunta": "A senhora costuma carregar peso?",
@@ -199,7 +199,7 @@ window.VSC=window.VSC||[];
   },
   "solucao": {
    "culpado": "zeca",
-   "motivo": "Estava com dois meses de salário atrasado e queria se vingar do mestre, vendendo o lote por fora.",
+   "motivo": "Estava com dois meses de salário atrasado e queria se vingar do mestre, vendendo o lote por fora à Nilza, que tinha oferecido comprá-lo e a quem ele já tinha sondado na véspera. Ela recusou negociar fora do leilão e só soube do roubo no cais.",
    "como": "Quando o Otávio saiu para inscrever o lote, Zeca levou a caixa no carrinho do paiol, comprou gelo às 5h22 para manter as lagostas frias e escondeu o lote antes de fingir que dormia."
   },
   "dicas": [

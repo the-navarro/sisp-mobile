@@ -266,7 +266,7 @@ DCC.push({
    "suspeito": "otavio",
    "afirmacao": "af_o2",
    "prova": "p_registro_chaves",
-   "explicacao": "Otávio garantiu que só ele e a Celeste sabiam o código do armário, mas o registro mostra a retirada da chave da vitrine às 19h40 assinada por P. Nunes. Alguém além deles descobriu o código, que é a data de inauguração do ateliê.",
+   "explicacao": "Otávio garantiu que só ele e a Celeste sabiam o código do armário, mas o registro mostra a retirada da chave da vitrine às 19h40 assinada por P. Nunes. Alguém além deles descobriu o código, que é a data de inauguração do ateliê. Priscila assinou a folha por hábito, sem pensar: é a aluna que toda semana retira a chave do depósito e está acostumada a escrever o nome.",
    "lado_afirmacao": "A",
    "lado_prova": "ambos"
   }
@@ -310,7 +310,7 @@ DCC.push({
   ]
  },
  "final": {
-  "acerto": "Mandado expedido! Priscila Nunes copiou o código do armário (a data de inauguração), retirou a chave da vitrine às 19h40 e combinou a entrega do original a um colecionador, deixando uma réplica pronta. O Vaso Lua de Barro foi recuperado antes da entrega.",
+  "acerto": "Mandado expedido! Priscila Nunes copiou o código do armário (a data de inauguração), retirou a chave da vitrine às 19h40 e assinou a folha por hábito, sem pensar, e combinou a entrega do original a um colecionador, deixando uma réplica pronta. O Vaso Lua de Barro foi recuperado antes da entrega.",
   "erro": "A acusação não se sustenta. Revisem juntos a conversa do tablet e o registro de retirada de chaves: eles apontam para quem pegou a chave e quando."
  }
 });
