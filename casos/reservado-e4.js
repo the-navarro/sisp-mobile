@@ -14,6 +14,8 @@ X.marcas.forEach(m=>{E.CL[m.id]={id:m.id,n:m.nome,i:m.emoji,d:m.descricao+' '+m.
 const FIOS=X.guia.fios;Object.keys(FIOS).forEach(k=>{if(E.CL[k]&&FIOS[k]&&!E.CL[k].mk)E.CL[k].d=E.CL[k].d+' '+FIOS[k]});
 Object.keys(E.CL).forEach(id=>{EVA[id]=['eclip',{e:E.CL[id].i,m:E.CL[id].mk?1:0}]});
 E.entregas={};ENT.forEach(p=>{(E.entregas[p.na_pergunta]=E.entregas[p.na_pergunta]||[]).push(p.id)});
+E.grav={pessoas:[{id:'davi',av:'davi',n:'Davi',sub:'a voz da rádio',clips:['ar_abertura','ar_boletim','ar_beth','ensaio_davi','xarope','recado_davi','entrevista','bootleg']},{id:'lia',av:'lia',n:'Lia',clips:['xarope','recado_lia','reuniao']},{id:'tadeu',av:'tadeu',n:'Tadeu',clips:['bootleg']},{id:'iris',av:'iris',n:'Íris',clips:['recado_davi']},{id:'wagner',av:'wagner',n:'Wagner',clips:['recado_lia']},{id:'cleo',av:'cleo',n:'Cléo',clips:['cleo_demo']},{id:'beth',av:'beth',n:'Dona Beth',clips:['ar_beth']},{id:'sons',ic:'🔔',n:'Sons da rádio',sub:'portaria e vinhetas',clips:['porta_manual','porta_corredor','jingle_novo','jingle_antigo']}],
+horas:[{id:'h22',ic:'🌆',n:'22h às 23h',clips:['recado_davi','xarope']},{id:'h23',ic:'🕚',n:'23h às 23h30',clips:['ar_abertura','recado_lia']},{id:'h2330',ic:'🌙',n:'23h30 à meia-noite',clips:['bootleg','cleo_demo','ar_boletim','ar_beth']},{id:'hnoite',ic:'🚪',n:'A noite toda',sub:'portaria',clips:['porta_manual','porta_corredor']},{id:'harq',ic:'🗂️',n:'Arquivo',sub:'outras noites',clips:['ensaio_davi','reuniao','entrevista','jingle_novo','jingle_antigo']}]};
 E.clipes={};X.clipes.forEach(c=>{E.clipes[c.id]=c});E.marcas=X.marcas;E.msom=X.msom;
 const OPW=X.op.meio,OPM=X.op.motivacao;
 E.wp=E.wp.map(w=>['e4_'+w[0],w[1]]);E.mo=E.mo.map(w=>['e4_'+w[0],w[1]]);E.sol=[E.sol[0],'e4_'+E.sol[1],'e4_'+E.sol[2]];

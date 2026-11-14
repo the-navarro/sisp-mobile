@@ -1,5 +1,5 @@
 Object.assign(LK,{locations:'Abra o Caderno primeiro.',calls:'Chega com a primeira ligação de um suspeito.'});
-const APPS=[['caderno','Caderno','#FFBE0B','#FB8500'],['interrogate','Conversas','#34D663','#13A94A'],['calls','Chamadas','#3AA0FF','#0A63E0'],['locations','Locais','#FF7A52','#E5384B'],['mindmap','Quadro','#B876FF','#7B3FE0'],['lab','Perícia','#2ED8C8','#0E9AA7'],['solve','Prisão','#2E3A5C','#141A2B'],['brief','Briefing','#7A86FF','#4453E6'],['set','Ajustes','#A2A8B3','#6B7280'],['hint','Dicas','#FFD83A','#FFB000'],['grav','Gravações','#FF5A5F','#9B1C31'],['menu','Menu','#444A58','#22262F']];
+const APPS=[['caderno','Caderno','#FFBE0B','#FB8500'],['interrogate','Conversas','#34D663','#13A94A'],['calls','Chamadas','#3AA0FF','#0A63E0'],['locations','Locais','#FF7A52','#E5384B'],['mindmap','Quadro','#B876FF','#7B3FE0'],['lab','Perícia','#2ED8C8','#0E9AA7'],['solve','Prisão','#2E3A5C','#141A2B'],['brief','Briefing','#7A86FF','#4453E6'],['set','Ajustes','#A2A8B3','#6B7280'],['hint','Dicas','#FFD83A','#FFB000'],['grav','Gravações','#FF4FA3','#9A1B6E'],['menu','Menu','#444A58','#22262F']];
 const ANAME={caderno:'Caderno',calls:'Chamadas',locations:'Locais',interrogate:'Conversas',mindmap:'Quadro',lab:'Perícia',solve:'Prisão'};
 const APPTABS=['caderno','calls','locations','interrogate','mindmap','lab','solve'];
 let APPA=0,APPO=[50,50];
