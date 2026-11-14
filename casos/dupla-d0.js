@@ -93,7 +93,7 @@ DCC.push({
      ],
      "erro": "Não. Quem trabalha com barro de verdade sabe o nome do forno."
     },
-    "resposta": "A chave fica no armário de chaves do corredor. O código, só eu e a Celeste sabemos.",
+    "resposta": "A chave fica no armário de chaves do corredor. O código, só eu e a Celeste, a dona do ateliê, sabemos.",
     "registra_afirmacao": "af_o2",
     "libera_prova": "p_armario"
    },

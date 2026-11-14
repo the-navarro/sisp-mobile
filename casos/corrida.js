@@ -59,7 +59,7 @@ window.VSC=window.VSC||[];
     },
     {
      "pergunta": "Alguém mexeu no carrinho do barco?",
-     "resposta": "Ele fica no paiol, trancado. Hoje cedo estava no convés, todo molhado. Eu não toquei nele.",
+     "resposta": "Ele fica no paiol, trancado, e a chave fica pendurada na cabine. Hoje cedo estava no convés, todo molhado. Eu não toquei nele.",
      "libera_prova": "p8"
     },
     {
@@ -296,7 +296,7 @@ window.VSC=window.VSC||[];
    "irene": [
     {
      "pergunta": "O que a senhora fez hoje à noite na sala?",
-     "resposta": "Fechei a sala às 18h30 e só voltei às 19h35. Vi a vitrine vazia e chamei todo mundo.",
+     "resposta": "Fechei a sala às 18h30 e só voltei às 19h35. Vi a mesa de leitura vazia e chamei todo mundo.",
      "registra_afirmacao": "A3"
     },
     {
@@ -405,7 +405,7 @@ window.VSC=window.VSC||[];
    "suspeito": "davi",
    "afirmacao": "A1",
    "prova": "p5",
-   "explicacao": "Davi disse que nem chegou perto da sala de Coleções Raras, mas o registro de acesso mostra D. Cunha entrando às 19h22 e saindo às 19h31, depois que o Mauro viu o diário na mesa às 19h14 e antes de a Irene encontrar a vitrine vazia às 19h35."
+   "explicacao": "Davi disse que nem chegou perto da sala de Coleções Raras, mas o registro de acesso mostra D. Cunha entrando às 19h22 e saindo às 19h31, depois que o Mauro viu o diário na mesa às 19h14 e antes de a Irene encontrar a mesa vazia às 19h35."
   },
   "solucao": {
    "culpado": "davi",
@@ -618,8 +618,8 @@ window.VSC=window.VSC||[];
   },
   "solucao": {
    "culpado": "ofelia",
-   "motivo": "Queria a lente de volta para a própria coleção, sem abrir mão do valor do seguro.",
-   "como": "Usou a chave reserva a que tinha direito pelo contrato, abriu a vitrine durante a sessão no terraço, guardou a lente na bolsa grande e saiu às 21h50 pela porta lateral."
+   "motivo": "Queria a lente de volta para a própria coleção, e o seguro cobriria o prejuízo do observatório sem que ninguém desconfiasse dela.",
+   "como": "Usou a chave reserva a que tinha direito pelo contrato, abriu a vitrine durante a sessão no terraço, escondeu a lente sob o xale, pôs na bolsa grande ao retirá-la do guarda-volumes às 21h50 e saiu pela porta lateral."
   },
   "dicas": [
    "Todos tinham álibi na sessão, menos um. Leia com atenção o que cada um conta.",

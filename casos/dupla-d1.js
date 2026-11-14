@@ -234,7 +234,7 @@ DCC.push({
    {
     "id": "i3",
     "pergunta": "A senhora conhece o recepcionista da noite?",
-    "resposta": "O Tobias? Um moço gentil. Sempre me chama de Dona Ilda e traz chá. Está conosco há dois anos.",
+    "resposta": "O Tobias? Um moço gentil. Sempre me chama de Dona Ilda e traz chá. Está conosco há dois anos, e hoje carregou a minha bolsa até a porta do escritório quando fui guardar o colar, às 19h30.",
     "registra_afirmacao": "af_i3"
    }
   ]
@@ -406,7 +406,7 @@ DCC.push({
    "suspeito": "helga",
    "afirmacao": "af_h3",
    "prova": "p_log_porta",
-   "explicacao": "Helga disse que só ela e Dona Ilda tinham cartão para a porta do escritório. O controle de acesso mostra que às 22h09 o cartão RECEP-02 entrou na sala e só saiu às 22h14, justo quando o cofre foi aberto e fechado. A escala diz que RECEP-02 é o cartão do recepcionista da noite.",
+   "explicacao": "Helga disse que só ela e Dona Ilda tinham cartão para a porta do escritório. O controle de acesso mostra que às 22h09 o cartão RECEP-02 entrou na sala e só saiu às 22h14, justo quando o cofre foi aberto e fechado. A escala diz que RECEP-02 é o cartão do recepcionista da noite, que tem um acesso de emergência ao escritório à noite do qual Helga não se lembrava.",
    "lado_afirmacao": "A",
    "lado_prova": "B"
   },
