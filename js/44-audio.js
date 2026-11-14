@@ -16,18 +16,43 @@ if(m.verdadeira){claim(m);try{tst('🔊 Marca registrada: '+(CL[mid]?CL[mid].n:'
 window.espClipPlay=cid=>{const c=C.clipes[cid];if(!c)return;const a=aud();
 if(a.dataset.id===cid&&a.src&&!a.ended&&a.currentTime>0&&!a.paused){a.pause();espClipTick(cid);return}
 if(a.dataset.id!==cid||!a.src){a.dataset.id=cid;a.onerror=null;const base=c.audio.replace(/\.mp3$/,'');let tried=0;a.onerror=()=>{if(!tried++){a.src='assets/audio/'+base+'_sons.mp3';a.play().catch(()=>{})}};a.src='assets/audio/'+c.audio}
-a.onended=()=>{if(!clh().includes(cid)){clh().push(cid);try{save()}catch(e){}}espClipUi(cid,1)};a.ontimeupdate=()=>espClipTick(cid);a.onpause=()=>espClipTick(cid);a.onplay=()=>espClipTick(cid);
+a.onended=()=>{if(!clh().includes(cid)){clh().push(cid);try{save()}catch(e){}}if(document.getElementById('espclip'))espClipUi(cid,1);if(window.gravEnded)gravEnded(cid)};a.ontimeupdate=()=>{espClipTick(cid);window.gmTick&&gmTick()};a.onpause=()=>{espClipTick(cid);window.gmTick&&gmTick()};a.onplay=()=>{espClipTick(cid);window.gmTick&&gmTick()};
 a.play().catch(()=>{});espClipTick(cid)};
 window.espClipAgain=cid=>{const a=aud();a.dataset.id=cid;try{a.currentTime=0}catch(e){}espClipPlay(cid)};
 function espClipTick(cid){const a=A,b=document.getElementById('ecbar'),t=document.getElementById('ectm'),p=document.getElementById('ecpl');if(!b||!a||a.dataset.id!==cid)return;const d=a.duration||C.clipes[cid].dur_s||1;b.style.width=Math.min(100,(a.currentTime/d)*100)+'%';if(t)t.textContent=mm(a.currentTime)+' / '+mm(d);if(p)p.textContent=(!a.paused&&!a.ended)?'⏸':'▶'}
 
 /* app "Gravações": todas as gravações já coletadas ficam aqui para ouvir de novo */
 PIC.grav='<path d="M4.5 15v-3a7.500 7.500 0 0115 0v3" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/><rect class="w" x="3" y="13.500" width="4.500" height="7.500" rx="2"/><rect class="w" x="16.500" y="13.500" width="4.500" height="7.500" rx="2"/>';
-const gravHtml=()=>{const L=Object.keys(C.clipes).filter(id=>S.inv.includes(id)),all=Object.keys(C.clipes).length;
-return `<div class=pan style="margin-top:0;border-color:var(--amb)"><h3 style="color:var(--amb)">🎧 Gravações</h3><p class=mut style="margin:0 0 10px">Tudo o que você já coletou fica aqui, para ouvir de novo quando quiser. <b>${L.length} de ${all}</b> gravações.</p>${L.length?L.map(id=>{const c=C.clipes[id],cl=CL[id],heard=clh().includes(id),nm=(c.marcas||[]).filter(m=>m.verdadeira&&mks().includes(m.id)).length,tm=(c.marcas||[]).filter(m=>m.verdadeira).length;
-return `<button class=ecrow onclick="espClipUi('${id}')"><span class=ecic>${esc(cl.i||'🎧')}</span><span class=ecnm><b>${esc(c.nome)}</b><small>${mm(c.dur_s)}${heard?' · ✓ ouvida':' · ainda não ouvida'}${tm?' · marcas '+nm+'/'+tm:''}</small></span><span class=ecgo>▶</span></button>`}).join(''):'<p class=mut>Nenhuma gravação coletada ainda. Colete nos locais.</p>'}</div>`};
-window.espGravAbrir=()=>{const e=espEl('espgrav','duo-m');e.style.zIndex=2100;e.innerHTML=`<div class="dcard espfs"><div class=esphd><div style="flex:1"><b>Gravações</b><small>Ouça de novo quando quiser</small></div><button class=dcx onclick="espDel('espgrav');try{render()}catch(e){}" aria-label="Fechar">✕</button></div><div class=espfl>${gravHtml()}</div></div>`};
-window.espGravRefresh=()=>{const e=document.getElementById('espgrav');if(e)espGravAbrir()};
+/* playlists do app Gravações: por pessoa e por horário */
+const GRV={tab:'t',pl:'todas',q:[],qi:-1};
+const gtn=id=>C.clipes[id];
+const gcol=id=>{let h=0;for(const ch of id)h=(h*31+ch.charCodeAt(0))%360;return `linear-gradient(135deg,hsl(${h} 60% 38%),hsl(${(h+40)%360} 55% 20%))`};
+const gHas=id=>S.inv.includes(id);
+const LIC={ar:'📻',estudio:'🎙️',caixa:'📮',porta:'🚪',reuniao:'🗂️',vinhetas:'🔔'};
+const gLists=()=>{if(GRV.tab!=='l')return [{id:'todas',n:'Todas as gravações',ic:'🎧',sub:'na ordem em que você coletou',clips:S.inv.filter(id=>C.clipes[id])}];
+const L=(C.LO||[]).map(l=>({id:l.id,ic:LIC[l.id]||'🎧',n:l.n,clips:l.c.map(c=>c[0]).filter(id=>C.clipes[id])})).filter(l=>l.clips.length),ids=new Set(L.flatMap(l=>l.clips)),ex=Object.keys(C.clipes).filter(id=>!ids.has(id));
+if(ex.length)L.push({id:'entregas',ic:'🤝',n:'Entregues em conversa',clips:ex});return L};
+const gCover=(l,sz)=>l.av?`<span class=gvcv style="width:${sz}px;height:${sz}px">${av(l.av,sz,0)}</span>`:`<span class=gvcv style="width:${sz}px;height:${sz}px;background:${gcol(l.id)}"><b style="font-size:${Math.round(sz/3.2)}px">${esc(l.ic||'🎧')}</b></span>`;
+const gravGrid=()=>{const L=gLists();return `<div class=gvgrid>${L.map(l=>{const n=l.clips.filter(gHas).length;return `<button class=gvcard onclick="gravPl('${l.id}')">${gCover(l,88)}<b>${esc(l.n)}</b><small>${n} de ${l.clips.length} ${l.clips.length===1?'faixa':'faixas'}${l.sub?' · '+esc(l.sub):''}</small></button>`}).join('')}</div>`};
+const gravLista=()=>{const l=gLists().find(x=>x.id===GRV.pl);if(!l)return gravGrid();const own=l.clips.filter(gHas);
+return `${GRV.tab==='l'?'<button class=gvback onclick="gravPl(null)">‹ Playlists</button>':''}<div class=gvhead>${gCover(l,96)}<div><b>${esc(l.n)}</b><small>${own.length} de ${l.clips.length} faixas${l.sub?' · '+esc(l.sub):''}</small>${own.length?`<button class=gvall onclick="gravTocar('${l.id}')">▶ Tocar tudo</button>`:''}</div></div><div class=gvtr>${l.clips.length?'':'<p class=mut style="padding:10px 0">Nenhuma gravação coletada ainda. Colete nos locais.</p>'}${l.clips.map((id,i)=>{const c=gtn(id),has=gHas(id),playing=A&&A.dataset.id===id&&!A.paused&&!A.ended,heard=clh().includes(id);
+return has?`<button class="gvrow ${playing?'on':''}" onclick="gravTocar('${l.id}','${id}')"><span class=gvn>${playing?'<i class=gveq></i>':i+1}</span><span class=gvt><b>${esc(c.nome)}</b><small>${mm(c.dur_s)}${heard?' · ✓ ouvida':''}</small></span><span class=gvi onclick="event.stopPropagation();espClipUi('${id}')" aria-label="Detalhes">ⓘ</span></button>`:`<div class="gvrow lk"><span class=gvn>🔒</span><span class=gvt><b>Gravação ainda não coletada</b><small>Colete nos locais</small></span></div>`}).join('')}</div>`};
+const gravMini=()=>{const id=GRV.q[GRV.qi];if(!id)return '';const c=gtn(id),a=A,pl=a&&a.dataset.id===id&&!a.paused&&!a.ended;return `<div class=gvmini><div class=gvmb><div class=gvmbar id=gmbar></div></div><div class=gvmr><span class=gvmt onclick="espClipUi('${id}')"><b>${esc(c.nome)}</b><small id=gmtm>${mm(c.dur_s)}</small></span><button onclick="gravPrev()" aria-label="Anterior">⏮</button><button class=gvpp id=gmpl onclick="espClipPlay('${id}')" aria-label="Tocar ou pausar">${pl?'⏸':'▶'}</button><button onclick="gravNext()" aria-label="Próxima">⏭</button></div></div>`};
+const gravBody=()=>`<div class=gvtabs>${[['t','Todas'],['l','Por local']].map(([k,t])=>`<button class="${GRV.tab===k?'on':''}" onclick="gravTab('${k}')">${t}</button>`).join('')}</div><div class=gvmain>${GRV.pl?gravLista():gravGrid()}</div>${gravMini()}`;
+/* o app Gravações é uma tela cheia, como os outros apps do celular */
+APPTABS.push('grav');ANAME.grav='Gravações';
+V_.grav=()=>`<div id=gvbody class=gvapp>${gravBody()}</div>`;
+window.espGravAbrir=()=>{APPA=1;S.tab='grav';try{save()}catch(e){}render()};
+window.espGravRefresh=()=>{const b=document.getElementById('gvbody');if(b){b.innerHTML=gravBody();gmTick()}};
+{const _ca=closeApp;closeApp=function(){if(S.tab==='grav'){stop();GRV.q=[];GRV.qi=-1}return _ca.apply(this,arguments)}}
+
+window.gravTab=k=>{GRV.tab=k;GRV.pl=k==='t'?'todas':null;espGravRefresh()};
+window.gravPl=id=>{GRV.pl=id;espGravRefresh()};
+window.gravTocar=(plId,id)=>{const l=gLists().find(x=>x.id===plId);if(!l)return;const own=l.clips.filter(gHas);if(!own.length)return;const cur=id||own[0];GRV.q=own;GRV.qi=own.indexOf(cur);if(A&&A.dataset.id===cur&&A.src&&!A.ended)espClipPlay(cur);else{if(A){try{A.pause();A.removeAttribute('data-id');A.removeAttribute('src')}catch(e){}}espClipPlay(cur)}espGravRefresh()};
+window.gravNext=()=>{if(GRV.qi<GRV.q.length-1){GRV.qi++;const id=GRV.q[GRV.qi];if(A){try{A.pause();A.removeAttribute('src')}catch(e){}}espClipPlay(id);espGravRefresh()}};
+window.gravPrev=()=>{if(A&&A.currentTime>3){A.currentTime=0;return}if(GRV.qi>0){GRV.qi--;const id=GRV.q[GRV.qi];if(A){try{A.pause();A.removeAttribute('src')}catch(e){}}espClipPlay(id);espGravRefresh()}};
+window.gravEnded=cid=>{if(S.tab!=='grav')return;if(GRV.q[GRV.qi]===cid&&GRV.qi<GRV.q.length-1)gravNext();else espGravRefresh()};
+window.gmTick=()=>{const id=GRV.q[GRV.qi],b=document.getElementById('gmbar');if(!b||!A||A.dataset.id!==id)return;const d=A.duration||gtn(id).dur_s||1;b.style.width=Math.min(100,(A.currentTime/d)*100)+'%';const t=document.getElementById('gmtm');if(t)t.textContent=mm(A.currentTime)+' / '+mm(d);const p=document.getElementById('gmpl');if(p)p.textContent=(!A.paused&&!A.ended)?'⏸':'▶'};
 window.espClipClose=()=>{stop();espDel('espclip');try{render()}catch(e){}espMarcaUi();espGravRefresh()};
 function espClipUi(cid,keep){const c=C.clipes[cid],cl=CL[cid],e=espEl('espclip','duo-m');e.style.zIndex=2200;const heard=clh().includes(cid),g=S.inv.includes(cid),ms=(c.marcas||[]).slice().sort((x,y)=>hsh(cid+x.id)-hsh(cid+y.id));
 e.innerHTML=`<div class="dcard espfs ecw"><div class=esphd><div style="flex:1"><b>${esc(c.nome)}</b><small>🎧 Gravação · ${mm(c.dur_s)}</small></div><button class=dcx onclick="espClipClose()" aria-label="Fechar">✕</button></div><div class=espfl>
@@ -51,7 +76,7 @@ if(S.f.cd!=='msom')return _vc.apply(this,arguments);
 const k='msom',nn=(S.nb||[]).length,bar=`<div class=cdtabs>${CDT.map(([v,t])=>`<button class="${k===v?'on':''}" onclick="S.f.cd='${v}';save();render();$('main').scrollTop=0">${t}${v==='not'&&nn?` <b>${nn}</b>`:''}</button>`).join('')}</div>`;
 return bar+espMarcasHtml()}}
 window.espMarcasAbrir=()=>{const e=espEl('espmsheet','duo-m');e.style.zIndex=2300;e.innerHTML=`<div class="dcard espfs"><div class=esphd><div style="flex:1"><b>Marcas de som</b><small>Hora declarada x hora pelo som</small></div><button class=dcx onclick="espDel('espmsheet');espMarcaUi()" aria-label="Fechar">✕</button></div><div class=espfl>${espMarcasHtml()}</div></div>`;espMarcaUi()};
-function espMarcaUi(){let c=document.getElementById('espmchip');const show=has()&&S&&S.seen>=4&&!CUT&&!RM&&!INS&&!document.getElementById('espmsheet')&&!document.getElementById('espclip')&&!document.getElementById('espfsheet')&&!document.querySelector('#ui .ov');
+function espMarcaUi(){let c=document.getElementById('espmchip');const show=has()&&S&&S.seen>=4&&S.tab!=='grav'&&!CUT&&!RM&&!INS&&!document.getElementById('espmsheet')&&!document.getElementById('espclip')&&!document.getElementById('espfsheet')&&!document.querySelector('#ui .ov');
 if(!show){if(c)c.remove();return}const n=C.msom.filter(found).length;
 if(!c){c=document.createElement('button');c.id='espmchip';c.setAttribute('aria-label','Marcas de som');c.onclick=()=>espMarcasAbrir();document.body.appendChild(c)}
 c.innerHTML=`<span>🎧</span><b>${n}/${C.msom.length}</b>`;if(n>(window.ESPMN||0)){c.classList.remove('jump');void c.offsetWidth;c.classList.add('jump')}window.ESPMN=n}
