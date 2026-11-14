@@ -5,7 +5,7 @@ const X={"guia": {"regras": ["A primeira instrução sempre manda abrir o Cadern
 const E=Object.assign({},J);
 E.plan={top:'Rádio Nova Madrugada FM 98,7',R:[['Prédio da rádio',250,54,100,166]],I:[['ar','A fita do ar',10,54],['estudio','Estúdio e cabine',125,54],['caixa','Caixa postal',10,140],['porta','Portaria',125,140],['reuniao','Reuniões',10,226],['vinhetas','Vinhetário',125,226]]};
 E.paper=Object.assign({lau:'Sem sinais de luta no estúdio. A causa da morte só se esclarece com a perícia e com o que as gravações guardam.'},J.paper);
-E.esp=true;E.solo=true;E.mec=['🎧 Só áudio'];E.opcional=[];E.solveAt=11;
+E.nocla=true;E.esp=true;E.solo=true;E.mec=['🎧 Só áudio'];E.opcional=[];E.solveAt=11;
 E.TS.r_b={s:'Dona Beth',t:'Davi sempre perguntava da gata Pirulita; naquela noite, nem uma palavra'};E.TS.r_c={s:'Cléo',t:'Davi tomou as gotas duas vezes naquela noite e não gostou do gosto nas duas'};E.TS.r_t={s:'Tadeu',t:'O gravador pirata dele ficou ligado a noite toda'};
 Object.keys(E.TS).forEach(k=>{if(!E.TS[k].t){const q=E.SU.flatMap(x=>x.q).find(x=>x[0]===k);if(q)E.TS[k].t=q[4]||q[1]}});
 const ENT=X.ent;

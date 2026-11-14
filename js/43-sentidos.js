@@ -1,6 +1,6 @@
 /* Caso 03: painel "Sentidos" (o que Madame Zora ouviu x o que Tico viu), aba no Caderno e botão fixo */
 (function(){
-const has=()=>!!(typeof C!=='undefined'&&C&&C.esp&&C.matriz&&C.matriz.length);
+const has=()=>!!(typeof C!=='undefined'&&C&&C.esp&&!(typeof MENU!=='undefined'&&MENU)&&C.matriz&&C.matriz.length);
 const V={livre:['Livre','#6fcf8a'],duvida:['Dúvida','#eaa73c'],suspeita:['Suspeita','#ff6b5a']};
 const cel=(c,ic)=>S.asked.includes(c.q)?`<p><span>${ic}</span>${esc(c.txt)}</p>`:`<p class=mut><span>${ic}</span>Ainda não revelado.</p>`;
 window.espSentHtml=()=>{const m=C.matriz,n=m.filter(r=>S.asked.includes(r.ouvido.q)&&S.asked.includes(r.visto.q)).length;
