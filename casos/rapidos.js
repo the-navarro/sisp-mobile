@@ -238,7 +238,7 @@ const RQC=[
    {
     "id": "p4",
     "nome": "Nota da loja de antiguidades",
-    "descricao": "Venda de peça de bronze de relógio antigo, comprada pelo antiquário de Ribeiro Obras, na sexta de manhã.",
+    "descricao": "Venda de peça de bronze de relógio antigo, feita por Ribeiro Obras ao antiquário, na sexta de manhã.",
     "ilustracao_nova": "Nota fiscal amarelada com timbre de antiquário",
     "disponivel": "apos_marlene_q2"
    }
