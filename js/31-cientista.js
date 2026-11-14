@@ -50,7 +50,7 @@ const LBI2=['Delegada, saiu o laudo, e está muito interessante!','Ah, a senhora
 const LBH2=['Esta não tem relação com o crime. Examinei tudo e posso descartar. Às vezes um objeto é só um objeto.','Fiz os exames e não achei nada que ligue isto ao crime. Descarte, delegada, mas foi bom conferir.'];
 function lbBub(e){const id=e.id,c=CL[id],nm=lbNm(id);
 if(e.k==='s'){const ids=e.ids||[id],ns=ids.map(i=>'<b>'+lbNm(i)+'</b>'),lst=ns.length>1?ns.slice(0,-1).join(', ')+' e '+ns[ns.length-1]:ns[0];return [bl(`<small style="opacity:.6">${e.t}</small> Para análise: ${lst}.`,1),bl(jb(ids.length>1?`Recebi as ${ids.length} provas! Vou na ordem, com calma, e aviso a cada laudo.`:pk(LBA2,id)))]}
-const cat=lbCat(id),btn=`<div style="margin-top:8px"><button class=btn style="padding:8px 14px;font-size:13px" onclick="RM='${id}';render()">Rever laudo ilustrado</button></div>`;
+const cat=lbCat(id),btn=`<div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">${C.clipes&&C.clipes[id]?`<button class=btn style="padding:8px 14px;font-size:13px" onclick="espClipUi('${id}')">▶ Ouvir a gravação</button>`:''}<button class=btn style="padding:8px 14px;font-size:13px" onclick="RM='${id}';render()">Rever laudo ilustrado</button></div>`;
 const mu=lbMuda(id),mt=/^Nenhuma pergunta nova com este laudo\.$/.test(mu)?'':'<br><small style="opacity:.7">O QUE MUDA</small><br>'+mu;
 if(c.h)return [bl(jb(pk(LBH2,id)+'<br><br><b>📄 '+nm+':</b> sem relação com o crime.'+btn))];
 return [bl(jb(pk(LBI2,id,1)+'<br><br><b>📄 Laudo: '+nm+'</b><br>'+RES[id]+mt+btn,'border:1px solid var(--amb)'))]}

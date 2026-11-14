@@ -20,7 +20,15 @@ a.onended=()=>{if(!clh().includes(cid)){clh().push(cid);try{save()}catch(e){}}es
 a.play().catch(()=>{});espClipTick(cid)};
 window.espClipAgain=cid=>{const a=aud();a.dataset.id=cid;try{a.currentTime=0}catch(e){}espClipPlay(cid)};
 function espClipTick(cid){const a=A,b=document.getElementById('ecbar'),t=document.getElementById('ectm'),p=document.getElementById('ecpl');if(!b||!a||a.dataset.id!==cid)return;const d=a.duration||C.clipes[cid].dur_s||1;b.style.width=Math.min(100,(a.currentTime/d)*100)+'%';if(t)t.textContent=mm(a.currentTime)+' / '+mm(d);if(p)p.textContent=(!a.paused&&!a.ended)?'⏸':'▶'}
-window.espClipClose=()=>{stop();espDel('espclip');try{render()}catch(e){}espMarcaUi()};
+
+/* app "Gravações": todas as gravações já coletadas ficam aqui para ouvir de novo */
+PIC.grav='<path d="M4.5 15v-3a7.500 7.500 0 0115 0v3" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/><rect class="w" x="3" y="13.500" width="4.500" height="7.500" rx="2"/><rect class="w" x="16.500" y="13.500" width="4.500" height="7.500" rx="2"/>';
+const gravHtml=()=>{const L=Object.keys(C.clipes).filter(id=>S.inv.includes(id)),all=Object.keys(C.clipes).length;
+return `<div class=pan style="margin-top:0;border-color:var(--amb)"><h3 style="color:var(--amb)">🎧 Gravações</h3><p class=mut style="margin:0 0 10px">Tudo o que você já coletou fica aqui, para ouvir de novo quando quiser. <b>${L.length} de ${all}</b> gravações.</p>${L.length?L.map(id=>{const c=C.clipes[id],cl=CL[id],heard=clh().includes(id),nm=(c.marcas||[]).filter(m=>m.verdadeira&&mks().includes(m.id)).length,tm=(c.marcas||[]).filter(m=>m.verdadeira).length;
+return `<button class=ecrow onclick="espClipUi('${id}')"><span class=ecic>${esc(cl.i||'🎧')}</span><span class=ecnm><b>${esc(c.nome)}</b><small>${mm(c.dur_s)}${heard?' · ✓ ouvida':' · ainda não ouvida'}${tm?' · marcas '+nm+'/'+tm:''}</small></span><span class=ecgo>▶</span></button>`}).join(''):'<p class=mut>Nenhuma gravação coletada ainda. Colete nos locais.</p>'}</div>`};
+window.espGravAbrir=()=>{const e=espEl('espgrav','duo-m');e.style.zIndex=2100;e.innerHTML=`<div class="dcard espfs"><div class=esphd><div style="flex:1"><b>Gravações</b><small>Ouça de novo quando quiser</small></div><button class=dcx onclick="espDel('espgrav');try{render()}catch(e){}" aria-label="Fechar">✕</button></div><div class=espfl>${gravHtml()}</div></div>`};
+window.espGravRefresh=()=>{const e=document.getElementById('espgrav');if(e)espGravAbrir()};
+window.espClipClose=()=>{stop();espDel('espclip');try{render()}catch(e){}espMarcaUi();espGravRefresh()};
 function espClipUi(cid,keep){const c=C.clipes[cid],cl=CL[cid],e=espEl('espclip','duo-m');e.style.zIndex=2200;const heard=clh().includes(cid),g=S.inv.includes(cid),ms=(c.marcas||[]).slice().sort((x,y)=>hsh(cid+x.id)-hsh(cid+y.id));
 e.innerHTML=`<div class="dcard espfs ecw"><div class=esphd><div style="flex:1"><b>${esc(c.nome)}</b><small>🎧 Gravação · ${mm(c.dur_s)}</small></div><button class=dcx onclick="espClipClose()" aria-label="Fechar">✕</button></div><div class=espfl>
 <svg class=ecart viewBox="0 0 240 180">${art(cid)}</svg>
