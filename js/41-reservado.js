@@ -68,7 +68,7 @@ e.innerHTML=`<div class="dcard espdiario"><div class=esphd><b>${cl?cl.i+' '+esc(
 let ESPT=Date.now(),ESPSIG='';
 const espSig=()=>S?S.inv.length+'|'+S.asked.length+'|'+S.an.length+'|'+S.ded.length+'|'+(S.lo||[]).length:'';
 function espGuiaCond(q){if(!q)return true;const a=(k,f)=>!q[k]||q[k].every(f);
-return a('inv',x=>S.inv.includes(x))&&a('noinv',x=>!S.inv.includes(x))&&a('asked',x=>S.asked.includes(x))&&a('noasked',x=>!S.asked.includes(x))&&a('an',x=>S.an.includes(x))&&a('noan',x=>!S.an.includes(x))&&a('loc',x=>isLo(x))&&a('noloc',x=>!isLo(x))&&(q.ded==null||S.ded.length>=q.ded)&&(q.dedlt==null||S.ded.length<q.dedlt)&&(q.nodec==null||!S.dec)&&(q.strikes==null||S.strikes>=q.strikes)}
+return a('inv',x=>S.inv.includes(x))&&a('noinv',x=>!S.inv.includes(x))&&a('asked',x=>S.asked.includes(x))&&a('noasked',x=>!S.asked.includes(x))&&a('an',x=>S.an.includes(x))&&a('noan',x=>!S.an.includes(x))&&a('loc',x=>isLo(x))&&a('noloc',x=>!isLo(x))&&(q.ded==null||S.ded.length>=q.ded)&&(q.dedlt==null||S.ded.length<q.dedlt)&&(q.nodec==null||!S.dec)&&(q.strikes==null||S.strikes>=q.strikes)&&(q.marcas==null||(window.espMarcasPend?espMarcasPend():false))}
 window.espGuiaMsg=()=>{const g=C&&C.guia;if(!g||!g.msgs)return null;const m=g.msgs.find(x=>espGuiaCond(x.se));return m?m.t:null};
 function espGuiaShow(t){const e=espEl('espguia');e.innerHTML=`<div class=espgc><span>${av('chefe',40)}</span><div><small>CHEFE REGINA VAZ</small><p>${esc(t)}</p></div><button onclick="espDel('espguia')" aria-label="Fechar">✕</button></div>`;clearTimeout(window.__espgt);window.__espgt=setTimeout(()=>espDel('espguia'),22000)}
 window.espGuiaShow=espGuiaShow;
