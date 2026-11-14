@@ -51,3 +51,5 @@
 .eccaps{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 0}.eccaps button{padding:6px 11px;border-radius:999px;border:1px solid #eaa73c88;background:#101820;color:#eaa73c;font:700 12px Arial;cursor:pointer}
 
 .ecs1{width:22px;height:22px;display:block;margin:auto}.ecctl button .ecs1,.gvmr button .ecs1{width:20px;height:20px}.ecgo .ecs1{width:18px;height:18px}.gvmk{display:block;font:700 11px Arial;font-style:normal;color:var(--gv,#ff4fa3);margin-top:3px}
+
+.gvhelp{border:1px solid var(--gv,#ff4fa3);background:#ff4fa314;border-radius:14px;padding:12px 14px;margin:0 0 14px}.gvhelp b{display:block;font:700 14px inherit}.gvhelp p{margin:6px 0 10px;font-size:13px;line-height:1.45;color:#d9cfe0}.gvhelp button{padding:9px 16px;border-radius:999px;border:0;background:var(--gv,#ff4fa3);color:#2a0618;font:700 13px Arial;cursor:pointer}

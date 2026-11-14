@@ -23,7 +23,7 @@ const G=X.guia,P=G.proximo_passo;
 E.guia={parado:130000,obj:G.objetivos,
 msgs:[
 {se:{strikes:1},t:P[11][1]},
-{se:{marcas:1,dedlt:11},t:'Você já ouviu gravações, mas ainda não marcou tudo o que escutou. Abra o app Gravações, toque no ⓘ de uma faixa já ouvida e marque os sons que você realmente ouviu: as marcas verdadeiras viram provas para o Quadro.'},
+{se:{marcas:1,dedlt:11},t:'Você já ouviu gravações, mas ainda não marcou tudo o que escutou. Abra o app Gravações: marque os sons que você realmente ouviu (as marcas verdadeiras viram provas para o Quadro) ou, se já não achar mais nada, peça ajuda ao Dr. José no topo da tela.'},
 {se:{ded:11},t:'O mandado está liberado. Revise com calma as horas declaradas e as horas pelo som antes de acusar.'},
 {se:{ded:6},t:P[10][1]},
 {se:{an:['reuniao','ensaio_davi']},t:P[8][1]},
