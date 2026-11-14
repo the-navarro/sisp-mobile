@@ -15,7 +15,8 @@ const trans=t=>esc(t).split('\n').map(l=>/^\[som:/.test(l)?`<i class=ecs>🔊 ${
 /* marcas ainda não feitas em gravações já ouvidas (as verdadeiras viram provas para o Quadro) */
 const marcasDe=cid=>((C.clipes[cid]||{}).marcas||[]).filter(m=>!mks().includes(m.id));
 const semMarca=cid=>{const L=(C.clipes[cid]||{}).marcas||[];return L.length>0&&L.every(m=>!mks().includes(m.id))};
-window.espMarcasPend=()=>has()&&Object.keys(C.clipes).some(id=>clh().includes(id)&&marcasDe(id).length>0);
+/* só avisa quando de fato falta uma marca para seguir: não há dedução disponível, ainda faltam deduções e uma marca verdadeira de gravação já ouvida não foi feita */
+window.espMarcasPend=()=>{if(!has())return false;let pd=1;try{pd=pend().length}catch(e){}return pd===0&&S.ded.length<NT&&Object.keys(C.clipes).some(id=>clh().includes(id)&&((C.clipes[id].marcas||[]).some(m=>m.verdadeira&&!S.inv.includes(m.id))))};
 const hsh=s=>{let x=0;for(let i=0;i<s.length;i++)x=(x*31+s.charCodeAt(i))>>>0;return x};
 function claim(m){if(!S.inv.includes(m.id)){S.inv.push(m.id);if(!S.an.includes(m.id))S.an.push(m.id);try{galE(m.id)}catch(e){}try{lg('🔊','Marca de som: '+CL[m.id].n,2)}catch(e){}try{AU.fx('grab')}catch(e){}}}
 window.espClipMark=(cid,mid)=>{const c=C.clipes[cid];if(!c||!clh().includes(cid))return;const m=(c.marcas||[]).find(x=>x.id===mid);if(!m||mks().includes(mid))return;mks().push(mid);
