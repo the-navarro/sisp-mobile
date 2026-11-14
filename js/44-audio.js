@@ -1,6 +1,6 @@
 /* Caso 04 (só áudio): tocador de clipes, transcrição que abre após a 1ª escuta, marcas de som e painel "Marcas de som" */
 (function(){
-const has=()=>!!(typeof C!=='undefined'&&C&&C.esp&&C.clipes);
+const has=()=>!!(typeof C!=='undefined'&&C&&C.esp&&C.clipes&&!(typeof MENU!=='undefined'&&MENU));
 const clh=()=>(S.clh=S.clh||[]),mks=()=>(S.mks=S.mks||[]);
 /* arte do clipe: ondas sonoras e o ícone */
 AR.eclip=o=>{const bars=Array.from({length:30},(_,i)=>{const h=8+Math.abs(Math.sin(i*1.7)*34+Math.sin(i*.6)*18);return `<rect x=${18+i*7} y=${90-h/2} width=4 height=${h} rx=2 fill="${o.m?'#eaa73c':'#4fa3d9'}" opacity=${.35+.5*((i%5)/5)} />`}).join('');
@@ -87,7 +87,7 @@ if(S.f.cd!=='msom')return _vc.apply(this,arguments);
 const k='msom',nn=(S.nb||[]).length,bar=`<div class=cdtabs>${CDT.map(([v,t])=>`<button class="${k===v?'on':''}" onclick="S.f.cd='${v}';save();render();$('main').scrollTop=0">${t}${v==='not'&&nn?` <b>${nn}</b>`:''}</button>`).join('')}</div>`;
 return bar+espMarcasHtml()}}
 window.espMarcasAbrir=()=>{const e=espEl('espmsheet','duo-m');e.style.zIndex=2300;e.innerHTML=`<div class="dcard espfs"><div class=esphd><div style="flex:1"><b>Marcas de som</b><small>Hora declarada x hora pelo som</small></div><button class=dcx onclick="espDel('espmsheet');espMarcaUi()" aria-label="Fechar">✕</button></div><div class=espfl>${espMarcasHtml()}</div></div>`;espMarcaUi()};
-function espMarcaUi(){let c=document.getElementById('espmchip');const show=has()&&S&&S.seen>=4&&S.tab!=='grav'&&!CUT&&!RM&&!INS&&!document.getElementById('espmsheet')&&!document.getElementById('espclip')&&!document.getElementById('espfsheet')&&!document.querySelector('#ui .ov');
+function espMarcaUi(){let c=document.getElementById('espmchip');const show=has()&&!MENU&&S&&S.seen>=4&&S.tab!=='grav'&&!CUT&&!RM&&!INS&&!document.getElementById('espmsheet')&&!document.getElementById('espclip')&&!document.getElementById('espfsheet')&&!document.querySelector('#ui .ov');
 if(!show){if(c)c.remove();return}const n=mkOk();
 if(!c){c=document.createElement('button');c.id='espmchip';c.setAttribute('aria-label','Marcas de som');c.onclick=()=>espMarcasAbrir();document.body.appendChild(c)}
 c.innerHTML=`<span>🎧</span><b>${n}/${mkTot()}</b>`;if(n>(window.ESPMN||0)){c.classList.remove('jump');void c.offsetWidth;c.classList.add('jump')}window.ESPMN=n}
