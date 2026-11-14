@@ -40,7 +40,7 @@ const RQC=[
    "rogerio": [
     {
      "pergunta": "Onde você estava entre 14h e 14h30?",
-     "resposta": "Na minha cozinha, de avental e tudo, vigiando meu bolo no forno. Não saí de lá até as 14h40, juro por todas as colheres.",
+     "resposta": "Na cozinha dos fundos, onde os concorrentes têm bancada, de avental e tudo, vigiando meu bolo no forno. Não saí de lá até as 14h40, juro por todas as colheres.",
      "registra_afirmacao": "A1"
     },
     {
@@ -182,7 +182,7 @@ const RQC=[
    "ze": [
     {
      "pergunta": "Quem tem a chave da torre?",
-     "resposta": "Eu, mas deixo tudo anotado no livro de chaves. Na quinta saí às 17h30 porque meu neto tinha dentista. Pergunta pra quem quiser!"
+     "resposta": "Eu, mas o livro e a chave ficam na guarita, que a equipe da obra também usa, e tudo é anotado no livro. Na quinta saí às 17h30 porque meu neto tinha dentista. Pergunta pra quem quiser!"
     },
     {
      "pergunta": "O que o relógio significa para o senhor?",
@@ -217,7 +217,7 @@ const RQC=[
    {
     "id": "p1",
     "nome": "Livro de chaves",
-    "descricao": "Quinta, 17h50: chave da torre retirada com assinatura borrada começando com P. Devolvida às 19h10.",
+    "descricao": "Quinta, 17h50: chave da torre retirada da guarita, com assinatura borrada começando com P. Devolvida às 19h10.",
     "ilustracao_nova": "Livro de chaves com linha manuscrita e um P borrado",
     "disponivel": "inicio"
    },
@@ -238,7 +238,7 @@ const RQC=[
    {
     "id": "p4",
     "nome": "Nota da loja de antiguidades",
-    "descricao": "Compra de peça de bronze de relógio, paga por Ribeiro Obras, na sexta de manhã.",
+    "descricao": "Venda de peça de bronze de relógio antigo, comprada pelo antiquário de Ribeiro Obras, na sexta de manhã.",
     "ilustracao_nova": "Nota fiscal amarelada com timbre de antiquário",
     "disponivel": "apos_marlene_q2"
    }
