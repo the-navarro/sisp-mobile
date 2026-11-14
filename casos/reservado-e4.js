@@ -41,5 +41,6 @@ E.dicas=X.dicas;
 E.desfecho=X.desfecho.replace(/\s*\(Regina\)\s*$/,'');
 E.epilogo={quem:'lia',fala:X.epilogo.fala,fala_a:X.epilogo.fala_delegada,dir:'Calma, simpática, com um fio de gelo.'};
 RECON.e4=X.reconstrucao.map((r,i)=>['e4:ar',r.provas,r.hora,r.texto]);
+E.EVA={};Object.keys(E.CL).forEach(id=>{E.EVA[id]=EVA[id]});
 ESP.push(E);
 })();

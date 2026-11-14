@@ -123,3 +123,6 @@ if(!show){if(c)c.remove();return}const n=C.fios.filter((f,i)=>espFioOk(i)).lengt
 if(!c){c=document.createElement('button');c.id='espachip';c.setAttribute('aria-label','Álibi de Noêmia');c.onclick=()=>espAlibiAbrir();document.body.appendChild(c)}
 c.innerHTML=`<span>🕰️</span><b>${n}/${C.fios.length}</b>`;if(n>(window.ESPAN||0)){c.classList.remove('jump');void c.offsetWidth;c.classList.add('jump')}window.ESPAN=n}
 {const _r=render;render=function(){if(window.CDT){const i=CDT.findIndex(x=>x[0]==='alibi');if(i>=0&&!(C&&C.fios&&C.fios.length))CDT.splice(i,1);else if(i<0&&C&&C.fios&&C.fios.length)CDT.push(['alibi','Álibi'])}return _r.apply(this,arguments)}}
+
+/* as provas de casos diferentes podem ter o mesmo id (chaves, caderno, carta): cada caso reaplica as suas próprias artes ao começar */
+{const _sc=startCase;startCase=function(){const r=_sc.apply(this,arguments);try{if(C&&C.EVA)Object.assign(EVA,C.EVA)}catch(e){}return r}}
