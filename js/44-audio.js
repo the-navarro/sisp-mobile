@@ -39,15 +39,19 @@ return `${GRV.tab==='l'?'<button class=gvback onclick="gravPl(null)">‹ Playlis
 return has?`<button class="gvrow ${playing?'on':''}" onclick="gravTocar('${l.id}','${id}')"><span class=gvn>${playing?'<i class=gveq></i>':i+1}</span><span class=gvt><b>${esc(c.nome)}</b><small>${mm(c.dur_s)}${heard?' · ✓ ouvida':''}</small></span><span class=gvi onclick="event.stopPropagation();espClipUi('${id}')" aria-label="Detalhes">ⓘ</span></button>`:`<div class="gvrow lk"><span class=gvn>🔒</span><span class=gvt><b>Gravação ainda não coletada</b><small>Colete nos locais</small></span></div>`}).join('')}</div>`};
 const gravMini=()=>{const id=GRV.q[GRV.qi];if(!id)return '';const c=gtn(id),a=A,pl=a&&a.dataset.id===id&&!a.paused&&!a.ended;return `<div class=gvmini><div class=gvmb><div class=gvmbar id=gmbar></div></div><div class=gvmr><span class=gvmt onclick="espClipUi('${id}')"><b>${esc(c.nome)}</b><small id=gmtm>${mm(c.dur_s)}</small></span><button onclick="gravPrev()" aria-label="Anterior">⏮</button><button class=gvpp id=gmpl onclick="espClipPlay('${id}')" aria-label="Tocar ou pausar">${pl?'⏸':'▶'}</button><button onclick="gravNext()" aria-label="Próxima">⏭</button></div></div>`};
 const gravBody=()=>`<div class=gvtabs>${[['t','Todas'],['l','Por local']].map(([k,t])=>`<button class="${GRV.tab===k?'on':''}" onclick="gravTab('${k}')">${t}</button>`).join('')}</div><div class=gvmain>${GRV.pl?gravLista():gravGrid()}</div>${gravMini()}`;
-window.espGravAbrir=()=>{const e=espEl('espgrav','duo-m');e.style.zIndex=2100;e.innerHTML=`<div class="dcard espfs gvw"><div class=esphd><div style="flex:1"><b>Gravações</b><small>Para ouvir de novo</small></div><button class=dcx onclick="gravFechar()" aria-label="Fechar">✕</button></div><div id=gvbody>${gravBody()}</div></div>`;gmTick()};
+/* o app Gravações é uma tela cheia, como os outros apps do celular */
+APPTABS.push('grav');ANAME.grav='Gravações';
+V_.grav=()=>`<div id=gvbody class=gvapp>${gravBody()}</div>`;
+window.espGravAbrir=()=>{APPA=1;S.tab='grav';try{save()}catch(e){}render()};
 window.espGravRefresh=()=>{const b=document.getElementById('gvbody');if(b){b.innerHTML=gravBody();gmTick()}};
-window.gravFechar=()=>{espDel('espgrav');stop();GRV.q=[];GRV.qi=-1;try{render()}catch(e){}};
+{const _ca=closeApp;closeApp=function(){if(S.tab==='grav'){stop();GRV.q=[];GRV.qi=-1}return _ca.apply(this,arguments)}}
+
 window.gravTab=k=>{GRV.tab=k;GRV.pl=k==='t'?'todas':null;espGravRefresh()};
 window.gravPl=id=>{GRV.pl=id;espGravRefresh()};
 window.gravTocar=(plId,id)=>{const l=gLists().find(x=>x.id===plId);if(!l)return;const own=l.clips.filter(gHas);if(!own.length)return;const cur=id||own[0];GRV.q=own;GRV.qi=own.indexOf(cur);if(A&&A.dataset.id===cur&&A.src&&!A.ended)espClipPlay(cur);else{if(A){try{A.pause();A.removeAttribute('data-id');A.removeAttribute('src')}catch(e){}}espClipPlay(cur)}espGravRefresh()};
 window.gravNext=()=>{if(GRV.qi<GRV.q.length-1){GRV.qi++;const id=GRV.q[GRV.qi];if(A){try{A.pause();A.removeAttribute('src')}catch(e){}}espClipPlay(id);espGravRefresh()}};
 window.gravPrev=()=>{if(A&&A.currentTime>3){A.currentTime=0;return}if(GRV.qi>0){GRV.qi--;const id=GRV.q[GRV.qi];if(A){try{A.pause();A.removeAttribute('src')}catch(e){}}espClipPlay(id);espGravRefresh()}};
-window.gravEnded=cid=>{if(!document.getElementById('espgrav'))return;if(GRV.q[GRV.qi]===cid&&GRV.qi<GRV.q.length-1)gravNext();else espGravRefresh()};
+window.gravEnded=cid=>{if(S.tab!=='grav')return;if(GRV.q[GRV.qi]===cid&&GRV.qi<GRV.q.length-1)gravNext();else espGravRefresh()};
 window.gmTick=()=>{const id=GRV.q[GRV.qi],b=document.getElementById('gmbar');if(!b||!A||A.dataset.id!==id)return;const d=A.duration||gtn(id).dur_s||1;b.style.width=Math.min(100,(A.currentTime/d)*100)+'%';const t=document.getElementById('gmtm');if(t)t.textContent=mm(A.currentTime)+' / '+mm(d);const p=document.getElementById('gmpl');if(p)p.textContent=(!A.paused&&!A.ended)?'⏸':'▶'};
 window.espClipClose=()=>{stop();espDel('espclip');try{render()}catch(e){}espMarcaUi();espGravRefresh()};
 function espClipUi(cid,keep){const c=C.clipes[cid],cl=CL[cid],e=espEl('espclip','duo-m');e.style.zIndex=2200;const heard=clh().includes(cid),g=S.inv.includes(cid),ms=(c.marcas||[]).slice().sort((x,y)=>hsh(cid+x.id)-hsh(cid+y.id));
@@ -72,7 +76,7 @@ if(S.f.cd!=='msom')return _vc.apply(this,arguments);
 const k='msom',nn=(S.nb||[]).length,bar=`<div class=cdtabs>${CDT.map(([v,t])=>`<button class="${k===v?'on':''}" onclick="S.f.cd='${v}';save();render();$('main').scrollTop=0">${t}${v==='not'&&nn?` <b>${nn}</b>`:''}</button>`).join('')}</div>`;
 return bar+espMarcasHtml()}}
 window.espMarcasAbrir=()=>{const e=espEl('espmsheet','duo-m');e.style.zIndex=2300;e.innerHTML=`<div class="dcard espfs"><div class=esphd><div style="flex:1"><b>Marcas de som</b><small>Hora declarada x hora pelo som</small></div><button class=dcx onclick="espDel('espmsheet');espMarcaUi()" aria-label="Fechar">✕</button></div><div class=espfl>${espMarcasHtml()}</div></div>`;espMarcaUi()};
-function espMarcaUi(){let c=document.getElementById('espmchip');const show=has()&&S&&S.seen>=4&&!CUT&&!RM&&!INS&&!document.getElementById('espmsheet')&&!document.getElementById('espclip')&&!document.getElementById('espfsheet')&&!document.querySelector('#ui .ov');
+function espMarcaUi(){let c=document.getElementById('espmchip');const show=has()&&S&&S.seen>=4&&S.tab!=='grav'&&!CUT&&!RM&&!INS&&!document.getElementById('espmsheet')&&!document.getElementById('espclip')&&!document.getElementById('espfsheet')&&!document.querySelector('#ui .ov');
 if(!show){if(c)c.remove();return}const n=C.msom.filter(found).length;
 if(!c){c=document.createElement('button');c.id='espmchip';c.setAttribute('aria-label','Marcas de som');c.onclick=()=>espMarcasAbrir();document.body.appendChild(c)}
 c.innerHTML=`<span>🎧</span><b>${n}/${C.msom.length}</b>`;if(n>(window.ESPMN||0)){c.classList.remove('jump');void c.offsetWidth;c.classList.add('jump')}window.ESPMN=n}
