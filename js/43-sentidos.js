@@ -12,7 +12,7 @@ if(S.f.cd!=='sent')return _vc.apply(this,arguments);
 const k='sent',nn=(S.nb||[]).length,bar=`<div class=cdtabs>${CDT.map(([v,t])=>`<button class="${k===v?'on':''}" onclick="S.f.cd='${v}';save();render();$('main').scrollTop=0">${t}${v==='not'&&nn?` <b>${nn}</b>`:''}</button>`).join('')}</div>`;
 return bar+espSentHtml()}}
 window.espSentAbrir=()=>{const e=espEl('espssheet','duo-m');e.style.zIndex=2300;e.innerHTML=`<div class="dcard espfs"><div class=esphd><div style="flex:1"><b>Matriz dos sentidos</b><small>O que Zora ouviu e o que Tico viu</small></div><button class=dcx onclick="espDel('espssheet');espSentUi()" aria-label="Fechar">✕</button></div><div class=espfl>${espSentHtml()}</div></div>`;espSentUi()};
-function espSentUi(){let c=document.getElementById('espschip');const show=has()&&S&&S.seen>=4&&!CUT&&!RM&&!INS&&!document.getElementById('espssheet')&&!document.getElementById('espfsheet')&&!document.querySelector('#ui .ov');
+function espSentUi(){let c=document.getElementById('espschip');const show=!window.MG&&has()&&S&&S.seen>=4&&!CUT&&!RM&&!INS&&!document.getElementById('espssheet')&&!document.getElementById('espfsheet')&&!document.querySelector('#ui .ov');
 if(!show){if(c)c.remove();return}const n=C.matriz.filter(r=>S.asked.includes(r.ouvido.q)&&S.asked.includes(r.visto.q)).length;
 if(!c){c=document.createElement('button');c.id='espschip';c.setAttribute('aria-label','Matriz dos sentidos');c.onclick=()=>espSentAbrir();document.body.appendChild(c)}
 c.innerHTML=`<span>👂</span><b>${n}/${C.matriz.length}</b>`;if(n>(window.ESPSN||0)){c.classList.remove('jump');void c.offsetWidth;c.classList.add('jump')}window.ESPSN=n}
