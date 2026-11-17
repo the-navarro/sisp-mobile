@@ -2,6 +2,7 @@ let SU,LO,CL,RES,TL,DD,DH,EV,TS,NT,TOTAL_Q,TOTAL_C,LOCT,SL;
 const isLk=id=>!!(C&&C.lock&&(id===C.lock.id||(C.lock.libera||[]).includes(id)));const isOpc=id=>!!(C&&C.opcional&&C.opcional.includes(id));
 const qOk=q=>(!q[2]||S.an.includes(q[2]))&&(!q[5]||S.asked.includes(q[5]));
 const roomDone=l=>l.c.every(c=>S.inv.includes(c[0])&&(isLk(c[0])||isOpc(c[0])||(CL[c[0]]&&CL[c[0]].h)||S.an.includes(c[0])));
+const solveOk=()=>{if(!C.esp)return true;const r=rdState();return !LO.some(l=>!isLo(l.id))&&r.col[0]===r.col[1]&&!toAn().length&&!lbWt().length};
 const lbWt=()=>Object.keys(S.lb||{}).filter(i=>!S.an.includes(i));
 const toAn=()=>S.inv.filter(id=>!S.an.includes(id)&&!(CL[id]&&CL[id].h)&&!isLk(id)&&!isOpc(id));
 const talkLeft=()=>SU.reduce((n,s)=>n+s.q.filter(q=>!S.asked.includes(q[0])&&qOk(q)).length,0);
@@ -19,7 +20,7 @@ const U=()=>{const k=[],a=(i,t,g)=>k.push([i,t,g]),P=x=>(S.tu||[]).includes(x),r
 (P('lab')||cc)&&a('tab:lab','Perícia liberada: leve as provas ao laboratório.','lab');
 oi&&a('tab:interrogate','Conversas liberadas: o delegado convocou os suspeitos.','interrogate');
 (P('mindmap')||(ct&&S.asked.length>=1))&&a('tab:mindmap','Quadro de conexões liberado.','mindmap');
-((P('solve')||S.ded.length>=(C.solveAt||2))&&(!C.SUALL||SU.length===C.SUALL.length))&&a('tab:solve','Mandado liberado: você já pode pedir uma prisão.','solve');
+((P('solve')||S.ded.length>=(C.solveAt||2))&&solveOk()&&(!C.SUALL||SU.length===C.SUALL.length))&&a('tab:solve','Mandado liberado: você já pode pedir uma prisão.','solve');
 const LN=C.LN;
 C.WV&&Object.keys(C.WV).forEach(rm=>C.WV[rm].forEach(id=>{const z=SU.find(x=>x.id===id);z&&a('su:'+id,z.n+' ('+z.r+') foi chamado(a) à delegacia. '+(z.why||'')+' Já pode ser interrogado(a).','interrogate')}));
 for(const l in LOCT)locOpen(l)&&a('loc:'+l,'Novo cenário no mapa: '+LN[l]+'.','locations');
@@ -28,7 +29,7 @@ SU.forEach(s=>s.q.forEach(q=>q[2]&&S.an.includes(q[2])&&oi&&a('qz:'+q[0],'Nova p
 return k};
 const cnd=x=>x&&(x[0]==='c'?S.an.includes(x.slice(2)):x[0]==='i'?S.inv.includes(x.slice(2)):S.asked.includes(x.slice(2)));
 const tabOpen=k=>k==='phone'||k==='dossier'||k==='timeline'||k==='caderno'||(k==='locations'&&!!S.cd1)||(k==='calls'&&tabOpen('interrogate')&&Object.keys(EV).some(i=>S.asked.includes(i)))||U().some(u=>u[0]==='tab:'+k);
-window.ARRQ=window.ARRQ||[];function chk(){const t=hm(S.clock);if(!S.tu)S.tu=[S.inv.length>=2&&'interrogate',S.inv.length>=2&&'lab',S.an.length>=1&&S.asked.length>=1&&'mindmap',S.ded.length>=(C.solveAt||2)&&'solve'].filter(Boolean);U().forEach(u=>{if(u[0].slice(0,4)==='tab:'&&!S.tu.includes(u[0].slice(4)))S.tu.push(u[0].slice(4))});if(!S.lo)S.lo=[C.start,...LO.filter(l=>l.c.some(c=>S.inv.includes(c[0]))).map(l=>l.id)];LO.forEach(l=>{if(!isLo(l.id)&&locCond(l.id))S.lo.push(l.id)});syncWaves();S.th=S.th||[];((C&&C.TH)||[]).forEach((x,i)=>{if(!S.th.includes(i)&&cnd(x[0]))S.th.push(i)});U().forEach(u=>{if(S.ann.includes(u[0]))return;S.ann.push(u[0]);if(u[0].slice(0,3)==='su:')ARRQ.push(u[0].slice(3));S.notes.unshift({t:u[1],tab:u[2],r:0,h:t});if(S.tab!==u[2])S.bd[u[2]]=(S.bd[u[2]]||0)+1});callchk()}
+window.ARRQ=window.ARRQ||[];function chk(){const t=hm(S.clock);if(!S.tu)S.tu=[S.inv.length>=2&&'interrogate',S.inv.length>=2&&'lab',S.an.length>=1&&S.asked.length>=1&&'mindmap',S.ded.length>=(C.solveAt||2)&&solveOk()&&'solve'].filter(Boolean);U().forEach(u=>{if(u[0].slice(0,4)==='tab:'&&!S.tu.includes(u[0].slice(4)))S.tu.push(u[0].slice(4))});if(!S.lo)S.lo=[C.start,...LO.filter(l=>l.c.some(c=>S.inv.includes(c[0]))).map(l=>l.id)];LO.forEach(l=>{if(!isLo(l.id)&&locCond(l.id))S.lo.push(l.id)});syncWaves();S.th=S.th||[];((C&&C.TH)||[]).forEach((x,i)=>{if(!S.th.includes(i)&&cnd(x[0]))S.th.push(i)});U().forEach(u=>{if(S.ann.includes(u[0]))return;S.ann.push(u[0]);if(u[0].slice(0,3)==='su:')ARRQ.push(u[0].slice(3));S.notes.unshift({t:u[1],tab:u[2],r:0,h:t});if(S.tab!==u[2])S.bd[u[2]]=(S.bd[u[2]]||0)+1});callchk()}
 const hint=()=>!S.inv.length?'Abra o app Locais e colete as provas da cena do crime.':!S.asked.length?'Abra Conversas e interrogue alguém. Cada resposta pode abrir novos cenários.':S.inv.length>S.an.length?(lbWt().length?'O Dr. José avisa em Conversas quando os laudos ficarem prontos. Enquanto isso, interrogue.':'Leve as provas à Perícia: os laudos liberam perguntas mais duras.'):S.ded.length<2?'No Quadro, conecte provas e depoimentos que se confirmam.':S.ded.length<4?'Ainda faltam deduções para sustentar uma acusação. Explore os cenários que continuam fechados.':'Você já tem um caso sólido. Quando estiver seguro, peça o mandado.';
 const nxt=()=>{const r=rdState(),un=LO.filter(l=>locOpen(l.id)&&l.c.some(c=>!S.inv.includes(c[0])&&cAv(c[0]))),nq=s=>s.q.filter(q=>!S.asked.includes(q[0])&&(!q[2]||S.an.includes(q[2]))).length,pa=toAn().filter(i=>!(S.lb||{})[i]),G=(t,d,tab,b,o)=>({t,d,tab,b,o:o||''});
 if(!S.cd1&&S.seen>=4&&!S.inv.length&&!S.asked.length)return G('Comece pelo Caderno ('+(S.cdv||[]).filter(x=>CDT.some(t=>t[0]===x)).length+'/'+CDT.length+')','Abra o app Caderno e visite todas as abas: Ocorrência, Cronologia e Anotações. Depois dele, o app Locais chega por notificação.','caderno','Abrir Caderno');
@@ -36,7 +37,7 @@ if(un.length){const l=un.find(l=>l.id===S.loc)||un[0];return G('1. Colete as pro
 if(pa.length)return G('2. Leve as provas à Perícia',`${pa.length} prova(s) aguardam envio ao laboratório. O Dr. José demora um pouco em cada laudo, então mande tudo e converse enquanto espera: cada laudo libera perguntas mais duras.`,'lab','Ir à Perícia');
 const sq=SU.find(s=>nq(s)&&s.id===S.su)||SU.find(s=>nq(s));
 if(sq)return G('3. Converse com os suspeitos ('+r.talk+' pergunta(s))',`${fn(sq)} tem ${nq(sq)} pergunta(s) nova(s). Converse com todos antes de ir ao Quadro: cada resposta pode abrir cenários e pistas.`,'interrogate','Interrogar '+fn(sq),`S.su='${sq.id}';CHPRE=1;`);
-if(lbWt().length&&!S.ded.length&&!pend().length)return G('Aguarde o laudo do Dr. José',`${lbWt().length} prova(s) na bancada. Ele avisa em Conversas quando ficarem prontas. Enquanto isso, converse com os suspeitos ou explore.`,'interrogate','Abrir Conversas');
+if(lbWt().length&&((!S.ded.length&&!pend().length)||C.esp))return G('Aguarde o laudo do Dr. José',`${lbWt().length} prova(s) na bancada. Ele avisa em Conversas quando ficarem prontas. Enquanto isso, converse com os suspeitos ou explore.`,'interrogate','Abrir Conversas');
 if(S.inv.includes(C.lock.id)&&!S.dec)return G('Destrave a prova trancada',C.lock.hint,'lab','Ir à Perícia');
 const ca=ctAvail()[0];if(ca){const o=SU.find(s=>s.id===qOwner(ca[0]));return G('⚡ Há uma mentira à vista',`${fn(o)} disse algo que uma das suas provas desmente. Em Conversas, toque em ⚡ Contradizer na fala certa.`,'interrogate','Confrontar '+fn(o),`S.su='${o.id}';CHPRE=1;`)}
 if(pend().length)return G('4. Conecte as provas no Quadro',`Há ${pend().length} conexão(ões) possível(is). Conclua todas: é isso que fecha a rodada e abre o próximo cenário.`,'mindmap','Ir ao Quadro');

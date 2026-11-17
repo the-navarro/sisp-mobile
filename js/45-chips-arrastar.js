@@ -12,4 +12,6 @@ document.addEventListener('pointermove',e=>{if(!d)return;if(!moved&&Math.hypot(e
 const end=()=>{if(!d)return;if(moved){const c=d.c,r=c.getBoundingClientRect();wr(c.id,{x:r.left/innerWidth,y:r.top/innerHeight})}d=null};
 document.addEventListener('pointerup',end,true);document.addEventListener('pointercancel',end,true);
 document.addEventListener('click',e=>{if(moved&&e.target.closest&&e.target.closest(SEL)){e.stopImmediatePropagation();e.preventDefault();moved=false}},true);
+/* Vigia: botões flutuantes só existem dentro de uma partida do Arquivo Reservado em andamento */
+setInterval(()=>{try{const off=(typeof MENU!=='undefined'&&MENU)||typeof C==='undefined'||!C||!C.esp||(window.DUO&&DUO.on)||(typeof CUT!=='undefined'&&CUT);if(off)document.querySelectorAll(SEL).forEach(e=>e.remove())}catch(e){}},400);
 })();

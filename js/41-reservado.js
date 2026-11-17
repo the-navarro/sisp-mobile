@@ -68,7 +68,7 @@ e.innerHTML=`<div class="dcard espdiario"><div class=esphd><b>${cl?cl.i+' '+esc(
 let ESPT=Date.now(),ESPSIG='';
 const espSig=()=>S?S.inv.length+'|'+S.asked.length+'|'+S.an.length+'|'+S.ded.length+'|'+(S.lo||[]).length:'';
 function espGuiaCond(q){if(!q)return true;const a=(k,f)=>!q[k]||q[k].every(f);
-return a('inv',x=>S.inv.includes(x))&&a('noinv',x=>!S.inv.includes(x))&&a('asked',x=>S.asked.includes(x))&&a('noasked',x=>!S.asked.includes(x))&&a('an',x=>S.an.includes(x))&&a('noan',x=>!S.an.includes(x))&&a('loc',x=>isLo(x))&&a('noloc',x=>!isLo(x))&&(q.ded==null||S.ded.length>=q.ded)&&(q.dedlt==null||S.ded.length<q.dedlt)&&(q.nodec==null||!S.dec)&&(q.strikes==null||S.strikes>=q.strikes)&&(q.marcas==null||(window.espMarcasPend?espMarcasPend():false))}
+return a('inv',x=>S.inv.includes(x))&&a('noinv',x=>!S.inv.includes(x))&&a('asked',x=>S.asked.includes(x))&&a('noasked',x=>!S.asked.includes(x))&&a('an',x=>S.an.includes(x))&&a('noan',x=>!S.an.includes(x))&&a('loc',x=>isLo(x))&&a('noloc',x=>!isLo(x))&&(q.ded==null||S.ded.length>=q.ded)&&(q.dedlt==null||S.ded.length<q.dedlt)&&(q.nodec==null||!S.dec)&&(q.strikes==null||S.strikes>=q.strikes)&&(q.marcas==null||(window.espMarcasPend?espMarcasPend():false))&&(q.lab==null||(q.lab?(!(typeof toAn==='function'&&toAn().length)&&!(typeof lbWt==='function'&&lbWt().length)):true))}
 window.espGuiaMsg=()=>{const g=C&&C.guia;if(!g||!g.msgs)return null;const m=g.msgs.find(x=>espGuiaCond(x.se));return m?m.t:null};
 function espGuiaShow(t){const e=espEl('espguia');e.innerHTML=`<div class=espgc><span>${av('chefe',40)}</span><div><small>CHEFE REGINA VAZ</small><p>${esc(t)}</p></div><button onclick="espDel('espguia')" aria-label="Fechar">✕</button></div>`;clearTimeout(window.__espgt);window.__espgt=setTimeout(()=>espDel('espguia'),22000)}
 window.espGuiaShow=espGuiaShow;
@@ -92,7 +92,7 @@ const v=document.getElementById('espepv');if(v){v.onended=espEpiGo;v.onerror=esp
 /* ligação da chefe (uma vez) quando a condição acontece */
 setInterval(()=>{try{if(!espOk()||!C.guia||!C.guia.chefe||CUT||S.typing||S.seen<4)return;S.ech=S.ech||{};for(const x of C.guia.chefe){if(!S.ech[x.id]&&espGuiaCond(x.se)){S.ech[x.id]=1;try{save()}catch(e){}espGuiaShow(x.t);break}}}catch(e){}},5000);
 /* acusar a pessoa errada mostra uma pista sobre aquele suspeito */
-{const _ac=accuse;accuse=function(){const r=_ac.apply(this,arguments);try{if(C&&C.esp&&C.fail_por&&V&&!V.w&&S.acc&&C.fail_por[S.acc]&&!S.won){V.m=C.fail_por[S.acc];render()}}catch(e){}return r}}
+{const _ac=accuse;accuse=function(){const r=_ac.apply(this,arguments);try{if(C&&C.esp&&V&&!V.w&&V.t==='MANDADO NEGADO'&&!S.won&&S.acc===C.sol[0]){const xq=C.xq||[],w=[];if(S.wp!==C.sol[1])w.push('o meio do crime');if(S.mo!==C.sol[2])w.push('a motivação');xq.forEach(q=>{if(S['x_'+q[0]]!==q[3])w.push('a pergunta "'+q[1]+'"')});if(w.length)V.m+=' Você acertou quem foi, mas errou '+w.join(' e ')+'.'}}catch(e){}try{if(C&&C.esp&&C.fail_por&&V&&!V.w&&S.acc&&C.fail_por[S.acc]&&!S.won){V.m=C.fail_por[S.acc];render()}}catch(e){}return r}}
 /* conclusão da chefe no fim */
 {const _pe=window.ptEpi;window.ptEpi=function(){if(C&&C.esp&&C.desfecho)return `<div class=ptfin>${av('chefe',48)}<p>“${esc(C.desfecho)}”</p></div>`;return _pe?_pe.apply(this,arguments):''}}
 /* dicas da lâmpada: por etapa (último local aberto) */
@@ -101,7 +101,7 @@ setInterval(()=>{try{if(!espOk()||!C.guia||!C.guia.chefe||CUT||S.typing||S.seen<
 /* laudo do diário: o Dr. José pede para ler as páginas coladas, no próprio chat */
 {const _lb=window.lbBub;if(_lb)window.lbBub=function(e){const r=_lb.apply(this,arguments);try{if(e.k!=='s'&&C&&C.paginas&&C.paginas[e.id]&&!(CL[e.id]||{}).h){const L=C.paginas[e.id];r.push(bl(jb('Delegada, as páginas '+(L.map((p,i)=>p.lab?i+1:0).filter(Boolean).join(' e '))+' ficaram legíveis. Leia aqui mesmo, com calma, e depois me diga o que achou.<div style="margin-top:8px"><button class=btn style="padding:8px 14px;font-size:13px" onclick="espPag(\''+e.id+'\','+L.findIndex(p=>p.lab)+')">📔 Ler as páginas</button></div>')))}}catch(x){}return r}}
 /* Prisão só abre perto do fim */
-try{Object.defineProperty(LK,'solve',{configurable:true,get(){return 'Faça '+((typeof C!=='undefined'&&C&&C.solveAt)||2)+' deduções no Quadro para liberar o mandado.'}})}catch(e){}
+try{Object.defineProperty(LK,'solve',{configurable:true,get(){return 'Faça '+((typeof C!=='undefined'&&C&&C.solveAt)||2)+' deduções no Quadro e conclua todos os locais e laudos para liberar o mandado.'}})}catch(e){}
 
 /* provas entregues numa conversa (ex.: Margarida entrega os desenhos) */
 function espEntregas(){if(!espOk()||!C.entregas||CUT)return;let n=[];Object.keys(C.entregas).forEach(q=>{if(S.asked.includes(q))C.entregas[q].forEach(id=>{if(!S.inv.includes(id)&&CL[id]){S.inv.push(id);try{galE(id)}catch(e){}try{lg('📦','Recebeu: '+CL[id].n,6)}catch(e){}n.push(CL[id].n)}})});
