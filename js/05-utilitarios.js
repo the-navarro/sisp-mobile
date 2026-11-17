@@ -1,3 +1,4 @@
+const tlk=e=>{const m=/^(\d+):(\d+)/.exec(e[0]||'');return m?((+m[1]<6?+m[1]+24:+m[1])*60+ +m[2]):0};
 const save=()=>{chk();if(!C)return;META.p[C.id]=pct();try{localStorage.setItem(C.key,JSON.stringify(S));localStorage.setItem('sisp-meta',JSON.stringify(META))}catch(e){}};
 const $=s=>document.querySelector(s);
 function swp(el,rm){let x0=null,dx=0,mv=0;el.style.touchAction='pan-y';el.addEventListener('animationend',()=>{el.style.animation='none'},{once:true});

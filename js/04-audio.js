@@ -14,7 +14,7 @@ if(k==='tick'||k==='pick'){const n=performance.now();if(k==='tick'&&n-(this.ls||
 this.init();const x=this.x;if(!x||x.state!=='running')return;const t=x.currentTime;
 if(k==='tick')this.s(560,400,t,.09,.025);
 if(k==='pick'){this.s(440,436,t,.12,.024);this.s(880,872,t,.08,.005);this.s(587,583,t+.075,.16,.024);this.s(1174,1166,t+.075,.1,.005)}
-if(k==='grab'){this.o(220,t,.08,'square',.07);this.o(440,t+.05,.1,'square',.05)}
+if(k==='grab'){this.o(660,t,.09,'sine',.025);this.o(880,t+.05,.12,'sine',.018)}
 if(k==='chime')[660,880,1320].forEach((f,i)=>this.o(f,t+i*.09,.5,'sine',.14));
 if(k==='thud')this.o(70,t,.5,'sine',.5);
 if(k==='err')this.o(150,t,.3,'sawtooth',.1)},
