@@ -20,7 +20,7 @@ sting(x){const t=x.currentTime;nz(x,t,.7,'bandpass',1800,.8,.22);tone(x,311,t,.7
 heart(x,n=8,ms=900){const t=x.currentTime;for(let i=0;i<n;i++){const k=t+i*(ms/1000)*Math.pow(.93,i);tone(x,58,k,.14,'sine',.5+i*.03);tone(x,46,k+.16,.12,'sine',.38+i*.03)}},
 steps(x){const t=x.currentTime;let side=-.8;for(let i=0;i<7;i++){const k=t+i*.62;nz(x,k,.16,'lowpass',260,.9,.18+i*.04,side+i*.12);tone(x,70,k,.12,'sine',.12)}},
 door(x){const t=x.currentTime;nz(x,t,.28,'lowpass',500,.6,.3,.7);tone(x,48,t,.3,'sine',.4,.7)},
-whisper(x){return vplay('sussurro',.9,.2,()=>SND.whisperSynth(x))},
+whisper(x){return vplay('sussurro',1.5,.2,()=>SND.whisperSynth(x))},
 whisperSynth(x){const t=x.currentTime;nz(x,t,1.5,'bandpass',2600,6,.07,-.5);nz(x,t+.8,1.3,'bandpass',1900,5,.06,.5);tone(x,60,t,1.3,'sine',.1)},
 breath(x){const t=x.currentTime;nz(x,t,1.6,'bandpass',900,2,.12,.3);nz(x,t+1.9,1.4,'bandpass',800,2,.1,-.3)},
 scrape(x){const t=x.currentTime;nz(x,t,1.2,'bandpass',3200,3,.08,-.6)},
@@ -29,7 +29,7 @@ honk(x){const t=x.currentTime;[0,.42].forEach(d=>{const o=x.createOscillator(),g
 laugh(x){const t=x.currentTime;for(let i=0;i<6;i++){const o=x.createOscillator(),g=x.createGain(),f=x.createBiquadFilter();o.type='sawtooth';o.frequency.setValueAtTime(520-i*38,t+i*.2);o.frequency.exponentialRampToValueAtTime(380-i*38,t+i*.2+.14);f.type='bandpass';f.frequency.value=900+(i%2)*500;f.Q.value=2;g.gain.setValueAtTime(.0001,t+i*.2);g.gain.exponentialRampToValueAtTime(.09,t+i*.2+.02);g.gain.exponentialRampToValueAtTime(.0001,t+i*.2+.16);o.connect(f);f.connect(g);g.connect(AU.mg);o.start(t+i*.2);o.stop(t+i*.2+.2)}},
 lullaby(x,cut){const N=[659,659,784,659,659,784,659,784,1047,988,880,880,784],t=x.currentTime;let k=0;N.forEach((f,i)=>{if(cut&&i>=cut)return;const d=.5+i*.07,tt=t+k;k+=d;const dt=1-i*.006;tone(x,f*dt,tt,d*1.4,'sine',.07,0);tone(x,f*2.76*dt,tt,d*.6,'sine',.015,0)})},
 bell(x){const t=x.currentTime;[[0,.07],[.9,.04]].forEach(([d,v])=>{[1568,2093,3136].forEach((f,i)=>tone(x,f,t+d,1.6-i*.3,'sine',v/(1+i*.8),.5))})},
-laughSoft(x){return vplay('risada',.9,-.3,()=>SND.laughSoftSynth(x))},
+laughSoft(x){return vplay('risada',1.1,-.3,()=>SND.laughSoftSynth(x))},
 laughSoftSynth(x){const t=x.currentTime;for(let i=0;i<4;i++){const o=x.createOscillator(),g=x.createGain(),f=x.createBiquadFilter(),pn=x.createStereoPanner?x.createStereoPanner():null;o.type='sawtooth';o.frequency.setValueAtTime(330-i*22,t+i*.26);o.frequency.exponentialRampToValueAtTime(260-i*22,t+i*.26+.16);f.type='bandpass';f.frequency.value=780+(i%2)*300;f.Q.value=1.6;g.gain.setValueAtTime(.0001,t+i*.26);g.gain.exponentialRampToValueAtTime(.05-i*.006,t+i*.26+.03);g.gain.exponentialRampToValueAtTime(.0001,t+i*.26+.2);o.connect(f);f.connect(g);if(pn){pn.pan.value=-.5;g.connect(pn);pn.connect(AU.mg)}else g.connect(AU.mg);o.start(t+i*.26);o.stop(t+i*.26+.25)}nz(x,t+1.1,1,'bandpass',900,2,.06,-.4)},
 silence(x){/* corta tudo por um instante */try{AU.mg.gain.setValueAtTime(AU.mg.gain.value,x.currentTime);AU.mg.gain.linearRampToValueAtTime(.02,x.currentTime+.15);AU.mg.gain.linearRampToValueAtTime(.9,x.currentTime+4.2)}catch(e){}}
 };
