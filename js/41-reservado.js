@@ -126,3 +126,6 @@ c.innerHTML=`<span>🕰️</span><b>${n}/${C.fios.length}</b>`;if(n>(window.ESPA
 
 /* as provas de casos diferentes podem ter o mesmo id (chaves, caderno, carta): cada caso reaplica as suas próprias artes ao começar */
 {const _sc=startCase;startCase=function(){const r=_sc.apply(this,arguments);try{if(C&&C.EVA)Object.assign(EVA,C.EVA)}catch(e){}return r}}
+
+/* Ligação espontânea nos casos do Arquivo Reservado: anota no Caderno, sem selo em Conversas, sem trocar de conversa e sem segunda atualização da tela */
+{const _ec=window.endcall||endcall;window.endcall=function(){if(!(typeof C!=='undefined'&&C&&C.esp))return _ec.apply(this,arguments);AU.vstop();const id=S.call,s=SU.find(x=>x.id===EV[id][0]);S.call=null;S.callst=0;S.asked.push(id);if(imp(id))(S.mq=S.mq||[]).push({k:'q',id});S.tm[id]=hm(S.clock);lg('📞','Ligação espontânea de '+fn(s)+'.',3);S.lc=S.tick;try{tst('📞 Ligação de '+fn(s)+' anotada no inquérito.')}catch(e){}save();render()}}
