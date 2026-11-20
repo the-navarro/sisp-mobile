@@ -17,6 +17,12 @@ const label=i=>i.t?TS[i.id].t:CL[i.id].n;
 const fn=s=>nm1(s.n);
 const hm=m=>String(Math.floor(m/60)%24).padStart(2,'0')+':'+String(m%60).padStart(2,'0');
 const fmt=t=>gx(t).replace(/\[(.*?)\]/,'<em>[$1]</em>');
+/* depoimento importante: selo e marca-texto na frase que mais pesa (a que mais se parece com o resumo do depoimento) */
+const _nz=t=>String(t||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+function fmtI(id,t){if(typeof imp!=='function'||!imp(id))return fmt(t);const m=/^\[[^\]]*\]\s*/.exec(t),pre=m?m[0]:'',body=t.slice(pre.length),sm=_nz((typeof TS!=='undefined'&&TS[id]&&TS[id].t)||''),W=[...new Set(sm.match(/[a-z0-9]{4,}/g)||[])];
+const S_=body.match(/[^.!?…]+[.!?…]+["”]?\s*|[^.!?…]+$/g)||[body];const sc=S_.map(x=>{const n=_nz(x);return W.filter(w=>n.includes(w)).length}),mx=Math.max(0,...sc);
+let out=pre;S_.forEach((x,i)=>{out+=(mx>=2&&sc[i]===mx)?'\u0001'+x.replace(/\s+$/,'')+'\u0002'+(x.match(/\s+$/)||[''])[0]:x});
+return '<span class=impb>IMPORTANTE</span><br>'+fmt(out).replace(/\u0001/g,'<mark class=mkt>').replace(/\u0002/g,'</mark>')}
 const lg=(i,x,c)=>{S.tick++;S.clock+=c;S.log.unshift({t:hm(S.clock),i,x})};
 const fchips=(k,o)=>`<div class=loc style="margin:6px 0">${o.map(([v,t])=>`<button class="chip ${S.f[k]===v?'on':''}" onclick="S.f.${k}='${v}';save();render()">${t}</button>`).join('')}</div>`;
 const avail=()=>items().filter(i=>!(isLk(i.id)&&!i.t&&!S.dec)).map(i=>i.id);
