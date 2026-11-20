@@ -50,7 +50,7 @@ sec('e3','giz',.88,.22,'Debaixo da caixinha, um recibo dobrado: "Parque Maravilh
 sec('e3','carta',.78,.82,'O lacre de cera está rompido e refeito, e há uma marca redonda de café ainda úmida na dobra: a carta foi aberta e lida esta noite.');
 ix('e3','deck',{col:'dust',lab:'Levantar digitais do PLAY',seed:7,ok:0,ttl:'Levantar digitais da tecla PLAY'});
 ix('e3','garrafa',{col:'dna',lab:'Coletar saliva do gargalo',seed:2,st:st('e3','garrafa',[[.30,.10],[.30,.30],[.14,.62]]),ttl:'Coletar saliva do gargalo'});
-ix('e3','bengala',{col:'dna',lab:'Coletar suor do cabo',seed:4,st:st('e3','bengala',[[.35,.05],[.55,.04],[.68,.13]]),ttl:'Coletar suor do cabo'});
+ix('e3','bengala',{col:'dna',lab:'Coletar suor do cabo',seed:4,st:st('e3','bengala',[[.55,.10],[.45,.52],[.56,.90]]),ttl:'Coletar suor do cabo'});
 ix('e3','xale',{col:'dna',lab:'Recolher fibras e DNA',seed:6,st:st('e3','xale',[[.30,.40],[.50,.58],[.72,.40]]),ttl:'Recolher fibras e DNA do xale'});
 ix('e3','caderno',{pg:[pg('ESTREIA · CAIXA',['23h34  ingressos  412,00','23h40  balcão  86,50','23h44  troco Zequinha  12,00','23h54  fecho do caixa  539,50'],2),pg('FIADO',['Seu Alcides  8,00','Zora  —','Rocco  bolo','Tico  3,00'],1)]});
 ix('e3','carta',{pg:[pg('PARQUE MARAVILHA · Diversões e Atrações S.A.',['Carta de intenção de compra do Circo Esperança, com todo o seu material, lona e animais.','A venda será comunicada ao público à meia-noite do dia da estreia.']),pg('CLÁUSULAS',['1. Dispensa de toda a trupe na data da assinatura.','2. O Parque assume lona, animais e carretas.','3. O vendedor se compromete a anunciar a venda.'],0),pg('ASSINATURA',['Hermínio Tavares','(lacre de cera vermelha, rompido e refeito)'],1)]});

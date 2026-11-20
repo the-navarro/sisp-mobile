@@ -4,7 +4,7 @@ const has=()=>!!(typeof C!=='undefined'&&C&&C.esp&&!(typeof MENU!=='undefined'&&
 const V={livre:['Livre','#6fcf8a'],duvida:['Dúvida','#eaa73c'],suspeita:['Suspeita','#ff6b5a']};
 const cel=(c,ic)=>S.asked.includes(c.q)?`<p><span>${ic}</span>${esc(c.txt)}</p>`:`<p class=mut><span>${ic}</span>Ainda não revelado.</p>`;
 window.espSentHtml=()=>{const m=C.matriz,n=m.filter(r=>S.asked.includes(r.ouvido.q)&&S.asked.includes(r.visto.q)).length;
-return `<div class=pan style="margin-top:0;border-color:var(--amb)"><h3 style="color:var(--amb)">👂👁️ Matriz dos sentidos</h3><p class=mut style="margin:0 0 10px">Madame Zora só ouve e cheira; Tico só vê. Cruze o que uma ouviu com o que o outro viu. <b>${n} de ${m.length}</b> completos.</p>${m.map(r=>{const su=C.SU.find(x=>x.id===r.suspeito)||{n:r.suspeito},ok=S.asked.includes(r.ouvido.q)&&S.asked.includes(r.visto.q),v=V[r.veredito]||V.duvida;
+return `<div class=pan style="margin-top:0;border-color:var(--amb)"><h3 style="color:var(--amb)">👂👁️ Matriz dos sentidos</h3><p class=mut style="margin:0 0 10px">Madame Zora só ouve e cheira; Tico só vê. Cruze o que uma ouviu com o que o outro viu. <b>${n} de ${m.length}</b> completos.</p>${m.filter(r=>C.SU.some(x=>x.id===r.suspeito)).map(r=>{const su=C.SU.find(x=>x.id===r.suspeito)||{n:r.suspeito},ok=S.asked.includes(r.ouvido.q)&&S.asked.includes(r.visto.q),v=V[r.veredito]||V.duvida;
 return `<div class=sentrow><div class=senthd><b>${esc(nm1?nm1(su.n):su.n)}</b>${ok?`<i style="color:${v[1]};border-color:${v[1]}">${v[0]}</i>`:'<i class=mut>?</i>'}</div>${cel(r.ouvido,'👂')}${cel(r.visto,'👁️')}</div>`}).join('')}</div>`};
 {const _vc=V_.caderno;V_.caderno=function(){if(!has())return _vc.apply(this,arguments);
 if(!CDT.some(x=>x[0]==='sent'))CDT.push(['sent','Sentidos']);
