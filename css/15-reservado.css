@@ -54,3 +54,4 @@
 
 .gvhelp{border:1px solid var(--gv,#ff4fa3);background:#ff4fa314;border-radius:14px;padding:12px 14px;margin:0 0 14px}.gvhelp b{display:block;font:700 14px inherit}.gvhelp p{margin:6px 0 10px;font-size:13px;line-height:1.45;color:#d9cfe0}.gvhelp button{padding:9px 16px;border-radius:999px;border:0;background:var(--gv,#ff4fa3);color:#2a0618;font:700 13px Arial;cursor:pointer}
 @keyframes e3pulse{0%,100%{opacity:.85}45%{opacity:1}50%{opacity:.7}55%{opacity:1}}
+@keyframes e3ring{0%,100%{box-shadow:0 0 0 0 rgba(255,255,255,.25)}50%{box-shadow:0 0 0 18px rgba(255,255,255,0)}}
