@@ -58,18 +58,6 @@
         },
         "$other": { ".validate": false }
       }
-    },
-    "rooms": {
-      "$room": {
-        ".validate": "$room.matches(/^[A-Z0-9]{4,8}$/)",
-        ".read": "auth != null",
-        ".write": "auth != null && (!data.exists() || data.child('players').child(auth.uid).exists() || data.child('players').numChildren() < 2)",
-        "chat": {
-          "$msg": {
-            ".validate": "newData.hasChildren(['k', 'u']) && (!newData.child('t').exists() || (newData.child('t').isString() && newData.child('t').val().length <= 240)) && (!newData.child('e').exists() || (newData.child('e').isString() && newData.child('e').val().length <= 8))"
-          }
-        }
-      }
     }
   }
 }
