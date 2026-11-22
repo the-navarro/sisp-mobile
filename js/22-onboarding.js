@@ -1,11 +1,12 @@
 PDX.chefe={e:'almond',n:'pointed',b:'arch',bt:.8,lp:1,mw:.95,sp:7.8,sk:'#d9b496',sh:'#b89478',hc:'#2a1d12',hs:'swept',bg:['#2a3a40','#0b151c'],deco:'',out:'blazer',oc:'#1d3a3f',oc2:'#ece7dc',ic:'#3a2a1c',age:47,g:'',ex:['lipstick:#8a3a44','earrg','smile'],ms:.6};VFEM.add('chefe');
 const ONTALK={talk:["Então é você. A Corregedoria disse que ia mandar alguém bom, e eu não costumo ouvir isso à toa.","Eu sou a superintendente Regina Vaz, chefe da Divisão de Homicídios do SISP, o Sistema de Investigação Policial. A partir de hoje, sou a sua chefe. E quem cobra relatório.","Aqui o trabalho é minucioso: cada caso chega com suspeitos mentindo e provas que ninguém olhou direito.","Antes de tudo, preciso registrar você no sistema."],talk2:["Prazer, {n}. Registro aberto.","Agora o crachá: o sistema precisa de uma foto sua. Escolha a sua aparência. Dá para mudar depois."]};
 const ONTOUR=[
-{s:'.play',t:"Este é o seu painel, {n}. Toque no nome do caso para ir direto à investigação da vez; ele lembra onde você parou."},
-{s:'.tl3 .tile:nth-child(1)',t:"O Arquivo guarda todos os casos: os novos, os em andamento e os que você já resolveu."},
-{s:'.tl3 .tile:nth-child(2)',t:"Investigador: aqui você muda o seu visual quando quiser."},
-{s:'.tl3 .tile:nth-child(3)',t:"A Galeria reúne os selos. Eles premiam quem investiga a fundo e descobre os segredos de cada caso."},
-{s:'.tl3 .tile:nth-child(4)',t:"Em Ajustes ficam o som, a acessibilidade e o nível de ajuda do jogo."},
+{s:'.play',t:"Este é o seu painel, {n}. Toque no nome do caso para seguir a trilha: ele leva direto à investigação da vez e lembra onde você parou."},
+{s:'.tl3 .tile:nth-child(1)',t:"O Arquivo é o mapa do Brasil: cada cidade tem os seus casos, e você segue de cidade em cidade. O botão i, no mapa, explica como funciona."},
+{s:'.tl3 .tile:nth-child(2)',t:"Dupla: para investigar com outra pessoa, no mesmo celular ou em dois celulares."},
+{s:'.tl3 .tile:nth-child(3)',t:"Investigador: aqui você muda o seu visual quando quiser."},
+{s:'.tl3 .tile:nth-child(4)',t:"A Galeria reúne os selos. Eles premiam quem investiga a fundo e descobre os segredos de cada caso."},
+{s:'.tl3 .tile:nth-child(5)',t:"Em Ajustes ficam o som, a acessibilidade e o nível de ajuda do jogo."},
 {m:1,t:"Dentro de um caso, o seu celular é a sua central de trabalho. Vou mostrar os aplicativos."},
 {m:1,s:'[data-k=locations]',t:"Locais: você vai até o cenário e coleta as provas. Toque nos objetos e colete tudo o que encontrar."},
 {m:1,s:'[data-k=lab]',t:"Perícia: depois de coletar, analise cada prova. Muita coisa só aparece aqui."},
