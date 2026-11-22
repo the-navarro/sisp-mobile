@@ -50,14 +50,13 @@ window.trPin=ci=>{const c=cities()[ci];if(!c)return;if(!c.open){const pv=cities(
 async function trMapRun(my){const CS=cities(),nx=trNext(),target=(nx&&CS[nx.ci])||CS[0];
  const alive=()=>my===MP&&document.getElementById('trg');
  Z=1;CX=217.5;CY=220;camApply();await sleep(650);if(!alive())return;
- await camTo(4.2,target.x,target.y,2300)}
+ await camTo(3.6,(target.x+312)/2,(target.y+308)/2,2300)}
 window.trList=()=>{const L=trNodes(),dn=L.filter(n=>n.done).length,CS=cities();
  const nx=trNext(),t=(nx&&CS[nx.ci])||CS[0],seen=CS.length;const my=MP=Date.now()+Math.random();setTimeout(()=>trMapRun(my),30);
  return `<p class="mut rqsub">Cada capítulo acontece numa <b>cidade do Brasil</b>. Todas as cidades e casos estão abertos: escolha por onde começar. Qualquer caso concluído por outra aba também conta.</p>
 <div class=trh><div><b>${dn} de ${L.length}</b><small>etapas concluídas</small></div><div class=trbar>${L.map(n=>`<i class="${n.done?'on':''} ${n.k==='e'?'st':''}"></i>`).join('')}</div></div>
 <div class=trmw>${mapHTML(CS,seen)}<div class=trbn id=trbn><small>CIDADE DESBLOQUEADA</small><b></b></div></div>
-<button class=trgo onclick="trCity(${t.ci})"><span><small>${nx?'VOCÊ PAROU EM':'JORNADA CONCLUÍDA EM'}</small><b>${esc(t.n)} (${t.uf})</b></span><em>${t.dn}/${t.ns.length+(t.soon?1:0)} · Entrar</em></button>
-<div class=trcl>${CS.map(c=>`<button class="trc1 ${c.open?(c.full?'dn':'op'):'lk'}" onclick="trPin(${c.ci})"><i>${c.ci+1}</i><span><b>${esc(c.n)}</b><small>${c.uf} · ${c.open?c.dn+'/'+(c.ns.length+(c.soon?1:0))+' casos':'🔒 bloqueada'}${c.soon?' · mais casos em breve':''}</small></span></button>`).join('')}</div>`};
+<button class=trgo onclick="trCity(${t.ci})"><span><small>${nx?'VOCÊ PAROU EM':'JORNADA CONCLUÍDA EM'}</small><b>${esc(t.n)} (${t.uf})</b></span><em>${t.dn}/${t.ns.length+(t.soon?1:0)} · Entrar</em></button>`};
 
 /* ============ capítulo (cidade): capas em cima, curva da trilha embaixo ============ */
 let TRS={ci:0,sel:0};
