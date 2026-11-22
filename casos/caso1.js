@@ -10,9 +10,9 @@ function mkC1(){const SU=[
 ['q_v4','Seu cartão magnético foi usado no laboratório às 22h42.','keycard','[silêncio de 10 segundos] ...Fui buscar os discos rígidos antes que ele cancelasse a fusão. Ao passar pelo escritório, ouvi o Arthur sufocar, mas a porta estava trancada!','Estava no laboratório às 22h42 (e não no terraço)'],
 ['q_v5','O interfone da copa tocou às 22h14, vindo do telefone interno do terraço. O senhor estava lá.','intercom','[vacila] Foi... engano de número. Eu pedia um café. Não vejo nada de criminoso nisso.','Telefone do terraço ligou para a copa']]},
 {id:'clara',n:'Clara Rossi',r:'Governanta',b:84,al:'Serviu a camomila às 22h15 e se recolheu.',bio:'Três anos na casa. Responsável pela governança e pelas refeições da família.',q:[
-['q_c1','Clara, descreva o caminho da xícara de chá servida ao Dr. Arthur.',null,'Preparei na chaleira às 22h15. Deixei a bandeja uns 4 minutos no balcão, fui atender o interfone no portão.','Bandeja ficou 4 min sozinha'],
-['q_c2','O laudo encontrou veneno (cianeto) no chá.','tea_cup','[chora] Meu Deus! Alguém envenenou a xícara enquanto eu estava fora! Vi o Sr. Victor apressado naquele corredor!','Viu Victor apressado no corredor'],
-['q_c3','O interfone tocou, vindo do telefone do terraço. Havia alguém no portão?','intercom','[pausa] Não... não havia ninguém. O Sr. Victor tinha dito que ficaria lá em cima, ao telefone.','Ninguém estava no portão']]}];
+['q_c1','Clara, descreva o caminho da xícara de chá servida ao Dr. Arthur.',null,'Preparei na chaleira às 22h15. Deixei a bandeja uns 4 minutos no balcão, fui atender o interfone no portão, né.','Bandeja ficou 4 min sozinha'],
+['q_c2','O laudo encontrou veneno (cianeto) no chá.','tea_cup','[chora] Meu Deus do céu! Alguém envenenou a xícara enquanto eu tava fora! Vi o Sr. Victor apressado naquele corredor!','Viu Victor apressado no corredor'],
+['q_c3','O interfone tocou, vindo do telefone do terraço. Havia alguém no portão?','intercom','[pausa] Não... não tinha ninguém, não. O Sr. Victor tinha dito que ficava lá em cima, no telefone.','Ninguém estava no portão']]}];
 const LO=[
 {id:'office',n:'Escritório (cena do crime)',d:'Trancado por dentro. Cheiro de amêndoas amargas e lareira com cinzas ainda mornas.',c:[
 ['note_fragment','Papel parcialmente carbonizado','📄','Fragmento da lareira, ilegível a olho nu.',0],
