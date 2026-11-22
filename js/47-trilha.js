@@ -35,8 +35,8 @@ const stTxt=n=>n.soon?'Em breve':n.done?('✓ Concluído'+(n.nota?' · nota '+n.
 let Z=1,CX=217.5,CY=220,TOK=0,SY=280;
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const LOCK='<svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>';
-function camApply(){const g=document.getElementById('trg');if(!g)return false;g.setAttribute('transform','translate('+(217.5-Z*CX)+','+(SY-Z*CY)+') scale('+Z+')');
- const d=.5+.8*Math.min(1,(Z-1)/3);document.querySelectorAll('#trg .tp').forEach(p=>{p.setAttribute('transform','translate('+p.dataset.x+','+p.dataset.y+') scale('+(d/Z)+')');p.style.setProperty('--lo',Z>2.4?1:0)});return true}
+function camApply(g,z,cx,cy,sy){g=g||document.getElementById('trg');if(!g)return false;z=z||Z;cx=cx==null?CX:cx;cy=cy==null?CY:cy;sy=sy||SY;g.setAttribute('transform','translate('+(217.5-z*cx)+','+(sy-z*cy)+') scale('+z+')');
+ const d=.5+.8*Math.min(1,(z-1)/3);g.querySelectorAll('.tp').forEach(p=>{p.setAttribute('transform','translate('+p.dataset.x+','+p.dataset.y+') scale('+(d/z)+')');p.style.setProperty('--lo',z>2.4?1:0)});return true}
 function camTo(z,x,y,ms){const my=++TOK;return new Promise(res=>{const z0=Z,x0=CX,y0=CY,t0=performance.now();const e=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;(function f(now){if(my!==TOK||!camApply()){res();return}const t=Math.min(1,(now-t0)/ms),k=e(t);Z=z0+(z-z0)*k;CX=x0+(x-x0)*k;CY=y0+(y-y0)*k;camApply();t<1?requestAnimationFrame(f):res()})(t0)})}
 function pinHTML(c,st){const k='#'+(st==='lk'?'3a3a42':st==='dn'?'3fbf72':'f0c75e');const lab=(c.side==='l'?-17:17),an=c.side==='l'?'end':'start';
  return `<g class="tp ${st}" id="trp${c.ci}" data-x="${c.x}" data-y="${c.y}" onclick="trPin(${c.ci})" style="--k:${k}"><circle class=pls r=13 /><clipPath id="trcp${c.ci}"><circle r="11"/></clipPath><circle class=pr r=13 /><image href="${capa(c.pin)}" x=-11 y=-11 width=22 height=22 clip-path="url(#trcp${c.ci})" preserveAspectRatio="xMidYMid slice"/><text class=pk y=4 text-anchor=middle font-size=12>${st==='lk'?'🔒':st==='dn'?'✓':''}</text><text class="tl s" x=${lab} y=-3 text-anchor=${an}>CAP. ${c.ci+1}</text><text class=tl x=${lab} y=8 text-anchor=${an}>${esc(c.n)}</text></g>`}
@@ -62,7 +62,9 @@ ${nc?`<button class="trgo nx" onclick="trCity(${nc.ci})"><span><small>PRÓXIMA C
 window.trMock=()=>{const L=trNodes(),dn=L.filter(n=>n.done).length,CS=cities(),nx=trNext(),t=(nx&&CS[nx.ci])||CS[0],nc=CS[t.ci+1]||CS[0];
  const map=mapHTML(CS,CS.length).replace('viewBox="0 0 435 560"','viewBox="0 0 435 330"');
  return `<div class="tmk tma"><div class=trh><div><b>${dn} de ${L.length}</b><small>etapas concluídas</small></div><span class=trinfo>i</span></div><div class=trmw>${map}</div><div class=trgo><span><small>VOCÊ PAROU EM</small><b>${esc(t.n)} (${t.uf})</b></span><em>${t.dn}/${t.ns.length+(t.soon?1:0)} · Entrar</em></div><div class="trgo nx"><span><small>PRÓXIMA CIDADE</small><b>${esc(nc.n)} (${nc.uf})</b></span><em>${nc.dn}/${nc.ns.length+(nc.soon?1:0)}</em></div></div>`};
-window.trMockCam=()=>{if(!document.querySelector('.tma #trg'))return;const CS=cities(),nx=trNext(),t=(nx&&CS[nx.ci])||CS[0];TOK++;SY=165;Z=3.6;CX=(t.x+312)/2;CY=(t.y+308)/2;camApply()};
+window.trMockCam=()=>{const CS=cities(),nx=trNext(),t=(nx&&CS[nx.ci])||CS[0];
+ document.querySelectorAll('.tma .trmw g[id=trg]').forEach(g=>camApply(g,3.6,(t.x+312)/2,(t.y+308)/2,165));
+ document.querySelectorAll('.hth g.trg').forEach(g=>camApply(g,3,(t.x+312)/2,(t.y+308)/2,165))};
 /* texto de ajuda: fica escondido atrás do botão "i" e abre num modal com fundo desfocado */
 window.trInfo=()=>{if(document.getElementById('trim'))return;const o=document.createElement('div');o.id='trim';o.setAttribute('role','dialog');o.setAttribute('aria-label','Como funciona a trilha');o.onclick=e=>{if(e.target===o)trInfoX()};
  o.innerHTML='<div class=trimc><small>TRILHA DE CASOS</small><h3>Como funciona</h3><p>Cada capítulo acontece numa <b>cidade do Brasil</b>. Toque numa cidade do mapa para ver os casos dela: casos comuns, rápidos, linha do tempo e o <b>Arquivo Reservado</b>, que fecha o capítulo.</p><p>Todas as cidades e casos estão abertos: escolha por onde começar. Qualquer caso concluído por outra via também conta na trilha.</p><button class=trplay onclick="trInfoX()">Entendi</button></div>';
@@ -103,8 +105,14 @@ window.trClose=()=>{const o=document.getElementById('trc');if(o)o.remove()};
 /* o capítulo some quando a tela do Arquivo/Trilha deixa de estar aberta (ex.: ao começar um caso) */
 {const _r=render;render=function(){const r=_r.apply(this,arguments);try{trMockCam()}catch(e){}const o=document.getElementById('trc');if(o&&!(MENU&&ARQ&&RQT===6))o.remove();const m=document.getElementById('trim');if(m&&!(MENU&&ARQ&&RQT===6))m.remove();return r}}
 
-/* botão principal da tela inicial: segue a trilha (no modo Sozinho) */
-window.trPlay=()=>{if(!solo())return '';const n=trNext();const pi='<span class=pi><svg viewBox="0 0 24 24"><path d="M7 4v16l13-8z"/></svg></span>';
- if(!n)return `<button class=play onclick="ARQ=1;RQT=6;render()">${pi}<span class=pt><small>TRILHA CONCLUÍDA</small><b>Rever o mapa</b></span></button>`;
- return `<button class=play onclick="trStart(${n.i})">${pi}<span class=pt><small>${n.p?'CONTINUAR':n.i===0?'COMECE POR AQUI':'PRÓXIMO CASO'}</small><b>${esc(n.t)}</b></span>${n.k==='c'&&n.p?`<span class=pp><i style="width:${n.p}%"></i></span>`:''}</button>`};
+/* tela inicial: barra no topo (investigador e atalhos) e cartão do mapa embaixo */
+const GALS='<svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M8.5 14L7 22l5-3 5 3-1.5-8"/></svg>';
+window.trHomeTop=()=>{const nm=esc(((META.pl&&META.pl.n)||'Investigador').slice(0,14)),du=window.amMode&&amMode()!=='solo';
+ return `<div class=htop><button class=hinv onclick="plOpen()" aria-label="Investigador"><span class=hav>${av('det',30)}</span><span>${nm}</span></button><div class=hic><button class="${du?'on':''}" onclick="amDupla()" aria-label="Modo dupla">${eic('👥')}</button><button onclick="GAL=1;render()" aria-label="Galeria">${GALS}</button><button onclick="SET=1;render()" aria-label="Ajustes">${eic('⚙')}</button></div></div>`};
+window.trHomeCard=()=>{if(!solo()){const m=window.amMode?amMode():'rev',nme=(window.AMN&&AMN[m]&&AMN[m][1])||'Dupla';
+  return `<div class=hcard><span class="hth hdu">${eic('👥')}</span><div class=hct><small>MODO DUPLA</small><b>${esc(nme)}</b><span>Casos principais, rápidos e linha do tempo</span><button class=hgo onclick="ARQ=1;render()">ACESSAR CASOS</button></div></div>`}
+ const L=trNodes(),dn=L.filter(n=>n.done).length,CS=cities(),nx=trNext(),t=(nx&&CS[nx.ci])||CS[CS.length-1];
+ const map=mapHTML(CS,CS.length).replace('<svg id=trsvg viewBox="0 0 435 560"','<svg viewBox="0 0 435 330" preserveAspectRatio="xMidYMid slice"').replace('<g id=trg>','<g class=trg>');
+ return `<div class=hcard><span class=hth>${map}</span><div class=hct><small>${dn?'SEU MAPA':'COMECE POR AQUI'}</small><b>${esc(t.n)} (${t.uf})</b><span>${t.dn} de ${t.ns.length+(t.soon?1:0)} casos · ${dn} de ${L.length} no total</span><button class=hgo onclick="ARQ=1;RQT=6;render()">ACESSAR MAPA</button></div></div>`};
+window.trPlay=()=>trHomeCard();
 })();

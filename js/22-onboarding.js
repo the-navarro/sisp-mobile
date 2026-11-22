@@ -1,16 +1,15 @@
 PDX.chefe={e:'almond',n:'pointed',b:'arch',bt:.8,lp:1,mw:.95,sp:7.8,sk:'#d9b496',sh:'#b89478',hc:'#2a1d12',hs:'swept',bg:['#2a3a40','#0b151c'],deco:'',out:'blazer',oc:'#1d3a3f',oc2:'#ece7dc',ic:'#3a2a1c',age:47,g:'',ex:['lipstick:#8a3a44','earrg','smile'],ms:.6};VFEM.add('chefe');
 const ONTALK={talk:["Então é você. A Corregedoria disse que ia mandar alguém bom, e eu não costumo ouvir isso à toa.","Eu sou a superintendente Regina Vaz, chefe da Divisão de Homicídios do SISP, o Sistema de Investigação Policial. A partir de hoje, sou a sua chefe. E quem cobra relatório.","Aqui o trabalho é minucioso: cada caso chega com suspeitos mentindo e provas que ninguém olhou direito.","Antes de tudo, preciso registrar você no sistema."],talk2:["Prazer, {n}. Registro aberto.","Agora o crachá: o sistema precisa de uma foto sua. Escolha a sua aparência. Dá para mudar depois."]};
 const ONTOUR=[
-{s:'.play',t:"Este é o seu painel, {n}. Toque no nome do caso para seguir a trilha: ele leva direto à investigação da vez e lembra onde você parou."},
-{s:'.tl3 .tile:nth-child(1)',t:"O Arquivo é o mapa do Brasil: cada cidade tem os seus casos, e você segue de cidade em cidade. Vou mostrar como ele funciona."},
+{s:'.hcard',t:"Este é o seu painel, {n}. O cartão mostra a cidade onde você parou. Toque em Acessar mapa para continuar a investigação."},
 {a:1,s:'.tma .trmw',t:"Este é o mapa da trilha. Cada capítulo acontece numa cidade do Brasil, e o mapa mostra onde você parou."},
 {a:1,s:'.tma .trgo:not(.nx)',t:"Aqui fica a cidade atual. Toque para entrar e escolher o caso. Em cada cidade há casos comuns, rápidos, de linha do tempo e um Arquivo Reservado, que fecha o capítulo."},
 {a:1,s:'.tma .trgo.nx',t:"Aqui, a próxima cidade. Todas já estão abertas, então você pode seguir a ordem ou escolher por onde começar."},
 {a:1,s:'.tma .trinfo',t:"O botão i explica como a trilha funciona, sempre que você quiser rever."},
-{s:'.tl3 .tile:nth-child(2)',t:"Dupla: para investigar com outra pessoa, no mesmo celular ou em dois celulares."},
-{s:'.tl3 .tile:nth-child(3)',t:"Investigador: aqui você muda o seu visual quando quiser."},
-{s:'.tl3 .tile:nth-child(4)',t:"A Galeria reúne os selos. Eles premiam quem investiga a fundo e descobre os segredos de cada caso."},
-{s:'.tl3 .tile:nth-child(5)',t:"Em Ajustes ficam o som, a acessibilidade e o nível de ajuda do jogo. Seu progresso é salvo automaticamente."},
+{s:'.htop .hinv',t:"Investigador: aqui você muda o seu visual quando quiser."},
+{s:'.hic button:nth-child(1)',t:"Dupla: para investigar com outra pessoa, no mesmo celular ou em dois celulares."},
+{s:'.hic button:nth-child(2)',t:"A Galeria reúne os selos. Eles premiam quem investiga a fundo e descobre os segredos de cada caso."},
+{s:'.hic button:nth-child(3)',t:"Em Ajustes ficam o som, a acessibilidade e o nível de ajuda do jogo. Seu progresso é salvo automaticamente."},
 {m:1,t:"Dentro de um caso, o seu celular é a sua central de trabalho. Vou mostrar os aplicativos."},
 {m:1,s:'[data-k=locations]',t:"Locais: você vai até o cenário e coleta as provas. Toque nos objetos e colete tudo o que encontrar."},
 {m:1,s:'[data-k=lab]',t:"Perícia: depois de coletar, analise cada prova. Muita coisa só aparece aqui."},
@@ -21,7 +20,7 @@ const ONTOUR=[
 {m:1,s:'[data-k=solve]',t:"Prisão: com as deduções feitas, acuse o culpado. Errar custa caro. Com três erros, o caso é arquivado."},
 {m:1,s:'[data-k=hint]',t:"Dicas: se travar, toque aqui ou na lâmpada, no topo de qualquer aplicativo. No modo Guiado a dica não custa tempo; no Clássico custa 20 minutos do relógio."},
 {t:"A ordem é sempre a mesma: coletar, analisar, conversar e deduzir. Os aplicativos vão se liberando a cada etapa."},
-{s:'.play',last:1,t:"Vamos começar, {n}? Seu primeiro caso é um treinamento: {caso}. É só tocar no nome do caso quando estiver pronto."}];
+{s:'.hgo',last:1,t:"Vamos começar, {n}? Seu primeiro caso é um treinamento: {caso}. Toque em Acessar mapa e, na cidade, em Entrar para começar."}];
 const onbN=()=>esc((ONN||(META.pl&&META.pl.n)||'detetive').trim()||'detetive');
 const onbT=t=>t.replace(/\{n\}/g,onbN()).replace(/\{caso\}/g,esc(CASES[0].n));
 const onbBust=sz=>av('chefe',sz);
@@ -42,5 +41,5 @@ if(ONS==='name')return `<div class=onr><div class=obg></div><div class=onm><div 
 if(ONS==='tour'){const st=ONTOUR[ONI]||ONTOUR[0],mock=st.a&&window.trMock?trMock():st.m?`<div class=tmk><div class=pgr>${[['locations'],['lab'],['interrogate'],['calls'],['caderno'],['mindmap'],['solve'],['hint']].map(([k])=>{const a=APPS.find(x=>x[0]===k);return `<button class=pap data-k=${k}><i class=pic style="background:linear-gradient(180deg,${a[2]},${a[3]});--ic:${a[3]}"><svg viewBox="0 0 24 24">${PIC[k]}</svg></i><span>${a[1]}</span></button>`}).join('')}</div></div>`:'';
 return `<div class="onr otr" onclick="onbNext()">${st.m||st.a||!st.s?'<div class=obg></div>':''}${mock}${st.s?`<div class="spt ${st.m||st.a?'nos':''}" data-s="${st.s}"></div>`:''}<div class=odlg><div class=oav>${onbBust(54)}</div>${nm}<p>${esc(onbT(st.t))}</p><div class=onx><span class=odots>${ONTOUR.map((_,i)=>`<i class="${i===ONI?'on':''}"></i>`).join('')}</span><button class=oskip onclick="event.stopPropagation();onbEnd()">Pular</button></div></div></div>`}
 return ''}
-function onbPos(){const sp=document.querySelector('.spt'),d=document.querySelector('.otr .odlg,.onr>.odlg');if(!sp)return;const u=$('#ui').getBoundingClientRect(),t=document.querySelector(sp.dataset.s);if(!t){sp.style.display='none';return}const r=t.getBoundingClientRect(),pd=6;sp.style.left=(r.left-u.left-pd)+'px';sp.style.top=(r.top-u.top-pd)+'px';sp.style.width=(r.width+pd*2)+'px';sp.style.height=(r.height+pd*2)+'px';if(d)d.classList.toggle('top',!sp.classList.contains('nos')&&(r.top-u.top+r.height/2)>u.height*.5)}
+function onbPos(){const sp=document.querySelector('.spt'),d=document.querySelector('.otr .odlg,.onr>.odlg');if(!sp)return;const u=(document.getElementById('app')||$('#ui')).getBoundingClientRect(),t=document.querySelector(sp.dataset.s);if(!t){sp.style.display='none';return}const r=t.getBoundingClientRect(),pd=6;sp.style.left=(r.left-u.left-pd)+'px';sp.style.top=(r.top-u.top-pd)+'px';sp.style.width=(r.width+pd*2)+'px';sp.style.height=(r.height+pd*2)+'px';if(d)d.classList.toggle('top',!sp.classList.contains('nos')&&(r.top-u.top+r.height/2)>u.height*.5)}
 /* ===== Provas interativas: vídeo, livro, coleta e puzzles ===== */
