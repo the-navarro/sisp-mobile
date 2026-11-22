@@ -1,5 +1,5 @@
 /* ===== Casos rápidos: lista, telas e regras (usa os dados de casos/rapidos.js) ===== */
-window.RQ=null;let RQT=0;
+window.RQ=null;let RQT=6;
 const RQM=()=>{META.rq=META.rq||{done:{},prog:{}};META.rq.done=META.rq.done||{};META.rq.prog=META.rq.prog||{};return META.rq};
 const rqC=id=>RQC.find(c=>c.id===id);
 const rqAv=(c,s,sz)=>av('rq_'+s,sz||52);
