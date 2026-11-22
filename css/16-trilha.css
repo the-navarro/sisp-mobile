@@ -39,3 +39,4 @@
 #trim{position:absolute;inset:0;z-index:1600;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(5,5,8,.55);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
 .trimc{max-width:360px;background:#14141a;border:1px solid #ffffff22;border-radius:18px;padding:20px;box-shadow:0 24px 60px #000c;color:#e8e2d4}.trimc small{color:#d9a441;font:700 10px var(--ty);letter-spacing:.16em}.trimc h3{font:600 22px Georgia,serif;margin:4px 0 10px}.trimc p{font:400 13.5px/1.55 var(--ty);color:#c9c3b3;margin:0 0 10px}.trimc b{color:#f0c75e}.trimc .trplay{width:100%;margin-top:6px}
 .hbt .tl3 .tile{padding:0 clamp(3px,1.4vw,8px);letter-spacing:.18em}
+.tma{width:min(350px,94%);padding:14px 12px 12px;pointer-events:none}.tma .trh{margin:0 0 8px}.tma .trinfo{display:grid;place-items:center}.tma #trsvg{aspect-ratio:435/330}.tma .trgo{margin:8px 0 0}.tma .trgo.nx{margin-top:6px}
