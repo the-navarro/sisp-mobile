@@ -14,7 +14,7 @@ fatos:[
 {id:'f7',hora:'20:26',titulo:'Alguém sobe a escada da cabine',texto:'Uma pessoa sobe no escuro até a cabine do projetor.',fonte:{tipo:'prova',nome:'Câmera da escada',texto:'Com a luz de emergência, um homem de casaco bege sobe a escada. Minutos depois, a luz geral volta.'},pistas:[['f7','f8']]},
 {id:'f8',hora:'20:30',titulo:'A luz volta e o rolo sumiu',texto:'A luz volta e a prateleira da cabine está vazia.',fonte:{tipo:'depoimento',nome:'Sr. Nélio Braga',texto:'Eu não saí da poltrona 12 nem durante o apagão. Quando a luz voltou, eu estava no mesmo lugar e vi o Otávio descer correndo da cabine.'},falso:true,pistas:[]}],
 contradicao:{fato:'f8',suspeito:'Sr. Nélio',explicacao:'O Sr. Nélio disse que não saiu da poltrona, mas a câmera da escada mostra um homem de casaco bege subindo até a cabine durante o apagão. O casaco bege é o mesmo do comprador do ingresso nº 1: o Sr. Nélio.'},
-final:'O rolo Aurora foi achado na mochila do Sr. Nélio. Ele aproveitou o apagão para pegar o filme na cabine.'},
+final:'O rolo Aurora foi achado dentro do casaco bege do Sr. Nélio. Ele aproveitou o apagão para pegar o filme na cabine.'},
 {id:'t2',titulo:'A Orquídea Cortada',cenario:{local:'Estufa do Clube Jardim Vivo, manhã da exposição',resumo:'A orquídea Lua Azul, estrela da exposição, apareceu com a flor principal cortada antes de os visitantes entrarem.'},
 abertura:'A flor mais famosa da exposição foi cortada. Monte a manhã na estufa na ordem certa antes de apontar o culpado.',
 suspeitos:[{id:'gilda',nome:'Gilda Prado',papel:'Presidente do clube'},{id:'tomas',nome:'Tomás Veiga',papel:'Jardineiro'},{id:'raquel',nome:'Raquel Sousa',papel:'Vendedora de mudas'}],
