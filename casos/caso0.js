@@ -1,7 +1,7 @@
 function mkC0(){
 const SU=[
 {id:'lucio',n:'Lúcio Prado',r:'Tesoureiro do clube',b:88,al:'No salão, conferindo as contas do jantar.',bio:'Cuida do dinheiro do clube há 10 anos. Anda de cabeça baixa nos últimos meses.',q:[
-['q_l1','Lúcio, onde o senhor estava às 20h?',null,'[ajeita os óculos] No salão, uai, conferindo as contas do jantar. Não saí de lá em nenhum momento.','Diz que não saiu do salão'],
+['q_l1','Lúcio, onde o senhor estava às 20h?',null,'[ajeita os óculos] No salão, conferindo as contas do jantar. Não saí de lá em nenhum momento.','Diz que não saiu do salão'],
 ['q_l2','O registro mostra a chave reserva retirada às 20h10 por "L.P.".','keybox','[nervoso] Ah... peguei só pra guardar um papel na secretaria, uai. Devolvi depois, quando acabei.','Admite ter pego a chave reserva'],
 ['q_l3','Este recibo de empréstimo vence amanhã, em seu nome.','receipt','Fiz um empréstimo, sim. Todo mundo tem dívida, delegado, uai.','Admite dívida de empréstimo']]},
 {id:'marta',n:'Marta Veiga',r:'Zeladora',b:76,al:'Limpando o salão e depois servindo na cozinha.',bio:'Trabalha no clube desde sempre. Conhece cada canto, mas não tem acesso ao cofre.',q:[
