@@ -11,13 +11,13 @@ DCC.push({
   "resumo": "O Vaso Lua de Barro, peça mais valiosa do ateliê (R$ 12.000), desapareceu da vitrine trancada. O vidro está intacto e a fechadura foi aberta com a chave. Só três pessoas estavam por perto naquela noite."
  },
  "abertura": {
-  "A": "Detetive, aqui é o chefe. O Vaso Lua de Barro sumiu da vitrine do Ateliê Barro Vivo. Você cuida da área das aulas: converse com Otávio, o professor, e com Gil, o assistente. Você também tem a foto da vitrine, o convite de inauguração e o mural de avisos. Seu parceiro está com outra parte do caso. Troquem tudo o que descobrirem.",
+  "A": "Detetive, aqui é o chefe. O Vaso Lua de Barro sumiu da vitrine do Ateliê Barro Vivo. Você cuida da área das aulas: converse com Wanderley, o professor, e com Gil, o assistente. Você também tem a foto da vitrine, o convite de inauguração e o mural de avisos. Seu parceiro está com outra parte do caso. Troquem tudo o que descobrirem.",
   "B": "Detetive, aqui é o chefe. O Vaso Lua de Barro sumiu da vitrine do Ateliê Barro Vivo. Você cuida da turma e da sala de queima: converse com Priscila, aluna dedicada do ateliê. Você tem a foto da sala de queima, a foto da festa de aniversário do ateliê e o tablet da bancada. Seu parceiro está com outra parte do caso. Troquem tudo o que descobrirem."
  },
  "suspeitos": [
   {
    "id": "otavio",
-   "nome": "Otávio Brandão",
+   "nome": "Wanderley Resende",
    "idade": 48,
    "papel": "Professor de torno",
    "aparencia": "Homem alto e magro, cabelo grisalho curto, barba rala, avental de couro marrom manchado de argila e óculos redondos de aro preto",
@@ -120,7 +120,7 @@ DCC.push({
    {
     "id": "g2",
     "pergunta": "Você tem cópia da chave da vitrine?",
-    "resposta": "Eu? Não! Só pego o cadeado do depósito. Pergunta pro Otávio.",
+    "resposta": "Eu? Não! Só pego o cadeado do depósito. Pergunta pro Wanderley.",
     "registra_afirmacao": "af_g2"
    },
    {
@@ -248,7 +248,7 @@ DCC.push({
    "descricao": "Folha dentro do armário: 'Chave da vitrine. Retirada: quinta, 19h40. Assinatura: P. Nunes. Devolução: (em branco)'.",
    "dono": "ambos",
    "disponivel": "apos_trava_p_armario",
-   "imagem": "d0_p_registro_chaves.png"
+   "imagem": "d0_p_registro_chaves.png?v=2"
   }
  ],
  "contradicoes": [
@@ -266,7 +266,7 @@ DCC.push({
    "suspeito": "otavio",
    "afirmacao": "af_o2",
    "prova": "p_registro_chaves",
-   "explicacao": "Otávio garantiu que só ele e a Celeste sabiam o código do armário, mas o registro mostra a retirada da chave da vitrine às 19h40 assinada por P. Nunes. Alguém além deles descobriu o código, que é a data de inauguração do ateliê. Priscila assinou a folha por hábito, sem pensar: é a aluna que toda semana retira a chave do depósito e está acostumada a escrever o nome.",
+   "explicacao": "Wanderley garantiu que só ele e a Celeste sabiam o código do armário, mas o registro mostra a retirada da chave da vitrine às 19h40 assinada por P. Nunes. Alguém além deles descobriu o código, que é a data de inauguração do ateliê. Priscila assinou a folha por hábito, sem pensar: é a aluna que toda semana retira a chave do depósito e está acostumada a escrever o nome.",
    "lado_afirmacao": "A",
    "lado_prova": "ambos"
   }
@@ -299,7 +299,7 @@ DCC.push({
  "dicas": {
   "A": [
    "Você tem a foto da vitrine, o convite e o mural. Algum desses detalhes pode ser útil para o seu parceiro.",
-   "Se Otávio se recusa a falar, ele quer saber algo sobre o ateliê que seu parceiro pode ter visto na sala de queima."
+   "Se Wanderley se recusa a falar, ele quer saber algo sobre o ateliê que seu parceiro pode ter visto na sala de queima."
   ],
   "B": [
    "O tablet da bancada guarda segredos. A dica da tela de bloqueio fala de um animal.",
