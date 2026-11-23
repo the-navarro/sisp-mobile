@@ -1,0 +1,70 @@
+name: Limpar versões antigas do Firebase Hosting
+
+# Roda só quando alguém pede (Actions > este fluxo > Run workflow).
+# Apaga as versões antigas do Hosting para liberar espaço, mantendo a versão no ar
+# e as mais recentes. Com "executar" = nao, apenas lista o que seria apagado.
+on:
+  workflow_dispatch:
+    inputs:
+      manter:
+        description: "Quantas versões recentes manter (além da que está no ar)"
+        default: "3"
+      executar:
+        description: "sim = apagar de verdade; nao = só listar"
+        default: "nao"
+
+jobs:
+  limpar:
+    runs-on: ubuntu-latest
+    env:
+      FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+      MANTER: ${{ inputs.manter }}
+      EXECUTAR: ${{ inputs.executar }}
+    steps:
+      - name: Listar e apagar versões antigas do Hosting
+        run: |
+          if [ -z "$FIREBASE_SERVICE_ACCOUNT" ]; then
+            echo "Segredo FIREBASE_SERVICE_ACCOUNT não configurado."
+            exit 1
+          fi
+          printf '%s' "$FIREBASE_SERVICE_ACCOUNT" > "$RUNNER_TEMP/sa.json"
+          gcloud auth activate-service-account --key-file="$RUNNER_TEMP/sa.json" --quiet
+          rm -f "$RUNNER_TEMP/sa.json"
+          export TOKEN="$(gcloud auth print-access-token)"
+          python3 - <<'PY'
+          import json, os, sys, urllib.request, urllib.error
+          T = os.environ['TOKEN']; SITE = 'sisp-mobile'
+          API = 'https://firebasehosting.googleapis.com/v1beta1'
+          KEEP = int(os.environ.get('MANTER') or 3)
+          EXEC = (os.environ.get('EXECUTAR') or 'nao').strip().lower() == 'sim'
+          def call(method, url):
+              r = urllib.request.Request(url, method=method, headers={'Authorization': 'Bearer ' + T})
+              with urllib.request.urlopen(r) as f:
+                  b = f.read()
+                  return json.loads(b) if b else {}
+          live = call('GET', f'{API}/sites/{SITE}/channels/live').get('release', {}).get('version', {}).get('name', '')
+          print('Versão no ar:', live or '(não encontrada)')
+          if not live:
+              sys.exit('Não consegui identificar a versão no ar; nada foi apagado.')
+          vs, tok = [], ''
+          while True:
+              u = f'{API}/sites/{SITE}/versions?pageSize=200&filter=status%3DFINALIZED' + (f'&pageToken={tok}' if tok else '')
+              d = call('GET', u); vs += d.get('versions', []); tok = d.get('nextPageToken', '')
+              if not tok: break
+          vs.sort(key=lambda v: v['createTime'], reverse=True)
+          keep = {live} | {v['name'] for v in vs[:KEEP]}
+          old = [v for v in vs if v['name'] not in keep]
+          mb = lambda v: int(v.get('versionBytes', 0) or 0) / 1e6
+          print(f'Versões finalizadas: {len(vs)} | mantidas: {len(keep)} | a apagar: {len(old)} (~{sum(mb(v) for v in old):.0f} MB contados)')
+          for v in old[:200]:
+              print(' -', v['name'].split('/')[-1], v['createTime'], f'{mb(v):.0f} MB')
+          if not EXEC:
+              print('Modo "nao": nada foi apagado.'); sys.exit(0)
+          ok = bad = 0
+          for v in old:
+              try:
+                  call('DELETE', f"{API}/{v['name']}"); ok += 1
+              except urllib.error.HTTPError as e:
+                  bad += 1; print('Falhou:', v['name'].split('/')[-1], e.code, e.read()[:200])
+          print(f'Apagadas: {ok} | falharam: {bad}')
+          PY
