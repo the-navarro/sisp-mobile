@@ -115,4 +115,6 @@ window.trHomeCard=()=>{if(!solo()){const m=window.amMode?amMode():'rev',nme=(win
  const map=mapHTML(CS,CS.length).replace('<svg id=trsvg viewBox="0 0 435 560"','<svg viewBox="0 0 435 330" preserveAspectRatio="xMidYMid slice"').replace('<g id=trg>','<g class=trg>');
  return `<div class=hcard><span class=hth>${map}</span><div class=hct><small>${dn?'SEU MAPA':'COMECE POR AQUI'}</small><b>${esc(t.n)} (${t.uf})</b><span>${t.dn} de ${t.ns.length+(t.soon?1:0)} casos · ${dn} de ${L.length} no total</span><button class=hgo onclick="ARQ=1;RQT=6;render()">ACESSAR MAPA</button></div></div>`};
 window.trPlay=()=>trHomeCard();
+/* a primeira tela pode ser desenhada antes deste arquivo carregar (sem barra e sem cartão): redesenha a tela inicial uma vez, para a tela de "toque para começar" já nascer igual à tela inicial */
+window.addEventListener('load',()=>{try{if(document.querySelector('.hmh')&&!document.querySelector('.hcard'))render()}catch(e){}});
 })();
