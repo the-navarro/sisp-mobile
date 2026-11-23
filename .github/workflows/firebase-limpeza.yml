@@ -39,18 +39,23 @@ jobs:
           EXEC = (os.environ.get('EXECUTAR') or 'nao').strip().lower() == 'sim'
           def call(method, url):
               r = urllib.request.Request(url, method=method, headers={'Authorization': 'Bearer ' + T})
-              with urllib.request.urlopen(r) as f:
-                  b = f.read()
-                  return json.loads(b) if b else {}
+              try:
+                  with urllib.request.urlopen(r) as f:
+                      b = f.read()
+                      return json.loads(b) if b else {}
+              except urllib.error.HTTPError as e:
+                  print('Erro', e.code, 'em', method, url.split('?')[0].replace(API, ''), '->', e.read()[:300])
+                  raise
           live = call('GET', f'{API}/sites/{SITE}/channels/live').get('release', {}).get('version', {}).get('name', '')
           print('Versão no ar:', live or '(não encontrada)')
           if not live:
               sys.exit('Não consegui identificar a versão no ar; nada foi apagado.')
           vs, tok = [], ''
           while True:
-              u = f'{API}/sites/{SITE}/versions?pageSize=200&filter=status%3DFINALIZED' + (f'&pageToken={tok}' if tok else '')
+              u = f'{API}/sites/{SITE}/versions?pageSize=100' + (f'&pageToken={tok}' if tok else '')
               d = call('GET', u); vs += d.get('versions', []); tok = d.get('nextPageToken', '')
               if not tok: break
+          vs = [v for v in vs if v.get('status') == 'FINALIZED']
           vs.sort(key=lambda v: v['createTime'], reverse=True)
           keep = {live} | {v['name'] for v in vs[:KEEP]}
           old = [v for v in vs if v['name'] not in keep]
