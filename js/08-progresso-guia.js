@@ -2,7 +2,7 @@ let SU,LO,CL,RES,TL,DD,DH,EV,TS,NT,TOTAL_Q,TOTAL_C,LOCT,SL;
 const isLk=id=>!!(C&&C.lock&&(id===C.lock.id||(C.lock.libera||[]).includes(id)));const isOpc=id=>!!(C&&C.opcional&&C.opcional.includes(id));
 const qOk=q=>(!q[2]||S.an.includes(q[2]))&&(!q[5]||S.asked.includes(q[5]));
 const roomDone=l=>l.c.every(c=>S.inv.includes(c[0])&&(isLk(c[0])||isOpc(c[0])||(CL[c[0]]&&CL[c[0]].h)||S.an.includes(c[0])));
-const solveOk=()=>{if(!C.esp)return true;const r=rdState();return !LO.some(l=>!isLo(l.id))&&r.col[0]===r.col[1]&&!toAn().length&&!lbWt().length};
+const solveOk=()=>{if(!C.esp)return S.ded.length>=C.thr&&!LO.some(l=>!locOpen(l.id))&&!toAn().length&&!lbWt().length;const r=rdState();return !LO.some(l=>!isLo(l.id))&&r.col[0]===r.col[1]&&!toAn().length&&!lbWt().length};
 const lbWt=()=>Object.keys(S.lb||{}).filter(i=>!S.an.includes(i));
 const toAn=()=>S.inv.filter(id=>!S.an.includes(id)&&!(CL[id]&&CL[id].h)&&!isLk(id)&&!isOpc(id));
 const talkLeft=()=>SU.reduce((n,s)=>n+s.q.filter(q=>!S.asked.includes(q[0])&&qOk(q)).length,0);

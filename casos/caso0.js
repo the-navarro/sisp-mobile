@@ -9,7 +9,7 @@ const SU=[
 ['q_m2','Este pano tem marcas douradas.','rag','É meu, uai, do polimento das 19h. Só isso.','O pano é dela, do polimento das 19h'],
 ['q_m3','A vitrine foi aberta com a chave original.','lock','Eu não tenho a chave reserva, não, sô. Só o tesoureiro e a secretaria têm.','Só o tesoureiro tem a chave reserva']]}];
 const LO=[
-{id:'hall',n:'Salão do clube (cena do crime)',d:'A vitrine do troféu, fechada e vazia, bem no centro do salão.',c:[['lock','Fechadura da vitrine','🔐','Sem arranhões nem sinal de arrombamento.',0],['plant','Vaso de planta','🪴','Decoração do salão, sem relação com o caso.',1]]},
+{id:'hall',n:'Salão do clube (cena do crime)',d:'A vitrine do troféu, fechada e vazia, bem no centro do salão.',c:[['lock','Fechadura da vitrine','🔐','Sem arranhões nem sinal de arrombamento.',0],['plant','Vaso de planta','🪴','Samambaia num vaso de barro ao lado da vitrine. A terra está seca e o vaso, no lugar de sempre.',1]]},
 {id:'office',n:'Secretaria',d:'Mesa de trabalho e o quadro onde as chaves ficam penduradas.',c:[['keybox','Registro da chave reserva','🗝️','Caderno de retirada e devolução de chaves.',0],['receipt','Recibo de empréstimo','🧾','Papel dobrado dentro de uma gaveta.',0]]},
 {id:'closet',n:'Depósito de limpeza',d:'Baldes, vassouras e produtos de polimento.',c:[['rag','Pano de polir','🧽','Pano com marcas douradas.',0]]}];
 const CL={};LO.forEach(l=>l.c.forEach(c=>CL[c[0]]={id:c[0],n:c[1],i:c[2],d:c[3],h:c[4]}));

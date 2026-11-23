@@ -18,7 +18,7 @@ const ONTOUR=[
 {m:1,s:'[data-k=caderno]',t:"Caderno: tudo fica anotado, como a ocorrência, os suspeitos, a cronologia e as suas notas. Consulte sempre que ficar em dúvida."},
 {m:1,s:'[data-k=mindmap]',t:"Quadro: aqui você liga as pistas e faz as deduções. Cada dedução certa aproxima você do culpado."},
 {m:1,s:'[data-k=solve]',t:"Prisão: com as deduções feitas, acuse o culpado. Errar custa caro. Com três erros, o caso é arquivado."},
-{m:1,s:'[data-k=hint]',t:"Dicas: se travar, toque aqui ou na lâmpada, no topo de qualquer aplicativo. No modo Guiado a dica não custa tempo; no Clássico custa 20 minutos do relógio."},
+{m:1,s:'[data-k=hint]',t:"Dicas: se travar, toque aqui ou na lâmpada, no topo de qualquer aplicativo. A primeira dica de cada etapa não custa nada; as seguintes descontam pontos da nota."},
 {t:"A ordem é sempre a mesma: coletar, analisar, conversar e deduzir. Os aplicativos vão se liberando a cada etapa."},
 {s:'.hgo',last:1,t:"Vamos começar, {n}? Seu primeiro caso é um treinamento: {caso}. Toque em Acessar mapa e, na cidade, em Entrar para começar."}];
 const onbN=()=>esc((ONN||(META.pl&&META.pl.n)||'detetive').trim()||'detetive');
