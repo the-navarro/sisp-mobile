@@ -124,7 +124,7 @@ function chHTML(){const c=cities()[TRS.ci],ns=pad(TRS.ci),sel=Math.max(0,Math.mi
 <p class=trnote>${prem?'O capítulo termina no premium <b>'+esc(prem.t)+'</b>. ':c.soon?'Mais casos de Santos estão sendo preparados. Quando o premium chegar, ele fecha este capítulo.':''}</p></div>`}
 window.trCity=(ci,sel)=>{const CS=cities();if(!CS[ci]||!CS[ci].open)return;TRS.ci=ci;const ns=pad(ci);let s=sel;if(s==null){s=ns.findIndex(x=>x.cur);if(s<0)s=ns.length-1}TRS.sel=s;
  let o=document.getElementById('trc');if(!o){o=document.createElement('div');o.id='trc';o.setAttribute('role','dialog');o.setAttribute('aria-label','Capítulo da trilha');(document.getElementById('app')||document.body).appendChild(o)}
- o.innerHTML=chHTML();o.scrollTop=0;wire(o);try{AU&&AU.sfx&&AU.sfx('tap')}catch(e){}};
+ o.innerHTML=chHTML();o.scrollTop=0;wire(o);try{AU&&AU.sfx&&AU.sfx('tap')}catch(e){}setTimeout(()=>{try{trFinMaybe(ci)}catch(e){}},450)};
 function wire(o){const cf=o.querySelector('#trcf');if(!cf||cf._w)return;cf._w=1;let x0=null;cf.addEventListener('pointerdown',e=>{x0=e.clientX});cf.addEventListener('pointerup',e=>{if(x0==null)return;const dx=e.clientX-x0;x0=null;if(Math.abs(dx)>40)trSel(TRS.sel+(dx<0?1:-1))});cf.addEventListener('pointercancel',()=>x0=null)}
 window.trSel=i=>{const ns=pad(TRS.ci);if(i<0||i>=ns.length||i===TRS.sel)return;TRS.sel=i;const o=document.getElementById('trc');if(!o)return;const cf=o.querySelector('#trcf');
  /* os pôsteres deslizam de um lugar para o outro (a posição vem do data-p), em vez de serem redesenhados */
@@ -137,8 +137,25 @@ const ctOf=id=>CT.find(c=>c.cs.some(x=>x[1]===id))||null;
 window.trBack=id=>{const ct=ctOf(id);if(!ct||!solo())return false;const ci=CT.indexOf(ct);ARQ=1;RQT=6;MENU=1;render();const s=pad(ci).findIndex(x=>x.id===id);trCity(ci,s<0?undefined:s);return true};
 window.trBackLbl=(id,def)=>{const ct=ctOf(id);return ct&&solo()?'Voltar aos casos de '+ct.n:def};
 window.trClose=()=>{const o=document.getElementById('trc');if(o)o.remove()};
+
+/* ============ fim de capítulo: a chefe avisa que a cidade terminou e apresenta a próxima ============ */
+const TRFIM={
+tir:{t:'Tiradentes concluída',b:'o convento de Santa Clara voltou a ter paz e Tiradentes pode dormir em silêncio. Do clube de xadrez à vinícola, cada prova e cada depoimento foram bem trabalhados.',n:'Sua próxima parada é Nova Friburgo (RJ). Na Região Serrana do Rio, entre montanhas, neblina e casarões de herança suíça e alemã, o clima é fresco e os segredos são antigos. A mansão, o teatro e o museu do tempo esperam por você.'},
+nf:{t:'Nova Friburgo concluída',b:'a mansão, o teatro e o museu do tempo voltaram à rotina. A Região Serrana agradece e a neblina já começa a abrir.',n:'Sua próxima parada é Piracicaba (SP). No interior paulista, banhada pelo rio, entre canaviais, engenhos e uma tradição de circo e de feira, a cidade tem sotaque caipira e muito segredo guardado atrás do balcão.'},
+pir:{t:'Piracicaba concluída',b:'a joalheria, a estação e o circo estão em ordem, e o rio segue seu caminho sem sobressaltos.',n:'Sua próxima parada é Belo Horizonte (MG). A capital mineira tem avenidas largas, montanhas ao redor, bares onde todo mundo se conhece, galerias de arte e rádios que nunca dormem. Prepare o ouvido: lá, o som também guarda pistas.'},
+bh:{t:'Belo Horizonte concluída',b:'a galeria, o edifício e a rádio voltaram à calma. A capital mineira respira aliviada.',n:'Sua próxima parada é Santos (SP). No litoral paulista, entre navios, guindastes e maresia, fica o maior porto da América Latina. Os casos de lá chegam em breve: assim que a delegacia estiver pronta, eu aviso.'}};
+const trTit=()=>{const g=(typeof plv==='function'&&plv().g)||'f';return g==='f'?'Delegada':g==='n'?'Delegade':'Delegado'};
+window.trFinX=()=>{const o=document.getElementById('trfin');if(o)o.remove()};
+window.trFinGo=ci=>{const c=CT[ci];META.trfin=META.trfin||{};if(c)META.trfin[c.id]=1;try{msave()}catch(e){}trFinX();const nx=cities()[ci+1];if(nx&&nx.open&&!nx.soon)trCity(ci+1)};
+window.trFinMaybe=ci=>{const c=CT[ci],cs=cities()[ci],f=TRFIM[c&&c.id];if(!f||!cs||!cs.full)return false;META.trfin=META.trfin||{};if(META.trfin[c.id])return false;if(document.getElementById('trfin'))return true;
+ const nx=cities()[ci+1],q=(typeof plv==='function'&&plv())||{},nm=esc((q.n||'').slice(0,14)),o=document.createElement('div');o.id='trfin';o.setAttribute('role','dialog');o.setAttribute('aria-label',f.t);
+ const go=nx&&nx.open&&!nx.soon;
+ o.innerHTML=`<div class=trfc><div class=trfh><span class=trfa>${av('chefe',54)}</span><div><small>LIGAÇÃO DA CHEFE REGINA VAZ</small><b>${esc(f.t)}</b></div></div><p>${trTit()}${nm?' '+nm:''}, ${esc(f.b)}</p><p class=trfn>${esc(f.n)}</p>${nx?`<div class=trfp><span>PRÓXIMA CIDADE</span><b>${esc(nx.n)} · ${esc(nx.uf)}</b><i>${esc(nx.reg)}</i></div>`:''}<button class=trplay onclick="${go?`trFinGo(${ci})`:`trFinGo(${ci})`}">${go?'Seguir para '+esc(nx.n):'Entendido'}</button>${go?`<button class="trplay trgh" onclick="META.trfin=META.trfin||{};META.trfin['${c.id}']=1;try{msave()}catch(e){};trFinX()">Ficar em ${esc(c.n)}</button>`:''}</div>`;
+ (document.getElementById('app')||document.body).appendChild(o);try{AU.fx('chime')}catch(e){}return true};
+window.trFinCheck=id=>{const ct=ctOf(id);if(!ct||!solo())return false;const ci=CT.indexOf(ct),cs=cities()[ci];if(!cs||!cs.full||!TRFIM[ct.id])return false;META.trfin=META.trfin||{};if(META.trfin[ct.id])return false;return trBack(id)};
+{const _tm=toMenu;toMenu=function(){const cid=C&&C.id;const r=_tm.apply(this,arguments);try{if(cid)trFinCheck(cid)}catch(e){}return r}}
 /* o capítulo some quando a tela do Arquivo/Trilha deixa de estar aberta (ex.: ao começar um caso) */
-{const _r=render;render=function(){const r=_r.apply(this,arguments);try{trMockCam()}catch(e){}const o=document.getElementById('trc');if(o&&!(MENU&&ARQ&&RQT===6))o.remove();const m=document.getElementById('trim');if(m&&!(MENU&&ARQ&&RQT===6))m.remove();return r}}
+{const _r=render;render=function(){const r=_r.apply(this,arguments);try{trMockCam()}catch(e){}const o=document.getElementById('trc');if(o&&!(MENU&&ARQ&&RQT===6))o.remove();const m=document.getElementById('trim');if(m&&!(MENU&&ARQ&&RQT===6))m.remove();const f=document.getElementById('trfin');if(f&&!(MENU&&ARQ&&RQT===6))f.remove();return r}}
 
 /* tela inicial: barra no topo (investigador e atalhos) e cartão do mapa embaixo */
 const GALS='<svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M8.5 14L7 22l5-3 5 3-1.5-8"/></svg>';
