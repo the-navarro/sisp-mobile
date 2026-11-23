@@ -2,12 +2,12 @@
    `prova` é a prova que desmente (ou confirma) o palpite. No máximo 3 por caso. */
 const PLP={
 c0:[
-{id:'pa',tipo:'achado',quando:{ask:'q_l2'},ref:'Fala de Lúcio ("não saí do salão em nenhum momento") × Registro da chave reserva (retirada às 20h10 por "L.P.").',prova:'keybox',texto:{
+{id:'pa',tipo:'achado',quando:{all:['q_l1','q_l2']},ref:'Fala de Lúcio ("não saí do salão em nenhum momento") × Registro da chave reserva (retirada às 20h10 por "L.P.").',prova:'keybox',texto:{
  marcos:'Chefe, deixa eu farejar uma coisa. O Lúcio jurou que não saiu do salão em nenhum momento. Mas o registro da chave reserva mostra uma retirada às 20h10 com as iniciais L.P. Cruza a fala dele com esse registro.',
  beatriz:'Deixa que eu ilumino um detalhe: o Lúcio disse que não saiu do salão, mas o registro da chave reserva tem uma retirada às 20h10 assinada L.P. Vale cruzar a fala com o registro.'}},
-{id:'pb',tipo:'achado',quando:{ask:'q_m2'},ref:'Fala de Marta ("passei o pano no troféu às 19h") × Pano de polir (marcas douradas do polimento).',prova:'rag',texto:{
- marcos:'Sobre a Marta: o pano com marcas douradas bate com o polimento que ela disse ter feito às 19h, e a chave reserva só saiu às 20h10. Ela limpou o troféu, mas não há nada que a ponha na vitrine depois disso. Meu faro diz que dá para riscar a Marta dessa janela.',
- beatriz:'Sobre a Marta: o pano tem as marcas douradas do polimento das 19h, e a chave reserva só foi retirada às 20h10. Ela limpou o troféu antes, não depois. Dá para deixar a Marta de lado nessa janela.'}}
+{id:'pb',tipo:'achado',quando:{all:['q_m1','q_m2']},ref:'Fala de Marta ("passei o pano no troféu às 19h") × Pano de polir (marcas douradas do polimento).',prova:'rag',texto:{
+ marcos:'Sobre a Marta: o pano com marcas douradas bate com o polimento das 19h que ela contou. Ela limpou o troféu, mas isso não a põe diante da vitrine depois. Meu faro diz que dá para riscar a Marta dessa parte.',
+ beatriz:'Sobre a Marta: o pano tem as marcas douradas do polimento das 19h que ela contou. Ela limpou o troféu, e isso não a põe diante da vitrine depois. Dá para deixar a Marta de lado nessa parte.'}}
 ],
 c1:[
 {id:'pa',tipo:'achado',quando:{ask:'q_v5'},ref:'Fala de Victor ("foi engano de número, eu pedia um café") × Registro do interfone (40 segundos de chamada, fone fora do gancho, ninguém no portão).',texto:{
@@ -18,20 +18,20 @@ c1:[
  beatriz:'Faísca acesa! O Victor chamou a discussão de "divergência sobre investimentos", mas a Eleanor falou em bate-boca terrível no jantar. E o fragmento queimado mostra o que estava em jogo. Vale cruzar essas duas falas com o papel.'}}
 ],
 c2:[
-{id:'pa',tipo:'achado',quando:{ask:'q_k3'},ref:'Fala de Caio ("conferi o aperto às 16h30") × Livro de chaves (quem retirou a chave da passarela depois da inspeção dele?).',prova:'keylog',texto:{
+{id:'pa',tipo:'achado',quando:{all:['q_k1','q_k3']},ref:'Fala de Caio ("conferi o aperto às 16h30") × Livro de chaves (quem retirou a chave da passarela depois da inspeção dele?).',prova:'keylog',texto:{
  marcos:'A mesa de luz mostra o Caio operando de 20h30 a 20h55, na hora da queda, então ele não estava na passarela. Só que a sabotagem pode ter vindo antes. Dá uma olhada no livro de chaves: quem pegou a chave da passarela depois da inspeção dele, às 16h30?',
  beatriz:'A mesa de luz põe o Caio no posto de 20h30 a 20h55, justo na queda. Então a sabotagem veio antes. Deixa que eu ilumino: veja no livro de chaves quem retirou a chave da passarela depois da inspeção dele.'}},
-{id:'pb',tipo:'achado',quando:{ask:'q_c3'},ref:'Chave de boca 17 mm (caixa do figurino) × Parafusos da grade (ferrugem e graxa das porcas soltas).',prova:'rail_bolts',texto:{
- marcos:'A chave de 17 mm estava na caixa do figurino, e o Caio disse que a dele é de 19. Cruza essa chave com as porcas da grade: o laudo fala em ferrugem e graxa. Meu faro diz que as duas coisas se encaixam.',
- beatriz:'Faísca acesa! A chave de 17 mm é da caixa do figurino, e a do Caio é de 19. Vale cruzar a chave com os parafusos da grade, que têm ferrugem e graxa.'}}
+{id:'pb',tipo:'achado',quando:{ask:'q_c3'},ref:'Chave de boca 17 mm (caixa do figurino) × Parafusos e porcas da grade da passarela.',prova:'rail_bolts',texto:{
+ marcos:'Essa chave de 17 mm estava na caixa de ferramentas do figurino, e a grade da passarela cedeu por causa de porcas soltas. Meu faro diz que vale cruzar a chave com as porcas da grade.',
+ beatriz:'Faísca acesa! A chave de 17 mm estava na caixa do figurino, e a grade cedeu por causa de porcas soltas. Vale cruzar a chave com os parafusos da grade.'}}
 ],
 c3:[
 {id:'pa',tipo:'achado',quando:{ask:'q_h3'},ref:'Fala de Helena ("não saí do laboratório") × Planilha dos analisadores (31 amostras, de 21h00 às 21h50).',prova:'samples',texto:{
- marcos:'Sobre a Helena: a planilha dos analisadores mostra 31 amostras de 21h00 às 21h50, sem pausa. O exaustor foi desligado às 21h05, no meio disso. Dá para riscar a Helena dessa janela. Cruza a fala dela com a planilha.',
- beatriz:'A Helena disse que não saiu do laboratório, e a planilha dos analisadores registra 31 amostras de 21h00 às 21h50 sem pausa. O exaustor caiu às 21h05. Confere a fala dela com a planilha.'}},
-{id:'pb',tipo:'achado',quando:{ask:'q_r2'},ref:'Fala de Rui ("sempre desligo para limpar os filtros") × Registro do painel (exaustor 21h05) e Sensor de CO₂ (21h06).',prova:'sensor',texto:{
- marcos:'O Rui falou em limpar filtros em plena festa. Mas o painel mostra o exaustor desligado às 21h05, e o sensor de CO₂ foi desligado um minuto depois. Duas proteções desligadas em um minuto não parece limpeza de filtro. Cruza o painel com o sensor.',
- beatriz:'Deixa que eu ilumino: o painel registra o exaustor desligado às 21h05, e o sensor de CO₂ às 21h06. Duas proteções em um minuto. Filtro de ar não se limpa assim. Cruza o registro do painel com o sensor.'}}
+ marcos:'Sobre a Helena: a planilha dos analisadores mostra 31 amostras de 21h00 às 21h50, sem pausa. Isso cobre a hora do problema. Dá para riscar a Helena dessa janela. Cruza a fala dela com a planilha.',
+ beatriz:'A Helena disse que não saiu do laboratório, e a planilha dos analisadores registra 31 amostras de 21h00 às 21h50 sem pausa. Isso cobre a hora do problema. Confere a fala dela com a planilha.'}},
+{id:'pb',tipo:'achado',quando:{ask:'q_r2'},ref:'Fala de Rui ("sempre desligo para limpar os filtros") × Registro do painel (exaustor 21h05) e Sensor de CO₂ da parede.',prova:'sensor',texto:{
+ marcos:'O Rui falou em limpar filtros em plena festa. Mas o painel mostra o exaustor desligado às 21h05, e o sensor de CO₂ também foi desligado. Duas proteções desligadas quase juntas não parecem limpeza de filtro. Cruza o painel com o sensor.',
+ beatriz:'Deixa que eu ilumino: o painel registra o exaustor desligado às 21h05, e o sensor de CO₂ também foi desligado. Duas proteções quase juntas. Filtro de ar não se limpa assim. Cruza o registro do painel com o sensor.'}}
 ],
 c4:[
 {id:'pa',tipo:'achado',quando:{ask:'q_o3'},ref:'Fala de Olívia ("mesa de honra, não saí dali") × Transmissão de Bianca (mesa de honra das 01h20 às 02h30).',prova:'live',texto:{
@@ -45,7 +45,7 @@ c5:[
 {id:'pa',tipo:'achado',quando:{ask:'q_a4'},ref:'Fala de Armando ("tranquei a porta às 18h, quem entrou tinha chave") × Fechadura da porta dos fundos (sem arrombamento). Vale procurar quem fez uma cópia da chave.',prova:'keyreceipt',texto:{
  marcos:'O Seu Armando trancou a porta às 18h e ela não foi arrombada. Então quem entrou tinha uma cópia da chave. Meu faro diz para procurar um recibo de chaveiro: alguém pode ter mandado copiar a chave dos fundos.',
  beatriz:'A porta dos fundos estava trancada e ninguém a arrombou. Deixa que eu ilumino: quem entrou tinha uma cópia da chave. Vale procurar um recibo de chaveiro.'}},
-{id:'pb',tipo:'achado',quando:{ask:'q_l3'},ref:'Fala de Lúcia ("na academia desde as 18h30") × Proposta de compra (carimbo das 18h20, na loja do Quintela).',prova:'proposal',texto:{
+{id:'pb',tipo:'achado',quando:{all:['q_l1','q_l3','q_a1']},ref:'Fala de Lúcia ("na academia desde as 18h30") × Proposta de compra (carimbo das 18h20, na loja do Quintela).',prova:'proposal',texto:{
  marcos:'A Lúcia mentiu sobre a academia, mas a proposta de compra tem o carimbo das 18h20, na loja do Quintela. O assalto foi às 18h45. Ela estava escondendo outra coisa. A mentira é feia, mas é de outro assunto. Cruza a fala dela com o carimbo.',
  beatriz:'A Lúcia mentiu sobre a academia, mas o carimbo da proposta mostra que ela estava assinando a venda na loja do Quintela às 18h20. Mentira, sim, mas de outro assunto. Cruza a fala dela com a proposta.'}}
 ],
