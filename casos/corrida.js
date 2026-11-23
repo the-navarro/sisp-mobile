@@ -339,7 +339,7 @@ window.VSC=window.VSC||[];
    {
     "id": "p1",
     "nome": "Cartaz da exposição",
-    "descricao": "Abertura hoje às 20h no auditório. Vitrine da sala de Coleções Raras aberta à visitação a partir das 19h. Ensaio da abertura no auditório das 19h20 às 19h55, com a Profa. Esmeralda.",
+    "descricao": "Abertura hoje às 20h no auditório. Visita guiada à vitrine da sala de Coleções Raras a partir das 20h30. Ensaio da abertura no auditório das 19h20 às 19h55, com a Profa. Esmeralda.",
     "ilustracao_nova": "Cartaz sóbrio de exposição com programação",
     "disponivel": "inicio",
     "arquivo": "assets/provas/v2_p1.png"
@@ -363,7 +363,7 @@ window.VSC=window.VSC||[];
    {
     "id": "p4",
     "nome": "Registro de impressão do laboratório 3",
-    "descricao": "19h04 e 19h41, d.cunha; 18h47 L. Tavares; 20h02 t.souza.",
+    "descricao": "19h04 e 19h41, d.cunha; 18h47 I. Tavares; 20h02 t.souza.",
     "ilustracao_nova": "Lista de impressões com duas linhas do d.cunha",
     "disponivel": "inicio",
     "arquivo": "assets/provas/v2_p4.png"

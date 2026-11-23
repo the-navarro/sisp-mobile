@@ -9,7 +9,7 @@ const RQC=[
    "horario_do_crime": "entre 14h e 14h30",
    "resumo": "O bolo de morango com pimenta-rosa de Dona Cecília, favorito do concurso, sumiu da mesa de exposição meia hora antes do julgamento das 15h."
   },
-  "abertura_chefe": "O julgamento é às 15h e o bolo favorito sumiu. Três pessoas estavam na confeitaria. Descubra quem levou e onde está o bolo.",
+  "abertura_chefe": "O julgamento é às 15h e o bolo favorito sumiu. Três pessoas passaram pela confeitaria. Descubra quem levou e onde está o bolo.",
   "suspeitos": [
    {
     "id": "rogerio",
@@ -208,7 +208,7 @@ const RQC=[
      "registra_afirmacao": "A1"
     },
     {
-     "pergunta": "Por que a inauguração está atrasada?",
+     "pergunta": "Por que a reforma ainda não terminou?",
      "resposta": "Imprevistos de obra. Peças atrasam, é normal. Eu não tenho culpa de nada."
     }
    ]
@@ -394,7 +394,7 @@ const RQC=[
   "solucao": {
    "culpado": "alvaro",
    "motivo": "Vendeu o Atlas para um leilão particular.",
-   "como": "Usou a própria credencial de pesquisador, abriu a vitrine e saiu com o livro na pasta de couro."
+   "como": "Usou a própria credencial de pesquisador, abriu a vitrine e saiu com o livro num carrinho de livros coberto por um pano."
   },
   "dicas": [
    "O registro de acesso diz quem entrou na sala e quando.",

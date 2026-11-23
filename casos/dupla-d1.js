@@ -222,7 +222,7 @@ DCC.push({
    {
     "id": "i1",
     "pergunta": "Há quanto tempo a senhora tem o colar?",
-    "resposta": "Desde a inauguração, em 1994. Foi presente do meu marido, que Deus o tenha.",
+    "resposta": "Desde a inauguração, há trinta anos. Foi presente do meu marido, que Deus o tenha.",
     "registra_afirmacao": "af_i1"
    },
    {
@@ -234,7 +234,7 @@ DCC.push({
    {
     "id": "i3",
     "pergunta": "A senhora conhece o recepcionista da noite?",
-    "resposta": "O Tobias? Um moço gentil. Sempre me chama de Dona Ilda e traz chá. Está conosco há dois anos, e hoje carregou a minha bolsa até a porta do escritório quando fui guardar o colar, às 19h30.",
+    "resposta": "O Tobias? Um moço gentil. Sempre me chama de Dona Ilda e traz chá. Está conosco há dois anos, e hoje carregou a minha bolsa até a porta do escritório quando fui guardar o colar, às 19h30. Digitei o código do cofre com ele ao meu lado, sem pensar, como faço com todo mundo de casa.",
     "registra_afirmacao": "af_i3"
    }
   ]
@@ -266,7 +266,7 @@ DCC.push({
   },
   {
    "id": "p_foto_inauguracao",
-   "nome": "Foto da inauguração, 1994",
+   "nome": "Foto da inauguração, há trinta anos",
    "descricao": "Foto antiga do saguão. Sobre o balcão está o veleiro em miniatura com a plaquinha: 'Albatroz, presente do capitão Mirante'.",
    "dono": "A",
    "disponivel": "inicio",
@@ -275,7 +275,7 @@ DCC.push({
   {
    "id": "p_escala",
    "nome": "Escala da equipe de sábado",
-   "descricao": "Escala impressa: Helga, gerência, 14h às 24h, cartão GER-01. Denise, governança, 14h às 23h, 3º andar das 21h às 23h, cartão CAM-01. Tobias Reis, recepção noite, 20h às 6h, cartão RECEP-02.",
+   "descricao": "Escala impressa: Helga, gerência, 14h às 24h, cartão GER-01. Denise, governança, 14h às 23h, 3º andar das 21h às 23h, cartão CAM-01. Tobias Reis, recepção noite, 19h às 7h, cartão RECEP-02.",
    "dono": "A",
    "disponivel": "inicio",
    "imagem": "d1_p_escala.png"
@@ -406,7 +406,7 @@ DCC.push({
    "suspeito": "helga",
    "afirmacao": "af_h3",
    "prova": "p_log_porta",
-   "explicacao": "Helga disse que só ela e Dona Ilda tinham cartão para a porta do escritório. O controle de acesso mostra que às 22h09 o cartão RECEP-02 entrou na sala e só saiu às 22h14, justo quando o cofre foi aberto e fechado. A escala diz que RECEP-02 é o cartão do recepcionista da noite, que tem um acesso de emergência ao escritório à noite do qual Helga não se lembrava.",
+   "explicacao": "Helga disse que só ela e Dona Ilda tinham cartão para a porta do escritório. O controle de acesso mostra que às 22h09 o cartão RECEP-02 entrou na sala e só saiu às 22h14, justo quando o cofre foi aberto e fechado. A escala diz que RECEP-02 é o cartão do recepcionista da noite, Tobias, que afirmou que o cartão dele só abre a recepção e o elevador de serviço.",
    "lado_afirmacao": "A",
    "lado_prova": "B"
   },
