@@ -12,7 +12,7 @@ const HOMEL=[
 ['rua',0.7,0.0,66.975,100.0,33.025],
 ['luz',0.8,15.648,41.79,36.48,26.975],
 ['poste',0.8,27.778,43.704,12.778,23.827],
-['inv',0.85,37.8,49.2,9.5,18.6]];
+['inv',0.85,38.75,52.92,7.6,14.88]];
 // Garoa: n=quantidade, vmin/vs=velocidade, lmin/ls=comprimento, wk/ak=espessura e brilho,
 // slant=inclinação, rip=chance de respingo na rua, flash=intervalo entre raios (s).
 const HG={n:2.4,vmin:170,vs:100,lmin:7,ls:7,wk:.6,ak:1,slant:.12,rip:.5,flash:[16,26]};
