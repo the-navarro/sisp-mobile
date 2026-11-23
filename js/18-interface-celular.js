@@ -4,7 +4,7 @@ const ANAME={caderno:'Caderno',calls:'Chamadas',locations:'Locais',interrogate:'
 const APPTABS=['caderno','calls','locations','interrogate','mindmap','lab','solve'];
 let APPA=0,APPO=[50,50];
 const mapTab=t=>t==='timeline'||t==='dossier'?'caderno':t;
-const badgeOf=k=>k==='caderno'?(S.bd.dossier||0)+(S.bd.timeline||0)+(S.bd.caderno||0):k==='lab'?S.inv.filter(i=>!S.an.includes(i)&&!(S.lb||{})[i]).length:k==='calls'?(S.call?1:(S.bd.calls||0)):(S.bd[k]||0);
+const badgeOf=k=>k==='caderno'?0:k==='lab'?S.inv.filter(i=>!S.an.includes(i)&&!(S.lb||{})[i]).length:k==='calls'?(S.call?1:(S.bd.calls||0)):(S.bd[k]||0);
 function openApp(k,ev){try{if(ev&&ev.currentTarget){const r=ev.currentTarget.getBoundingClientRect(),p=$('#ui').getBoundingClientRect();APPO=[Math.round((r.left+r.width/2-p.left)/p.width*100),Math.round((r.top+r.height/2-p.top)/p.height*100)]}}catch(e){}
 if(k==='brief'){BRV=0;BRS=0;render();return}if(k==='grav'){if(window.espGravAbrir)espGravAbrir();return}if(k==='set'){SET=1;render();return}if(k==='hint'){GD=1;GT='d';render();return}if(k==='menu'){toMenu();return}if(!tabOpen(k)){tst('🔒 '+(LK[k]||'Ainda bloqueado.'));return}APPA=1;go(k)}
 function closeApp(){if(S.tab==='phone')return;if((S.tab==='interrogate'||S.tab==='lab')&&LBO){window.lbBack?lbBack():(LBO=0,render());return}if(S.tab==='interrogate'&&CHO){CHO=0;QTO=0;SWO=0;render();return}const e=$('.ascr');const fin=()=>{S.tab='phone';APPA=0;QTO=0;save();render()};if(e&&e.classList){e.classList.add('aclose');setTimeout(fin,170)}else fin()}
