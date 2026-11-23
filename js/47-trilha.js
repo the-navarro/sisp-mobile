@@ -85,7 +85,7 @@ function curveHTML(ns,sel){const n=ns.length,P=curvePts(n);const f=t=>[n>1?34+t*
  const[tx,ty]=P[sel],sx=ns[sel];
  h+=`<g id=trth style="transform:translate(${tx}px,${ty-34}px)"><circle r=19 fill="#0b0b0e" stroke="#fff" stroke-width=2.5 /><clipPath id=trthc><circle r=17 /></clipPath>${sx.soon?`<text y=6 text-anchor=middle font-size=17 fill="#f0c75e">★</text>`:`<image href="${capa(sx.id)}" x=-17 y=-17 width=34 height=34 clip-path="url(#trthc)" preserveAspectRatio="xMidYMid slice"/>`}<path d="M-5,18 L0,26 L5,18z" fill="#fff"/></g></svg>`;
  return h}
-function covHTML(ns,sel){const mk=(j,c)=>{const x=ns[j];if(!x)return '';const g=x.k==='e';return `<button class="tcv ${c} ${g?'gold':''} ${!x.open&&!x.soon?'lk':''}" ${c==='c'?'tabindex=-1 aria-label="Capa selecionada"':`onclick="trSel(${j})" aria-label="Ver ${esc(x.t)}"`}>${x.soon?'<span class=tcvs><i>★</i><small>EM BREVE</small></span>':`<img src="${capa(x.id)}" alt="" draggable=false>`}</button>`};return mk(sel-1,'l')+mk(sel+1,'r')+mk(sel,'c')}
+function covHTML(ns,sel){return ns.map((x,j)=>{const d=j-sel,p=Math.max(-3,Math.min(3,d));return `<button class="tcv ${x.k==='e'?'gold':''}" data-i="${j}" data-p="${p}" onclick="trSel(${j})" aria-label="${esc(x.t)}">${x.soon?'<span class=tcvs><i>★</i><small>EM BREVE</small></span>':`<img src="${capa(x.id)}" alt="" draggable=false>`}</button>`}).join('')}
 function infHTML(x){const g=x.k==='e'?' ★ PREMIUM':'';const act=x.soon?`<button class=trplay disabled>Em breve</button>`:x.open?`<button class=trplay onclick="trStart(${x.i})">${x.done?'↻ Rever':x.p?'▶ Continuar':'▶ Jogar'}</button>`:`<button class="trplay lk" onclick="trStart(${x.i})">🔒 Bloqueado</button>`;
  return `<small style="color:${COL[x.k]}">${x.lab}${g} · ${stTxt(x).toUpperCase().replace('✓ ','')}</small><b>${esc(x.t)}</b><span>${esc(x.sub||'')}</span>${act}`}
 function chHTML(){const c=cities()[TRS.ci],ns=pad(TRS.ci),sel=Math.max(0,Math.min(TRS.sel,ns.length-1)),prem=ns.find(x=>x.k==='e'&&!x.soon);
@@ -98,8 +98,11 @@ window.trCity=(ci,sel)=>{const CS=cities();if(!CS[ci]||!CS[ci].open)return;TRS.c
  let o=document.getElementById('trc');if(!o){o=document.createElement('div');o.id='trc';o.setAttribute('role','dialog');o.setAttribute('aria-label','Capítulo da trilha');(document.getElementById('app')||document.body).appendChild(o)}
  o.innerHTML=chHTML();o.scrollTop=0;wire(o);try{AU&&AU.sfx&&AU.sfx('tap')}catch(e){}};
 function wire(o){const cf=o.querySelector('#trcf');if(!cf||cf._w)return;cf._w=1;let x0=null;cf.addEventListener('pointerdown',e=>{x0=e.clientX});cf.addEventListener('pointerup',e=>{if(x0==null)return;const dx=e.clientX-x0;x0=null;if(Math.abs(dx)>40)trSel(TRS.sel+(dx<0?1:-1))});cf.addEventListener('pointercancel',()=>x0=null)}
-window.trSel=i=>{const ns=pad(TRS.ci);if(i<0||i>=ns.length)return;TRS.sel=i;const o=document.getElementById('trc');if(!o)return;const cf=o.querySelector('#trcf');cf.innerHTML=covHTML(ns,i);const c=cf.querySelector('.tcv.c');if(c)c.classList.add('pop');
- o.querySelector('#trinf').innerHTML=infHTML(ns[i]);o.querySelector('#trcw').innerHTML=curveHTML(ns,i);
+window.trSel=i=>{const ns=pad(TRS.ci);if(i<0||i>=ns.length||i===TRS.sel)return;TRS.sel=i;const o=document.getElementById('trc');if(!o)return;const cf=o.querySelector('#trcf');
+ /* os pôsteres deslizam de um lugar para o outro (a posição vem do data-p), em vez de serem redesenhados */
+ const els=cf.querySelectorAll('.tcv');if(els.length!==ns.length)cf.innerHTML=covHTML(ns,i);else els.forEach((e,j)=>{e.dataset.p=Math.max(-3,Math.min(3,j-i))});
+ const inf=o.querySelector('#trinf');inf.innerHTML=infHTML(ns[i]);inf.classList.remove('fx');void inf.offsetWidth;inf.classList.add('fx');
+ o.querySelector('#trcw').innerHTML=curveHTML(ns,i);
  o.querySelectorAll('#trcz button').forEach((b,j)=>b.classList.toggle('cur',j===i))};
 window.trClose=()=>{const o=document.getElementById('trc');if(o)o.remove()};
 /* o capítulo some quando a tela do Arquivo/Trilha deixa de estar aberta (ex.: ao começar um caso) */
