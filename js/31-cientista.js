@@ -7,7 +7,7 @@ const lbK=id=>(C&&C.id==='c0')?2:2+(id.length%3);
 const lbSent=id=>!!(S.lb&&S.lb[id]);
 const lbWait=()=>Object.keys(S.lb||{}).filter(id=>!S.an.includes(id)&&!(S.ld||[]).includes(id));
 /* Arquivo Reservado: o laudo só vale (perguntas novas, Quadro) depois de lido na conversa com o Dr. José */
-const lbRead=()=>!!(C&&C.esp)&&!(window.DUO&&DUO.on);
+const lbRead=()=>!!C&&!C.tut&&!(window.DUO&&DUO.on);
 function lbRelease(id){S.ld=(S.ld||[]).filter(x=>x!==id);if(!S.an.includes(id))S.an.push(id);save();render()}
 window.lbReadAll=()=>{(S.ld||[]).slice().forEach(i=>{S.ld=S.ld.filter(x=>x!==i);if(!S.an.includes(i))S.an.push(i)})};
 const lbHead=()=>lbWait().sort((a,b)=>(S.lb[a].ts||0)-(S.lb[b].ts||0))[0];
