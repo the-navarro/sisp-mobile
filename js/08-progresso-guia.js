@@ -17,7 +17,7 @@ const rdPanel=()=>{const r=rdState(),st=[['Coletar as provas',r.col[0]+'/'+r.col
 const tlOn=e=>e[3]==='start'||(e[3][0]==='c'?S.an.includes(e[3].slice(2)):S.asked.includes(e[3].slice(2)));
 const LK={interrogate:'Envie as provas à Perícia para liberar as conversas.',lab:'Colete todas as provas do cenário para liberar a perícia.',mindmap:'Converse com todos os suspeitos para liberar o Quadro.',solve:'Faça 2 deduções no Quadro para liberar o mandado.'};
 const U=()=>{const k=[],a=(i,t,g)=>k.push([i,t,g]),P=x=>(S.tu||[]).includes(x),r=rdState(),cc=r.col[0]===r.col[1]&&S.inv.length>0,ca=cc&&!r.an,cs=cc&&toAn().every(i=>S.lb&&S.lb[i]),ct=ca&&!r.talk,oi=P('interrogate')||ca||cs;
-(P('lab')||cc)&&a('tab:lab','Perícia liberada: leve as provas ao laboratório.','lab');
+(P('lab')||(cc&&(!C.esp||toAn().length||S.an.length||Object.keys(S.lb||{}).length)))&&a('tab:lab','Perícia liberada: leve as provas ao laboratório.','lab');
 oi&&a('tab:interrogate','Conversas liberadas: o delegado convocou os suspeitos.','interrogate');
 (P('mindmap')||(ct&&S.asked.length>=1))&&a('tab:mindmap','Quadro de conexões liberado.','mindmap');
 ((P('solve')||S.ded.length>=(C.solveAt||2))&&solveOk()&&(!C.SUALL||SU.length===C.SUALL.length))&&a('tab:solve','Mandado liberado: você já pode pedir uma prisão.','solve');

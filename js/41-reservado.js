@@ -74,7 +74,7 @@ function espGuiaShow(t){const e=espEl('espguia');e.innerHTML=`<div class=espgc><
 window.espGuiaShow=espGuiaShow;
 setInterval(()=>{try{if(!espOk()){espDel('espguia');return}const sg=espSig();if(sg!==ESPSIG){ESPSIG=sg;ESPT=Date.now();espDel('espguia')}
 espNotasSync();
-if(C.guia&&!CUT&&!S.typing&&!RM&&!INS&&S.seen>=4&&Date.now()-ESPT>(C.guia.parado||130000)){const m=espGuiaMsg();ESPT=Date.now();if(m)espGuiaShow(m)}}catch(e){}},4000);
+if(C.guia&&!CUT&&!S.typing&&!RM&&!INS&&S.seen>=4&&S.tab!=='caderno'&&Date.now()-ESPT>(C.guia.parado||240000)){const m=espGuiaMsg();ESPT=Date.now();if(m)espGuiaShow(m)}}catch(e){}},4000);
 /* objetivo do local, uma vez, ao abrir */
 function espObjetivo(){if(!espOk()||!C.guia||!C.guia.obj||S.tab!=='locations')return;S.eo=S.eo||{};const l=S.loc;if(!l||S.eo[l]||!C.guia.obj[l])return;S.eo[l]=1;try{save()}catch(e){}try{tst('🎯 '+C.guia.obj[l])}catch(e){}}
 

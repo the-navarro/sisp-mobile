@@ -25,7 +25,7 @@ Object.keys(SCE).forEach(l=>{SCN['e2:'+l]={b:'<image href="'+SCE[l].img+'" width
 E.EVW={};const EVT={r_c:{depois:'q_c1',acoes:6},r_r:{depois:'q_c1',acoes:10},r_d:{depois:'q_d1',acoes:8}};Object.keys(J.EVW).forEach(k=>{const w=EVT[k]||J.EVW[k];E.EVW[k]=()=>S.asked.includes(w.depois)&&S.tick>=w.acoes&&S.an.includes('automato')});
 /* guia: só aparece quando o jogador para (mais avançado primeiro) */
 const G=J.guia,P=G.proximo_passo;
-E.guia={parado:130000,obj:G.objetivos,
+E.guia={parado:240000,obj:G.objetivos,
 msgs:[
 {se:{strikes:1},t:P[11][1]},
 {se:{ded:11},t:'O mandado está liberado. Revise com calma o que cada um disse antes de acusar.'},
