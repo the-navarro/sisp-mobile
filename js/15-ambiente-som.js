@@ -7,7 +7,7 @@ c4:{dt:.4,mode:'arp',per:8,CH:[[73.4,[146.8,174.6,220,293.7]],[58.3,[116.5,146.8
 end:{dt:.8,mode:'pad',per:8,len:6,w:'sine',CH:[[110,[220,261.6,329.6,440]],[87.3,[174.6,220,261.6,349.2]],[65.4,[196,261.6,329.6,392]],[98,[196,246.9,293.7,392]]]}};
 const AMBM={'c1:office':'rain,fire','c1:lab':'hum','c1:vault':'hum','c1:copa':'rain','c2:stage':'crowd','c2:back':'hum','c2:bar':'crowd','c2:office':'hum','c4:cold':'hum,drip','c4:bridge':'hum','c4:med':'hum','c4:suite':'wind','c4:deck':'crowd,wind','c3:tanks':'hum,drip','c3:ctrl':'hum','c3:terrace':'wind','c3:lab':'hum','c3:office':'','c0:hall':'hum','c0:office':'','c0:closet':''};
 Object.assign(AU,{
-tick(){const x=this.x;if(!x||x.state!=='running')return;const c=this.cfg||TH.menu;if(!this.m){if(this.nx<x.currentTime)this.nx=x.currentTime+.1;return}while(this.nx<x.currentTime+.4){this.bar(this.st++,this.nx);this.nx+=c.dt}},
+tick(){const x=this.x;if(!x||x.state!=='running')return;const c=this.cfg||TH.menu;if(!this.m){if(this.nx<x.currentTime)this.nx=x.currentTime+.1;return}if(this.nx<x.currentTime-.05)this.nx=x.currentTime+.05;let n=0;while(this.nx<x.currentTime+.9&&n++<12){this.bar(this.st++,this.nx);this.nx+=c.dt}},
 bar(i,t){const c=this.cfg||TH.menu,k=Math.floor(i/c.per)%4,[r,A]=c.CH[k],p=i%c.per,m=this.mus,w=c.w||'triangle';
 if(c.mode==='waltz'){const q=p%3;if(q===0)this.o(r,t,.9,'triangle',.5,m);else{this.o(A[0],t,.25,'sawtooth',.07,m);this.o(A[2],t,.25,'sawtooth',.06,m)}if(p===0&&Math.random()<.5)this.o(A[1]*2,t+.12,.3,'sine',.1,m);return}
 if(c.mode==='arp'){const n=A[(p%4)];if(p%4===0)this.o(r,t,1.2,'triangle',.4,m);this.o(n,t,.7,'triangle',.2,m);if(p%2===1)this.o(n*2,t+.02,.3,'sine',.07,m);return}
