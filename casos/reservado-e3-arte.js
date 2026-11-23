@@ -6,7 +6,7 @@ PDX.gertrudes={e:'almond',n:'button',b:'arch',bt:.7,lp:1.1,mw:.9,sp:8,fa:17.8,sk
 PDX.rocco={e:'hooded',n:'button',b:'straight',bt:1.4,lp:.9,mw:1.05,sp:8.4,fa:19.5,sk:'#c99a76',sh:'#a87a58',hc:'#3a2a20',hs:'bald',bg:['#5a1f2a','#16080e'],deco:'',out:'tee',oc:'#c0392b',oc2:'#f2efe8',ic:'#3a2a1c',age:48,g:'',ex:['mustache','bags'],ms:.2};
 PDX.valquiria={e:'almond',n:'pointed',b:'sharp',bt:.9,lp:1.15,mw:.95,sp:8,fa:17.2,sk:'#c49672',sh:'#9a7050',hc:'#2a1812',hs:'bob',bg:['#5a1a4a','#16060e'],deco:'',out:'tee',oc:'#d63a6a',oc2:'#ffd23a',ic:'#2a1c12',age:31,g:'',ex:['lipstick:#c0243a','earrg','lash','smile'],ms:.6};
 PDX.aldo={e:'round',n:'wide',b:'straight',bt:1.1,lp:.9,mw:1,sp:8.2,sk:'#d0a888',sh:'#a88868',hc:'#6a6a6a',hs:'cap',bg:['#2a3a4a','#0a1018'],deco:'',out:'flannel',oc:'#4a6a3a',oc2:'#2a3a22',ic:'#3a2a1c',age:52,g:'',ex:['stubble','bags','headset','capc:#3a4a6a'],ms:-.2};
-PDX.herminio={e:'hooded',n:'hooked',b:'arch',bt:1.4,lp:.8,mw:1,sp:8,sk:'#e0bf9f',sh:'#b99a7e',hc:'#e8e8ea',hs:'slick',bg:['#5a1a1a','#160606'],deco:'',out:'blazer',oc:'#a02020',oc2:'#f2e6c0',ic:'#4a3022',age:63,g:'',ex:['mustache','wr','tophat'],ms:.3};
+PDX.herminio={dead:1,e:'hooded',n:'hooked',b:'arch',bt:1.4,lp:.8,mw:1,sp:8,sk:'#e0bf9f',sh:'#b99a7e',hc:'#e8e8ea',hs:'slick',bg:['#5a1a1a','#160606'],deco:'',out:'blazer',oc:'#a02020',oc2:'#f2e6c0',ic:'#4a3022',age:63,g:'',ex:['mustache','wr','tophat'],ms:.3};
 VICN.e3=['herminio','Hermínio Tavares','63 anos · Dono e mestre de pista'];
 ['zora','valquiria','gertrudes'].forEach(i=>VFEM.add(i));
 /* papel de parede: lona do circo à noite */

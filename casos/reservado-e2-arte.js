@@ -7,7 +7,7 @@ PDX.cecilia={e:'almond',n:'pointed',b:'arch',bt:.8,lp:1.2,mw:.95,sp:8,sk:'#ead2b
 PDX.dalmo={e:'hooded',n:'bulb',b:'straight',bt:1.2,lp:.8,mw:1,sp:8,sk:'#c9a07e',sh:'#a07a5c',hc:'#e4e4e8',hs:'cap',bg:['#2c3238','#0a0e12'],deco:'',out:'uniform',oc:'#5a606a',oc2:'#d8c04a',ic:'#3a2a1c',age:67,g:'',ex:['mustache','bags','wr','capc:#3a4048'],ms:-.4};
 PDX.rafael={e:'round',n:'button',b:'arch',bt:.9,lp:1,mw:1,sp:8.4,sk:'#e0bf9f',sh:'#b99a7e',hc:'#5a3a22',hs:'wavy',bg:['#2f3a3a','#0b1212'],deco:'',out:'apron',oc:'#8a8f98',oc2:'#4a4a4a',ic:'#3a2a1c',age:29,g:'round',ex:['smile'],ms:.2};
 PDX.estela={e:'almond',n:'pointed',b:'arch',bt:.6,lp:1.15,mw:.9,sp:8.1,sk:'#f0d8c4',sh:'#d4b6a0',hc:'#efe6c8',hs:'slick',bg:['#3a3028','#120e0a'],deco:'',out:'shawl',oc:'#cdb892',oc2:'#efe6d8',ic:'#4a3a2a',age:58,g:'',ex:['lipstick:#e0765a','earrg','pearl','wr'],ms:.4};
-PDX.aurelio={e:'hooded',n:'bulb',b:'arch',bt:1.4,lp:.8,mw:1,sp:8,sk:'#e6c9ae',sh:'#c3a78e',hc:'#f0f0f2',hs:'slick',bg:['#2f2a22','#0e0c08'],deco:'',out:'vest',oc:'#4a4a52',oc2:'#f2efe8',ic:'#4a3022',age:71,g:'round',ex:['mustache:#f0f0f2','wr','bags'],ms:.1};
+PDX.aurelio={dead:1,e:'hooded',n:'bulb',b:'arch',bt:1.4,lp:.8,mw:1,sp:8,sk:'#e6c9ae',sh:'#c3a78e',hc:'#f0f0f2',hs:'slick',bg:['#2f2a22','#0e0c08'],deco:'',out:'vest',oc:'#4a4a52',oc2:'#f2efe8',ic:'#4a3022',age:71,g:'round',ex:['mustache:#f0f0f2','wr','bags'],ms:.1};
 VICN.e2=['aurelio','Aurélio Bastos','71 anos · Dono do museu'];
 ['noemia','cecilia','estela'].forEach(i=>VFEM.add(i));
 /* papel de parede: torre do relógio sob a lua */
