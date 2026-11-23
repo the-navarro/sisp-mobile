@@ -20,15 +20,17 @@ c.fillStyle='rgba(222,234,250,.62)';c.beginPath();c.ellipse(q.x,q.y,1.15,1.65,0,
 if(q.y>H+4){q.y=-4;q.tr=[];q.x=6+R()*(W-12)}}
 CHU.nf-=dt;if(CHU.nf<0){CHU.fl=1;CHU.nf=5+R()*5}
 if(CHU.fl>0){c.fillStyle='rgba(232,240,255,'+.5*CHU.fl*(R()>.35?1:.2)+')';c.fillRect(0,0,W,H);CHU.fl-=dt*3.5}}
-function chuLoop(n){const cv=CHU.cv;if(!cv||!cv.isConnected){CHU.raf=0;return}
+/* o canvas fica dentro de um SVG que muda de tamanho (e pode estar escondido ou animando ao entrar no cenário): confere a resolução de tempos em tempos para a chuva não ficar borrada */
+function chuSize(cv){const r=cv.getBoundingClientRect(),dpr=Math.min(window.devicePixelRatio||1,2);if(r.width<12||r.height<12)return;const w=Math.round(r.width*dpr),h=Math.round(r.height*dpr);if(Math.abs(cv.width-w)>w*.08||Math.abs(cv.height-h)>h*.08){cv.width=w;cv.height=h}}
+function chuLoop(n){const cv=CHU.cv;if(!cv||!cv.isConnected){CHU.raf=0;return}CHU.k=(CHU.k||0)+1;if(CHU.k%20===0)chuSize(cv);
 const dt=Math.min(.05,(n-CHU.last)/1000);CHU.last=n;chuDraw(dt);CHU.raf=requestAnimationFrame(chuLoop)}
 function chuSync(){const cv=document.querySelector('canvas.rainc');
 if(!cv){CHU.cv=null;return}
-if(cv===CHU.cv&&CHU.raf)return;
+if(cv===CHU.cv&&CHU.raf){chuSize(cv);return}
 CHU.cv=cv;CHU.W=+cv.dataset.w||92;CHU.H=+cv.dataset.h||70;
 const r=cv.getBoundingClientRect(),dpr=Math.min(window.devicePixelRatio||1,2);
-cv.width=Math.max(1,Math.round((r.width||CHU.W)*dpr));cv.height=Math.max(1,Math.round((r.height||CHU.H)*dpr));
-if(!CHU.d)chuInit();
+cv.width=Math.max(1,Math.round((r.width>=12?r.width:CHU.W*1.6)*dpr));cv.height=Math.max(1,Math.round((r.height>=12?r.height:CHU.H*1.6)*dpr));
+if(!CHU.d)chuInit();setTimeout(()=>{if(cv.isConnected)chuSize(cv)},120);setTimeout(()=>{if(cv.isConnected)chuSize(cv)},600);
 if(chuReduz()){chuDraw(0);return}
 if(!CHU.raf){CHU.last=performance.now();CHU.raf=requestAnimationFrame(chuLoop)}}
 {const _rc=render;render=function(){_rc.apply(this,arguments);try{chuSync()}catch(e){}}}
