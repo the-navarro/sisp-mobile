@@ -11,6 +11,8 @@ const CT=[
 {id:'bh',n:'Belo Horizonte',uf:'MG',reg:'Capital mineira',x:327.4,y:284.7,side:'l',pin:'e4',cs:[['c','c6'],['t','t4'],['e','e4']]},
 {id:'san',n:'Santos',uf:'SP',reg:'Litoral paulista',x:301.5,y:329.9,side:'l',pin:'c4',soon:1,cs:[['c','c4']]}];
 /* os casos comuns passam a mostrar a cidade onde acontecem (os premium já mostram) */
+/* casos rápidos e de linha do tempo também mostram a cidade no local (Local, Cidade (UF), contexto) */
+CT.forEach(ct=>ct.cs.forEach(([k,id])=>{if(k!=='r'&&k!=='t')return;const c=(k==='r'?RQC:TLC).find(x=>x.id===id);if(!c||!c.cenario||c.cenario._cid)return;const cid=ct.n+' ('+ct.uf+')',p=String(c.cenario.local).split(','),f=p.shift();c.cenario._cid=cid;c.cenario.local=f+', '+cid+(p.length?','+p.join(','):'')}));
 CT.forEach(ct=>ct.cs.forEach(([k,id])=>{if(k!=='c')return;const c=CASES.find(x=>x.id===id);if(c&&c.place&&c.place.indexOf('(')<0)c.place=c.place.replace(/, Centro$/,'')+', '+ct.n+' ('+ct.uf+')'}));
 const TR=[];CT.forEach((c,ci)=>c.cs.forEach(([k,id])=>TR.push([k,id,ci])));
 const LB={c:'CASO COMUM',r:'CASO RÁPIDO',t:'LINHA DO TEMPO',e:'ARQUIVO RESERVADO'};
@@ -19,8 +21,8 @@ const solo=()=>typeof amMode==='function'?amMode()==='solo':true;
 const capa=id=>'assets/casos/capa_'+id+'.webp'+IMV(id);
 function info(k,id){
  if(k==='c'||k==='e'){const c=k==='c'?CASES.find(x=>x.id===id):(window.ESP||[]).find(x=>x.id===id);if(!c)return null;const d=META.done[id],p=META.p[id]||0;return{k,id,t:c.n,sub:c.place,done:!!d,p,nota:META.rk&&META.rk[id],lab:k==='c'&&c.tut?'TREINAMENTO':LB[k]}}
- if(k==='r'){const c=RQC.find(x=>x.id===id);if(!c)return null;const d=RQM().done[id],p=RQM().prog[id];return{k,id,t:c.titulo,sub:c.cenario.local.split(',')[0],done:!!d,p:p&&(p.asked.length||p.seen)?1:0,stars:d,lab:LB.r}}
- if(k==='t'){const c=TLC.find(x=>x.id===id);if(!c)return null;const d=TLM().done[id],p=TLM().prog[id];return{k,id,t:c.titulo,sub:c.cenario.local.split(',')[0],done:!!d,p:p&&(p.conf||p.hints)?1:0,stars:d,lab:LB.t}}
+ if(k==='r'){const c=RQC.find(x=>x.id===id);if(!c)return null;const d=RQM().done[id],p=RQM().prog[id];return{k,id,t:c.titulo,sub:lcl(c),done:!!d,p:p&&(p.asked.length||p.seen)?1:0,stars:d,lab:LB.r}}
+ if(k==='t'){const c=TLC.find(x=>x.id===id);if(!c)return null;const d=TLM().done[id],p=TLM().prog[id];return{k,id,t:c.titulo,sub:lcl(c),done:!!d,p:p&&(p.conf||p.hints)?1:0,stars:d,lab:LB.t}}
  return null}
 window.trCities=()=>CT;
 window.trNodes=()=>{const L=[];TR.forEach(([k,id,ci])=>{const n=info(k,id);if(n){n.ci=ci;n.city=CT[ci];L.push(n)}});const cur=L.findIndex(n=>!n.done);L.forEach((n,i)=>{n.i=i;n.cur=i===cur;n.open=true});return L};
