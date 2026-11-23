@@ -10,7 +10,7 @@ window.ptmSkip=()=>{MX.cho=0;render()};
 window.ptmPop=v=>{MX.pop=v;render()};
 function ptmProva(q){const x=CL[q.prova];if(!x)return null;const has=S.inv.includes(q.prova);const lo=LO.find(l=>l.c.some(c=>c[0]===q.prova));return {n:x.n,t:has?(x.d||''):('Ainda não temos essa prova. Procure em '+(lo?lo.n:'outro local')+'.')}}
 window.ptmAns=k=>{const q=ptmPal().find(x=>x.id===MX.pp),pt=PTM(),id=ptId(),cor=q.correto;
-if(q.tipo==='achado'){let d=0,pr=null,fala='achado_skip';if(k==='conferir'){fala='achado_ok';const g=S.pgain||0;d=Math.max(0,Math.min(8,15-g));S.pgain=g+d;pr={n:'Achado do parceiro',t:q.ref,lbl:'ACHADO'}}
+if(q.tipo==='achado'){let d=0,pr=null,fala='achado_skip';if(k==='conferir'){fala='achado_ok';const g=S.pgain||0;d=Math.max(0,Math.min(8,15-g));S.pgain=g+d;pr={n:'Achado do parceiro',t:q.ref+(q.prova&&CL[q.prova]&&!S.inv.includes(q.prova)?' Você ainda não tem "'+CL[q.prova].n+'": procure em '+((LO.find(l=>l.c.some(c=>c[0]===q.prova))||{}).n||'outro local')+'.':''),lbl:'ACHADO'}}
 pt.conf[id]=Math.max(0,Math.min(100,pt.conf[id]+d));S.pal[q.id]=k;MX.pp=null;MX.pop=0;MX.rx={id,fala,expr:k==='conferir'?'a':'n',prova:pr,ach:[],d};msave();save();render();return}
 let d=0,fala='',expr='n',ok=null,pr=null;
 if(k==='confiar'){ok=cor;d=ok?10:-10;fala=ok?'confiou_certo':'confiou_errado';expr=ok?'a':'e';if(!ok)S.pfw=1}
