@@ -59,10 +59,10 @@ const n=espFreiNovas();c.innerHTML=`${av('anselmo',44)}${n?`<b>${n}</b>`:''}`;if
 /* ---------- diário com páginas ---------- */
 window.ESPG={};
 {const _in=window.insp;window.insp=function(id){if(C&&C.paginas&&C.paginas[id]){espPag(id,0);return}return _in.apply(this,arguments)}}
-window.espPag=(id,i)=>{const L=C.paginas[id],n=L.length;i=Math.max(0,Math.min(n-1,i));ESPG[id]=i;const pg=L[i],trav=pg.lab&&!S.an.includes(id),cl=CL[id];
+window.espPag=(id,i)=>{const L=C.paginas[id],n=L.length;if(!ESPG['_pre'+id]){ESPG['_pre'+id]=1;L.forEach(q=>[q.img,q.imgC].forEach(u=>{if(u){const m=new Image();m.src=u}}))}i=Math.max(0,Math.min(n-1,i));ESPG[id]=i;const pg=L[i],trav=pg.lab&&!S.an.includes(id),cl=CL[id];
 const e=espEl('esppag','duo-m');e.style.zIndex=2200;
 const body=trav?`<div class=esppg>${pg.imgC?`<img src="${esc(pg.imgC)}" alt="Página colada" draggable=false onerror="this.remove()">`:'<div class=espcola>📎</div>'}<div class=espcnt>📎 Página colada · só dá para ler depois da Perícia</div></div>`:`<div class=esppg>${pg.img?`<img src="${esc(pg.img)}" alt="${esc((pg.fecha?pg.fecha+'. ':'')+(pg.txt||''))}" draggable=false>`:`<small>${esc(pg.fecha||'')}</small><p>${esc(pg.txt||'')}</p>`}</div>`;
-e.innerHTML=`<div class="dcard espdiario"><div class=esphd><b>${cl?cl.i+' '+esc(cl.n):'Diário'}</b><button class=dcx onclick="espDel('esppag')" aria-label="Fechar">✕</button></div>${body}<div class=esppn><button ${i<=0?'disabled':''} onclick="espPag('${id}',${i-1})">◀</button><span>Página ${i+1} de ${n}</span><button ${i>=n-1?'disabled':''} onclick="espPag('${id}',${i+1})">▶</button></div></div>`};
+e.innerHTML=`<div class="dcard espdiario"><div class=esphd><b>${cl?cl.i+' '+esc(cl.n):'Diário'}</b><button class=dcx onclick="espDel('esppag')" aria-label="Fechar">✕</button></div>${body}${S.inv.includes(id)?'':`<button class=dbtn style="width:100%;margin-top:10px" onclick="grab('${id}');espPag('${id}',${i})">Coletar</button>`}<div class=esppn><button ${i<=0?'disabled':''} onclick="espPag('${id}',${i-1})">◀</button><span>Página ${i+1} de ${n}</span><button ${i>=n-1?'disabled':''} onclick="espPag('${id}',${i+1})">▶</button></div></div>`};
 
 /* ---------- guia: só quando o jogador parar ---------- */
 let ESPT=Date.now(),ESPSIG='';
