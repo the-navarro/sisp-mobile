@@ -58,7 +58,7 @@ const vurl=(tag,ext)=>`assets/v/${C.id}_${tag}.${ext||'mp4'}`;
 // efeitos sonoros e silencia a música de fundo enquanto toca; para ao pular ou sair.
 function introSnd(){const id=C.id;if(!AU.f||AU.isl)return;AU.init();const x=AU.x;if(!x)return;AU.isl=id;
 fetch(`assets/v/${id}_intro.m4a`).then(r=>r.arrayBuffer()).then(b=>x.decodeAudioData(b)).then(buf=>{if(AU.isl!==id||!CUT||CUT.k!=='in'||C.id!==id)return;const s=x.createBufferSource(),g=x.createGain();g.gain.value=.9;s.buffer=buf;s.connect(g);g.connect(AU.mg);s.onended=()=>{if(AU.isrc===s)introStop()};s.start();AU.isrc=s;if(AU.mus)AU.mus.gain.value=0}).catch(()=>{AU.isl=0})}
-function introStop(){const s=AU.isrc;AU.isrc=null;AU.isl=0;if(s){try{s.onended=null;s.stop()}catch(e){}}if(AU.mus)AU.mus.gain.value=AU.m?.15:0}
+function introStop(){const s=AU.isrc;AU.isrc=null;AU.isl=0;if(s){try{s.onended=null;s.stop()}catch(e){}}if(AU.mus)AU.mus.gain.value=AU.m?.34:0}
 const WARM=new Set();
 // Pré-carrega arquivos no cache do navegador para a capa não ficar esperando o vídeo.
 const warmUrl=u=>{if(!u||WARM.has(u))return;WARM.add(u);try{fetch(u).then(r=>r.arrayBuffer()).catch(()=>WARM.delete(u))}catch(e){WARM.delete(u)}};
