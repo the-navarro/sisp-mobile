@@ -18,16 +18,16 @@ const LO=[
 ['note_fragment','Papel parcialmente carbonizado','📄','Fragmento da lareira, ilegível a olho nu.',0],
 ['tea_cup','Chaleira e xícara de porcelana','☕','Chá frio e pó cristalino amarelado no fundo.',0],
 ['old_book','Manual de Bioquímica Agropecuária','📖','Edição de 2018 aberta em compostos orgânicos.',1]]},
+{id:'copa',n:'Copa e portaria',d:'Onde o chá foi preparado. Interfone na parede e armário de produtos de limpeza.',c:[
+['intercom','Registro do interfone','📞','Registro da portaria com as chamadas da noite.',0],
+['neutralizer','Solvente de limpeza','🧴','Rótulo rasgado, cheiro forte de produto de limpeza.',1]]},
 {id:'lab',n:'Laboratório',d:'Bancadas limpíssimas, exaustores ligados e porta com trava por digital.',c:[
 ['poison_vial','Frasco "Neurotoxina-X"','🧪','Frasco escuro com o lacre rompido e marcas de dedos.',0],
 ['keycard','Cartão magnético #441','💳','Largado perto do terminal de registros.',0],
 ['coffee_mug','Copo térmico descartável','🥤','Café gelado de cafeteria da cidade.',1]]},
 {id:'vault',n:'Cofre oculto (biblioteca)',d:'Atrás do quadro a óleo, aberto há pouco por combinação.',c:[
 ['encrypted_diary','Diário de bordo criptografado','📓','Capa de couro e trava numérica de 4 dígitos. Anotação a lápis: "o minuto em que ele entrou".',0],
-['bank_statement','Extrato do exterior (Macau)','🏛️','Envios de milhões para o exterior.',0]]},
-{id:'copa',n:'Copa e portaria',d:'Onde o chá foi preparado. Interfone na parede e armário de produtos de limpeza.',c:[
-['intercom','Registro do interfone','📞','Registro da portaria com as chamadas da noite.',0],
-['neutralizer','Solvente de limpeza','🧴','Rótulo rasgado, cheiro forte de produto de limpeza.',1]]}];
+['bank_statement','Extrato do exterior (Macau)','🏛️','Envios de milhões para o exterior.',0]]}];
 const CL={};LO.forEach(l=>l.c.forEach(c=>CL[c[0]]={id:c[0],n:c[1],i:c[2],d:c[3],h:c[4]}));
 const RES={tea_cup:'Neurotoxina-X (um tipo de cianeto) em dose mortal.',poison_vial:'Digital identificada: Victor Vance (polegar direito).',note_fragment:'Luz ultravioleta: "...afastar a diretoria e destinar 80% das invenções a uma fundação. Victor não pode saber antes da votação."',keycard:'Registro do sistema: cartão #441 (Victor Vance) usado às 22h42.',bank_statement:'Perícia nas contas: R$ 4,2M enviados ao Cassino Royal Macau.',encrypted_diary:'Páginas datadas: Arthur rastreava os desvios e ia denunciá-los na segunda-feira.',intercom:'Chamada às 22h14 originada do telefone interno 12 (terraço). Duração 40 segundos, depois o fone ficou fora do gancho. Ninguém no portão.'};
 const TL=[['17:00','Frasco retirado do armário','Victor afirma ter pegado a Neurotoxina-X "para checar a validade".','q:q_v2'],['21:30','Jantar na mansão','Arthur, Eleanor e Victor jantam. A discussão sobre as regras da empresa começa aqui.','q:q_e2'],['22:14','Interfone toca na copa','Chamada do telefone interno 12 (terraço). Clara sai da cozinha.','c:intercom'],['22:14','Bandeja sem vigilância','A xícara fica sozinha por cerca de 4 minutos.','q:q_c1'],['22:20','Victor no escritório','Victor admite ter passado ali: a lareira já queimava papéis.','q:r_v'],['22:30','Acesso ao laboratório','Entrada por digital no laboratório restrito.','c:poison_vial'],['22:42','Cartão #441 usado','Registro do cartão de Victor Vance no terminal.','c:keycard'],['22:45','Colapso do doutor','Arthur bebe o chá e o coração e a respiração param.','start'],['23:00','Polícia acionada','Clara estranha o silêncio e liga para a emergência; a porta, trancada por dentro, é aberta pela polícia.','start']];
