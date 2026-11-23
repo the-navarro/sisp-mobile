@@ -19,7 +19,7 @@ const SCE={"pista": {"img": "assets/casos/e3_loc_pista.webp", "h": {"caixa": [18
 Object.keys(SCE).forEach(l=>{SCN['e3:'+l]={b:'<image href="'+SCE[l].img+'" width=360 height=230 preserveAspectRatio="xMidYMid slice" />',h:SCE[l].h}});
 E.EVW={};Object.keys(X.EVW).forEach(k=>{const w=X.EVW[k];E.EVW[k]=()=>S.asked.includes(w.depois)&&S.tick>=w.acoes});
 const G=X.guia,P=G.proximo_passo;
-E.guia={parado:130000,obj:G.objetivos,
+E.guia={parado:240000,obj:G.objetivos,
 msgs:[
 {se:{strikes:1},t:P[11][1]},
 {se:{an:['caixa'],asked:['q_r1','q_r2'],noasked:['q_r3']},t:'Rocco carrega peso todo dia. Mostre a caixa a ele e pergunte quem teria força para pôr um homem lá dentro.'},

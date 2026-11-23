@@ -49,7 +49,21 @@ function mapHTML(CS,seen){const used=new Set(CT.map(c=>c.uf));
  const rts=CT.slice(1).map((c,i)=>{const a=CT[i];return ''}).join('');
  return `<svg id=trsvg viewBox="0 0 435 560" role="img" aria-label="Mapa do Brasil com as cidades da trilha"><g id=trg>${sts}${CS.map(c=>pinHTML(c,stOf(c,c.ci,seen))).join('')}</g></svg>`}
 window.trPin=ci=>{const c=cities()[ci];if(!c)return;if(!c.open){const pv=cities()[ci-1];try{tst('🔒 Conclua '+(pv?pv.n+' ('+pv.uf+')':'a cidade anterior')+' para liberar '+c.n+'.')}catch(e){}return}trCity(ci)};
-async function trMapRun(my){SY=280;const CS=cities(),nx=trNext(),target=(nx&&CS[nx.ci])||CS[0];
+/* mapa: arrastar com o dedo, pinça para aproximar/afastar e roda do mouse */
+const clz=(v,a,b)=>Math.max(a,Math.min(b,v));
+function mapGest(svg){if(svg._g)return;svg._g=1;const P=new Map();let pd=0,mv=false;svg.style.touchAction='none';
+ const kx=()=>435/Math.max(1,svg.getBoundingClientRect().width);
+ svg.addEventListener('pointerdown',e=>{TOK++;P.set(e.pointerId,{x:e.clientX,y:e.clientY});mv=false;if(P.size===2){const[a,b]=[...P.values()];pd=Math.hypot(a.x-b.x,a.y-b.y)}});
+ svg.addEventListener('pointermove',e=>{const p=P.get(e.pointerId);if(!p)return;const dx=e.clientX-p.x,dy=e.clientY-p.y;
+  if(P.size===1){if(!mv&&Math.hypot(dx,dy)<6)return;mv=true;try{svg.setPointerCapture(e.pointerId)}catch(_){}p.x=e.clientX;p.y=e.clientY;CX=clz(CX-dx*kx()/Z,0,435);CY=clz(CY-dy*kx()/Z,0,440);camApply()}
+  else if(P.size===2){p.x=e.clientX;p.y=e.clientY;const[a,b]=[...P.values()],d=Math.hypot(a.x-b.x,a.y-b.y);if(pd)Z=clz(Z*d/pd,1,8);pd=d;mv=true;camApply()}});
+ const up=e=>{P.delete(e.pointerId);pd=0;if(mv)svg._nc=Date.now()};
+ svg.addEventListener('pointerup',up);svg.addEventListener('pointercancel',up);
+ svg.addEventListener('wheel',e=>{e.preventDefault();TOK++;Z=clz(Z*(e.deltaY<0?1.15:1/1.15),1,8);camApply()},{passive:false});
+ svg.addEventListener('click',e=>{if(svg._nc&&Date.now()-svg._nc<300){e.stopPropagation();e.preventDefault()}},true)}
+window.trZoom=f=>{TOK++;Z=clz(Z*f,1,8);camApply()};
+window.trFocus=()=>{const CS=cities(),nx=trNext(),t=(nx&&CS[nx.ci])||CS[0];camTo(3.6,(t.x+312)/2,(t.y+308)/2,900)};
+async function trMapRun(my){SY=280;{const sv=document.getElementById('trsvg');if(sv)mapGest(sv)}const CS=cities(),nx=trNext(),target=(nx&&CS[nx.ci])||CS[0];
  const alive=()=>my===MP&&document.getElementById('trg');
  Z=1;CX=217.5;CY=220;camApply();await sleep(650);if(!alive())return;
  await camTo(3.6,(target.x+312)/2,(target.y+308)/2,2300)}
@@ -57,7 +71,7 @@ window.trList=()=>{const L=trNodes(),dn=L.filter(n=>n.done).length,CS=cities();
  const nx=trNext(),t=(nx&&CS[nx.ci])||CS[0],seen=CS.length,nc=CS[t.ci+1]||null;
  const my=MP=Date.now()+Math.random();setTimeout(()=>trMapRun(my),30);
  return `<div class=trh><div><b>${dn} de ${L.length}</b><small>etapas concluídas</small></div><button class=trinfo onclick="trInfo()" aria-label="Como funciona a trilha">i</button></div>
-<div class=trmw>${mapHTML(CS,seen)}<div class=trbn id=trbn><small>CIDADE DESBLOQUEADA</small><b></b></div></div>
+<div class=trmw>${mapHTML(CS,seen)}<div class=trzc><button onclick="trZoom(1.4)" aria-label="Aproximar">+</button><button onclick="trZoom(1/1.4)" aria-label="Afastar">−</button><button onclick="trFocus()" aria-label="Voltar ao meu caso"><svg viewBox="0 0 24 24"><circle cx=12 cy=12 r=3 /><path d="M12 2v4M12 18v4M2 12h4M18 12h4" /></svg></button></div><div class=trbn id=trbn><small>CIDADE DESBLOQUEADA</small><b></b></div></div>
 <button class=trgo onclick="trCity(${t.ci})"><span><small>${nx?'VOCÊ PAROU EM':'JORNADA CONCLUÍDA EM'}</small><b>${esc(t.n)} (${t.uf})</b></span><em>${t.dn}/${t.ns.length+(t.soon?1:0)} · Entrar</em></button>
 ${nc?`<button class="trgo nx" onclick="trCity(${nc.ci})"><span><small>PRÓXIMA CIDADE</small><b>${esc(nc.n)} (${nc.uf})</b></span><em>${nc.dn}/${nc.ns.length+(nc.soon?1:0)}</em></button>`:''}`};
 /* miniatura do mapa para o passo a passo da chefe (tela inicial): mesma aparência, sem animação nem toque */
@@ -88,8 +102,20 @@ function curveHTML(ns,sel){const n=ns.length,P=curvePts(n);const f=t=>[n>1?34+t*
  h+=`<g id=trth style="transform:translate(${tx}px,${ty-34}px)"><circle r=19 fill="#0b0b0e" stroke="#fff" stroke-width=2.5 /><clipPath id=trthc><circle r=17 /></clipPath>${sx.soon?`<text y=6 text-anchor=middle font-size=17 fill="#f0c75e">★</text>`:`<image href="${capa(sx.id)}" x=-17 y=-17 width=34 height=34 clip-path="url(#trthc)" preserveAspectRatio="xMidYMid slice"/>`}<path d="M-5,18 L0,26 L5,18z" fill="#fff"/></g></svg>`;
  return h}
 function covHTML(ns,sel){return ns.map((x,j)=>{const d=j-sel,p=Math.max(-3,Math.min(3,d));return `<button class="tcv ${x.k==='e'?'gold':''}" data-i="${j}" data-p="${p}" onclick="trSel(${j})" aria-label="${esc(x.t)}">${x.soon?'<span class=tcvs><i>★</i><small>EM BREVE</small></span>':`<img src="${capa(x.id)}" alt="" draggable=false>`}</button>`}).join('')}
-function infHTML(x){const g=x.k==='e'?' ★ PREMIUM':'';const act=x.soon?`<button class=trplay disabled>Em breve</button>`:x.open?`<button class=trplay onclick="trStart(${x.i})">${x.done?'↻ Rever':x.p?'▶ Continuar':'▶ Jogar'}</button>`:`<button class="trplay lk" onclick="trStart(${x.i})">🔒 Bloqueado</button>`;
- return `<small style="color:${COL[x.k]}">${x.lab}${g} · ${stTxt(x).toUpperCase().replace('✓ ','')}</small><b>${esc(x.t)}</b><span>${esc(x.sub||'')}</span>${act}`}
+function infHTML(x){const g=x.k==='e'?' ★ PREMIUM':'';
+ let act;if(x.soon)act=`<button class=trplay disabled>Em breve</button>`;
+ else if(x.done)act=`<button class=trplay onclick="trRestart(${x.i})">↻ Jogar de novo</button>`;
+ else if(x.p)act=`<button class=trplay onclick="trStart(${x.i})">▶ Continuar</button><button class="trplay gh" onclick="trRestart(${x.i})">↻ Reiniciar</button>`;
+ else act=`<button class=trplay onclick="trStart(${x.i})">▶ Jogar</button>`;
+ return `<small style="color:${COL[x.k]}">${x.lab}${g} · ${stTxt(x).toUpperCase().replace('✓ ','')}</small><b>${esc(x.t)}</b><span>${esc(x.sub||'')}</span><div class=tract>${act}</div>`}
+/* reiniciar um caso (a partir da tela da cidade); se já estiver em andamento, pergunta antes */
+window.trRestart=(i,ok)=>{const n=trNodes()[i];if(!n)return;
+ if(!ok&&!n.done&&n.p){const o=document.getElementById('trc');if(!o)return;trRsX();const m=document.createElement('div');m.id='trrs';m.innerHTML=`<div class=trrsc><b>Reiniciar este caso?</b><p>O progresso de "${esc(n.t)}" será apagado e você começa do zero.</p><button class=trplay onclick="trRestart(${i},1)">Reiniciar</button><button class="trplay gh" onclick="trRsX()">Cancelar</button></div>`;o.appendChild(m);return}
+ trRsX();trClose();
+ if(n.k==='r'){delete RQM().prog[n.id];msave();rqOpen(n.id)}
+ else if(n.k==='t'){delete TLM().prog[n.id];msave();tlOpen(n.id)}
+ else ptmStart(n.id,1)};
+window.trRsX=()=>{const m=document.getElementById('trrs');if(m)m.remove()};
 function chHTML(){const c=cities()[TRS.ci],ns=pad(TRS.ci),sel=Math.max(0,Math.min(TRS.sel,ns.length-1)),prem=ns.find(x=>x.k==='e'&&!x.soon);
  return `<div class=trhd><button class=trbk onclick="trClose()" aria-label="Voltar ao mapa"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button><div><small>CAPÍTULO ${c.ci+1} · ${esc(c.n.toUpperCase())} · ${c.uf}</small><h2>Escolha o caso</h2></div></div>
 <div class=tcf id=trcf>${covHTML(ns,sel)}</div><div class=tin id=trinf>${infHTML(ns[sel])}</div>
@@ -106,6 +132,10 @@ window.trSel=i=>{const ns=pad(TRS.ci);if(i<0||i>=ns.length||i===TRS.sel)return;T
  const inf=o.querySelector('#trinf');inf.innerHTML=infHTML(ns[i]);inf.classList.remove('fx');void inf.offsetWidth;inf.classList.add('fx');
  o.querySelector('#trcw').innerHTML=curveHTML(ns,i);
  o.querySelectorAll('#trcz button').forEach((b,j)=>b.classList.toggle('cur',j===i))};
+const ctOf=id=>CT.find(c=>c.cs.some(x=>x[1]===id))||null;
+/* ao terminar (ou sair de) um caso rápido ou de linha do tempo: volta para a tela da cidade daquele caso */
+window.trBack=id=>{const ct=ctOf(id);if(!ct||!solo())return false;const ci=CT.indexOf(ct);ARQ=1;RQT=6;MENU=1;render();const s=pad(ci).findIndex(x=>x.id===id);trCity(ci,s<0?undefined:s);return true};
+window.trBackLbl=(id,def)=>{const ct=ctOf(id);return ct&&solo()?'Voltar aos casos de '+ct.n:def};
 window.trClose=()=>{const o=document.getElementById('trc');if(o)o.remove()};
 /* o capítulo some quando a tela do Arquivo/Trilha deixa de estar aberta (ex.: ao começar um caso) */
 {const _r=render;render=function(){const r=_r.apply(this,arguments);try{trMockCam()}catch(e){}const o=document.getElementById('trc');if(o&&!(MENU&&ARQ&&RQT===6))o.remove();const m=document.getElementById('trim');if(m&&!(MENU&&ARQ&&RQT===6))m.remove();return r}}

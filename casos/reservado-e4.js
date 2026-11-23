@@ -20,7 +20,7 @@ E.wp=E.wp.map(w=>['e4_'+w[0],w[1]]);E.mo=E.mo.map(w=>['e4_'+w[0],w[1]]);E.sol=[E
 OPW.forEach(k=>{WIC['e4_'+k]='<image href="assets/casos/e4_op_'+k+'.webp" width=64 height=64 />'});OPM.forEach(k=>{MIC['e4_'+k]='<image href="assets/casos/e4_op_'+k+'.webp" width=64 height=64 />'});
 E.EVW={};Object.keys(X.EVW).forEach(k=>{const w=X.EVW[k];E.EVW[k]=()=>S.asked.includes(w.depois)&&S.tick>=w.acoes});
 const G=X.guia,P=G.proximo_passo;
-E.guia={parado:130000,obj:G.objetivos,
+E.guia={parado:240000,obj:G.objetivos,
 msgs:[
 {se:{strikes:1},t:P[11][1]},
 {se:{marcas:1,dedlt:11},t:'Você já ouviu gravações, mas ainda não marcou tudo o que escutou. Abra o app Gravações e marque todos os sons que você realmente ouviu, em cada gravação (pode ser mais de um): as marcas verdadeiras viram provas para o Quadro.'},
