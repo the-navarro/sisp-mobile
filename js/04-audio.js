@@ -17,8 +17,8 @@ if(k==='pick'){this.s(440,436,t,.12,.024);this.s(880,872,t,.08,.005);this.s(587,
 if(k==='grab'){this.o(660,t,.09,'sine',.025);this.o(880,t+.05,.12,'sine',.018)}
 if(k==='chime')[660,880,1320].forEach((f,i)=>this.o(f,t+i*.09,.5,'sine',.14));
 if(k==='thud')this.o(70,t,.5,'sine',.5);
-if(k==='err')this.o(150,t,.3,'sawtooth',.1)},
+if(k==='err'){this.o(247,t,.16,'sine',.07);this.o(196,t+.11,.24,'sine',.06)}},
 ring(on){if(on&&!this.rt){this.init();const b=()=>{const x=this.x;if(!x||x.state!=='running')return;const t=x.currentTime;[0,.55].forEach(d=>{this.o(440,t+d,.4,'sine',.16,null,1);this.o(480,t+d,.4,'sine',.16,null,1)})};b();this.rt=setInterval(b,2600)}else if(!on&&this.rt){clearInterval(this.rt);this.rt=0}},
-hb(b){if(!b||!this.f){if(this.ht){clearTimeout(this.ht);this.ht=0;this.hv=''}return}const k=b[0]+'/'+b[1];if(this.hv===k&&this.ht)return;clearTimeout(this.ht);this.hv=k;this.init();const lp=()=>{if(this.x&&this.x.state==='running')this.o(880+b[1]*140,this.x.currentTime,.09,'sine',.1);this.ht=setTimeout(lp,60000/b[0])};lp()},
+hb(b){if(!b||!this.f){if(this.ht){clearTimeout(this.ht);this.ht=0;this.hv=''}return}const k=b[0]+'/'+b[1];if(this.hv===k&&this.ht)return;clearTimeout(this.ht);this.hv=k;this.init();const lp=()=>{if(this.x&&this.x.state==='running'){const t=this.x.currentTime,v=.12+Math.min(.1,b[1]*.02);this.o(112,t,.11,'sine',v);this.o(90,t+.15,.13,'sine',v*.75)};this.ht=setTimeout(lp,60000/b[0])};lp()},
 sync(){const on=!MENU&&C;this.ring(!!(on&&S.call&&!S.callst&&this.f));this.hb(on&&S.tab==='interrogate'&&CHO&&!S.call&&!V&&!RM&&!ND&&S.seen>=4?HBV:0)}};
 
