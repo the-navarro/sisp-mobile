@@ -21,6 +21,8 @@ const PTD=[
    "pediu_prova": "Prova? Eu já tinha certeza, mas tudo bem... finjo que também quero ver.",
    "discordou_certo": "Poxa, eu tinha certeza! Quer dizer, ainda tenho. Mas você tem razão, pelo menos hoje.",
    "discordou_errado": "Eu sabia que você ia discordar. E eu estava certo, tá? Não vou fazer cara de 'eu avisei'. Já fiz, desculpa.",
+   "achado_ok": "Viu? Quando eu trago prova, é prova. Anota aí: dessa vez o faro e o fato andaram juntos.",
+   "achado_skip": "Tá, deixo guardado. Se mudar de ideia, o achado continua valendo.",
    "troca": "Vou ficar com saudade. Deixei um lanche na gaveta. Se ele sumir, não fui eu. Fui eu, sim."
   }
  },
@@ -44,6 +46,8 @@ const PTD=[
    "pediu_prova": "Boa ideia. Provas primeiro, teorias depois.",
    "discordou_certo": "Tá bom, eu me apressei. Anota aí: você ganhou essa.",
    "discordou_errado": "Eu sabia que a minha ideia tinha brilho. Pelo menos um pouquinho!",
+   "achado_ok": "Faísca acesa! Deu para ver que a pista tinha fundamento. Boa dupla.",
+   "achado_skip": "Sem problema, fica anotado. Se precisar, eu volto nisso.",
    "troca": "Vou carregar meu celular até a gente se ver de novo!"
   }
  }

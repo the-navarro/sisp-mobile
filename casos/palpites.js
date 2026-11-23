@@ -10,15 +10,12 @@ c0:[
  beatriz:'Só o tesoureiro mexe na chave reserva. Faísca acesa: foi o Lúcio!'}}
 ],
 c1:[
-{id:'pa',quando:{n:2},aponta_para:'eleanor',correto:false,prova:'poison_vial',texto:{
- marcos:'Viúva e diretora da empresa do marido? Meu faro de sabujo apita: foi a Eleanor. Cônjuge é sempre o primeiro suspeito. Está no manual. Ou deveria estar.',
- beatriz:'A esposa de quem morreu e que dirige a empresa dele? Deixa que eu ilumino: foi a Eleanor, não foi?'}},
-{id:'pb',quando:{ask:'q_c1'},aponta_para:'clara',correto:false,prova:'intercom',texto:{
- marcos:'A bandeja ficou quatro minutos com a governanta e sem ninguém olhando. Foi a Clara! Eu já desconfiava desde o café. Que ela não me ofereceu.',
- beatriz:'Quatro minutos sozinha com a bandeja e a Clara sumiu da cozinha bem nessa hora. Faísca acesa: foi ela!'}},
-{id:'pc',quando:{an:'keycard'},aponta_para:'victor',correto:true,prova:'keycard',texto:{
- marcos:'Cartão do laboratório no nome do Victor! Meu faro nunca falha. Foi ele. E eu cheguei nele antes, tá?',
- beatriz:'Faísca acesa! Cartão #441 e o álibi do terraço foi por água abaixo. É o Victor.'}}
+{id:'pa',tipo:'achado',quando:{ask:'q_v5'},ref:'Fala de Victor ("foi engano de número, eu pedia um café") × Registro do interfone (40 segundos de chamada, fone fora do gancho, ninguém no portão).',texto:{
+ marcos:'Chefe, deixa eu farejar uma coisa. O Victor disse que ligou por engano, pra pedir um café. Mas o registro do interfone mostra 40 segundos de chamada e o fone largado fora do gancho. Quem pede café fala, espera e desliga. Dessa vez o meu faro tem prova: confere a fala dele com o registro.',
+ beatriz:'Deixa que eu ilumino um detalhe: o Victor jura que foi engano de número e que queria um café. Só que o registro mostra 40 segundos de chamada e o fone largado fora do gancho. Ninguém pede café assim. Confere a fala dele com o registro do interfone.'}},
+{id:'pb',tipo:'achado',quando:{all:['q_v1','q_e2']},ref:'Fala de Victor ("só uma divergência sobre investimentos") × Fala de Eleanor ("bate-boca terrível no jantar") e o fragmento queimado (Victor não podia saber antes da votação).',texto:{
+ marcos:'Anotei duas coisas aqui. O Victor chamou a briga de "divergência sobre investimentos". A doutora Eleanor falou em bate-boca terrível no jantar, e o papel queimado diz que o Victor não podia saber das novas regras. Divergência, sei. Meu faro diz que ele está minimizando.',
+ beatriz:'Faísca acesa! O Victor chamou a discussão de "divergência sobre investimentos", mas a Eleanor falou em bate-boca terrível no jantar. E o fragmento queimado mostra o que estava em jogo. Vale cruzar essas duas falas com o papel.'}}
 ],
 c2:[
 {id:'pa',quando:{ask:'q_r2'},aponta_para:'rogerio',correto:false,prova:'bar_receipt',texto:{
