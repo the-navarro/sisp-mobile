@@ -12,7 +12,7 @@ const HOMEL=[
 ['rua',0.7,0.0,66.975,100.0,33.025],
 ['luz',0.8,15.648,41.79,36.48,26.975],
 ['poste',0.8,27.778,43.704,12.778,23.827],
-['inv',0.85,34.074,49.63,9.259,18.148]];
+['inv',0.85,37.8,49.2,9.5,18.6]];
 // Garoa: n=quantidade, vmin/vs=velocidade, lmin/ls=comprimento, wk/ak=espessura e brilho,
 // slant=inclinação, rip=chance de respingo na rua, flash=intervalo entre raios (s).
 const HG={n:2.4,vmin:170,vs:100,lmin:7,ls:7,wk:.6,ak:1,slant:.12,rip:.5,flash:[16,26]};
@@ -20,7 +20,7 @@ const HM={raf:0,hero:null,st:null,cv:null,px:0,py:0,tx:0,ty:0,t:0,last:0,d:null,
 const hmR=()=>{HM.seed=HM.seed*16807%2147483647;return HM.seed/2147483647};
 const hmReduz=()=>document.body.classList.contains('rm')||(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
 function homeArt(){
-const L=k=>{const a=HOMEL.find(x=>x[0]===k);return `<img class=hl data-d=${a[1]} alt="" draggable=false src="assets/home/${a[0]}.webp" style="left:${a[2]}%;top:${a[3]}%;width:${a[4]}%;height:${a[5]}%">`};
+const L=k=>{const a=HOMEL.find(x=>x[0]===k);return `<img class=hl data-d=${a[1]} alt="" draggable=false src="assets/home/${a[0]}.webp${a[0]==='luz'||a[0]==='inv'?'?v=2':''}" style="left:${a[2]}%;top:${a[3]}%;width:${a[4]}%;height:${a[5]}%">`};
 return `<div class=hstage aria-hidden=true>${L('ceu')}${L('distantes')}${L('meio')}<div class="hfog f1"></div>${L('proximos')}<div class="hfog f2"></div><div class=hflash></div>${L('rua')}${L('luz')}${L('poste')}${L('inv')}</div><canvas class=hrain aria-hidden=true></canvas><div class=hvig></div>`}
 function homeGeom(){const h=HM.hero,r=h.getBoundingClientRect(),hw=h.clientWidth||r.width,hh=h.clientHeight||r.height;
 if(!hw||!hh)return;HM.hw=hw;HM.hh=hh;
@@ -33,7 +33,7 @@ HM.d=Array.from({length:Math.round(hw*hh/(430*600)*170*HG.n)},()=>hmDrop(true))}
 function hmDrop(first){const z=[.4,.7,1][Math.floor(hmR()*3)],streetTop=HM.oy+HM.sh*.67,land=Math.min(HM.hh,streetTop+(HM.hh-streetTop)*(.1+.9*z*hmR()));
 return{x:hmR()*(HM.hw+120)-30,y:first?hmR()*land-30:-20-hmR()*60,z,v:(HG.vmin+hmR()*HG.vs)*z+120,l:(HG.lmin+hmR()*HG.ls)*z,a:(.12+.45*z*hmR()+.08)*HG.ak,w:(.5+.9*z)*HG.wk,land}}
 // máscara da luz do poste: a chuva fica mais clara e dourada onde há luz
-function hmMask(){const a=HOMEL.find(x=>x[0]==='luz'),im=new Image();im.onload=()=>{const W=108,H=162,cv=document.createElement('canvas');cv.width=W;cv.height=H;const x=cv.getContext('2d',{willReadFrequently:true});x.drawImage(im,a[2]/100*W,a[3]/100*H,a[4]/100*W,a[5]/100*H);const d=x.getImageData(0,0,W,H).data;let mx=1;for(let k=3;k<d.length;k+=4)if(d[k]>mx)mx=d[k];HM.mask=(fx,fy)=>{const i=Math.floor(fx*W),j=Math.floor(fy*H);return i<0||j<0||i>=W||j>=H?0:Math.min(1,d[(j*W+i)*4+3]/mx*1.15)}};im.src='assets/home/luz.webp'}
+function hmMask(){const a=HOMEL.find(x=>x[0]==='luz'),im=new Image();im.onload=()=>{const W=108,H=162,cv=document.createElement('canvas');cv.width=W;cv.height=H;const x=cv.getContext('2d',{willReadFrequently:true});x.drawImage(im,a[2]/100*W,a[3]/100*H,a[4]/100*W,a[5]/100*H);const d=x.getImageData(0,0,W,H).data;let mx=1;for(let k=3;k<d.length;k+=4)if(d[k]>mx)mx=d[k];HM.mask=(fx,fy)=>{const i=Math.floor(fx*W),j=Math.floor(fy*H);return i<0||j<0||i>=W||j>=H?0:Math.min(1,d[(j*W+i)*4+3]/mx*1.15)}};im.src='assets/home/luz.webp?v=2'}
 function homeDraw(dt){const cv=HM.cv,c=cv.getContext('2d'),dpr=+cv.dataset.dpr||1;c.setTransform(dpr,0,0,dpr,0,0);c.clearRect(0,0,HM.hw,HM.hh);c.lineCap='round';
 const sl=HG.slant,lit=(x,y)=>HM.mask?HM.mask((x-HM.ox)/HM.sw,(y-HM.oy)/HM.sh):0;
 for(const d of HM.d){d.y+=d.v*dt;d.x+=-sl*d.v*dt;
@@ -52,7 +52,7 @@ homeDraw(dt);HM.raf=requestAnimationFrame(homeLoop)}
 function homeSync(){const h=document.querySelector('.hero');
 if(!h||!h.querySelector('.hstage')){HM.hero=null;return}
 if(h===HM.hero&&HM.raf)return;
-HM.hero=h;HM.st=h.querySelector('.hstage');HM.cv=h.querySelector('.hrain');HM.els=[...h.querySelectorAll('.hl')];HM.luz=h.querySelector('img[src$="luz.webp"]');HM.fx=h.querySelector('.hflash');
+HM.hero=h;HM.st=h.querySelector('.hstage');HM.cv=h.querySelector('.hrain');HM.els=[...h.querySelectorAll('.hl')];HM.luz=h.querySelector('img[src*="luz.webp"]');HM.fx=h.querySelector('.hflash');
 homeGeom();if(!HM.mask)hmMask();
 if(!h.dataset.hb){h.dataset.hb=1;h.addEventListener('pointermove',e=>{const r=h.getBoundingClientRect();HM.tx=(e.clientX-r.left)/r.width*2-1;HM.ty=(e.clientY-r.top)/r.height*2-1});h.addEventListener('pointerleave',()=>{HM.tx=HM.ty=0});
 if(window.ResizeObserver)new ResizeObserver(()=>{if(HM.hero===h)homeGeom()}).observe(h)}
