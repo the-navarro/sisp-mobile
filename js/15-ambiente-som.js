@@ -14,7 +14,7 @@ if(c.mode==='arp'){const n=A[(p%4)];if(p%4===0)this.o(r,t,1.2,'triangle',.4,m);t
 if(p===0){this.o(r,t,c.len,w,.5,m);this.o(r*2,t,c.len,'sine',.18,m);this.o(r*3,t,c.len+.2,'sine',.08,m);if(c.dark)this.o(r*1.5,t,c.len,'sine',.1,m)}
 if(p===4&&k%2===0)this.o(r,t,c.len/2.5,w,.25,m);
 if([2,5,7].includes(p)&&Math.random()<.7)this.o(A[(i*7+p)%4]*(c.dark&&Math.random()<.15?1.06:1),t,c.len/2,'sine',.2,m)},
-theme(k){if(this.th===k)return;this.th=k;this.cfg=TH[k]||TH.menu;this.st=0;if(this.x)this.nx=this.x.currentTime+.2},
+theme(k){if(/^c\d+$/.test(k))k='menu';if(this.th===k)return;this.th=k;this.cfg=TH[k]||TH.menu;this.st=0;if(this.x)this.nx=this.x.currentTime+.2},
 noise(){if(this.nb)return this.nb;const x=this.x,b=x.createBuffer(1,x.sampleRate*2,x.sampleRate),d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;return this.nb=b},
 amb(spec){if(this.ak===spec)return;this.ak=spec;(this.an||[]).forEach(f=>{try{f()}catch(e){}});this.an=[];if(!spec||!this.f)return;this.init();const x=this.x;if(!x)return;const g=x.createGain();g.gain.value=.35;g.connect(this.mg);this.an.push(()=>{g.disconnect()});
 const nz=(type,fr,q,v,lfo)=>{const s=x.createBufferSource();s.buffer=this.noise();s.loop=true;const f=x.createBiquadFilter();f.type=type;f.frequency.value=fr;f.Q.value=q;const gg=x.createGain();gg.gain.value=v;s.connect(f);f.connect(gg);gg.connect(g);s.start();this.an.push(()=>{s.stop()});if(lfo){const o=x.createOscillator(),og=x.createGain();o.frequency.value=lfo;og.gain.value=v*.6;o.connect(og);og.connect(gg.gain);o.start();this.an.push(()=>{o.stop()})}return gg};
