@@ -15,7 +15,7 @@ window.VSC=window.VSC||[];
   "suspeitos": [
    {
     "id": "otavio",
-    "nome": "Otávio Brandão",
+    "nome": "Edinaldo Bastião",
     "idade": 52,
     "papel": "Mestre e dono do barco",
     "aparencia": "Capa de chuva AMARELA, boné cinza, barba grisalha por fazer, cicatriz na mão esquerda",
@@ -75,7 +75,7 @@ window.VSC=window.VSC||[];
     },
     {
      "pergunta": "A senhora ofereceu dinheiro pelo lote?",
-     "resposta": "Ofereci 4 mil pelo lote inteiro, ontem à tarde. O Otávio recusou. Foi negócio, não roubo."
+     "resposta": "Ofereci 4 mil pelo lote inteiro, ontem à tarde. O Edinaldo recusou. Foi negócio, não roubo."
     },
     {
      "pergunta": "Conhece a tripulação?",
@@ -140,15 +140,15 @@ window.VSC=window.VSC||[];
     "descricao": "Bilhete oferecendo R$ 4.000 em dinheiro pelo lote inteiro de lagostas antes do leilão, assinado por Nilza P.",
     "ilustracao_nova": "Bilhete manuscrito num cartão com clipe, assinatura legível",
     "disponivel": "inicio",
-    "arquivo": "assets/provas/v1_p2.png"
+    "arquivo": "assets/provas/v1_p2.png?v=2"
    },
    {
     "id": "p3",
     "nome": "Aviso de cobrança",
-    "descricao": "Aviso de R$ 6.800 em atraso do mestre Otávio com a Casa do Pescador, vencido há 60 dias.",
+    "descricao": "Aviso de R$ 6.800 em atraso do mestre Edinaldo com a Casa do Pescador, vencido há 60 dias.",
     "ilustracao_nova": "Folha de cobrança com carimbo de ATRASADO em vermelho",
     "disponivel": "inicio",
-    "arquivo": "assets/provas/v1_p3.png"
+    "arquivo": "assets/provas/v1_p3.png?v=2"
    },
    {
     "id": "p4",
@@ -169,18 +169,18 @@ window.VSC=window.VSC||[];
    {
     "id": "p6",
     "nome": "Livro de gelo da barraca",
-    "descricao": "5h05 Vento Sul, 2 barras, O. Brandão; 5h14 Sereia, 3 barras, R. Alves; 5h22 Vento Sul, 1 barra, Z. Lopes; 5h31 Gaivota, 2 barras, M. Faria.",
+    "descricao": "5h05 Vento Sul, 2 barras, E. Bastião; 5h14 Sereia, 3 barras, R. Alves; 5h22 Vento Sul, 1 barra, Z. Lopes; 5h31 Gaivota, 2 barras, M. Faria.",
     "ilustracao_nova": "Livro de registro de gelo com assinaturas e uma linha destacada",
     "disponivel": "apos_p6_liberada_por_dalia",
-    "arquivo": "assets/provas/v1_p6.png"
+    "arquivo": "assets/provas/v1_p6.png?v=2"
    },
    {
     "id": "p7",
     "nome": "Ficha de inscrição do leilão",
-    "descricao": "Lote 12 do Vento Sul, responsável O. Brandão: carimbo de entrada às 5h12 e carimbo de conferência às 5h38.",
+    "descricao": "Lote 12 do Vento Sul, responsável E. Bastião: carimbo de entrada às 5h12 e carimbo de conferência às 5h38.",
     "ilustracao_nova": "Ficha com dois carimbos de hora",
     "disponivel": "apos_primeiro_interrogatorio",
-    "arquivo": "assets/provas/v1_p7.png"
+    "arquivo": "assets/provas/v1_p7.png?v=2"
    },
    {
     "id": "p8",
@@ -200,7 +200,7 @@ window.VSC=window.VSC||[];
   "solucao": {
    "culpado": "zeca",
    "motivo": "Estava com dois meses de salário atrasado e queria se vingar do mestre, vendendo o lote por fora à Nilza, que tinha oferecido comprá-lo e a quem ele já tinha sondado na véspera. Ela recusou negociar fora do leilão e só soube do roubo no cais.",
-   "como": "Quando o Otávio saiu para inscrever o lote, Zeca levou a caixa no carrinho do paiol, comprou gelo às 5h22 para manter as lagostas frias e escondeu o lote antes de fingir que dormia."
+   "como": "Quando o Edinaldo saiu para inscrever o lote, Zeca levou a caixa no carrinho do paiol, comprou gelo às 5h22 para manter as lagostas frias e escondeu o lote antes de fingir que dormia."
   },
   "dicas": [
    "Compare o que cada um diz com os horários nos registros do cais.",
