@@ -265,3 +265,6 @@ Os 53 nomes de arquivo seguem exatamente a tabela do briefing. As ligações (`r
 - **Mesma voz por pessoa:** pedi a mesma voz do Gemini para cada personagem, mas cada geração sai com pequenas variações de timbre e tom. O Davi, com 16 arquivos, é o mais exposto; ouça-o em sequência (abertura, boletim, ensaio, xarope, recado, reunião, entrevista, bootleg).
 - **Volume:** a maioria ficou perto de -16 LUFS, entre -18.5 e -14.5. Os nomes soltos do porteiro (`porta_manual__03`, `04`, `06` e `07`) ficaram em cerca de -18 LUFS, porque palavras curtas têm pico alto e não dá para subir mais sem passar de -1 dBFS. Pico máximo de -1.3 dBFS; maior duração de 16.4 s.
 
+
+## Regravação das ligações com sotaque regional (23/11/2026)
+Foram regravadas, com o texto novo do jogo (toque regional de MG, RJ e SP), as ligações `c0_r_m`, `c1_r_c`, `c5_r_a`, `e1_r_b`, `e2_r_d`, `e3_r_r`, `e4_r_b` e `e4_r_t`, cada uma nas versões normal e `_a` (16 arquivos), mantendo a voz de cada personagem e o mesmo formato (MP3 mono, 44,1 kHz, cerca de -16 LUFS). As durações da tabela acima dessas faixas mudaram ligeiramente.
