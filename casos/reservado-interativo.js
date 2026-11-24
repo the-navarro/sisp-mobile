@@ -27,13 +27,13 @@ ix('e1','chaves',{pg:[pg('RETIRADAS · ARMÁRIO DA ENFERMARIA',['Quem retira ano
 ix('e1','tombo',{pg:[pg('LIVRO DE TOMBO · INVENTÁRIO',['Bens do convento, por ordem de entrada.','Guardado no cofre do arquivo.']),pg('Ostensório, séc. XVIII',['(folha nova, de papel branco)','a anotação antiga desapareceu'],0),pg('Ex-votos de prata',['(folha nova, de papel branco)','as demais folhas são amareladas'],0)]});
 
 /* ---------- caso 02 ---------- */
-sec('e2','bolso',.60,.08,'Uma impressão de polegar na coroa, com óleo fluorescente: quem parou o relógio tinha as mãos sujas do óleo da oficina.');
+sec('e2','bolso',.60,.08,'Manchas de óleo fluorescente na coroa: quem parou o relógio tinha as mãos sujas do óleo da oficina.');
 sec('e2','alavanca',.20,.40,'Os parafusos da tampa têm a pintura riscada em círculo: foram soltos há pouco, com uma chave de fenda de relojoeiro.');
 sec('e2','contador',.50,.28,'Entre o oito e a engrenagem há um calço de cera: o contador foi travado, não parou sozinho.');
 sec('e2','molde',.80,.28,'Na cera, uma impressão de dedo manchada de nanquim: quem copiou a chave tinha acabado de mexer em desenho técnico.');
 sec('e2','chaves',.40,.63,'Logo abaixo da última linha, a marca de uma linha raspada com lâmina: houve um terceiro registro, apagado.');
 ix('e2','alavanca',{col:'dust',lab:'Levantar digitais',seed:9,ok:2,ttl:'Levantar digitais da alavanca'});
-ix('e2','bolso',{col:'dust',lab:'Levantar digitais da coroa',seed:4,ok:0,ttl:'Levantar digitais do relógio'});
+ix('e2','bolso',{col:'dna',lab:'Coletar suor da corrente',seed:4,st:st('e2','bolso',[[.45,.30],[.55,.52],[.40,.72]]),ttl:'Coletar suor da corrente do relógio'});
 ix('e2','chaves',{pg:[pg('LIVRO DE CHAVES · TORRE',['Cópias registradas da chave da torre.','Preso ao quadro de chaves da guarita.']),pg('Cópias',['Cópia 1: Aurélio Bastos, com o dono.','Cópia 2: Portaria (Seu Daimo), no quadro.'],1),pg('Retiradas desde junho',['nenhuma','(abaixo, uma linha raspada com lâmina)'],1)]});
 ix('e2','ronda',{pg:[pg('LIVRO DE RONDAS · PORTARIA',['O vigia anota hora e ocorrências.']),pg('Quinta, 20h',['20h00: ronda do pátio, sem novidade.','20h15: pedestal do autômato vazio, restauro?'],1),pg('Quinta, 21h',['21h00: tudo em ordem.','21h30: tudo em ordem.','(outra caneta, escrita depois)'],2)]});
 ix('e2','agenda',{pg:[pg('AGENDA · AURÉLIO BASTOS',['Compromissos da semana, a mão.']),pg('Sexta',['20h45: torre, conferir o carrilhão.','(escrito na segunda-feira)'],0),pg('Sexta, depois',['Teodoro, conversa séria.','(outra tinta, mais pressão)'],0)]});
