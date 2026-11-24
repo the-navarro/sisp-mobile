@@ -151,14 +151,3 @@ render=function(){try{return _r.apply(this,arguments)}catch(err){rec('render: '+
  catch(e2){try{const u=document.getElementById('ui');if(u)u.innerHTML='<div class="ov" style="z-index:50"><h2>Algo deu errado nesta tela</h2><p class=mut style="font-size:12px;max-width:320px">'+String(e2&&e2.message||e2).replace(/</g,'&lt;')+'</p><p><button class=btn onclick="location.reload()">Recarregar</button></p><p><button class="btn gh" onclick="try{MENU=1;render()}catch(e){location.reload()}">Voltar ao menu</button></p></div>'}catch(e3){}}
  finally{busy=0}}};
 })();
-
-/* Diagnóstico: abrir o jogo com ?diag=1 mostra os últimos erros registrados neste aparelho (para achar a causa de telas pretas ou de caso que não abre). */
-(function(){try{if(!/[?&]diag\b/.test(location.search))return;
-addEventListener('load',()=>setTimeout(()=>{let L=[];try{L=JSON.parse(localStorage.getItem('sisp_errlog')||'[]')}catch(e){}if(!L.length){const e=localStorage.getItem('sisp_lasterr');if(e)L=[e]}
-const d=document.createElement('div');d.style.cssText='position:fixed;inset:0;z-index:99999;background:#07090d;color:#e8ecf1;padding:20px;overflow:auto;font:14px/1.45 Arial';
-const h=document.createElement('h2');h.textContent='Diagnóstico do jogo';d.appendChild(h);
-const p=document.createElement('p');p.textContent=L.length?'Últimos erros registrados neste aparelho (o mais recente por último):':'Nenhum erro registrado neste aparelho.';d.appendChild(p);
-L.forEach(t=>{const pr=document.createElement('pre');pr.style.cssText='white-space:pre-wrap;word-break:break-all;background:#151a22;padding:10px;border-radius:8px;font-size:12px';pr.textContent=t;d.appendChild(pr)});
-const b=document.createElement('button');b.textContent='Fechar';b.style.cssText='margin-top:14px;padding:12px 22px;border-radius:12px;border:0;background:#eaa73c;font-weight:700';b.onclick=()=>d.remove();d.appendChild(b);
-const c=document.createElement('button');c.textContent='Apagar registro de erros';c.style.cssText='margin:14px 0 0 10px;padding:12px 18px;border-radius:12px;border:1px solid #888;background:none;color:#e8ecf1';c.onclick=()=>{try{localStorage.removeItem('sisp_errlog');localStorage.removeItem('sisp_lasterr')}catch(e){}d.remove()};d.appendChild(c);
-document.body.appendChild(d)},900))}catch(e){}})();
