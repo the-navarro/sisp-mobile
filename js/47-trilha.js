@@ -146,7 +146,7 @@ pir:{t:'Piracicaba concluída',b:'a joalheria, a estação e o circo estão em o
 bh:{t:'Belo Horizonte concluída',b:'a galeria, o edifício e a rádio voltaram à calma. A capital mineira respira aliviada.',n:'Sua próxima parada é Santos, no litoral de São Paulo. Entre navios, guindastes e maresia, fica o maior porto da América Latina. Os casos de lá chegam em breve: assim que a delegacia estiver pronta, eu aviso.'}};
 const trTit=()=>{const g=(typeof plv==='function'&&plv().g)||'f';return g==='f'?'Delegada':g==='n'?'Delegade':'Delegado'};
 /* ids de cidade com áudio gravado da chefe (assets/voz/fim_<id>_1.mp3, fim_<id>_1_a.mp3 para delegada e fim_<id>_2.mp3). Sem áudio, a fala só aparece digitada. */
-const TRFV={};
+const TRFV={tir:1,nf:1,pir:1,bh:1};
 let TRF=null;
 window.trFinX=()=>{if(TRF){clearInterval(TRF.iv);clearTimeout(TRF.to);try{if(TRF.au){TRF.au.pause();TRF.au.removeAttribute('src');TRF.au.load()}}catch(e){}}TRF=null;const o=document.getElementById('trfin');if(o)o.remove()};
 window.trFinGo=ci=>{const c=CT[ci];META.trfin=META.trfin||{};if(c)META.trfin[c.id]=1;try{msave()}catch(e){}trFinX();const nx=cities()[ci+1];if(nx&&nx.open&&!nx.soon)trCity(ci+1)};
@@ -156,10 +156,10 @@ function trFinDone(){if(!TRF||TRF.fin)return;TRF.fin=1;clearInterval(TRF.iv);cle
  o.querySelectorAll('.trfs').forEach((e,k)=>{e.textContent=TRF.tx[k]});const pl=o.querySelector('#trfpl');if(pl)pl.remove();const sp=o.querySelector('.avl');if(sp)sp.classList.remove('talk');o.querySelector('#trflb').textContent='CHAMADA ENCERRADA';
  const b=o.querySelector('#trfbt');b.innerHTML=(nx?`<div class=trfp><span>PRÓXIMA CIDADE</span><b>${esc(nx.n)} · ${esc(nx.uf)}</b><i>${esc(nx.reg)}</i></div>`:'')+`<button class=trplay onclick="trFinGo(${ci})">${go?'Seguir para '+esc(nx.n):'Entendido'}</button>${go?`<button class="trplay trgh" onclick="trFinStay(${ci})">Ficar em ${esc(c.n)}</button>`:''}`;b.classList.add('on')}
 function trFinTipo(k){if(!TRF||TRF.fin)return;const o=document.getElementById('trfin');if(!o)return;if(k>=TRF.tx.length){TRF.to=setTimeout(trFinDone,500);return}
- const el=o.querySelectorAll('.trfs')[k];el.parentNode.style.display='block';const tx=TRF.tx[k];let i=0,ms=28,step=()=>{clearInterval(TRF.iv);TRF.iv=setInterval(()=>{i++;el.textContent=tx.slice(0,i);const sc=o.querySelector('#trfbx');if(sc)sc.scrollTop=sc.scrollHeight;if(i>=tx.length){clearInterval(TRF.iv);TRF.to=setTimeout(()=>trFinTipo(k+1),k===0?700:200)}},ms)};
+ const el=o.querySelectorAll('.trfs')[k];el.parentNode.style.display='block';const tx=TRF.tx[k];let i=0,ms=28,step=()=>{clearInterval(TRF.iv);TRF.iv=setInterval(()=>{i++;el.textContent=tx.slice(0,i);const sc=o.querySelector('#trfbx');if(sc)sc.scrollTop=sc.scrollHeight;if(i>=tx.length){clearInterval(TRF.iv);const nx=()=>{TRF.to=setTimeout(()=>trFinTipo(k+1),k===0?700:200)},au=TRF.au;if(src&&au&&!au.ended&&isFinite(au.duration)&&au.duration>0){let d=0;const g=()=>{if(d)return;d=1;nx()};au.addEventListener('ended',g,{once:true});TRF.to=setTimeout(g,Math.max(0,au.duration-au.currentTime)*1000+1500)}else nx()}},ms)};
  const src=TRF.src[k];if(!src){step();return}
  const a=trVoz(src);TRF.au=a;let ok=0;const fb=setTimeout(()=>{if(!ok){ok=1;step()}},1200);
- a.addEventListener('loadedmetadata',()=>{if(ok)return;ok=1;clearTimeout(fb);if(isFinite(a.duration)&&a.duration>1)ms=Math.max(14,Math.min(70,a.duration*1000*.96/tx.length));step()});
+ a.addEventListener('loadedmetadata',()=>{if(ok)return;ok=1;clearTimeout(fb);if(isFinite(a.duration)&&a.duration>1)ms=Math.max(14,Math.min(140,a.duration*1000*.96/tx.length));step()});
  a.addEventListener('error',()=>{if(ok)return;ok=1;clearTimeout(fb);TRF.au=null;step()});
  a.addEventListener('ended',()=>{});const pr=a.play();if(pr&&pr.catch)pr.catch(()=>{if(!ok){ok=1;clearTimeout(fb);step()}})}
 window.trFinAtender=()=>{if(!TRF)return;const o=document.getElementById('trfin');if(!o)return;TRF.on=1;try{AU.fx('tick')}catch(e){}
