@@ -7,7 +7,7 @@ Arquivo de acompanhamento. Atualizado a cada mudança combinada.
 ### Para remover quando a Laryssa terminar de testar
 - [ ] **Botão provisório "Ouvir de novo a ligação da Regina"** (fim das cidades). Código: `trFinReplay` e o botão em `chHTML`, em `js/47-trilha.js`.
 - [ ] **Todas as cidades e casos estão liberados só para teste.** Em `trNodes` (`js/47-trilha.js`), `n.open=true` precisa voltar a liberar por progresso real. Só mudar quando ela pedir.
-- [ ] **Painel de diagnóstico `?diag=1`** (`js/46-susto.js`). Pode ficar durante os testes. Decidir se sai na publicação.
+- [x] Painel de diagnóstico `?diag=1` removido a pedido da Laryssa. O jogo ainda registra os últimos erros no aparelho (`sisp_errlog`), sem mostrar nada na tela.
 
 ### Para a publicação do jogo
 - [ ] **Botão "Avançar a espera do laudo" com anúncio.** Hoje o laudo sai por tempo (12 s por ação de cada prova, de 24 a 48 s) ou ao fazer ações no caso. A contagem regressiva já aparece no card da perícia.
