@@ -32,8 +32,29 @@ IXV.cctv=t=>{const sw=Math.sin(t*30)*1.5,sec=t*1800;let o=`<rect width=240 heigh
  o+=`<g transform="translate(${96+sw} 134)"><circle cx=0 cy=-62 r=9 fill="#050806" /><path d="M-9 -52h18l4 40h-26z" fill="#050806" /><rect x=-14 y=-52 width=28 height=5 rx=2 fill="#0c1a10" /></g><rect x=116 y=96 width=8 height=3 fill="#050806" />`;
  return o+CAMHUD(t,IXM.cctv.t,pad2(1+(45+Math.floor(sec/60)>=60?1:0))+':'+pad2((45+Math.floor(sec/60))%60)+':'+pad2(Math.floor(sec%60)))};
 /* impressões e DNA */
-function PRN(p,bg){let o='';const st=p.st;if(p.ty==='whorl'){for(let i=1;i<=9;i++)o+=`<ellipse cx=50 cy=60 rx=${st*i*.95} ry=${st*i*1.2} />`}else if(p.ty==='arch'){for(let i=1;i<=11;i++){const y=118-i*st*.8;o+=`<path d="M6 ${y}Q50 ${y-34+i*2} 94 ${y}" />`}}else{for(let i=1;i<=9;i++){const r=st*i*.8;o+=`<path d="M${50-r} 118V${54-i*2}A${r} ${r} 0 0 1 ${50+r} ${54-i*2}V118" />`}}
- return `<g fill=none stroke="#15171c" stroke-width=1.7 stroke-linecap=round clip-path="url(#mgcp)">${o}</g><path d="M${p.sx} ${p.sy}l16 -7" stroke="${bg}" stroke-width=3.4 stroke-linecap=round /><circle cx=${p.sx+22} cy=${p.sy-12} r=1.8 fill="#15171c" />`}
+const PRC={};
+function PRN(p,bg){
+ /* digital realista: campo de fase dos sulcos (laço ou espiral) + ruído, desenhada em canvas com poros e falhas, como pó sobre vidro */
+ const key=p.ty+'|'+p.st+'|'+p.sx+'|'+p.sy;
+ if(!PRC[key]){
+  const W=240,H=288,c=document.createElement('canvas');c.width=W;c.height=H;const g=c.getContext('2d'),im=g.createImageData(W,H);
+  let h=(p.sx*131+p.sy*71+Math.round(p.st*97))>>>0;const R=()=>{h=(h*1664525+1013904223)>>>0;return h/4294967296};
+  const hs=(x,y,z)=>{let n=(x*374761393+y*668265263+z*2147483647)|0;n=(n^(n>>13))*1274126177|0;return((n^(n>>16))>>>0)/4294967296};
+  const vn=(x,y,z)=>{const xi=Math.floor(x),yi=Math.floor(y),xf=x-xi,yf=y-yi,u=xf*xf*(3-2*xf),v=yf*yf*(3-2*yf);return hs(xi,yi,z)*(1-u)*(1-v)+hs(xi+1,yi,z)*u*(1-v)+hs(xi,yi+1,z)*(1-u)*v+hs(xi+1,yi+1,z)*u*v};
+  const z=Math.round(R()*999),k=2*Math.PI/(st=>st)(p.st*.92+.5),sl=(R()<.5?-1:1)*(.10+R()*.1),cy=58+R()*6;
+  for(let py=0;py<H;py++)for(let px=0;px<W;px++){
+   const x=px/2.4-50,y=py/2.4-cy,wx=x+(vn(px/22,py/22,z)-.5)*7,wy=y+(vn(px/22,py/22,z+7)-.5)*7;let ph;
+   if(p.ty==='whorl'){const a=Math.atan2(wy*1.15,wx);ph=k*Math.hypot(wx*.95,wy*1.15)+a*1.0}
+   else{const sx=wx-sl*(wy+30);const top=Math.hypot(sx,Math.min(wy,0)*1.25);const bot=Math.abs(sx)*(wy>0?1:0);const blend=Math.max(0,Math.min(1,wy/14));ph=k*(top*(1-blend)+Math.max(Math.abs(sx),top)*blend*1)+(wy>0?Math.sin(wy*.06)*0:0)}
+   let v=Math.cos(ph);
+   const nz=vn(px/3,py/3,z+3);
+   let a=Math.max(0,Math.min(1,(v-.1+(nz-.5)*.7)*2.4));
+   if(vn(px/5,py/5,z+11)>.86)a*=.25;
+   const m=.78+vn(px/30,py/30,z+5)*.3;
+   const ex=(px/2.4-50)/42,ey=(py/2.4-60)/56,edge=ex*ex+ey*ey;a*=m*Math.max(0,Math.min(1,(1.0-edge)*7));
+   const o=(py*W+px)*4;im.data[o]=21;im.data[o+1]=23;im.data[o+2]=28;im.data[o+3]=Math.round(a*255)}
+  g.putImageData(im,0,0);PRC[key]=c.toDataURL()}
+ return `<image href="${PRC[key]}" x=0 y=0 width=100 height=120 /><path d="M${p.sx} ${p.sy}l16 -7" stroke="${bg}" stroke-width=3.4 stroke-linecap=round /><circle cx=${p.sx+22} cy=${p.sy-12} r=1.8 fill="#15171c" />`}
 const PRS=(it,i)=>({ty:['loop','whorl','loop','loop'][(i+it.seed)%4],st:3.6+((i*7+it.seed)%5)*.28,sx:28+((i*23+it.seed*11)%40),sy:36+((i*31+it.seed*7)%46)});
 const PRSVG=(p,bg,w,extra='')=>`<svg viewBox="0 0 100 120" width=${w} height=${w*1.2} style="display:block"><defs><clipPath id=mgcp><ellipse cx=50 cy=60 rx=40 ry=54 /></clipPath></defs><ellipse cx=50 cy=60 rx=41 ry=55 fill="${bg}" />${PRN(p,bg)}${extra}</svg>`;
 const BANDS=(seed,i,ok)=>{const b=Array.from({length:7},(_,k)=>16+((k*37+seed*13)%100));b.sort((a,c)=>a-c);return b.map((y,k)=>i!==ok&&(k+i)%3===0?cl(y+(k%2?-12:12),8,118):y)};
