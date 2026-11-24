@@ -121,7 +121,8 @@ function chHTML(){const c=cities()[TRS.ci],ns=pad(TRS.ci),sel=Math.max(0,Math.mi
 <div class=tcf id=trcf>${covHTML(ns,sel)}</div><div class=tin id=trinf>${infHTML(ns[sel])}</div>
 <div class=trmt><h4>SUA TRILHA EM ${esc(c.n.toUpperCase())} · TOQUE EM UM PONTO PARA VER A CAPA</h4><div class=tcw id=trcw>${curveHTML(ns,sel)}</div>
 <div class=tcz id=trcz>${ns.map((x,i)=>`<button class="${x.done?'d':''} ${i===sel?'cur':''} ${x.k==='e'?'e':''}" onclick="trSel(${i})">${x.done?'✓ ':x.k==='e'?'★ ':''}${esc(x.t)}</button>`).join('')}</div>
-<p class=trnote>${prem?'O capítulo termina no premium <b>'+esc(prem.t)+'</b>. ':c.soon?'Mais casos de Santos estão sendo preparados. Quando o premium chegar, ele fecha este capítulo.':''}</p></div>`}
+<p class=trnote>${prem?'O capítulo termina no premium <b>'+esc(prem.t)+'</b>. ':c.soon?'Mais casos de Santos estão sendo preparados. Quando o premium chegar, ele fecha este capítulo.':''}</p>${c.full&&TRFIM[c.id]&&(META.trfin||{})[c.id]?`<button class=trbtn2 onclick="trFinReplay(${c.ci})" style="display:block;margin:6px auto 14px;background:none;border:1px solid #eaa73c88;color:#eaa73c;border-radius:999px;padding:9px 16px;font:600 13px var(--ui,Arial)">☎ Ouvir de novo a ligação da Regina</button>`:''}</div>`}
+window.trFinReplay=ci=>{const c=CT[ci];if(!c)return;META.trfin=META.trfin||{};delete META.trfin[c.id];try{msave()}catch(e){}trFinMaybe(ci)};
 window.trCity=(ci,sel)=>{const CS=cities();if(!CS[ci]||!CS[ci].open)return;TRS.ci=ci;const ns=pad(ci);let s=sel;if(s==null){s=ns.findIndex(x=>x.cur);if(s<0)s=ns.length-1}TRS.sel=s;
  let o=document.getElementById('trc');if(!o){o=document.createElement('div');o.id='trc';o.setAttribute('role','dialog');o.setAttribute('aria-label','Capítulo da trilha');(document.getElementById('app')||document.body).appendChild(o)}
  o.innerHTML=chHTML();o.scrollTop=0;wire(o);try{AU&&AU.sfx&&AU.sfx('tap')}catch(e){}setTimeout(()=>{try{trFinMaybe(ci)}catch(e){}},450)};
