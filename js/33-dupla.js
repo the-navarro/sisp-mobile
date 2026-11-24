@@ -27,7 +27,7 @@ const duoSes=a=>{const d=DU(),z=d.ses[a.key]=d.ses[a.key]||{t:0,n:0,pass:0,c:[{}
 /* papéis: 0 e 1; z.r = jogador que tem o papel 0; z.t = quem está com o celular */
 const DUOR={c:[{n:'Campo',d:'Conversa com os suspeitos, atende ligações e visita os locais, e coleta as provas.',h:'Não vê Perícia, Quadro nem Caderno.',a:['Conversas','Chamadas','Locais']},{n:'Perícia',d:'Manda as provas para o Dr. José e conversa com ele na Perícia, liga as peças no Quadro e anota no Caderno.',h:'Não vê Conversas, Chamadas nem Locais.',a:['Perícia (com o Dr. José)','Quadro','Caderno']}],
 r:[{n:'Interrogatório',d:'Conversa com os suspeitos e ouve os depoimentos.',h:'Não vê as provas.',a:['Suspeitos','Conversas']},{n:'Perícia',d:'Examina as provas e os laudos.',h:'Não vê as conversas.',a:['Provas']}],
-t:[{n:'Leitura',d:'Abre e lê as fontes das pistas. Lê em voz alta para a dupla.',h:'Não mexe na ordem dos fatos.',a:['Abrir as fontes das pistas','Minhas pistas','Marcar o depoimento que não bate']},{n:'Montagem',d:'Coloca os fatos em ordem e confere a linha do tempo.',h:'Não abre as fontes das pistas.',a:['Mover os fatos','Pedir dica','Conferir a ordem']}]};
+t:[{n:'Leitura',d:'Abre e lê as fontes das pistas. Lê em voz alta para a dupla.',h:'Não mexe na ordem dos fatos.',a:['Abrir as fontes das pistas','Minhas anotações','Marcar o depoimento que não bate']},{n:'Montagem',d:'Coloca os fatos em ordem e confere a linha do tempo.',h:'Não abre as fontes das pistas.',a:['Mover os fatos','Pedir dica','Conferir a ordem']}]};
 const DUOSH={c:'Prisão (acusação), Briefing, Dicas e Ajustes',r:'Acusar',t:'Ver os títulos e horários dos fatos'};
 window.duoLabOk=()=>{const a=duoAct();return a&&a.k==='c'?duoHolderRole(a,duoSes(a))===1:true};
 const duoRoles=a=>DUOR[a.k];
